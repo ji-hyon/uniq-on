@@ -13,25 +13,25 @@ import java.util.List;
 @AllArgsConstructor
 public class Members{
     @Id
-    @Column(name = "member_id")
+    @Column(name = "member_id", length = 50)
     private String id;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 50)
     private String password;
 
-    @Column(name = "nickname")
+    @Column(name = "nickname", length = 50)
     private String nickname;
 
-    @Column(name = "email")
+    @Column(name = "email", length = 100)
     private String email;
 
-    @Column(name = "username")
+    @Column(name = "username", length = 50)
     private String username;
 
-    @Column(name = "profileImage")
+    @Column(name = "profileImage", length = 512)
     private String profileImage;
 
-    @Column(name = "phoneNumber")
+    @Column(name = "phoneNumber", length = 16)
     private String phoneNumber;
 
     @OneToMany(mappedBy = "member")

@@ -19,7 +19,7 @@ public class Post_Images {
     @Column(name = "post_images_id")
     private Integer id;
 
-    @Column(name = "image")
+    @Column(name = "image", length = 512)
     private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)

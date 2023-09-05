@@ -14,7 +14,7 @@ public class Wallets {
     @Column(name = "wallet_id")
     private  Integer id;
 
-    @Column(name = "address")
+    @Column(name = "address", length = 100)
     private  String address;
 
     @Column(name = "balance")

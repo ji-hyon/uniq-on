@@ -19,7 +19,8 @@ public class Collections {
     @Column(name = "collection_id")
     private Integer id;
 
-    @Column(name = "image")
+
+    @Column(name = "image", length = 512)
     private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,6 +30,7 @@ public class Collections {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Members member;
+
     @OneToMany(mappedBy = "collection")
     private List<Comments> commentsList = new ArrayList<>();
 

@@ -22,10 +22,10 @@ public class Comments {
     @Column(name = "time")
     private Timestamp time;
 
-    @Column(name = "content")
+    @Column(name = "content", length = 512)
     private String content;
 
-    @Column(name = "image")
+    @Column(name = "image", length = 512)
     private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)

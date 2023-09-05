@@ -18,16 +18,16 @@ public class Animals{
     @Column(name = "animal_id")
     private Integer id;
 
-   @Column(name = "species")
+   @Column(name = "species", length = 50)
    private String species;
 
-   @Column(name = "creature_name")
+   @Column(name = "creature_name", length = 100)
    private String creature_name;
 
-   @Column(name = "feature")
+   @Column(name = "feature", length = 200)
    private String feature;
 
-   @Column(name = "image")
+   @Column(name = "image", length = 512)
    private String image;
 
    @Column(name = "hatch_date")
@@ -36,11 +36,11 @@ public class Animals{
    @Column(name = "weight")
    private Integer weight;
 
-   @Column(name = "gender")
+   @Column(name = "gender", length = 50)
    private String gender;
 
-   @Column(name = "size")
-   private Integer size;
+   @Column(name = "length")
+   private Integer length;
 
     @OneToMany(mappedBy = "animal")
    private List<Posts> postsList = new ArrayList<>();

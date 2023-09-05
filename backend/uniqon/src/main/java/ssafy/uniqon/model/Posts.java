@@ -22,16 +22,16 @@ public class Posts{
     @Column(name = "price")
     private Integer price;
 
-    @Column(name = "content")
+    @Column(name = "content", length = 512)
     private String content;
 
-    @Column(name = "main_image")
+    @Column(name = "main_image", length = 512)
     private String main_image;
 
     @Column(name = "create_datetime")
     private Timestamp create_datetime;
 
-    @Column(name = "title")
+    @Column(name = "title", length = 50)
     private String title;
 
     @Column(name = "sale_completed_datetime")
