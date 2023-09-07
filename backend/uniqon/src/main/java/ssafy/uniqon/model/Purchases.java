@@ -15,20 +15,11 @@ public class Purchases {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "did_address")
     private Members member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Posts post;
-
-    public void setMember(Members member){
-        this.member = member;
-    }
-
-    public void setPost(Posts post){
-        this.post = post;
-    }
-
 
 }

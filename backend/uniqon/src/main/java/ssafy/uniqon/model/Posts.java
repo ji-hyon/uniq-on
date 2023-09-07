@@ -41,12 +41,8 @@ public class Posts{
     private Integer state;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "did_address")
     private Members member;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "creature_id")
-    private Animals animal;
 
     @OneToMany(mappedBy = "post")
     private List<Purchases> purchasesList = new ArrayList<>();
@@ -58,9 +54,9 @@ public class Posts{
     private List<PostList> postlistList = new ArrayList<>();
 
     @OneToMany(mappedBy = "post")
-    private List<Post_Images> post_imagesList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "post")
     private List<Notifications> notificationList = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nft_id")
+    private NFTs nft;
 }

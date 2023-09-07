@@ -13,24 +13,26 @@ import java.util.List;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Notifications {
+public class Mediums {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "notification_id")
+    @Column(name = "medium_id")
     private Integer id;
 
-    @Column(name  = "checked")
-    private Boolean checked;
+    @Column(name = "species", length = 100)
+    private String species;
 
-    @Column(name = "create_date")
-    private Timestamp create_date;
+    @Column(name = "image", length = 512)
+    private String image;
+
+    @Column(name = "feature", length = 200)
+    private String feature;
+
+    @OneToMany(mappedBy = "medium")
+    private List<NFTs> nftsList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "did_address")
-    private Members member;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Posts post;
+    @JoinColumn(name = "big_id")
+    private Bigs big;
 
 }
