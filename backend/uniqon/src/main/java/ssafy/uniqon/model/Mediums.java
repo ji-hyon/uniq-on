@@ -28,9 +28,6 @@ public class Mediums {
     @Column(name = "feature", length = 200)
     private String feature;
 
-    @OneToMany()
-    private List<NFTs> nftsList = new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "big_id")
     private Bigs big;

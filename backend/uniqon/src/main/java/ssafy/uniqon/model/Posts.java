@@ -44,18 +44,6 @@ public class Posts{
     @JoinColumn(name = "did_address")
     private Members member;
 
-    @OneToMany()
-    private List<Purchases> purchasesList = new ArrayList<>();
-
-    @OneToMany()
-    private List<WishList> wishlistList = new ArrayList<>();
-
-    @OneToMany()
-    private List<PostList> postlistList = new ArrayList<>();
-
-    @OneToMany()
-    private List<Notifications> notificationList = new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nft_id")
     private NFTs nft;

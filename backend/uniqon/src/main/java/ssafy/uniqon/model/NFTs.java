@@ -32,11 +32,4 @@ public class NFTs {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medium_id")
     private Mediums medium;
-
-    @OneToMany()
-    private List<Posts> postsList = new ArrayList<>();
-
-    @OneToMany()
-    private List<My_Collections> my_collectionsList = new ArrayList<>();
-
 }

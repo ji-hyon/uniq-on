@@ -23,6 +23,4 @@ public class Bigs {
     @Column(name = "image", length = 512)
     private String image;
 
-    @OneToMany()
-    private List<Mediums> mediumsList = new ArrayList<>();
 }
