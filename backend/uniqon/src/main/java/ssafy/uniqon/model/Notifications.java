@@ -26,7 +26,7 @@ public class Notifications {
     private Timestamp create_date;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "did_address")
+    @JoinColumn(name = "member")
     private Members member;
 
     @ManyToOne(fetch = FetchType.LAZY)

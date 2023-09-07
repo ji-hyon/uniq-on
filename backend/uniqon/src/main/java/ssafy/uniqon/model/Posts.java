@@ -41,8 +41,12 @@ public class Posts{
     private Integer state;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "did_address")
-    private Members member;
+    @JoinColumn(name = "buyer")
+    private Members buyer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller")
+    private Members seller;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nft_id")

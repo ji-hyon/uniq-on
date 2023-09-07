@@ -20,7 +20,7 @@ public class My_Collections {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "did_address")
+    @JoinColumn(name = "member")
     private Members member;
 
     @ManyToOne(fetch = FetchType.LAZY)
