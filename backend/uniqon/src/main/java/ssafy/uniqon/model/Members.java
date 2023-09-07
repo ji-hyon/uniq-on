@@ -23,24 +23,24 @@ public class Members{
     private String nickname;
 
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany()
     private List<Posts> postsList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany()
     private List<NFTs> nftsList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany()
     private List<Purchases> purchasesList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany()
     private List<PostList> postlistList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany()
     private List<WishList> wishlistList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany()
     private List<Notifications> notificationsList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany()
     private List<My_Collections> my_collectionsList = new ArrayList<>();
 }

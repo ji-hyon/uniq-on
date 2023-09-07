@@ -44,16 +44,16 @@ public class Posts{
     @JoinColumn(name = "did_address")
     private Members member;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany()
     private List<Purchases> purchasesList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany()
     private List<WishList> wishlistList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany()
     private List<PostList> postlistList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany()
     private List<Notifications> notificationList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

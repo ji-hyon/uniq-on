@@ -23,6 +23,6 @@ public class Bigs {
     @Column(name = "image", length = 512)
     private String image;
 
-    @OneToMany(mappedBy = "big")
+    @OneToMany()
     private List<Mediums> mediumsList = new ArrayList<>();
 }

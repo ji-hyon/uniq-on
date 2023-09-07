@@ -33,10 +33,10 @@ public class NFTs {
     @JoinColumn(name = "medium_id")
     private Mediums medium;
 
-    @OneToMany(mappedBy = "nft")
+    @OneToMany()
     private List<Posts> postsList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "nft")
+    @OneToMany()
     private List<My_Collections> my_collectionsList = new ArrayList<>();
 
 }
