@@ -11,7 +11,7 @@ import lombok.*;
 public class MiddleClassifications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "middle_classification_id")
     private Integer id;
 
     @Column(name = "species", length = 100)
@@ -24,7 +24,7 @@ public class MiddleClassifications {
     private String feature;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "big_id")
+    @JoinColumn(name = "main_classification_id")
     private MainClassifications big;
 
 }

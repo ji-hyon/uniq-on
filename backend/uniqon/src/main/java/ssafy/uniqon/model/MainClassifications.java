@@ -11,7 +11,7 @@ import lombok.*;
 public class MainClassifications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "main_classification_id")
     private Integer id;
 
     @Column(name = "type", length = 100)
