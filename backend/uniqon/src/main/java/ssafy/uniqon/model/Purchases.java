@@ -8,27 +8,23 @@ import lombok.*;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Purchases {
+public class NFTs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "purchase_id")
+    @Column(name = "id")
     private Integer id;
 
+    @Column(name = "nft_address", length = 200)
+    private String nft_address;
+
+    @Column(name = "image", length = 512)
+    private String image;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member")
     private Members member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Posts post;
-
-    public void setMember(Members member){
-        this.member = member;
-    }
-
-    public void setPost(Posts post){
-        this.post = post;
-    }
-
-
+    @JoinColumn(name = "medium_id")
+    private MiddleClassifications medium;
 }
