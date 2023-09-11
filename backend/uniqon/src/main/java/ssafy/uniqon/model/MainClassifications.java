@@ -3,6 +3,11 @@ package ssafy.uniqon.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.management.Notification;
+import java.security.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
