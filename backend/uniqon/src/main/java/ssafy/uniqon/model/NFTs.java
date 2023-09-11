@@ -20,11 +20,20 @@ public class NFTs {
     @Column(name = "image", length = 512)
     private String image;
 
+    @Column(name = "name", length = 100)
+    private String name;
+
+    @Column(name = "age")
+    private Integer age;
+
+    @Column(name = "feature", length = 200)
+    private String feature;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member")
     private Members member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medium_id")
+    @JoinColumn(name = "middle_classification_id")
     private MiddleClassifications medium;
 }
