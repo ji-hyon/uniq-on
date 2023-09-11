@@ -18,8 +18,4 @@ public class Members{
 
     @Column(name = "address", length = 255)
     private String address;
-
-    @Column(name = "nickname", length = 50)
-    private String nickname;
-
 }
