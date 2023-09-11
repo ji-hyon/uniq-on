@@ -11,7 +11,7 @@ import lombok.*;
 public class MyCollections {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "my_collection_id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)

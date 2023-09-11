@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Members{
     @Id
-    @Column(name = "id", length = 255)
+    @Column(name = "member_id", length = 255)
     private String id;
 
     @Column(name = "address", length = 255)

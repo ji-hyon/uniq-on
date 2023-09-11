@@ -11,7 +11,7 @@ import lombok.*;
 public class NFTs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "nft_id")
     private Integer id;
 
     @Column(name = "nft_address", length = 200)
@@ -30,10 +30,10 @@ public class NFTs {
     private String feature;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member")
+    @JoinColumn(name = "member_id")
     private Members member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "middle_classification_id")
-    private MiddleClassifications medium;
+    private MiddleClassifications middle;
 }

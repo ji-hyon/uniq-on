@@ -25,6 +25,6 @@ public class MiddleClassifications {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "main_classification_id")
-    private MainClassifications big;
+    private MainClassifications main;
 
 }

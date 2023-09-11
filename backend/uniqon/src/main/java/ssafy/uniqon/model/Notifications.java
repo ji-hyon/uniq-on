@@ -16,7 +16,7 @@ import java.util.List;
 public class Notifications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "notification_id")
     private Integer id;
 
     @Column(name  = "checked")
@@ -26,7 +26,7 @@ public class Notifications {
     private Timestamp create_date;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member")
+    @JoinColumn(name = "member_id")
     private Members member;
 
     @ManyToOne(fetch = FetchType.LAZY)
