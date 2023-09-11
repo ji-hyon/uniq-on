@@ -3,11 +3,6 @@ package ssafy.uniqon.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.xml.stream.events.Comment;
-import java.security.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
@@ -16,7 +11,7 @@ import java.util.List;
 public class NFTs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "nft_id")
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "nft_address", length = 200)
@@ -31,5 +26,5 @@ public class NFTs {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medium_id")
-    private Mediums medium;
+    private MiddleClassifications medium;
 }

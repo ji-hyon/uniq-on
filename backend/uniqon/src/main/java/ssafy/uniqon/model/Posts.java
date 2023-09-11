@@ -16,7 +16,7 @@ import java.util.List;
 public class Posts{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "price")

@@ -16,7 +16,7 @@ import java.util.List;
 public class Notifications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "notification_id")
+    @Column(name = "id")
     private Integer id;
 
     @Column(name  = "checked")

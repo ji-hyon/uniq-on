@@ -3,25 +3,21 @@ package ssafy.uniqon.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.security.Timestamp;
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class WishList {
+public class MainClassifications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member")
-    private Members member;
+    @Column(name = "type", length = 100)
+    private String type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private  Posts post;
+    @Column(name = "image", length = 512)
+    private String image;
 
 }
