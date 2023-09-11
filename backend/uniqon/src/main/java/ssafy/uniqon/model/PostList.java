@@ -3,15 +3,17 @@ package ssafy.uniqon.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.security.Timestamp;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class MyCollections {
+public class PostList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "postlist_id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -19,7 +21,6 @@ public class MyCollections {
     private Members member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nft_id")
-    private NFTs nft;
-
+    @JoinColumn(name = "post_id")
+    private Posts post;
 }

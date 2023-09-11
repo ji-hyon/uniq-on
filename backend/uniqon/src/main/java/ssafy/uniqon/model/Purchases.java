@@ -8,10 +8,10 @@ import lombok.*;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class MyCollections {
+public class Purchases {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "purchase_id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -19,7 +19,16 @@ public class MyCollections {
     private Members member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nft_id")
-    private NFTs nft;
+    @JoinColumn(name = "post_id")
+    private Posts post;
+
+    public void setMember(Members member){
+        this.member = member;
+    }
+
+    public void setPost(Posts post){
+        this.post = post;
+    }
+
 
 }
