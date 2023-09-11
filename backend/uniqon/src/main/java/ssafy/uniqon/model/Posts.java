@@ -57,8 +57,7 @@ public class Posts{
     @OneToMany(mappedBy = "post")
     private List<PostList> postlistList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post")
-    private List<Post_Images> post_imagesList = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "post")
     private List<Notifications> notificationList = new ArrayList<>();
