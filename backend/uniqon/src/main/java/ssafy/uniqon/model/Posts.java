@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Posts{
@@ -24,9 +23,6 @@ public class Posts{
 
     @Column(name = "content", length = 512)
     private String content;
-
-    @Column(name = "main_image", length = 512)
-    private String main_image;
 
     @Column(name = "create_datetime")
     private Timestamp create_datetime;

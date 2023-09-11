@@ -5,7 +5,6 @@ import lombok.*;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class NFTs {
@@ -36,4 +35,8 @@ public class NFTs {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "middle_classification_id")
     private MiddleClassifications middle;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "my_collection_id")
+    private MyCollections myCollection;
 }
