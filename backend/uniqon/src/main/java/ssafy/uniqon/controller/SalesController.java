@@ -32,4 +32,9 @@ public class SalesController {
         return OK(null);
     }
 
+    @PutMapping("/update/{postId}")
+    public Response<?> updatePost(@RequestBody RegisterReportWebRequest req){
+        return OK(null);
+    }
+
 }
