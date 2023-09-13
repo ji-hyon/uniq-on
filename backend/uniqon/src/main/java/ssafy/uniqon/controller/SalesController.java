@@ -17,10 +17,9 @@ import static ssafy.uniqon.global.response.Response.OK;
 @RequestMapping("/api/sales")
 public class SalesController {
 
-    record RegisterReportWebRequest(
+    record RegisterPostWebRequest(
             Integer price,
             String content,
-            LocalDateTime createDatetime,
             String title,
             String species,
             String creatureName
@@ -29,7 +28,7 @@ public class SalesController {
 
 
     @PostMapping("/register")
-    public Response<?> registerPost(@RequestBody RegisterReportWebRequest req){
+    public Response<?> registerPost(@RequestBody RegisterPostWebRequest req){
         return OK(null);
     }
 
