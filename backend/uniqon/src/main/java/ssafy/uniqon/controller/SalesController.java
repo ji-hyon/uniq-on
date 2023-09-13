@@ -47,4 +47,9 @@ public class SalesController {
     public Response<?> searchPost(@PathVariable String word) {
         return OK(null);
     }
+
+    @GetMapping("/detail/{postId}")
+    public Response<?> getDetailPost(@PathVariable int postId){
+        return OK(null);
+    }
 }
