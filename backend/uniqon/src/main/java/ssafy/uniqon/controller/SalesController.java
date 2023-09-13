@@ -27,14 +27,19 @@ public class SalesController {
     ) {
     }
 
+
     @PostMapping("/register")
     public Response<?> registerPost(@RequestBody RegisterReportWebRequest req){
         return OK(null);
     }
 
     @PutMapping("/update/{postId}")
-    public Response<?> updatePost(@RequestBody RegisterReportWebRequest req){
+    public Response<?> updatePost(@PathVariable Integer price){
         return OK(null);
     }
 
+    @DeleteMapping("/delete/{postId}")
+    public Response<?> deletePost(@PathVariable int postId){
+        return OK(null);
+    }
 }
