@@ -34,12 +34,17 @@ public class SalesController {
     }
 
     @PutMapping("/update/{postId}")
-    public Response<?> updatePost(@PathVariable Integer price){
+    public Response<?> updatePost(@PathVariable int postId, @PathVariable Integer price){
         return OK(null);
     }
 
     @DeleteMapping("/delete/{postId}")
     public Response<?> deletePost(@PathVariable int postId){
+        return OK(null);
+    }
+
+    @GetMapping("/search/{word}")
+    public Response<?> searchPost(@PathVariable String word) {
         return OK(null);
     }
 }
