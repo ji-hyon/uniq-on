@@ -33,7 +33,7 @@ public class SalesController {
     }
 
     @PutMapping("/update/{postId}")
-    public Response<?> updatePost(@PathVariable int postId, @PathVariable Integer price){
+    public Response<?> updatePost(@PathVariable int postId, @RequestBody Integer price){
         return OK(null);
     }
 
