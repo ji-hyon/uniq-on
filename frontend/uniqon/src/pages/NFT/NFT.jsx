@@ -16,10 +16,12 @@ export function NFT() {
             "age": 0
         };
 
+        ///////////////////////////////////////////////////////////////////////////
         const response = await axios.post("api/nfts/register", data, {
             headers: {
             'Content-Type': 'application/json', 
             },
+            // 파일 직접 넣기 
             file: "fileString",
         });
 
@@ -27,6 +29,7 @@ export function NFT() {
         } catch (e) {
         console.log("failed: ", e);
         }
+        /////////////////////////////////////////////////////////////////////////
     }
 
     // nft 조회
