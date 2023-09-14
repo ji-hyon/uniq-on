@@ -13,7 +13,6 @@ export function Collections() {
     }
   }
 
-  ///////////////////////////////////////////////////////////////////////////////
   // nft 리스트
   async function nftList() {
     try {
@@ -23,16 +22,6 @@ export function Collections() {
       console.log("failed: ", e);
     }
   }
-  // # NFT 리스트 조회 (대>중>소의 소 부분)
-  // 요청 : /api/collections/list/nft/{middleId}
-  // 예시 middleId = 1
-  // 응답 : {
-  //   "success": true,
-  //   "response": null,
-  //   "error": null
-  // }
-  ////////////////////////////////////////////////////////////////////////////
-
 
   // 중분류 리스트
   async function middleList() {
@@ -55,17 +44,14 @@ export function Collections() {
   }
 
   // 중분류 조회
-  //////////////////////////////////////////////////////////////////////////////////
-  // middleId 하드코딩 하면 안되고 예시값 넣어주기 
   async function middleInfo() {
     try {
-      const response = await axios.get("/api/collections/info/middle/{middleId}")
+      const response = await axios.get("/api/collections/info/middle/1")
       console.log("success: ", response);
     }catch(e) {
       console.log("failed: ", e);
     }
   }
-  /////////////////////////////////////////////////////////////////////////////////
 
   return (
     <div className="App">
