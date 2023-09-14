@@ -1,5 +1,6 @@
 package ssafy.uniqon.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,7 @@ import static ssafy.uniqon.global.response.Response.OK;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/sales")
+@Tag(name = "판매 API")
 @CrossOrigin("*")
 public class SalesController {
 
