@@ -10,6 +10,7 @@ import static ssafy.uniqon.global.response.Response.OK;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/myPage")
+@CrossOrigin("*")
 public class MyPageController {
 
     record ModifyMyProfileWebRequest(

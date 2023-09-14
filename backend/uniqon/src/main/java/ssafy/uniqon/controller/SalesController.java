@@ -15,6 +15,7 @@ import static ssafy.uniqon.global.response.Response.OK;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/sales")
+@CrossOrigin("*")
 public class SalesController {
 
     record RegisterPostWebRequest(
