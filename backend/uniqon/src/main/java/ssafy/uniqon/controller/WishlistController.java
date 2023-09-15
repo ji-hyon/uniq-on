@@ -18,7 +18,7 @@ import static ssafy.uniqon.global.response.Response.OK;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/wishlist")
-@Tag(name = "위시리스트 Api")
+@Tag(name = "위시리스트 API")
 @CrossOrigin("*")
 public class WishlistController {
 
