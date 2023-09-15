@@ -1,4 +1,0 @@
-<<<<<<< PATCH SET (4f6fa0 Revert "test")
-=======
-asdsadasdsadasss
->>>>>>> BASE      (a61d39 Merge branch 'test' of http://j9c201.p.ssafy.io:8081/a/S09P2)
