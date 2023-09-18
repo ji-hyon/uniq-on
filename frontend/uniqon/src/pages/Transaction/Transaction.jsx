@@ -3,7 +3,7 @@ import axios from "axios";
 import { Button } from "@material-tailwind/react";
 import { useTransactionStore } from "../../stores/TransactionStore";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function Transaction() {
   
