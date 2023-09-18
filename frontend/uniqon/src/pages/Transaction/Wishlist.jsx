@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Button } from "@material-tailwind/react";
+import { useWishlistStore } from "../../stores/WishlistStore";
 
 import { useEffect } from "react";
 
