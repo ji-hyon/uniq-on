@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 export function Wishlist() {
 
-  // const URL = "http://localhost:8080"
+  const URL = "http://localhost:5000"
 
   // useEffect(() => {
   //   getDefaultWishlist();
@@ -29,7 +29,7 @@ export function Wishlist() {
   async function getWishlist() {
 
       try {
-        const res = await axios.get("/api/wishlist/0xF2a7423475C6240321732Ed5f9e29d94dAB603A9");
+        const res = await axios.get(URL + "/api/wishlist/0xF2a7423475C6240321732Ed5f9e29d94dAB603A9");
           console.log(res.data)
 
       } catch(err) {

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 export function Transaction() {
   
 
-  // const URL = "http://localhost:8080"
+  const URL = "http://localhost:5000"
 
   // function getSales() {
         
@@ -33,7 +33,7 @@ export function Transaction() {
           creatureName: "test",
         };
 
-        const res = await axios.post("/api/sales/register", data);
+        const res = await axios.post(URL + "/api/sales/register", data);
         console.log(res.data)
         
       } catch (err) {
