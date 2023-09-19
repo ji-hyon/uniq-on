@@ -12,6 +12,7 @@ export function Transaction() {
 
   const URL = "http://localhost:5000"
 
+
   async function getSales() {
         
     try{
@@ -96,16 +97,18 @@ export function Transaction() {
 
   return (
     <div className="App">
-      <TopNavBar />
       
       
       <header className="App-header">
-        <p>
-          Transaction
-        </p>
-        <br></br>
+      <div className="bg-white flex flex-row justify-center w-full">
+        <div className="bg-white w-[1440px] h-[1024px] relative">
+          <TopNavBar />
+          <p>
+            Transaction
+          </p>
+          <br></br>
 
-        <SalesCard />
+          <SalesCard />
 
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
         <br></br>
@@ -118,6 +121,8 @@ export function Transaction() {
         <Button color="red" onClick={serachSales}>판매 검색</Button>
         <br></br>
         <Button color="indigo" onClick={detailSales}>판매 상세</Button>
+        </div>
+        </div>
       </header>
     </div>
   );
