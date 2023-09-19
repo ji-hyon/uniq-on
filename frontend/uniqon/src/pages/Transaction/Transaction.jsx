@@ -130,6 +130,8 @@ export function Transaction() {
 
           <SalesCard />
 
+        <SalesCard />
+
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
         <br></br>
         <Button color="yellow" onClick={registerSales}>판매 등록</Button>
