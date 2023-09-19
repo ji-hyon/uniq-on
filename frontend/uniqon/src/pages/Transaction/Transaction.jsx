@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button } from "@material-tailwind/react";
 import { useTransactionStore } from "../../stores/TransactionStore";
 import { TopNavBar } from "../../components/Common/TopNavBar";
+import { SalesCard } from "../../components/Common/SalesCard";
 
 import { useEffect, useState } from "react";
 
@@ -103,6 +104,8 @@ export function Transaction() {
           Transaction
         </p>
         <br></br>
+
+        <SalesCard />
 
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
         <br></br>
