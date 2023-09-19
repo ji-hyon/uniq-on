@@ -42,7 +42,7 @@ public class NFTCreateService {
         PinataResponse pinataJsonResponse=pinata.pinJsonToIpfs(jsonMetaData);
         bodySplit = pinataJsonResponse.getBody().split(",");
         String jsonIpfsHash=ipfsBaseURL+bodySplit[0].substring(bodySplit[0].indexOf(":")+2,bodySplit[0].length()-1);
-        System.out.println(jsonIpfsHash);
+        // System.out.println(jsonIpfsHash);
 
         Credentials credential = Credentials.create(userPrivateKey);
         ContractGasProvider gasProvider = new DefaultGasProvider();
