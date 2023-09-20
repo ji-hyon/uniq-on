@@ -5,14 +5,14 @@ spring:
     group:
       local:
         - db-local
-#        - log-local
+        - log-local
       dev:
         - db-dev
-#        - log-dev
+        - log-dev
     include:
       - db
       - swagger
-#      - log
+      - log
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
