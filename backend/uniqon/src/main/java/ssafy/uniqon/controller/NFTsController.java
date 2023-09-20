@@ -55,7 +55,7 @@ public class NFTsController {
                                    @RequestPart(value = "file") MultipartFile multipartFile) throws Exception {
         log.debug("# NFT 등록시 데이터 : {}", req);
         log.debug("# NFT 등록시 이미지 : {}", multipartFile);
-        nftCreateService.createNFT(req);
+        nftCreateService.createNFT(req,multipartFile);
         return OK(null);
     }
 
