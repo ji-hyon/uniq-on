@@ -32,7 +32,7 @@ public class SecurityConfig  {
         http
                 .authorizeHttpRequests(
                         authorize -> authorize
-                                .requestMatchers("/diti/auth/login", "/diti/swagger.html", "/diti/swagger-ui/**", "/diti/swagger.html/swagger-config").permitAll()
+                                .requestMatchers("/diti/auth/login","/diti/auth/join", "/diti/swagger.html", "/diti/swagger-ui/**", "/diti/swagger.html/swagger-config").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
