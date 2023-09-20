@@ -22,7 +22,7 @@ export function NFT() {
         formData.append("data", new Blob([JSON.stringify(data)], {type: "application/json"}))
         formData.append("file", nftImg.current.files[0])
 
-        const response = await axios.post("api/nfts/register", formData, {
+        const response = await axios.post("/api/nfts/register", formData, {
             headers: {
             'Content-Type': 'multipart/form-data',  
             },
