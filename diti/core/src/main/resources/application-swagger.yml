@@ -4,12 +4,12 @@ springdoc:
     groups:
       enabled: true
   swagger-ui:
-    path: /diti/swagger.html
+    path: /diti/swagger.html # 접속 url 설정
     enabled: true
-    doc-expansion: none
+    doc-expansion: none # 기본적으로 닫혀있도록 설정
   cache:
     disabled: true
   override-with-generic-response: false
   default-produces-media-type: application/json
   default-consumes-media-type: application/json
-  packages-to-scan: com.diti.core.domain.controller
+  packages-to-scan: com.diti.core.domain.controller # 컨트롤러 스캔
