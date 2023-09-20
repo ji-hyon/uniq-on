@@ -23,6 +23,7 @@ export function Landing() {
         <p>
           여기는 랜딩페이지입니다.
         </p>
+        <LoginButton />
         <Button
           className="text-4xl w-96 h-28"
           onClick={() => {
