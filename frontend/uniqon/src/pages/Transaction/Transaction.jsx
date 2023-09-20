@@ -4,7 +4,7 @@ import { Button } from "@material-tailwind/react";
 import { useTransactionStore } from "../../stores/TransactionStore";
 import { TopNavBar } from "../../components/Common/TopNavBar";
 import { SalesCard } from "../../components/Common/SalesCard";
-import { TransactionFigma } from "../../components/Transaction/TransactionFigma";
+import { TransactionBanner } from "../../components/Transaction/TransactionBanner";
 
 import { useEffect, useState } from "react";
 
@@ -148,7 +148,7 @@ export function Transaction() {
             Transaction
           </p>
           <br></br>
-          <TransactionFigma />
+          <TransactionBanner />
 
           <SalesCard />
 
