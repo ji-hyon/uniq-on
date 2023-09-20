@@ -5,6 +5,14 @@ import { Menu, MenuHandler, MenuList, MenuItem, Button } from "@material-tailwin
 export function TopNavBar() {
 
     const navigate = useNavigate();
+
+    const goToLanding = () => {
+      navigate("/");
+    };
+
+    const goToWishlist = () => {
+      navigate("/wishlist");
+    };
     // 마켓플레이스(거래 목록 페이지)로 이동
     const goToTransaction = () => {
       navigate("/transaction");
@@ -27,7 +35,7 @@ export function TopNavBar() {
     
     <div className="flex max-w-[1600px] w-[1440px] min-h-[80px] items-center justify-between pl-[24px] pr-[24.01px] py-[16px] absolute top-[2px] left-0">
               <div className="relative flex-1 grow h-[36px]">
-                <img className="absolute w-[171px] h-[79px] top-[-22px] left-[4px] object-cover" src="logo.png" alt="Link foundation logo" />
+                <img onClick={goToLanding} className="absolute w-[171px] h-[79px] top-[-22px] left-[4px] object-cover" src="logo.png" alt="Link foundation logo" />
                 <div className="inline-flex items-start justify-center left-[213px] absolute top-0">
                   <button
                     onClick={goToTransaction}
@@ -105,7 +113,7 @@ export function TopNavBar() {
                     <MenuItem>나의 NFT</MenuItem>
                     <MenuItem>구매 이력</MenuItem>
                     <MenuItem>판매 이력</MenuItem>
-                    <MenuItem>위시리스트</MenuItem>
+                    <MenuItem onClick={goToWishlist}>위시리스트</MenuItem>
                     <MenuItem>로그아웃</MenuItem>
                   </MenuList>
                 </Menu>
