@@ -22,6 +22,41 @@ import static ssafy.uniqon.global.response.Response.OK;
 @CrossOrigin("*")
 public class CollectionsController {
 
+    public record mainClassficationListWebResponse(
+            int id,
+            String type,
+            String image
+    ){}
+
+    public record middleClassificationListWebResponse(
+            int id,
+            int mainClassificationId,
+            String species,
+            String image,
+            String feature
+    ){}
+
+    public record middleAnimalInfoWebResponse(
+            int id,
+            int mainClassficationId,
+            String species,
+            String image,
+            String feature
+    ){}
+
+    public record nftListWebResponse(
+            int id,
+            String walletAddress,
+            int middleClassificationId,
+            String nftAddress,
+            String image,
+            String name,
+            String feature,
+            int age,
+            String nickname,
+            String profileImage
+    ){}
+
     @Operation(summary = "대분류 조회", description = "대분류 리스트를 조회합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
