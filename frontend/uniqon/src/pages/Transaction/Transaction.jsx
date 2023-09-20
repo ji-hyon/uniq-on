@@ -4,6 +4,7 @@ import { Button } from "@material-tailwind/react";
 import { useTransactionStore } from "../../stores/TransactionStore";
 import { TopNavBar } from "../../components/Common/TopNavBar";
 import { SalesCard } from "../../components/Common/SalesCard";
+import { TransactionFigma } from "../../components/Transaction/TransactionFigma";
 
 import { useEffect, useState } from "react";
 
@@ -140,13 +141,14 @@ export function Transaction() {
       
       
       <header className="App-header">
-      <div className="bg-white flex flex-row justify-center w-full">
+      <div className="flex flex-row justify-center w-full bg-white">
         <div className="bg-white w-[1440px] h-[1024px] relative">
           <TopNavBar />
           <p>
             Transaction
           </p>
           <br></br>
+          <TransactionFigma />
 
           <SalesCard />
 
