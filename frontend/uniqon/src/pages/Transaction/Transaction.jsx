@@ -17,6 +17,26 @@ export function Transaction() {
       itemNicknameList, setItemNicknameList,
       itemSpeciesList, setItemSpeciesList,
       itemTitleList, setItemTitleList } = useTransactionStore();
+
+  // salesItemsList에서 맵 함수로 인덱스로 아이템 한개씩 뽑아서
+  // SalesCard에 props로 넘겨주기
+  // salesItemsList.map((item, index) => {
+  //   return <SalesCard key={index} item={item} />
+  // })
+  // 그 다음 SalesCard에서 props로 받아서 사용하기 ( item.image 랑 등등 있음 )
+  // function SalesCard({ item }) {
+  //   return (
+  //      <>
+  //     <Card className="w-full max-w-[26rem] shadow-lg">
+  //       <CardHeader floated={false} color="blue-gray">
+  //         <img
+  //           src={item.image}
+  //           alt="ui/ux review check"
+  //         />
+  // </CardHeader>
+  //       </Card>
+  //      </>
+  //   )
   
 
   const URL = "http://localhost:5000"
@@ -156,7 +176,13 @@ export function Transaction() {
 
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
         <br></br>
+        <span>
+        <input 
+            type="file"
+            ref={nftImg}
+            />
         <Button color="yellow" onClick={registerSales}>판매 등록</Button>
+            </span>
         <br></br>
         <Button color="blue" onClick={updateSales}>판매 수정</Button>
         <br></br>
