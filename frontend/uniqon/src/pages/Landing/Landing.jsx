@@ -3,6 +3,7 @@ import { Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { Section1 } from '../../components/Landing/Section1';
 import { Section2 } from '../../components/Landing/Section2';
+import { Section3 } from '../../components/Landing/Section3';
 
 export function Landing() {
 
@@ -13,6 +14,7 @@ export function Landing() {
       <header className="App-header">
       <Section1 />
       <Section2 />
+      <Section3 />
 
         <p>
           여기는 랜딩페이지입니다.
