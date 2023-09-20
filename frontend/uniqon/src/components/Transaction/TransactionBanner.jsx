@@ -1,6 +1,6 @@
 import React from "react";
 
-export function TransactionFigma() {
+export function TransactionBanner() {
   return(
     <>
     <div className="bg-[#c1dcdc] flex flex-row justify-center w-full">
