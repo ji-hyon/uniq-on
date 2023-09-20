@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pinata.PinataException;
 import ssafy.uniqon.global.response.Response;
 import ssafy.uniqon.service.NFTCreateService;
+import ssafy.uniqon.service.NFTReadService;
 
 import java.io.IOException;
 
@@ -42,7 +43,29 @@ public class NFTsController {
             Integer age
     ){}
 
+    public record NFTWebResponse(
+            @Schema(description = "NFT ID")
+            Integer nftId,
+            @Schema(description = "소유자 주소")
+            String owner,
+            @Schema(description = "이미지 URL")
+            String image,
+            @Schema(description = "이름")
+            String name,
+            @Schema(description = "나이")
+            Integer age,
+            @Schema(description = "특징")
+            String feature,
+            @Schema(description = "NFT Metadata URL")
+            String nftURL,
+            @Schema(description = "컨트랙트 주소")
+            String contractAddress,
+            @Schema(description = "Token ID")
+            Integer tokenId
+    ){}
+
     private final NFTCreateService nftCreateService;
+    private final NFTReadService nftReadService;
 
     @Operation(summary = "NFT 등록", description = "NFT를 등록합니다.")
     @ApiResponses({
@@ -56,7 +79,7 @@ public class NFTsController {
         log.debug("# NFT 등록시 데이터 : {}", req);
         log.debug("# NFT 등록시 이미지 : {}", multipartFile);
         nftCreateService.createNFT(req,multipartFile);
-        return OK(null);
+        return OK("success");
     }
 
     @Operation(summary = "NFT 조회", description = "지갑 주소를 통해 위시리스트 조회합니다.")
@@ -71,7 +94,8 @@ public class NFTsController {
     @GetMapping("/{nftId}")
     public Response<?> getNFTInfo(@PathVariable Integer nftId){
         log.debug("# NFT 조회 : {}", nftId);
-        return OK(null);
+        NFTWebResponse response=nftReadService.getNFTById(nftId);
+        return OK(response);
     }
 
     @Operation(summary = "NFT 삭제", description = "등록했던 NFT를 삭제합니다.")
