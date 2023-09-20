@@ -3,6 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 
 export function Section1() {
+  const navigate = useNavigate();
+
+  function goToTransaction() {
+    navigate("/transaction");
+  }
+
   return (
     <>
     <div className="flex flex-col w-[1440px] items-center pt-[24px] pb-0 px-[448px] relative bg-[#c1dcdc]">
@@ -19,7 +25,7 @@ export function Section1() {
               </div>
               <div className="flex w-[1024px] items-center gap-[12.78px] pl-0 pr-[651.22px] py-0 absolute top-[494px] left-0">
                 <div className="relative w-[292px] h-[56px] bg-[#438f8f] rounded-[10px] shadow-[0px_4px_4px_#00000040] backdrop-blur-sm backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(4px)_brightness(100%)]">
-                  <div className="relative w-[247px] h-[28px] top-[12px] left-[29px]">
+                  <div onClick={goToTransaction} className="relative w-[247px] h-[28px] top-[12px] left-[29px]">
                     <img
                       className="absolute w-[18px] h-[21px] top-[6px] left-0"
                       alt="Google play white"
