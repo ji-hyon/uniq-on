@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
+import { Section1 } from '../../components/Landing/Section1';
 
 export function Landing() {
 
@@ -9,6 +10,7 @@ export function Landing() {
   return (
     <div className="App">
       <header className="App-header">
+      <Section1 />
         <p>
           여기는 랜딩페이지입니다.
         </p>
