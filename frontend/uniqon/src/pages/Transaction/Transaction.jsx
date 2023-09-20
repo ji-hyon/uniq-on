@@ -9,10 +9,30 @@ import { useEffect, useState } from "react";
 
 export function Transaction() {
   const nftImg = React.useRef(null);
+
+  const { salesItemsList, setSalesItemsList,
+      itemsPriceList, setItemsPriceList,
+      itemImageList, setItemImageList,
+      itemNicknameList, setItemNicknameList,
+      itemSpeciesList, setItemSpeciesList,
+      itemTitleList, setItemTitleList } = useTransactionStore();
   
 
   const URL = "http://localhost:5000"
 
+
+  // useEffect(() => {
+  //   getDefaultSales();
+  // }, []);
+
+  // function getDefaultSales() {
+  //   axios.get(URL + "/api/sales/post")
+  //   .then((res) => {
+  //     console.log(res.data)
+  //     setSalesItemsList(res.data.response)
+  //     console.log(salesItemsList)
+  //   })
+  // }
 
   async function getSales() {
         
@@ -20,7 +40,8 @@ export function Transaction() {
 
       const res = await axios.get(URL + "/api/sales/post");
             console.log(res.data)
-
+            setSalesItemsList(res.data.response)
+            console.log(salesItemsList)
         } catch(err) {
           console.log(err)
         }
@@ -34,7 +55,6 @@ export function Transaction() {
           content: "test",
           title: "test",
           species: "test",
-          creatureName: "test",
         };
 
         const formData = new FormData()
