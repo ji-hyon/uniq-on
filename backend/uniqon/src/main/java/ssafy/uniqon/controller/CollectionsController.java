@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ssafy.uniqon.global.response.Response;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static ssafy.uniqon.global.response.Response.OK;
 
 @Slf4j
