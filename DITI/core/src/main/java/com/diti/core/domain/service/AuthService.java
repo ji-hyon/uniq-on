@@ -5,4 +5,5 @@ import com.diti.core.domain.entity.Id;
 public interface AuthService {
 
     void registerAuth(String walletAddress);
+    void loginAuth(String walletAddress);
 }

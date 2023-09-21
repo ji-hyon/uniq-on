@@ -17,18 +17,16 @@ public class AuthController {
 
     private final AuthService authService;
 
-    public record loginWebRequest(
-    ){}
-
     @PostMapping("/login")
-    public Response<?> login(){
-        log.debug("# 로그인 시도중");
+    public Response<?> login(@RequestBody String walletAddress){
+        log.debug("# 로그인 요청 : {}", walletAddress);
+        authService.loginAuth(walletAddress);
         return OK(null);
     }
 
     @PostMapping("/join")
     public Response<?> join(@RequestBody String walletAddress){
-        log.debug("# 회원가입 : {}", walletAddress);
+        log.debug("# 회원가입 요청 : {}", walletAddress);
         authService.registerAuth(walletAddress);
         return OK(null);
     }
