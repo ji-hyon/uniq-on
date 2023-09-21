@@ -8,13 +8,32 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Members{
     @Id
-    @Column(name = "member_id", length = 255)
-    private String id;
+    @Column(length = 255)
+    private String walletAddress;
 
-    @Column(name = "address", length = 255)
-    private String address;
+    @Column(length = 255)
+    private String name;
+
+    @Column(length = 255)
+    private String nickname;
+
+    @Column(length = 255)
+    private String birth;
+
+    @Column(length = 30)
+    private String gender;
+
+    @Column(length = 255)
+    private String vpToken;
+
+    @Column(length = 255)
+    private String profileImage;
+
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
 }
