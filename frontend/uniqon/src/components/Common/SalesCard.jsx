@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Card,
   CardHeader,
@@ -8,8 +9,17 @@ import {
   Tooltip,
   IconButton,
 } from "@material-tailwind/react";
+
+import { useNavigate } from "react-router-dom";
  
 export function SalesCard() {
+
+  const navigate = useNavigate();
+
+  const goToTranItemDetail = () => {
+    navigate("/transaction/tranitemdetail");
+  };
+
   return (
     <Card className="w-full max-w-[26rem] shadow-lg">
       <CardHeader floated={false} color="blue-gray">
@@ -23,6 +33,7 @@ export function SalesCard() {
           color="red"
           variant="text"
           className="!absolute top-4 right-4 rounded-full"
+
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -151,7 +162,7 @@ export function SalesCard() {
         </div>
       </CardBody>
       <CardFooter className="pt-3">
-        <Button size="lg" fullWidth={true}>
+        <Button size="lg" fullWidth={true} onClick={goToTranItemDetail}>
           Reserve
         </Button>
       </CardFooter>
