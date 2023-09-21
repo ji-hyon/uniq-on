@@ -19,14 +19,6 @@ export function Landing() {
           >
             전자 신분증 발급
           </Button>
-
-          {/* 신분증 재발급 버튼 */}
-          <Button
-            className="text-4xl w-96 h-28 m-3"
-            color="purple"
-          >
-            전자 신분증 재발급
-          </Button>
               
           {/* 신분증 조회 버튼 */}
           <Button

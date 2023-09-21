@@ -9,7 +9,7 @@
 import express from "express" // 서버 실행
 import cors from "cors"
 import dotenv from "dotenv" 
-import didRouter from "./routes/did.js";
+import didRouter from "./routes/didRouter.js";
 
 // express서버, 7000번 포트 설정
 const app = express();
