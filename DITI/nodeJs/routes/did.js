@@ -15,10 +15,12 @@ import { createVerifiableCredentialJwt, createVerifiablePresentationJwt, verifyC
 
 // multipart 데이터를 받기 위해 사용 (신분증 사진)
 import multer from 'multer'
-const upload = multer()
+const upload = multer({ dest: 'uploads/'})
 
 // 메세지로 본인 인증하는 함수 작성한 것 import
 import { verifyLoginMessage } from "../src/auth.js"
+
+import { readImage } from "../src/ocr.js"
 
 // ssafy 네트워크로 수정하기
 const rpcUrl = 'https://rpc.sepolia.org/'
@@ -78,11 +80,11 @@ router.post('/vc', upload.single("imgFile"), async (req, res) => {
     if (!verifyLoginMessage(walletAddress, originalMessage, signedMessage)) {
         res.status(400).send("login failed")
     }
+
     // OCR로 읽어들인 정보 처리 아래와 같이 진행하면 될듯  
-    // console.log(req.file)
-    // const img2text=readText(req.file)    
-    // {"name":img2text.name, "personalID":img2text.id}
-    const vcJwt = await createVC(walletAddress, { "name": "서지현", "IDnumber": "123456-1234567" })
+    // console.log("log:",req.file)
+    const ocrResult=await readImage(req.file)
+    const vcJwt = await createVC(walletAddress, ocrResult)
     res.send(vcJwt)
 })
 
