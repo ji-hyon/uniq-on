@@ -31,17 +31,6 @@ public class AuthController {
         return OK(null);
     }
 
-    @GetMapping("/vc")
-    public Response<?> getVc(){
-        log.debug("# VC 반환");
-        return OK(null);
-    }
-
-    @GetMapping("/list/vc")
-    public Response<?> getVcList(){
-        log.debug("# VC 리스트 ");
-        return OK(null);
-    }
 
 
 }

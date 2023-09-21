@@ -5,19 +5,18 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import java.sql.Timestamp;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @SuperBuilder
-public class Id {
+public class Vc {
 
-    @jakarta.persistence.Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @JoinColumn(name = "wallet_address")
@@ -25,9 +24,11 @@ public class Id {
 
     private String vcJwt;
 
-    @CreatedDate
+    @CreationTimestamp
     private Timestamp createDateTime;
 
-    @LastModifiedDate
+    @UpdateTimestamp
     private Timestamp modifyDateTime;
+
+    private String type;
 }
