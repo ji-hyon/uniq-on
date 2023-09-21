@@ -6,10 +6,13 @@ import { TopNavBar } from "../../components/Common/TopNavBar";
 import { SalesCard } from "../../components/Common/SalesCard";
 import { TransactionBanner } from "../../components/Transaction/TransactionBanner";
 
+import { useNavigate } from "react-router-dom";
+
 import { useEffect, useState } from "react";
 
 export function Transaction() {
   const nftImg = React.useRef(null);
+  const navigate = useNavigate();
 
   const { salesItemsList, setSalesItemsList,
       itemsPriceList, setItemsPriceList,
@@ -17,6 +20,7 @@ export function Transaction() {
       itemNicknameList, setItemNicknameList,
       itemSpeciesList, setItemSpeciesList,
       itemTitleList, setItemTitleList } = useTransactionStore();
+
 
   // salesItemsList에서 맵 함수로 인덱스로 아이템 한개씩 뽑아서
   // SalesCard에 props로 넘겨주기
