@@ -1,5 +1,6 @@
 package com.diti.core.domain.controller;
 
+import com.diti.core.domain.service.AuthService;
 import com.diti.core.global.response.Response;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,8 @@ import static com.diti.core.global.response.Response.OK;
 @Tag(name = "인증 API")
 public class AuthController {
 
+    private final AuthService authService;
+
     public record loginWebRequest(
     ){}
 
@@ -24,8 +27,9 @@ public class AuthController {
     }
 
     @PostMapping("/join")
-    public Response<?> join(){
-        log.debug("# 회원가입 시도중");
+    public Response<?> join(@RequestBody String walletAddress){
+        log.debug("# 회원가입 : {}", walletAddress);
+        authService.registerAuth(walletAddress);
         return OK(null);
     }
 
