@@ -34,8 +34,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/login", "/api/auth/signup").permitAll()
                 .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
-                                .loginPage("/api/auth/login")
-                        .loginProcessingUrl("/api/auth/login")
+                                .loginPage("/api/user/login")
+                        .loginProcessingUrl("/api/user/login")
                         .successHandler(new LoginSuccessHandler())
                         .failureHandler(new LoginFailuerHandler()))
                 .build();
