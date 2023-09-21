@@ -62,20 +62,20 @@ export function CheckoutForm() {
         className="m-0 grid place-items-center rounded-b-none py-8 px-4 text-center"
       >
         <div className="mb-4 rounded-full border border-white/10 bg-white/10 p-6 text-white">
-          <BanknotesIcon className="h-10 w-10" />
+          <img src="heedong2.png" className="h-16 w-16" />
         </div>
         <Typography variant="h4" color="white">
-          Material Tailwind PRO
+          Welcome to UNIQON
         </Typography>
       </CardHeader>
       <CardBody>
         <Tabs value={type} className="overflow-visible">
           <TabsHeader className="relative z-0 ">
-            <Tab value="card" onClick={() => setType("card")}>
-              Pay with Card
+            <Tab className="font-bold" value="card" onClick={() => setType("card")}>
+              로그인
             </Tab>
-            <Tab value="paypal" onClick={() => setType("paypal")}>
-              Pay with PayPal
+            <Tab className="font-bold" value="paypal" onClick={() => setType("paypal")}>
+              회원가입
             </Tab>
           </TabsHeader>
           <TabsBody
@@ -139,7 +139,7 @@ export function CheckoutForm() {
                   </div>
                   <Input label="Holder Name" />
                 </div>
-                <Button size="lg">Pay Now</Button>
+                <Button size="lg">로그인하기</Button>
                 <Typography
                   variant="small"
                   color="gray"

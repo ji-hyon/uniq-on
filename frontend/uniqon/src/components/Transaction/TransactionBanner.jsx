@@ -3,7 +3,7 @@ import React from "react";
 export function TransactionBanner() {
   return(
     <>
-    <div className="bg-[#c1dcdc] flex flex-row justify-center w-full">
+    <div className="bg-[#c1dcdc] flex flex-row justify-center">
       <div className="bg-[#c1dcdc] w-[1178px] h-[372px] relative">
         <div className="absolute w-[493px] h-[59px] top-[206px] left-[53px] bg-[#ffffff] rounded-[4.67px] overflow-hidden">
           <div className="absolute w-[41px] h-[38px] top-[11px] left-[438px] bg-[100%_100%]">

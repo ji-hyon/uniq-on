@@ -24,7 +24,7 @@ export function SalesCard({ item, id }) {
   return (
     <Card 
       id={id}
-      className="w-full max-w-[26rem] shadow-lg">
+      className="w-full w-[27rem] shadow-lg">
       <CardHeader floated={false} color="blue-gray">
         <img
           src={item.image}
