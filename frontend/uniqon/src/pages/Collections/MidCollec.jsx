@@ -26,7 +26,7 @@ export function MidCollections() {
     midCollecType,
     setMidCollecType,
     midCollecImg,
-    setMidCllecImg
+    setMidCollecImg
   } = useCollectionsStore();
 
   const [midCardsData, setMidCardsData] = useState([]);
@@ -73,11 +73,20 @@ export function MidCollections() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>여기는 강아지에 대한 중분류 페이지 입니다.</p>
+        <p>중분류 페이지 입니다.</p>
 
         <div className="flex space-x-4">
           {midCardsData.map((card, index) => (
-            <Card key={index} className="w-full max-w-[26rem] shadow-lg">
+            <Card
+              onClick={() => {
+                setMidCollecId(card.id);
+                setMidCollecType(card.species);
+                setMidCollecImg(card.image);
+                goToNFTList();
+              }}
+              key={index}
+              className="w-full max-w-[26rem] shadow-lg"
+            >
               <CardHeader floated={false} color="blue-gray">
                 <img src={card.image} alt="ui/ux review check" />
                 <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
@@ -91,8 +100,8 @@ export function MidCollections() {
                 <Button
                   onClick={() => {
                     setMidCollecId(card.id);
-                    setMidCollecType(card.type);
-                    setMidCllecImg(card.image);
+                    setMidCollecType(card.species);
+                    setMidCollecImg(card.image);
                     goToNFTList();
                   }}
                   className="text-lg"
