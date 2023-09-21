@@ -5,6 +5,7 @@ import { useTransactionStore } from "../../stores/TransactionStore";
 import { TopNavBar } from "../../components/Common/TopNavBar";
 import { SalesCard } from "../../components/Common/SalesCard";
 import { TransactionBanner } from "../../components/Transaction/TransactionBanner";
+import { RegisterSalesItem } from "./RegisterSalesItem";
 
 import { useNavigate } from "react-router-dom";
 
@@ -173,20 +174,13 @@ export function Transaction() {
           </p>
           <br></br>
           <TransactionBanner />
-
+          <div className="flex flex-row">
           <SalesCard />
-
-        <SalesCard />
+          <SalesCard />
+          <SalesCard />
+          </div>
 
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
-        <br></br>
-        <span>
-        <input 
-            type="file"
-            ref={nftImg}
-            />
-        <Button color="yellow" onClick={registerSales}>판매 등록</Button>
-            </span>
         <br></br>
         <Button color="blue" onClick={updateSales}>판매 수정</Button>
         <br></br>
@@ -195,9 +189,12 @@ export function Transaction() {
         <Button color="red" onClick={serachSales}>판매 검색</Button>
         <br></br>
         <Button color="indigo" onClick={detailSales}>판매 상세</Button>
+        <br></br>
+        <RegisterSalesItem />
         </div>
         </div>
       </header>
+      
     </div>
   );
 }
