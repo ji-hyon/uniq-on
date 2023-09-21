@@ -12,21 +12,25 @@ import {
 
 import { useNavigate } from "react-router-dom";
 
-export function SalesCard({ item }) {
+export function SalesCard({ item, id }) {
 
   const navigate = useNavigate();
 
   const goToTranItemDetail = () => {
-    navigate("/transaction/tranitemdetail");
+    console.log(id);
+    navigate(`/transaction/tranitemdetail/${id}`);
   };
 
   return (
-    <Card className="w-full max-w-[26rem] shadow-lg">
+    <Card 
+      id={id}
+      className="w-full max-w-[26rem] shadow-lg">
       <CardHeader floated={false} color="blue-gray">
         <img
           src={item.image}
           alt="ui/ux review check"
           onClick={goToTranItemDetail}
+          className="w-full h-[21rem]"
         />
         <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
         <IconButton
@@ -71,7 +75,10 @@ export function SalesCard({ item }) {
           </Typography>
         </div>
         <Typography color="gray">
-          {item.species}/{item.nickname}
+          분류 | {item.species}
+        </Typography>
+        <Typography color="gray">
+          판매자 | {item.nickname}
         </Typography>
         <div className="group mt-8 inline-flex flex-wrap items-center gap-3">
           <Tooltip content="$129 per night">
@@ -163,7 +170,23 @@ export function SalesCard({ item }) {
       </CardBody>
       <CardFooter className="pt-3">
         <Button size="lg" fullWidth={true} onClick={goToTranItemDetail}>
+          <span>
           상세보기
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+              className="h-4 w-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+              />
+            </svg>
+            </span>
         </Button>
       </CardFooter>
     </Card>

@@ -176,7 +176,7 @@ export function Transaction() {
           <TransactionBanner />
           <div className="flex flex-row">
             {salesItemsList.map((item, index) => {
-              return <SalesCard key={index} item={item} />
+              return <SalesCard key={index} item={item} id={index} />
             })}
           </div>
 
