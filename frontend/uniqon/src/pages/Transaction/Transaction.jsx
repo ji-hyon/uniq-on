@@ -5,11 +5,15 @@ import { useTransactionStore } from "../../stores/TransactionStore";
 import { TopNavBar } from "../../components/Common/TopNavBar";
 import { SalesCard } from "../../components/Common/SalesCard";
 import { TransactionBanner } from "../../components/Transaction/TransactionBanner";
+import { RegisterSalesItem } from "./RegisterSalesItem";
+
+import { useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 
 export function Transaction() {
   const nftImg = React.useRef(null);
+  const navigate = useNavigate();
 
   const { salesItemsList, setSalesItemsList,
       itemsPriceList, setItemsPriceList,
@@ -17,6 +21,7 @@ export function Transaction() {
       itemNicknameList, setItemNicknameList,
       itemSpeciesList, setItemSpeciesList,
       itemTitleList, setItemTitleList } = useTransactionStore();
+
 
   // salesItemsList에서 맵 함수로 인덱스로 아이템 한개씩 뽑아서
   // SalesCard에 props로 넘겨주기
@@ -169,20 +174,13 @@ export function Transaction() {
           </p>
           <br></br>
           <TransactionBanner />
-
-          <SalesCard />
-
-        <SalesCard />
+          <div className="flex flex-row">
+            {salesItemsList.map((item, index) => {
+              return <SalesCard key={index} item={item} />
+            })}
+          </div>
 
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
-        <br></br>
-        <span>
-        <input 
-            type="file"
-            ref={nftImg}
-            />
-        <Button color="yellow" onClick={registerSales}>판매 등록</Button>
-            </span>
         <br></br>
         <Button color="blue" onClick={updateSales}>판매 수정</Button>
         <br></br>
@@ -191,9 +189,12 @@ export function Transaction() {
         <Button color="red" onClick={serachSales}>판매 검색</Button>
         <br></br>
         <Button color="indigo" onClick={detailSales}>판매 상세</Button>
+        <br></br>
+        <RegisterSalesItem />
         </div>
         </div>
       </header>
+      
     </div>
   );
 }
