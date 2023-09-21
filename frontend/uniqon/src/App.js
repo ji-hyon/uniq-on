@@ -21,7 +21,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         {/* <Route path="/collections" element={<Collections />} /> */}
         <Route path="/transaction" element={<Transaction />} />
-        <Route path="/transaction/tranItemDetail" element={<TranItemDetail />} />
+        <Route path="/transaction/tranItemDetail/:id" element={<TranItemDetail />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/nft" element={<NFT />} />
