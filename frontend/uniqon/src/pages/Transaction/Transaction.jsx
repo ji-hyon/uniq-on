@@ -175,9 +175,9 @@ export function Transaction() {
           <br></br>
           <TransactionBanner />
           <div className="flex flex-row">
-          <SalesCard />
-          <SalesCard />
-          <SalesCard />
+            {salesItemsList.map((item, index) => {
+              return <SalesCard key={index} item={item} />
+            })}
           </div>
 
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
