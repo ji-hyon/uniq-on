@@ -143,20 +143,24 @@ export function IssueCert() {
     }
   }
 
+
   return (
     <div className="App">
       <header className="App-header">
-        <Button onClick={connectMetaMask}>MetaMask 연결</Button>
+        <Button className="text-4xl w-96 h-28 m-5" color="orange" onClick={connectMetaMask}>MetaMask 연결</Button>
         <div>
-          <ul>
+          {/* <ul style={{ borderStyle: "solid", borderWidth:"5px", borderColor : "white" }}> */}
+          <div className="text-2xl border-while p-5 m-7 border-solid border-4">
+            <h2>VC Payload</h2>
             <li>Address:{wallet.address}</li>
             <li>Balance:{wallet.balance}</li>
             <li>ChainID:{wallet.chainId}</li>
-          </ul>
+          </div>
         </div>
-        <input ref={inputFileRef} type="file" name="imgFile" />
-        <Button onClick={requestVC}>전자신분증 발급</Button>
-        <Button onClick={test}>test</Button>
+        {/* <div style={{ borderStyle:"solid", borderWidth:"2px" }} > */}
+          <input className="text-[20px] text-center" ref={inputFileRef} type="file" name="imgFile" />
+          <Button className="text-4xl w-96 h-28 mt-1" color="yellow" onClick={requestVC}>전자신분증 발급</Button>
+          <Button className="text-base w-50 h-15 m-20" color="blue" onClick={test}>node connect test</Button>
       </header>
 
     </div>

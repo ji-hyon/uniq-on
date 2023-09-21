@@ -8,21 +8,34 @@ export function Landing() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <div className="flex flex-col w-[1440px] items-start relative">
+      <div className="App-header">
+          {/* 신분증 발급 버튼 */}
           <Button
-            className="text-4xl w-96 h-28"
+            className="text-4xl w-96 h-28 m-3"
+            color="blue"
             onClick={() => {
               navigate("/issue");
-
             }}
-            color="red"
           >
-
             전자 신분증 발급
           </Button>
-        </div>
-      </header>
+
+          {/* 신분증 재발급 버튼 */}
+          <Button
+            className="text-4xl w-96 h-28 m-3"
+            color="purple"
+          >
+            전자 신분증 재발급
+          </Button>
+              
+          {/* 신분증 조회 버튼 */}
+          <Button
+            className="text-4xl w-96 h-28 m-3"
+            color="yellow"
+          >
+            전자 신분증 조회 
+          </Button>
+      </div>
 
     </div>
   );
