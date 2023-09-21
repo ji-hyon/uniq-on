@@ -4,11 +4,7 @@ import com.diti.core.global.response.Response;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import static com.diti.core.global.response.Response.OK;
 
 @Slf4j
@@ -17,6 +13,9 @@ import static com.diti.core.global.response.Response.OK;
 @RequestMapping("/diti/auth")
 @Tag(name = "인증 API")
 public class AuthController {
+
+    public record loginWebRequest(
+    ){}
 
     @PostMapping("/login")
     public Response<?> login(){
@@ -29,5 +28,18 @@ public class AuthController {
         log.debug("# 회원가입 시도중");
         return OK(null);
     }
+
+    @GetMapping("/vc")
+    public Response<?> getVc(){
+        log.debug("# VC 반환");
+        return OK(null);
+    }
+
+    @GetMapping("/list/vc")
+    public Response<?> getVcList(){
+        log.debug("# VC 리스트 ");
+        return OK(null);
+    }
+
 
 }
