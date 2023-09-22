@@ -79,23 +79,7 @@ export function Transaction() {
         console.log(err);
       }
     }
-
-
-
-
-  async function detailSales() {
-          
-    try {
-            const res = await axios.get(URL + "/api/sales/detail/1");
-              console.log(res.data)
-
-          } catch(err) {
-            console.log(err)
-          }
-        }
-        
-
-  
+    
 
   return (
     <div className="App">
@@ -150,8 +134,6 @@ export function Transaction() {
           </div>
 
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
-        <br></br>
-        <Button color="indigo" onClick={detailSales}>판매 상세</Button>
         <br></br>
         <RegisterSalesItem />
         </div>
