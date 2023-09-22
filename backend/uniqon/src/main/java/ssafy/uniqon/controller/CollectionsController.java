@@ -76,6 +76,7 @@ public class CollectionsController {
     public Response<Page<MainClassficationQueryRepository.getMainClassficationDBResponse>> getMainList(@PageableDefault Pageable pageable){
         log.debug("# 대분류 리스트 표시 요청");
         Page<MainClassficationQueryRepository.getMainClassficationDBResponse> list = collectionsService.getMainClassificationList(pageable);
+        log.debug("# 대분류 리스트 : {}", list);
         return OK(list);
     }
 
