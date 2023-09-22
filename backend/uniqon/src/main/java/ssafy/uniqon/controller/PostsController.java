@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ssafy.uniqon.global.response.Response;
+import ssafy.uniqon.service.PostCreateService;
 import ssafy.uniqon.service.PostReadService;
 
 import java.util.ArrayList;
@@ -26,12 +27,13 @@ import static ssafy.uniqon.global.response.Response.OK;
 @CrossOrigin("*")
 public class PostsController {
 
-    record RegisterPostWebRequest(
+    public record RegisterPostWebRequest(
             Integer price,
             String content,
             String title,
             String species,
-            String creatureName
+            Integer nftId,
+            String walletAddress
     ) {
     }
 
@@ -44,10 +46,18 @@ public class PostsController {
     )
     {}
 private final PostReadService postReadService;
-
+private final PostCreateService postCreateService;
+    @Operation(summary="판매글 등록", description = "판매글을 등록합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND")
+    })
     @PostMapping("/register")
-    public Response<?> registerPost(@RequestBody RegisterPostWebRequest req){
-        return OK(null);
+    public Response<?> registerPost(@RequestBody RegisterPostWebRequest req) {
+        log.debug("# 판매글 등록시 데이터 : {}", req);
+        postCreateService.createPost(req);
+        return OK("success");
     }
 
     @PutMapping("/update/{postId}")
