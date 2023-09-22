@@ -12,7 +12,9 @@ spring:
     include:
       - db
       - log
+      - jwt
 
 logging:
   level:
     org.hibernate.SQL: debug
+
