@@ -1,0 +1,2 @@
+-- Member 더미데이터
+-- INSERT INTO MEMBERS (add) VALUES

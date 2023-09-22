@@ -129,10 +129,7 @@ public class CollectionsController {
     public Response<?> getNFTList(@PathVariable Integer middleId){
         log.debug("# 중분류에 속하는 NFT 리스트 : {}", middleId);
         List<nftListWebResponse> list = new ArrayList<>();
-        nftListWebResponse res = new nftListWebResponse(1, "0x000000",1,"0x0000","https://gateway.pinata.cloud/ipfs/QmWorfYFv5TWPpoSvfhqTAGSxq2UZFV8e3L9UnG46BKt6W", "멍멍이", "진짜 물어요", 5, "체리지현","https://img.freepik.com/free-photo/big-cherry-on-white-background_1387-635.jpg?w=996&t=st=1695107915~exp=1695108515~hmac=1cb73ffed25c5bdc95caaec5ef109fc9405098714bb41efc9e00174a1a8b45b9");
-        nftListWebResponse res2 = new nftListWebResponse(2, "0x111111",1,"0x1111","https://gateway.pinata.cloud/ipfs/QmWorfYFv5TWPpoSvfhqTAGSxq2UZFV8e3L9UnG46BKt6W", "멍뭉이", "우리 개는 안 물어요", 4, "큐트지수","https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTafiJBPoOQVBrQO-KKWv_m2N4cg_GB1bjtBmJfxE2XTWy3prHQ0EnFKkKDBKtzulP6");
-        list.add(res);
-        list.add(res2);
+
         return OK(list);
     }
 
