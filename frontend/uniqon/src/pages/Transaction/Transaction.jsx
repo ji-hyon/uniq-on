@@ -17,7 +17,8 @@ export function Transaction() {
   // const handleOpen = () => { setOpen(!open); };
   // const [등록할NFTid, set등록할NFTid] = useState("");
 
-
+  const [postId, setPostId] = React.useState('1');
+  const [wishId, setWishId] = React.useState('1');
 
   
 
@@ -80,22 +81,28 @@ export function Transaction() {
       }
     }
 
-
-
-
-  async function detailSales() {
-          
-    try {
-            const res = await axios.get(URL + "/api/sales/detail/1");
-              console.log(res.data)
-
-          } catch(err) {
-            console.log(err)
-          }
-        }
-        
-
+    async function addWishlist() {
+      
+      try {
+          const res = await axios.post(`/api/wishlist/add/${postId}`);
+            console.log(res.data)
   
+        } catch(err) {
+          console.log(err)
+        }
+      }
+  
+    async function deleteWishlist() {
+        
+      try {
+          const res = await axios.delete(`/api/wishlist/${wishId}`);
+            console.log(res.data)
+  
+        } catch(err) {
+          console.log(err)
+        }
+      } 
+    
 
   return (
     <div className="App">
@@ -150,8 +157,6 @@ export function Transaction() {
           </div>
 
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
-        <br></br>
-        <Button color="indigo" onClick={detailSales}>판매 상세</Button>
         <br></br>
         <RegisterSalesItem />
         </div>
