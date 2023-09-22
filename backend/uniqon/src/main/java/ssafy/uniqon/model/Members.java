@@ -21,18 +21,24 @@ public class Members{
     @Column(name = "wallet_Address")
     private String walletAddress;
 
+    @Column(length = 255)
     private String name;
 
+    @Column(length = 255)
     private String nickname;
 
+    @Column(length = 255)
     private String birth;
 
+    @Column(length = 30)
     private String gender;
 
     @Column(length = 700)
     private String vpToken;
 
-    private String profileImage;
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private byte[] profileImage;
 
     @CreationTimestamp
     private Timestamp registerDateTime;
