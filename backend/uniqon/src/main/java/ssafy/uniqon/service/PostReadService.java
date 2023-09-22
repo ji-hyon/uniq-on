@@ -29,4 +29,28 @@ public class PostReadService {
         return list;
     }
 
+    public PostsController.postDetailWebResponse getPostDetail(int postId, String walletAddress){
+        Posts post = postRepository.getPostById(postId);
+        if(post==null) {
+            throw new IllegalArgumentException("No Post found with postId " + postId);
+        }
+
+
+        return new PostsController.postDetailWebResponse(
+                null,
+                null,
+                post.getNft().getMiddle().getSpecies(),
+                post.getNft().getName(),
+                post.getNft().getFeature(),
+                post.getNft().getAge(),
+                post.getNft().getImage(),
+                post.getPrice(),
+                post.getContent(),
+                post.getCreate_datetime(),
+                post.getTitle(),
+                null
+        );
+    }
+
+
 }

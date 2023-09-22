@@ -32,7 +32,7 @@ public class PostRepository {
     public void createPost(PostsController.RegisterPostWebRequest req){
         NFTs nft = em.find(NFTs.class, req.nftId());
         if (nft == null) {
-            throw new IllegalArgumentException("No NFT found with id " + req.nftId());
+            throw new IllegalArgumentException("No NFT found with nftId " + req.nftId());
         }
 
         Posts post = new Posts(
@@ -53,4 +53,7 @@ public class PostRepository {
 
     public List<Posts> getPostAll() { return jpaQueryFactory.selectFrom(posts).where(posts.state.eq(0)).fetch();}
 
+    public Posts getPostById(int postId) {
+        return jpaQueryFactory.selectFrom(posts).where(posts.state.eq(0).and(posts.id.eq(postId))).fetchOne();
+    }
 }
