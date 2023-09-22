@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssafy.uniqon.controller.CollectionsController;
 import ssafy.uniqon.model.MiddleClassifications;
-import ssafy.uniqon.repository.MainClassficationQueryRepository;
-import ssafy.uniqon.repository.MainClassificationRepository;
-import ssafy.uniqon.repository.MiddleClassificationQueryRepository;
-import ssafy.uniqon.repository.MiddleClassificationRepository;
+import ssafy.uniqon.repository.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -23,22 +20,26 @@ public class CollectionsServiceImpl implements CollectionsService{
     private final MainClassificationRepository mainClassificationRepository;
     private final MiddleClassificationRepository middleClassificationRepository;
     private final MiddleClassificationQueryRepository middleClassificationQueryRepository;
+    private final NFTQueryRepository nftQueryRepository;
 
 
     @Override
     public Page<MainClassficationQueryRepository.getMainClassficationDBResponse> getMainClassificationList(Pageable pageable) {
-        log.debug("# 대분류 리스트...");
         return mainClassficationQueryRepository.getMainClassificationList(pageable);
     }
 
     @Override
     public CollectionsController.middleAnimalInfoWebResponse getmiddleAnimalInfo(int middleClassificationId) {
-        log.debug("# 중분류 정보 조회...");
         return middleClassificationRepository.findById(middleClassificationId);
     }
 
     @Override
     public Page<CollectionsController.middleClassificationListWebResponse> getMiddleClassificationList(Pageable pageable, int mainClassificationId) {
         return middleClassificationQueryRepository.getMiddleClassificationList(pageable, mainClassificationId);
+    }
+
+    @Override
+    public Page<CollectionsController.nftListWebResponse> getNFTList(int middleClassificationId, Pageable pageable) {
+        return nftQueryRepository.getNftList(middleClassificationId, pageable);
     }
 }

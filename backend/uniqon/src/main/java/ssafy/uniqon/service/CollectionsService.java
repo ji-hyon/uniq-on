@@ -12,4 +12,6 @@ public interface CollectionsService {
     CollectionsController.middleAnimalInfoWebResponse getmiddleAnimalInfo(int middleClassificationId);
 
     Page<CollectionsController.middleClassificationListWebResponse> getMiddleClassificationList (Pageable pageable, int mainClassificationId);
+
+    Page<CollectionsController.nftListWebResponse> getNFTList(int middleClassificationId, Pageable pageable);
 }

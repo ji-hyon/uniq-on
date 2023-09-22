@@ -16,10 +16,6 @@ public class NFTs {
     @Column(name = "nft_id")
     private Integer id;
 
-    @Column(length = 200)
-    @Setter
-    private String owner;
-
     @Column(name = "nft_tx_hash", length = 200)
     private String nftTxHash;
 
@@ -37,7 +33,7 @@ public class NFTs {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Members member;
+    private Members owner;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "middle_classification_id")

@@ -44,6 +44,7 @@ public class MiddleClassificationQueryRepository {
         int count = jpaQueryFactory
                 .select(middleClassifications.count())
                 .from(middleClassifications)
+                .where(middleClassifications.id.eq(mainClassificationId))
                 .fetch().size();
 
         return new PageImpl<>(list, pageable, count);

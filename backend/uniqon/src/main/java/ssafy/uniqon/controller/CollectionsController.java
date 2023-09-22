@@ -53,15 +53,17 @@ public class CollectionsController {
 
     public record nftListWebResponse(
             int id,
-            String walletAddress,
-            int middleClassificationId,
-            String nftAddress,
+            String nftTxHash,
             String image,
             String name,
-            String feature,
             int age,
-            String nickname,
-            String profileImage
+            String feature,
+            int ownerId,
+            int middleClassficationId,
+            String middleClassficationSpecies,
+            String nftURL,
+            String contractAddress,
+            int tokenId
     ){}
 
     private final CollectionsService collectionsService;
@@ -126,9 +128,10 @@ public class CollectionsController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/list/nft/{middleId}")
-    public Response<?> getNFTList(@PathVariable Integer middleId){
-        log.debug("# 중분류에 속하는 NFT 리스트 : {}", middleId);
-        List<nftListWebResponse> list = new ArrayList<>();
+    public Response<Page<nftListWebResponse>> getNFTList(@PathVariable Integer middleId, @PageableDefault Pageable pageable){
+        log.debug("# 중분류에 속하는 NFT 리스트 요청 : {}", middleId);
+        Page<nftListWebResponse> list = collectionsService.getNFTList(middleId, pageable);
+        log.debug("# 중분류에 속하는 NFT 리스트 : {}", list);
 
         return OK(list);
     }
