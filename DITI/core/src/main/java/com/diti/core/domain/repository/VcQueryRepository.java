@@ -1,6 +1,7 @@
 package com.diti.core.domain.repository;
 
 
+import com.diti.core.domain.dto.response.VcListDBResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +11,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
+import static com.diti.core.domain.entity.QAuth.auth;
 import static com.diti.core.domain.entity.QVc.vc;
 
 @Repository
@@ -21,29 +24,21 @@ public class VcQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public record getVcListDBResponse(
-            String id,
-            String walletAddress,
-            String vcJwt,
-            String createDateTime,
-            String modifyDateTime,
-            String type
 
-    ){}
 
-    public Page<getVcListDBResponse> getVcList(String walletAddress, Pageable pageable){
+    public Page<VcListDBResponse> getVcList(String walletAddress, Pageable pageable){
 
-        List<getVcListDBResponse> list = jpaQueryFactory
-                .select(Projections.constructor(getVcListDBResponse.class,
+        List<VcListDBResponse> list = jpaQueryFactory
+                .select(Projections.fields(VcListDBResponse.class,
                         vc.id,
-                        vc.walletAddress,
+                        auth.walletAddress,
                         vc.vcJwt,
                         vc.createDateTime,
                         vc.modifyDateTime,
                         vc.type))
                 .from(vc)
                 .where(
-                        vc.walletAddress.eq(walletAddress)
+                        vc.auth.walletAddress.eq(walletAddress)
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -53,7 +48,7 @@ public class VcQueryRepository {
         int count = jpaQueryFactory
                 .select(vc.count())
                 .from(vc)
-                .where(vc.walletAddress.eq(walletAddress))
+                .where(auth.walletAddress.eq(walletAddress))
                 .fetch().size();
 
         return new PageImpl<>(list, pageable, count);

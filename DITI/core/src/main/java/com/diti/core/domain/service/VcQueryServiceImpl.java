@@ -1,5 +1,6 @@
 package com.diti.core.domain.service;
 
+import com.diti.core.domain.dto.response.VcListDBResponse;
 import com.diti.core.domain.entity.Auth;
 import com.diti.core.domain.repository.AuthRepository;
 import com.diti.core.domain.repository.VcQueryRepository;
@@ -20,7 +21,7 @@ public class VcQueryServiceImpl implements VcQueryService{
     private final AuthRepository authRepository;
     private final VcQueryRepository vcQueryRepository;
     @Override
-    public Page<VcQueryRepository.getVcListDBResponse> getVcList(String walletAddress, Pageable pageable) {
+    public Page<VcListDBResponse> getVcList(String walletAddress, Pageable pageable) {
         Auth auth = authRepository.findByWalletAddress(walletAddress);
         if(auth != null) {
             return vcQueryRepository.getVcList(walletAddress, pageable);

@@ -1,5 +1,6 @@
 package com.diti.core.domain.controller;
 
+import com.diti.core.domain.dto.response.VcListDBResponse;
 import com.diti.core.domain.repository.VcQueryRepository;
 import com.diti.core.domain.service.VcQueryService;
 import com.diti.core.domain.service.VcService;
@@ -31,8 +32,15 @@ public class VcController {
             String type
     ){}
 
-    @GetMapping
-    public Response<?> getVc(@RequestBody getVcWebRequest req) {
+    public record registerVcWebRequest(
+            String walletAddress,
+            String vcJwt,
+            String type
+    ){}
+
+    @GetMapping("/{walletAddress}/{type}")
+    public Response<?> getVc(@PathVariable String walletAddress, @PathVariable String type) {
+        getVcWebRequest req = new getVcWebRequest(walletAddress, type);
         log.debug("# VC 요청 : {}", req);
         VcService.getVcWebResponse res = vcService.getVc(req);
         log.debug("# VC : {}", res);
@@ -41,10 +49,17 @@ public class VcController {
 
 
     @GetMapping("/list/vc/{walletAddress}")
-    public Response<Page<VcQueryRepository.getVcListDBResponse>> getVcList(@PathVariable String walletAddress, @PageableDefault Pageable pageable){
+    public Response<Page<VcListDBResponse>> getVcList(@PathVariable String walletAddress, @PageableDefault Pageable pageable){
         log.debug("# VC 리스트 요청 지갑 : {}", walletAddress);
-        Page<VcQueryRepository.getVcListDBResponse> list = vcQueryService.getVcList(walletAddress, pageable);
+        Page<VcListDBResponse> list = vcQueryService.getVcList(walletAddress, pageable);
         log.debug("# VC 리스트 : {}", list);
         return OK(list);
+    }
+
+    @PostMapping
+    public Response<?> registerVc(@RequestBody registerVcWebRequest req){
+        log.debug("# VC 등록 요청: {}", req);
+        vcService.registerVc(req);
+        return OK(null);
     }
 }

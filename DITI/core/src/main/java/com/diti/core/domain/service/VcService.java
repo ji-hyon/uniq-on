@@ -16,7 +16,7 @@ public interface VcService {
 
     ){}
 
-    void login(String walletAddress);
-
     getVcWebResponse getVc(VcController.getVcWebRequest req);
+
+    void registerVc(VcController.registerVcWebRequest req);
 }

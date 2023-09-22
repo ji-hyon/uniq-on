@@ -1,9 +1,10 @@
 package com.diti.core.domain.service;
 
 import com.diti.core.domain.controller.VcController;
+import com.diti.core.domain.entity.Auth;
 import com.diti.core.domain.entity.Vc;
+import com.diti.core.domain.repository.AuthRepository;
 import com.diti.core.domain.repository.VcRepository;
-import com.diti.core.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,19 +18,35 @@ import org.springframework.transaction.annotation.Transactional;
 public class VcServiceImpl implements VcService{
 
     private final VcRepository vcRepository;
-    @Override
-    public void login(String walletAddress) {
-
-    }
+    private final AuthRepository authRepository;
 
     @Override
     public getVcWebResponse getVc(VcController.getVcWebRequest req) {
-        Vc vc = vcRepository.findByWalletAddressAndType(req.walletAddress(), req.type()).orElseThrow(
-                ()-> new NotFoundException(Vc.class, req.walletAddress(), req.type())
-        );
+        Vc vc = vcRepository.findByAuth_WalletAddressAndType(req.walletAddress(), req.type());
 
-        getVcWebResponse res = new getVcWebResponse(vc.getId(), vc.getWalletAddress(), vc.getType(), vc.getVcJwt(), vc.getCreateDateTime(), vc.getModifyDateTime());
+        if (vc != null) {
+            getVcWebResponse res = new getVcWebResponse(vc.getId(),vc.getAuth().getWalletAddress(), vc.getType(), vc.getVcJwt(), vc.getCreateDateTime(), vc.getModifyDateTime());
+            log.debug("# 특정 VC 반환 : {}", res);
+            return res;
+        } else {
+            return null;
+        }
+    }
 
-        return res;
+    @Override
+    public void registerVc(VcController.registerVcWebRequest req) {
+        log.debug("# VC 등록중..");
+        Vc vc = vcRepository.findByAuth_WalletAddressAndType(req.walletAddress(), req.type());
+        Auth auth = authRepository.findByWalletAddress(req.walletAddress());
+        if (vc == null && auth != null) {
+            vcRepository.save(Vc.builder()
+                    .auth(auth)
+                    .vcJwt(req.vcJwt())
+                    .type(req.type())
+                    .build());
+            log.debug("# VC 등록 성공!");
+        } else{
+            log.warn("# VC 등록 실패!");
+        }
     }
 }
