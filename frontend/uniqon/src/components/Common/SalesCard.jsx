@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import {
   Card,
   CardHeader,
@@ -16,10 +17,35 @@ export function SalesCard({ item, id }) {
 
   const navigate = useNavigate();
 
+  const [postId, setPostId] = React.useState('1');
+  const [wishId, setWishId] = React.useState('1');
+
   const goToTranItemDetail = () => {
     console.log(id);
     navigate(`/transaction/tranitemdetail/${id}`);
   };
+
+  async function addWishlist() {
+      
+    try {
+        const res = await axios.post(`/api/wishlist/add/${postId}`);
+          console.log(res.data)
+
+      } catch(err) {
+        console.log(err)
+      }
+    }
+
+  async function deleteWishlist() {
+      
+    try {
+        const res = await axios.delete(`/api/wishlist/${wishId}`);
+          console.log(res.data)
+
+      } catch(err) {
+        console.log(err)
+      }
+    } 
 
   return (
     <Card 

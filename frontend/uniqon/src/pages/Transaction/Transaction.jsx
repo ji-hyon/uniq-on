@@ -17,7 +17,8 @@ export function Transaction() {
   // const handleOpen = () => { setOpen(!open); };
   // const [등록할NFTid, set등록할NFTid] = useState("");
 
-
+  const [postId, setPostId] = React.useState('1');
+  const [wishId, setWishId] = React.useState('1');
 
   
 
@@ -79,6 +80,28 @@ export function Transaction() {
         console.log(err);
       }
     }
+
+    async function addWishlist() {
+      
+      try {
+          const res = await axios.post(`/api/wishlist/add/${postId}`);
+            console.log(res.data)
+  
+        } catch(err) {
+          console.log(err)
+        }
+      }
+  
+    async function deleteWishlist() {
+        
+      try {
+          const res = await axios.delete(`/api/wishlist/${wishId}`);
+            console.log(res.data)
+  
+        } catch(err) {
+          console.log(err)
+        }
+      } 
     
 
   return (
