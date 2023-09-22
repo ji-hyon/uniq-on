@@ -10,4 +10,6 @@ public interface CollectionsService {
     Page<MainClassficationQueryRepository.getMainClassficationDBResponse> getMainClassificationList(Pageable pageable);
 
     CollectionsController.middleAnimalInfoWebResponse getmiddleAnimalInfo(int middleClassificationId);
+
+    Page<CollectionsController.middleClassificationListWebResponse> getMiddleClassificationList (Pageable pageable, int mainClassificationId);
 }

@@ -10,6 +10,7 @@ import ssafy.uniqon.controller.CollectionsController;
 import ssafy.uniqon.model.MiddleClassifications;
 import ssafy.uniqon.repository.MainClassficationQueryRepository;
 import ssafy.uniqon.repository.MainClassificationRepository;
+import ssafy.uniqon.repository.MiddleClassificationQueryRepository;
 import ssafy.uniqon.repository.MiddleClassificationRepository;
 
 @Service
@@ -21,6 +22,7 @@ public class CollectionsServiceImpl implements CollectionsService{
     private final MainClassficationQueryRepository mainClassficationQueryRepository;
     private final MainClassificationRepository mainClassificationRepository;
     private final MiddleClassificationRepository middleClassificationRepository;
+    private final MiddleClassificationQueryRepository middleClassificationQueryRepository;
 
 
     @Override
@@ -33,5 +35,10 @@ public class CollectionsServiceImpl implements CollectionsService{
     public CollectionsController.middleAnimalInfoWebResponse getmiddleAnimalInfo(int middleClassificationId) {
         log.debug("# 중분류 정보 조회...");
         return middleClassificationRepository.findById(middleClassificationId);
+    }
+
+    @Override
+    public Page<CollectionsController.middleClassificationListWebResponse> getMiddleClassificationList(Pageable pageable, int mainClassificationId) {
+        return middleClassificationQueryRepository.getMiddleClassificationList(pageable, mainClassificationId);
     }
 }

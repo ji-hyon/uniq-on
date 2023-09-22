@@ -7,5 +7,4 @@ import ssafy.uniqon.model.MainClassifications;
 
 public interface MainClassificationRepository extends JpaRepository<MainClassifications, Integer> {
 
-    CollectionsController.middleClassificationListWebResponse findMainClassificationsBy(int mainClassificationId);
 }
