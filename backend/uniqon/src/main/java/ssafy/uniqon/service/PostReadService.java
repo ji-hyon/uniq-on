@@ -2,6 +2,7 @@ package ssafy.uniqon.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import ssafy.uniqon.controller.PostsController;
 import ssafy.uniqon.model.Posts;
@@ -15,7 +16,7 @@ import java.util.List;
 public class PostReadService {
     private final PostRepository postRepository;
 
-    public List<PostsController.postListsWebResponse> getPostAll(){
+    public List<PostsController.postListsWebResponse> getPostAll(String walletAddress){
         List<PostsController.postListsWebResponse> list = new ArrayList<>();
         for(Posts post: postRepository.getPostAll()){
             list.add(new PostsController.postListsWebResponse(
@@ -35,7 +36,6 @@ public class PostReadService {
             throw new IllegalArgumentException("No Post found with postId " + postId);
         }
 
-
         return new PostsController.postDetailWebResponse(
                 null,
                 null,
@@ -51,6 +51,18 @@ public class PostReadService {
                 null
         );
     }
-
+    public List<PostsController.postListsWebResponse> getSearchPostList(String word, String walletAddress){
+        List<PostsController.postListsWebResponse> list = new ArrayList<>();
+        for(Posts post: postRepository.getSearchPost(word)){
+            list.add(new PostsController.postListsWebResponse(
+                    post.getPrice(),
+                    post.getTitle(),
+                    post.getNft().getMiddle().getSpecies(),
+                    null,
+                    post.getNft().getImage()
+            ));
+        }
+        return list;
+    }
 
 }
