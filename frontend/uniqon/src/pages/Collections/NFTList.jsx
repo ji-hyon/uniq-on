@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Modal from '../../components/Collections/NftModal';
+import { NftModal } from '../../components/Collections/NftModal';
 import {
   Card,
   CardHeader,
@@ -82,7 +82,7 @@ export function NFTList() {
             </Button>
           </CardFooter>
         </Card>
-
+        <br></br>
         {/* NFT 카드 리스트를 보여줌 */}
         <div className="flex space-x-4">
           {nftData.map((card, index) => (
@@ -111,7 +111,7 @@ export function NFTList() {
             </Card>
           ))}
         </div>
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} selectedNft={selectedNft}></Modal>
+        <NftModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} selectedNft={selectedNft}></NftModal>
       </header>
     </div>
   );
