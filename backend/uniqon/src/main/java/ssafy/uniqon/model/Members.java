@@ -13,6 +13,7 @@ import java.util.List;
 public class Members{
     @Id
     @Column(name = "member_id", length = 255)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Column(name = "address", length = 255)

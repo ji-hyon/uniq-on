@@ -8,9 +8,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import ssafy.uniqon.global.response.Response;
+import ssafy.uniqon.repository.MainClassficationQueryRepository;
+import ssafy.uniqon.service.CollectionsService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +64,8 @@ public class CollectionsController {
             String profileImage
     ){}
 
+    private final CollectionsService collectionsService;
+
     @Operation(summary = "대분류 조회", description = "대분류 리스트를 조회합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
@@ -67,13 +73,9 @@ public class CollectionsController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/list/main")
-    public Response<?> getMainList(){
-        log.debug("# 대분류 리스트 표시");
-        List<mainClassficationListWebResponse> list = new ArrayList<>();
-        mainClassficationListWebResponse res = new mainClassficationListWebResponse(1,"강아지","https://i.namu.wiki/i/Z7UQvQF41XcFJz8iUQm41VD1_Ta4WsBGr3JzhvMvjrY_dulkAfQG8s60fShNtrWZiD_9dMVZRyAT0kE12jHTJ3jOOYp3LCCW9q-6AK2U5qikPwwyjmwmclO0nanXjdeZ1Qnlw_68u5ftV1bCZ7EybA.webp");
-        mainClassficationListWebResponse res2 = new mainClassficationListWebResponse(2,"돌고래","https://i.namu.wiki/i/NOQ7uTB16sBxEHUAyL1U951Tb26HrJzhb4olcJ4wWNvTSSvswPSO-gXvPKWNy1UdgXQA2LCfJhV6hpzLF_N9zBJiJUPJNUzx4MY3SdQ_2bXGlcJSGEvOao7n73dVKPyxIBcm3bJEWyTaXZV6_EzTdA.webp");
-        list.add(res);
-        list.add(res2);
+    public Response<Page<MainClassficationQueryRepository.getMainClassficationDBResponse>> getMainList(@PageableDefault Pageable pageable){
+        log.debug("# 대분류 리스트 표시 요청");
+        Page<MainClassficationQueryRepository.getMainClassficationDBResponse> list = collectionsService.getMainClassificationList(pageable);
         return OK(list);
     }
 
@@ -90,10 +92,7 @@ public class CollectionsController {
     public Response<?> getMiddleList(@PathVariable Integer mainClassificationId){
         log.debug("# 대분류 식별자에 대한 중분류 리스트 표시 : {}", mainClassificationId);
         List<middleClassificationListWebResponse> list = new ArrayList<>();
-        middleClassificationListWebResponse res = new middleClassificationListWebResponse(1,1,"시골개","https://gateway.pinata.cloud/ipfs/QmWorfYFv5TWPpoSvfhqTAGSxq2UZFV8e3L9UnG46BKt6W", "물어요 조심하세요");
-        middleClassificationListWebResponse res2 = new middleClassificationListWebResponse(2,1,"리트리버","https://d1bg8rd1h4dvdb.cloudfront.net/upload/imgServer/storypick/editor/2020062615503065168.jpg", "귀여워요");
-        list.add(res);
-        list.add(res2);
+
         return OK(list);
     }
 
