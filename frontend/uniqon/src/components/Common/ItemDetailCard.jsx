@@ -12,6 +12,8 @@ import { useTransactionStore } from "../../stores/TransactionStore";
 
 export function ItemDetailCard( { item } ) {
 
+
+  // 아직 상세아이템 조회 api가 없어서 하드코딩하려고 거래 store에서 salesItemList 사용
   const { salesItemsList, setSalesItemsList } = useTransactionStore();
 
   useEffect(() => {
@@ -55,7 +57,7 @@ export function ItemDetailCard( { item } ) {
           Like so many organizations these days, Autodesk is a company in
           transition. It was until recently a traditional boxed software company
           selling licenses. Yet its own business model disruption is only part
-          of the story
+          of the story {item.content}
         </Typography>
         <a href="#" className="inline-block">
           <Button variant="text" className="flex items-center gap-2">

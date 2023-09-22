@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export function Transaction() {
-  const nftImg = React.useRef(null);
   const navigate = useNavigate();
   // const [open, setOpen] = React.useState(false);
   // const handleOpen = () => { setOpen(!open); };
@@ -66,19 +65,13 @@ export function Transaction() {
           price: 1000,
           content: "test",
           title: "test",
-          species: "test",
+          nftId: 1,
         };
 
-        const formData = new FormData()
-        formData.append("data", new Blob([JSON.stringify(data)], {type: "application/json"}))
-        formData.append("file", nftImg.current.files[0])
 
-        const res = await axios.post(URL + "/api/sales/register", formData, {
+        const res = await axios.post(URL + "/api/sales/register", data, {
           headers: {
-            'Content-Type': 'multipart/form-data',  
             },
-
-            file: nftImg.current.files[0],
         });
         console.log(res.data)
         

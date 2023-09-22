@@ -9,8 +9,6 @@ import { Button } from "@material-tailwind/react";
 
 export function TranItemDetail () {
 
-  const nftImg = React.useRef(null);
-
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -39,19 +37,18 @@ export function TranItemDetail () {
   async function updateSales() {
 
     try {
-    const data = {
+      const data = {
         price: 1000,
+        content: "test",
+        title: "test",
+        nftId: 1,
       };
 
-      const formData = new FormData()
-      formData.append("data", new Blob([JSON.stringify(data)], {type: "application/json"}))
-      formData.append("file", nftImg.current.files[0])
 
-      const res = await axios.put(URL + "/api/sales/update/1", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',  
+
+      const res = await axios.put(URL + `/api/sales/update/${id}`, data, {
+        headers: { 
           },
-          file: nftImg.current.files[0],
       });
         console.log(res.data)
 
