@@ -31,7 +31,6 @@ public class MainClassficationQueryRepository {
             this.image = image;
         }
     }
-
     public Page<getMainClassficationDBResponse> getMainClassificationList(Pageable pageable){
 
         List<getMainClassficationDBResponse> list = jpaQueryFactory
@@ -52,4 +51,5 @@ public class MainClassficationQueryRepository {
 
         return new PageImpl<>(list, pageable, count);
     }
+
 }
