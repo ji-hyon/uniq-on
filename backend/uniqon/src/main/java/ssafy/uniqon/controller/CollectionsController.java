@@ -79,7 +79,7 @@ public class CollectionsController {
         return OK(list);
     }
 
-    @Operation(summary = "중분류 정보 조회", description = "대분류 동물에 속하는 중분류 동물에 대한 정보를 조회합니다.")
+    @Operation(summary = "중분류 리스트 조회", description = "대분류 동물에 속하는 중분류 동물에 대한 정보를 조회합니다.")
     @Parameters({
             @Parameter(name = "mainClassificationId", description = "대분류 동물 식별자", example = "1")
     })
@@ -96,7 +96,7 @@ public class CollectionsController {
         return OK(list);
     }
 
-    @Operation(summary = "중분류 정보 조회", description = "중분류 동물에 대한 정보를 조회합니다.")
+    @Operation(summary = "중분류 상제 정보 조회", description = "중분류 동물에 대한 상제 정보를 조회합니다.")
     @Parameters({
             @Parameter(name = "middleId", description = "중분류 동물 식별자", example = "1")
     })
@@ -107,9 +107,10 @@ public class CollectionsController {
     })
     @GetMapping("/info/middle/{middleId}")
     public Response<?> getMiddleInfo(@PathVariable Integer middleId){
-        log.debug("# 중분류 동물에 대한 정보 조회 : {}", middleId);
-        middleAnimalInfoWebResponse res = new middleAnimalInfoWebResponse(1,1,"시골개", "https://gateway.pinata.cloud/ipfs/QmWorfYFv5TWPpoSvfhqTAGSxq2UZFV8e3L9UnG46BKt6W", "진짜 물어요");
-        return OK(res);
+        log.debug("# 중분류 동물에 대한 상제 정보 조회 : {}", middleId);
+        middleAnimalInfoWebResponse middle = collectionsService.getmiddleAnimalInfo(middleId);
+        log.debug("# 중분류 상세 정보 : {}", middle);
+        return OK(middle);
     }
 
     @Operation(summary = "NFT 리스트 조회", description = "중분류 동물에 속하는 NFT 리스트를 조회합니다.")

@@ -8,4 +8,6 @@ import ssafy.uniqon.repository.MainClassficationQueryRepository;
 public interface CollectionsService {
 
     Page<MainClassficationQueryRepository.getMainClassficationDBResponse> getMainClassificationList(Pageable pageable);
+
+    CollectionsController.middleAnimalInfoWebResponse getmiddleAnimalInfo(int middleId);
 }
