@@ -29,7 +29,7 @@ import static ssafy.uniqon.global.response.Response.OK;
 @CrossOrigin("*")
 public class CollectionsController {
 
-    public record mainClassficationListWebResponse(
+    public record mainClassificationListWebResponse(
             int id,
             String type,
             String image
@@ -44,8 +44,8 @@ public class CollectionsController {
     ){}
 
     public record middleAnimalInfoWebResponse(
-            int id,
-            int mainClassficationId,
+            int middleClassificationId,
+            int mainClassificationId,
             String species,
             String image,
             String feature
@@ -59,8 +59,8 @@ public class CollectionsController {
             int age,
             String feature,
             int ownerId,
-            int middleClassficationId,
-            String middleClassficationSpecies,
+            int middleClassificationId,
+            String middleClassificationSpecies,
             String nftURL,
             String contractAddress,
             int tokenId
@@ -111,7 +111,7 @@ public class CollectionsController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/info/middle/{middleClassificationId}")
-    public Response<?> getMiddleInfo(@PathVariable Integer middleClassificationId){
+    public Response<middleAnimalInfoWebResponse> getMiddleInfo(@PathVariable Integer middleClassificationId){
         log.debug("# 중분류 동물에 대한 상제 정보 조회 : {}", middleClassificationId);
         middleAnimalInfoWebResponse middle = collectionsService.getmiddleAnimalInfo(middleClassificationId);
         log.debug("# 중분류 상세 정보 : {}", middle);

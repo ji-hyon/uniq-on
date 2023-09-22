@@ -30,7 +30,15 @@ public class CollectionsServiceImpl implements CollectionsService{
 
     @Override
     public CollectionsController.middleAnimalInfoWebResponse getmiddleAnimalInfo(int middleClassificationId) {
-        return middleClassificationRepository.findById(middleClassificationId);
+        MiddleClassifications middle = middleClassificationRepository.findById(middleClassificationId);
+
+        return new CollectionsController.middleAnimalInfoWebResponse(
+                middle.getId(),
+                middle.getMain().getId(),
+                middle.getSpecies(),
+                middle.getImage(),
+                middle.getFeature()
+        );
     }
 
     @Override
