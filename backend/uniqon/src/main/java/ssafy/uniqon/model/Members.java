@@ -31,8 +31,9 @@ public class Members{
     @Column(length = 255)
     private String vpToken;
 
-    @Column(length = 255)
-    private String profileImage;
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private byte[] profileImage;
 
     @Enumerated(EnumType.STRING)
     private MemberRole role;

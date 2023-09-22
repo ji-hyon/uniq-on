@@ -22,13 +22,25 @@ public class MemberRepository {
 
     private final QMembers members=QMembers.members;
 
-    public void signup(MemberController.SignupWebRequest req){
+    public String signup(MemberController.SignupWebRequest req,byte[] bytes){
         Members member=new Members();
+        member.setWalletAddress(req.walletAddress());
         member.setName(req.name());
         member.setRole(MemberRole.USER);
         member.setBirth(req.birth());
         member.setGender(req.gender());
         member.setNickname(req.nickname());
         member.setVpToken(req.vpToken());
+        member.setProfileImage(bytes);
+        em.persist(member);
+        return member.getNickname();
+    }
+
+    public Members getMemberByNickname(String nickname){
+        return jpaQueryFactory.selectFrom(members).where(members.nickname.eq(nickname)).fetchOne();
+    }
+
+    public Members getMemberByWallet(String walletAddress){
+        return jpaQueryFactory.selectFrom(members).where(members.walletAddress.eq(walletAddress)).fetchOne();
     }
 }

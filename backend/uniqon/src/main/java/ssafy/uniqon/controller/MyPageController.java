@@ -21,7 +21,7 @@ public class MyPageController {
             String profileImage
     ){}
 
-    @GetMapping("/info/{userId}")
+    @GetMapping("/info/{nickname}")
     Response<?> myProfile(@PathVariable int userId){
         return OK(null);
     }
