@@ -1,4 +1,4 @@
-package ssafy.uniqon.global.config;
+package ssafy.uniqon.global.config.auth;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
