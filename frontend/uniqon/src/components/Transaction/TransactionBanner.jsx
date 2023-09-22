@@ -1,6 +1,23 @@
 import React from "react";
+import { useState } from "react";
+import axios from "axios";
+import { Button } from "@material-tailwind/react";
 
 export function TransactionBanner() {
+
+  const [ word, setWord ] = useState("뱀");
+
+  async function searchSales() {
+
+    try {
+      const res = await axios.get(URL + `/api/sales/search/word=${word}`);
+        console.log(res.data)
+
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
   return(
     <>
     <div className="bg-[#c1dcdc] flex flex-row justify-center">
@@ -14,6 +31,7 @@ export function TransactionBanner() {
           className="absolute w-[207px] h-[100px] top-[198px] left-[571px]"
           alt="Vector stroke"
           src="Vector186.svg"
+          onClick={searchSales}
         />
         <img className="absolute w-[350px] h-[320px] top-[50px] left-[778px] bg-[100%_100%]" src="heedong2.png" alt="heedong2">
         </img>
@@ -25,6 +43,8 @@ export function TransactionBanner() {
         </div>
       </div>
     </div>
+    <Button color="red" onClick={searchSales}>판매 검색</Button>
+        <br></br>
     </>
   )
 }

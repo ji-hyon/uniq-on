@@ -18,6 +18,8 @@ export function Transaction() {
   // const handleOpen = () => { setOpen(!open); };
   // const [등록할NFTid, set등록할NFTid] = useState("");
 
+
+
   
 
   const { salesItemsList, setSalesItemsList,
@@ -86,16 +88,7 @@ export function Transaction() {
     }
 
 
-  async function searchSales() {
 
-        try {
-          const res = await axios.get(URL + "/api/sales/search/word=1");
-            console.log(res.data)
-
-        } catch(err) {
-          console.log(err)
-        }
-      }
 
   async function detailSales() {
           
@@ -164,8 +157,6 @@ export function Transaction() {
           </div>
 
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
-        <br></br>
-        <Button color="red" onClick={searchSales}>판매 검색</Button>
         <br></br>
         <Button color="indigo" onClick={detailSales}>판매 상세</Button>
         <br></br>
