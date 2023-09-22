@@ -30,8 +30,8 @@ public class CollectionsServiceImpl implements CollectionsService{
     }
 
     @Override
-    public CollectionsController.middleAnimalInfoWebResponse getmiddleAnimalInfo(int middleId) {
+    public CollectionsController.middleAnimalInfoWebResponse getmiddleAnimalInfo(int middleClassificationId) {
         log.debug("# 중분류 정보 조회...");
-        return middleClassificationRepository.findMainClassificationsBy(middleId);
+        return middleClassificationRepository.findById(middleClassificationId);
     }
 }

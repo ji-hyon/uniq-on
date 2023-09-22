@@ -89,8 +89,8 @@ public class CollectionsController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/list/middle/{mainClassificationId}")
-    public Response<?> getMiddleList(@PathVariable Integer mainClassificationId){
-        log.debug("# 대분류 식별자에 대한 중분류 리스트 표시 : {}", mainClassificationId);
+    public Response<?> getMiddleList(@PathVariable Integer mainClassificationId, @PageableDefault Pageable pageable){
+        log.debug("# 대분류 식별자에 대한 중분류 리스트 요청 : {}", mainClassificationId);
         List<middleClassificationListWebResponse> list = new ArrayList<>();
 
         return OK(list);
@@ -105,10 +105,10 @@ public class CollectionsController {
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @GetMapping("/info/middle/{middleId}")
-    public Response<?> getMiddleInfo(@PathVariable Integer middleId){
-        log.debug("# 중분류 동물에 대한 상제 정보 조회 : {}", middleId);
-        middleAnimalInfoWebResponse middle = collectionsService.getmiddleAnimalInfo(middleId);
+    @GetMapping("/info/middle/{middleClassificationId}")
+    public Response<?> getMiddleInfo(@PathVariable Integer middleClassificationId){
+        log.debug("# 중분류 동물에 대한 상제 정보 조회 : {}", middleClassificationId);
+        middleAnimalInfoWebResponse middle = collectionsService.getmiddleAnimalInfo(middleClassificationId);
         log.debug("# 중분류 상세 정보 : {}", middle);
         return OK(middle);
     }

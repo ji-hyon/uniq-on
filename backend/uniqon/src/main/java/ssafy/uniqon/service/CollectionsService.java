@@ -9,5 +9,5 @@ public interface CollectionsService {
 
     Page<MainClassficationQueryRepository.getMainClassficationDBResponse> getMainClassificationList(Pageable pageable);
 
-    CollectionsController.middleAnimalInfoWebResponse getmiddleAnimalInfo(int middleId);
+    CollectionsController.middleAnimalInfoWebResponse getmiddleAnimalInfo(int middleClassificationId);
 }
