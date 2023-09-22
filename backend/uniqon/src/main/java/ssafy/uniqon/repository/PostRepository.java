@@ -8,6 +8,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ssafy.uniqon.controller.PostsController;
+import ssafy.uniqon.model.Members;
 import ssafy.uniqon.model.NFTs;
 import ssafy.uniqon.model.Posts;
 import ssafy.uniqon.model.QPosts;
@@ -44,10 +45,9 @@ public class PostRepository {
                     null,
                     0,
                     null,
-                    null,
+                    nft.getMember(),
                     nft
             );
-
         em.persist(post);
     }
 

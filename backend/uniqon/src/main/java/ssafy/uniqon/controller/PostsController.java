@@ -31,9 +31,7 @@ public class PostsController {
             Integer price,
             String content,
             String title,
-            String species,
-            Integer nftId,
-            String walletAddress
+            Integer nftId
     ) {
     }
 
