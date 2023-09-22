@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ssafy.uniqon.controller.NFTsController;
+import ssafy.uniqon.model.Members;
 import ssafy.uniqon.model.NFTs;
 import ssafy.uniqon.model.QMembers;
 import ssafy.uniqon.model.QNFTs;
@@ -29,14 +30,15 @@ public class NFTRepository {
     @Transactional
     public void createNFT(NFTsController.RegisterNFTWebRequest req, String owner, String txHash,String imageIpfsHash,String jsonIpfsHash,String contractAddress,int tokenId){
 
+        Members nftOwner = em.find(Members.class, owner);
+
         NFTs nft=new NFTs(null,
-                owner,
                 txHash,
                 imageIpfsHash,
                 req.name(),
                 req.age(),
                 req.feature(),
-                null,
+                nftOwner,
                 null,
                 new ArrayList<>(),
                 jsonIpfsHash,

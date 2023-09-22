@@ -19,7 +19,7 @@ public class NFTReadService {
         for(NFTs nft: nftRepository.getNFTAll()){
             list.add(new NFTsController.NFTWebResponse(
                     nft.getId(),
-                    nft.getOwner(),
+                    nft.getOwner().getAddress(),
                     nft.getImage(),
                     nft.getName(),
                     nft.getAge(),
@@ -36,7 +36,7 @@ public class NFTReadService {
         NFTs nft=nftRepository.getNFTById(nftId);
         return new NFTsController.NFTWebResponse(
                 nft.getId(),
-                nft.getOwner(),
+                nft.getOwner().getAddress(),
                 nft.getImage(),
                 nft.getName(),
                 nft.getAge(),

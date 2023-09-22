@@ -35,19 +35,19 @@ public class PostRepository {
             throw new IllegalArgumentException("No NFT found with id " + req.nftId());
         }
 
-            Posts post = new Posts(
-                    null,
-                    req.price(),
-                    req.content(),
-                    null,
-                    null,
-                    req.title(),
-                    null,
-                    0,
-                    null,
-                    nft.getMember(),
-                    nft
-            );
+        Posts post = new Posts(
+                null,
+                req.price(),
+                req.content(),
+                null,
+                null,
+                req.title(),
+                null,
+                0,
+                null,
+                nft.getOwner(),
+                nft
+        );
         em.persist(post);
     }
 
