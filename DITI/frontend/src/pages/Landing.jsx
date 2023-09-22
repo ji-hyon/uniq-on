@@ -24,6 +24,9 @@ export function Landing() {
           <Button
             className="text-4xl w-96 h-28 m-3"
             color="yellow"
+            onClick={() => {
+              navigate("/check");
+            }}
           >
             전자 신분증 조회 
           </Button>

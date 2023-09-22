@@ -8,6 +8,7 @@ const upload = multer({ dest: 'uploads/'})
 import { verifyLoginMessage } from "../src/auth.js"
 
 import { readImage } from "../src/ocr.js"
+import { createVC } from "../src/did.js"
 
 // /vc 경로로 post 요청이 왔을 때의 로직
 // https://inpa.tistory.com/entry/EXPRESS-%F0%9F%93%9A-multer-%EB%AF%B8%EB%93%A4%EC%9B%A8%EC%96%B4

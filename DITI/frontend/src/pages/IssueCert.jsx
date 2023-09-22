@@ -106,7 +106,7 @@ export function IssueCert() {
   async function requestVC() {
     // 백엔드 서버에 이 주소로 로그인하겠다는 것을 알려야 함. 신원 증명 필요. 
     // private key를 가지고 있고 서명을 만들 수 있다는 것을 증명
-    // hello world라는 임의의 메세지에 사인하는 것
+    // 임의의 메세지에 사인하는 것
     const message = "Please issue a certificate"
     const signedMessage = await signer.signMessage(message)
     // 백엔드 서버로, message와 signed message와 자신의 지갑 주소를 보내고, 백엔드에서 verifyMessage를 호출해서 나온 값이 자신의 주소와 일치해야 함 
@@ -147,20 +147,27 @@ export function IssueCert() {
   return (
     <div className="App">
       <header className="App-header">
-        <Button className="text-4xl w-96 h-28 m-5" color="orange" onClick={connectMetaMask}>MetaMask 연결</Button>
         <div>
-          {/* <ul style={{ borderStyle: "solid", borderWidth:"5px", borderColor : "white" }}> */}
-          <div className="text-2xl border-while p-5 m-7 border-solid border-4">
-            <h2>VC Payload</h2>
-            <li>Address:{wallet.address}</li>
-            <li>Balance:{wallet.balance}</li>
-            <li>ChainID:{wallet.chainId}</li>
+          <div className='border-while border-solid border-4 m-3'>
+            <Button className="text-4xl w-96 h-28 m-5" color="orange" onClick={connectMetaMask}>MetaMask 연결</Button>
+            {/* <ul style={{ borderStyle: "solid", borderWidth:"5px", borderColor : "white" }}> */}
+            {/* <div className="text-2xl border-while p-5 m-7 border-solid border-4"> */}
+            <div className="text-2xl container m-5">
+              <div>VC Payload</div>
+              <div>Address:{wallet.address}</div>
+              <div>Balance:{wallet.balance}</div>
+              <div>ChainID:{wallet.chainId}</div>
+            </div>
           </div>
         </div>
+
         {/* <div style={{ borderStyle:"solid", borderWidth:"2px" }} > */}
+        <div className='border-while border-solid border-4 m-3 p-5'>
           <input className="text-[20px] text-center" ref={inputFileRef} type="file" name="imgFile" />
           <Button className="text-4xl w-96 h-28 mt-1" color="yellow" onClick={requestVC}>전자신분증 발급</Button>
-          <Button className="text-base w-50 h-15 m-20" color="blue" onClick={test}>node connect test</Button>
+        </div>
+        
+          <Button className="text-base w-50 h-20 m-20" color="blue" onClick={test}>node connect test</Button>
       </header>
 
     </div>

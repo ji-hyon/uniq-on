@@ -25,7 +25,7 @@ const providerConfig = {
 const resolver = new Resolver(getResolver(providerConfig))
 
 
-async function createVC(walletAddress, data) {
+export async function createVC(walletAddress, data) {
     // create VC
     const vcPayload = {
         // 유저 지갑 주소 기반으로 did 생성
