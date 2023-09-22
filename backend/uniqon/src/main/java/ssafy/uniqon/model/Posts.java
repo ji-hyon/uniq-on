@@ -5,14 +5,13 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.management.Notification;
-import java.security.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Timestamp;
+
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Posts{
     @Id
@@ -26,7 +25,7 @@ public class Posts{
     @Column(name = "content", length = 512)
     private String content;
 
-    @Column(name = "create_datetime")
+    @Column(name = "create_datetime",insertable = false,updatable = false,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @CreationTimestamp
     private Timestamp create_datetime;
 
@@ -38,6 +37,7 @@ public class Posts{
     private String title;
 
     @Column(name = "sale_completed_datetime")
+    @UpdateTimestamp
     private Timestamp sale_completed_datetime;
 
     @Column(name = "state")
