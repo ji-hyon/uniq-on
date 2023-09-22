@@ -7,5 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface VcQueryService {
 
-    Page<VcListDBResponse> getVcList(String walletAddress, Pageable pageable);
+    Page<VcQueryRepository.response> getVcList(String walletAddress, Pageable pageable);
 }

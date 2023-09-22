@@ -4,11 +4,14 @@ package com.diti.core.domain.repository;
 import com.diti.core.domain.dto.response.VcListDBResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
@@ -26,16 +29,36 @@ public class VcQueryRepository {
 
 
 
-    public Page<VcListDBResponse> getVcList(String walletAddress, Pageable pageable){
+    public record response(
+            int id,
+            String walletAddress,
+            String type,
+            String vcJwt,
+            Timestamp createDateTime,
+            Timestamp modifyDateTIme
+    ){
+        public response(int id, String walletAddress, String type, String vcJwt, Timestamp createDateTime, Timestamp modifyDateTIme) {
+            this.id = id;
+            this.walletAddress = walletAddress;
+            this.type = type;
+            this.vcJwt = vcJwt;
+            this.createDateTime = createDateTime;
+            this.modifyDateTIme = modifyDateTIme;
+        }
+    }
 
-        List<VcListDBResponse> list = jpaQueryFactory
-                .select(Projections.fields(VcListDBResponse.class,
+
+
+    public Page<response> getVcList(String walletAddress, Pageable pageable){
+
+        List<response> list = jpaQueryFactory
+                .select(Projections.constructor(response.class,
                         vc.id,
                         auth.walletAddress,
+                        vc.type,
                         vc.vcJwt,
                         vc.createDateTime,
-                        vc.modifyDateTime,
-                        vc.type))
+                        vc.modifyDateTime))
                 .from(vc)
                 .where(
                         vc.auth.walletAddress.eq(walletAddress)

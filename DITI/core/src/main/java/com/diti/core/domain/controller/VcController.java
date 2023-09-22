@@ -49,9 +49,9 @@ public class VcController {
 
 
     @GetMapping("/list/vc/{walletAddress}")
-    public Response<Page<VcListDBResponse>> getVcList(@PathVariable String walletAddress, @PageableDefault Pageable pageable){
+    public Response<Page<VcQueryRepository.response>> getVcList(@PathVariable String walletAddress, @PageableDefault Pageable pageable){
         log.debug("# VC 리스트 요청 지갑 : {}", walletAddress);
-        Page<VcListDBResponse> list = vcQueryService.getVcList(walletAddress, pageable);
+        Page<VcQueryRepository.response> list = vcQueryService.getVcList(walletAddress, pageable);
         log.debug("# VC 리스트 : {}", list);
         return OK(list);
     }

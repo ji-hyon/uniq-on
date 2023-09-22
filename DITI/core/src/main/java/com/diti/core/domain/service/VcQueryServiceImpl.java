@@ -21,7 +21,7 @@ public class VcQueryServiceImpl implements VcQueryService{
     private final AuthRepository authRepository;
     private final VcQueryRepository vcQueryRepository;
     @Override
-    public Page<VcListDBResponse> getVcList(String walletAddress, Pageable pageable) {
+    public Page<VcQueryRepository.response> getVcList(String walletAddress, Pageable pageable) {
         Auth auth = authRepository.findByWalletAddress(walletAddress);
         if(auth != null) {
             return vcQueryRepository.getVcList(walletAddress, pageable);
