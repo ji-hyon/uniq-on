@@ -24,7 +24,7 @@ public class PostReadService {
                     post.getPrice(),
                     post.getTitle(),
                     post.getNft().getMiddle().getSpecies(),
-                    null,
+                    post.getSeller().getNickname(),
                     post.getNft().getImage(),
                     null
             ));
@@ -39,8 +39,8 @@ public class PostReadService {
         }
 
         return new PostsController.postDetailWebResponse(
-                null,
-                null,
+                post.getSeller().getProfileImage(),
+                post.getSeller().getNickname(),
                 post.getNft().getMiddle().getSpecies(),
                 post.getNft().getName(),
                 post.getNft().getFeature(),
@@ -50,7 +50,7 @@ public class PostReadService {
                 post.getContent(),
                 post.getCreate_datetime(),
                 post.getTitle(),
-                null
+                true
         );
     }
     public List<PostsController.postListsWebResponse> getSearchPostList(String word, String walletAddress){
@@ -60,10 +60,13 @@ public class PostReadService {
                     post.getPrice(),
                     post.getTitle(),
                     post.getNft().getMiddle().getSpecies(),
-                    null,
+                    post.getSeller().getNickname(),
                     post.getNft().getImage(),
                     null
             ));
+        }
+        if(list.isEmpty()){
+            throw new IllegalArgumentException("No Post found with word " + word);
         }
         return list;
     }

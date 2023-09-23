@@ -91,7 +91,7 @@ private final PostUpdateService postUpdateService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @PutMapping("/update/{postId}")
-    public Response<?> updatePost(@PathVariable int postId, @RequestBody UpdatePostWebRequest req){
+    public Response<?> updatePost(@PathVariable Integer postId, @RequestBody UpdatePostWebRequest req){
         log.debug("# 판매글 수정 데이터 : {}",req);
         postUpdateService.updatePost(postId,req);
         return OK("success");
