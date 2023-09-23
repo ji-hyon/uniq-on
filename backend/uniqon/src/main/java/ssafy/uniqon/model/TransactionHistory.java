@@ -14,10 +14,10 @@ public class TransactionHistory {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="wallet_address")
+    @JoinColumn(name="seller",insertable=false, updatable=false)
     private Members seller;
 
     @ManyToOne
-    @JoinColumn(name="wallet_address")
+    @JoinColumn(name="buyer",insertable=false, updatable=false)
     private Members buyer;
 }
