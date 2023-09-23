@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.security.Timestamp;
-
 @Entity
 @Getter
 @SuperBuilder
@@ -22,6 +20,6 @@ public class WishList {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private  Posts post;
+    private Posts post;
 
 }

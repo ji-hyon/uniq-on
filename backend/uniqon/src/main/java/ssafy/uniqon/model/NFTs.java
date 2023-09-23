@@ -32,7 +32,7 @@ public class NFTs {
     private String feature;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "wallet_address")
     private Members owner;
 
     @ManyToOne(fetch = FetchType.LAZY)

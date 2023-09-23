@@ -1,5 +1,6 @@
 -- Member 더미데이터
--- INSERT INTO uniqon.MEMBERS (add) VALUES
+INSERT INTO uniqon.members (wallet_address, birth, gender, modify_date_time, name, nickname, profile_image, register_date_time, vp_token) VALUES ('0x00000000000000', '1998.04.30', '남', null, '진병욱', '유니콘', null, null, 'eyJhbGciOiJFUzI1NkstUiIsInR5cCI6IkpXVCJ9.eyJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSJdLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIl0sImNyZWRlbnRpYWxTdWJqZWN0Ijp7ImRlZ3JlZSI6eyJ0eXBlIjoiSUQiLCJuYW1lIjoi7KeE67OR7JqxIiwibnVtYmVyIjoiOTgwNDMwIiwiYWRkcmVzcyI6Iuq0keyjvOq0keyXreyLnCDqtJHsgrDqtawifX19LCJzdWIiOiJkaWQ6ZXRocjpzZXBvbGlhOjB4MmNjM2NEMTk4YWU0OTUzMmUyOGREQmFlRjNGNkFkMjliOTc1ZDhEQyIsIm5iZiI6MTU2Mjk1MDI4MiwiaXNzIjoiZGlkOmV0aHI6c2Vwb2xpYToweEYyYTc0MjM0NzVDNjI0MDMyMTczMkVkNWY5ZTI5ZDk0ZEFCNjAzQTkifQ.9h8jrYVncb2YwG74R2GSQAASCTmnBIFFqmmo7PfjUV1ltUFDa67WJVZv_Z-ZVUn8kaa3n8hezcSDejYgFXJ7KgE');
+
 
 -- 대분류 더미
 INSERT INTO uniqon.main_classifications (main_classification_id, type, image) VALUES (1, '여우', 'https://media.istockphoto.com/id/689213498/ko/%EB%B2%A1%ED%84%B0/%EB%A0%88%EB%93%9C-%ED%8F%AD%EC%8A%A4%EB%8A%94-%EB%8F%99%EA%B5%B4%EC%97%90-%EB%B2%A1%ED%84%B0-%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8.jpg?s=2048x2048&w=is&k=20&c=YwbvfBh0F3a3xqk2KuOmD_EAhVM8I90KYbshvrVpCgs=');
@@ -23,10 +24,10 @@ INSERT INTO uniqon.middle_classifications (main_classification_id, middle_classi
 
 
 -- NFT 더미
-INSERT INTO uniqon.nfts (age, middle_classification_id, nft_id, token_id, name, contract_address, feature, nft_tx_hash, nft_url, image, member_id) VALUES (13, 8, 1, 123123, '멍뭉이', '0x00000', '개귀여움', 'asdfasf123sfasd', 'http://dfsdf', 'https://gateway.pinata.cloud/ipfs/QmWorfYFv5TWPpoSvfhqTAGSxq2UZFV8e3L9UnG46BKt6W', '1');
+INSERT INTO uniqon.nfts (age, middle_classification_id, nft_id, token_id, name, contract_address, feature, nft_tx_hash, nft_url, image, wallet_address) VALUES (13, 8, 1, 123123, '멍뭉이', '0x00000', '개귀여움', 'asdfasf123sfasd', 'http://dfsdf', 'https://gateway.pinata.cloud/ipfs/QmWorfYFv5TWPpoSvfhqTAGSxq2UZFV8e3L9UnG46BKt6W', '0x00000000000000');
 
 -- POST 더미
-INSERT INTO uniqon.posts (nft_id, post_id, price, state, create_datetime, sale_completed_datetime, update_datetime, title, content, buyer, seller) VALUES (1, 1, 200, null, '2023-09-23 16:50:56', null, null, '귀여운 강아지~', '강아지 너무 귀엽조', null, '1');
+INSERT INTO uniqon.posts (nft_id, post_id, price, state, create_datetime, sale_completed_datetime, update_datetime, title, content, buyer, seller) VALUES (1, 1, 200, null, '2023-09-23 16:50:56', null, null, '귀여운 강아지~', '강아지 너무 귀엽조', '0x00000000000000', '0x00000000000000');
 
 -- Wishlist 더미
-INSERT INTO uniqon.wish_list (post_id, wishlist_id, member_id) VALUES (1, 1, '0x0000000000000000');
+INSERT INTO uniqon.wish_list (post_id, wishlist_id, member_id) VALUES (1, 1, '0x00000000000000');

@@ -11,7 +11,7 @@ public class MiddleClassifications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "middle_classification_id")
-    private Integer id;
+    private int id;
 
     @Column(name = "species", length = 100)
     private String species;

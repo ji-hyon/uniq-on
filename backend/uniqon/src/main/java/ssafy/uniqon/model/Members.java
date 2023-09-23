@@ -16,8 +16,7 @@ import java.sql.Timestamp;
 public class Members{
     
     @Id
-    @Column(name = "wallet_Address", length = 255)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "wallet_Address")
     private String walletAddress;
 
     private String name;
@@ -28,6 +27,7 @@ public class Members{
 
     private String gender;
 
+    @Column(length = 700)
     private String vpToken;
 
     private String profileImage;
