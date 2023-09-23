@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import ssafy.uniqon.global.response.Response;
 import ssafy.uniqon.service.PostCreateService;
 import ssafy.uniqon.service.PostReadService;
+import ssafy.uniqon.service.PostUpdateService;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -37,12 +38,20 @@ public class PostsController {
     ) {
     }
 
+    public record UpdatePostWebRequest(
+            Integer price,
+            String title,
+            String content,
+            String walletAddress
+    ){}
+
     public record postListsWebResponse(
             Integer price,
             String title,
             String species,
             String nickname,
-            String image
+            String image,
+            Boolean wishCheck
     )
     {}
 
@@ -62,6 +71,7 @@ public class PostsController {
     ){}
 private final PostReadService postReadService;
 private final PostCreateService postCreateService;
+private final PostUpdateService postUpdateService;
     @Operation(summary="판매글 등록", description = "판매글을 등록합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
@@ -74,10 +84,17 @@ private final PostCreateService postCreateService;
         postCreateService.createPost(req);
         return OK("success");
     }
-
+    @Operation(summary="판매글 수정", description = "판매글을 수정합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND")
+    })
     @PutMapping("/update/{postId}")
-    public Response<?> updatePost(@PathVariable int postId, Map<String, Integer> price){
-        return OK(null);
+    public Response<?> updatePost(@PathVariable int postId, @RequestBody UpdatePostWebRequest req){
+        log.debug("# 판매글 수정 데이터 : {}",req);
+        postUpdateService.updatePost(postId,req);
+        return OK("success");
     }
 
     @DeleteMapping("/delete/{postId}")
@@ -110,13 +127,13 @@ private final PostCreateService postCreateService;
         log.debug("# 사용자 walletAddress : {}", walletAddress);
 
         postDetailWebResponse post = postReadService.getPostDetail(postId, walletAddress);
-//
-//        JSONObject obj = new JSONObject();
-//        obj.put("SellerInfo", Map.of("profileImage", post.profileImage, "nickname", post.nickname));
-//        obj.put("nftInfo", Map.of("species", post.species, "name", post.name, "feature", post.feature, "age", post.age, "image", post.image));
-//        obj.put("PostInfo", Map.of("price", post.price, "content", post.content, "createDatetime", post.createDatetime, "title", post.title, "wishCheck", post.wishCheck));
 
-        return OK(post);
+        JSONObject obj = new JSONObject();
+        obj.put("SellerInfo", Map.of("profileImage", post.profileImage, "nickname", post.nickname));
+        obj.put("nftInfo", Map.of("species", post.species, "name", post.name, "feature", post.feature, "age", post.age, "image", post.image));
+        obj.put("PostInfo", Map.of("price", post.price, "content", post.content, "createDatetime", post.createDatetime, "title", post.title, "wishCheck", post.wishCheck));
+
+        return OK(obj);
     }
 
     @Operation(summary="판매글 조회", description = "판매글 리스트를 조회합니다.")

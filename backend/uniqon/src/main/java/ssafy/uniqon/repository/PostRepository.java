@@ -51,6 +51,24 @@ public class PostRepository {
         em.persist(post);
     }
 
+    @Transactional
+    public void updatePost(Integer postId,PostsController.UpdatePostWebRequest req){
+        Posts post = em.find(Posts.class, postId);
+
+        if (post == null) {
+            throw new IllegalArgumentException("No Post found with postId " + postId);
+        }
+        if(post.getSeller().getAddress().equals(req.walletAddress())){
+            post.setPrice(req.price());
+            post.setTitle(req.title());
+            post.setContent(req.content());
+        }
+        else{
+            throw new IllegalArgumentException("No Access to Post with postId " + postId);
+        }
+
+    }
+
     public List<Posts> getPostAll() { return jpaQueryFactory.selectFrom(posts).where(posts.state.eq(0)).fetch();}
 
     public Posts getPostById(int postId) {
