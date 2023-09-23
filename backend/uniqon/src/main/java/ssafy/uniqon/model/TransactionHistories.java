@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransactionHistory {
+public class TransactionHistories {
     @Id
     @GeneratedValue
     @Column(name="tx_history_id")
