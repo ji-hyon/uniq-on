@@ -116,7 +116,16 @@ export function MainCollections() {
             </CardFooter>
           </Card> */}
           {mainCardsData.map((card, index) => (
-            <Card key={index} className="w-full max-w-[26rem] shadow-lg">
+            <Card
+              onClick={() => {
+                setMainCollecId(card.id);
+                setMainCollecType(card.type);
+                setMainCollecImg(card.image);
+                goToMiddle();
+              }}
+              key={index}
+              className="w-full max-w-[26rem] shadow-lg"
+            >
               <CardHeader floated={false} color="blue-gray">
                 <img src={card.image} alt="ui/ux review check" />
                 <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />

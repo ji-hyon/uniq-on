@@ -18,7 +18,7 @@ let collectionsStore = (set) => ({
   setMidCollecType: (payload) => set({ midCollecType: payload }),
 
   midCollecImg: [],
-  setMidCllecImg: (payload) => set({ midCollecImg: payload })
+  setMidCollecImg: (payload) => set({ midCollecImg: payload })
 });
 
 collectionsStore = persist(collectionsStore, { name: 'collections' });

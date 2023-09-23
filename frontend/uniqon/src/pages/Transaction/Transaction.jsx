@@ -174,10 +174,10 @@ export function Transaction() {
           </p>
           <br></br>
           <TransactionBanner />
-          <div className="flex flex-row">
-          <SalesCard />
-          <SalesCard />
-          <SalesCard />
+          <div className="flex flex-row justify-evenly">
+            {salesItemsList.map((item, index) => {
+              return <SalesCard key={index} item={item} id={index} />
+            })}
           </div>
 
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
