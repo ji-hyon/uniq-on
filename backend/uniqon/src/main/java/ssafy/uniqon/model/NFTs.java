@@ -14,7 +14,7 @@ public class NFTs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "nft_id")
-    private Integer id;
+    private int id;
 
     @Column(name = "nft_tx_hash", length = 200)
     private String nftTxHash;
@@ -26,7 +26,7 @@ public class NFTs {
     private String name;
 
     @Column(name = "age")
-    private Integer age;
+    private int age;
 
     @Column(name = "feature", length = 200)
     private String feature;
@@ -48,5 +48,5 @@ public class NFTs {
     @Column(length = 200)
     private String contractAddress;
 
-    private Integer tokenId;
+    private int tokenId;
 }
