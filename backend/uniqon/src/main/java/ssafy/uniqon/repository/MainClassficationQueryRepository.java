@@ -41,7 +41,7 @@ public class MainClassficationQueryRepository {
                 .from(mainClassifications)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(mainClassifications.type.desc())
+                .orderBy(mainClassifications.id.asc())
                 .fetch();
 
         int count = jpaQueryFactory

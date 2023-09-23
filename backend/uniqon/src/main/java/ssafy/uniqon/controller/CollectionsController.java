@@ -12,12 +12,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+import ssafy.uniqon.dto.NftListResponseDto;
+import ssafy.uniqon.dto.NftListSearchResponseDto;
 import ssafy.uniqon.global.response.Response;
 import ssafy.uniqon.repository.MainClassficationQueryRepository;
 import ssafy.uniqon.service.CollectionsService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static ssafy.uniqon.global.response.Response.OK;
 
@@ -58,13 +57,28 @@ public class CollectionsController {
             String name,
             int age,
             String feature,
-            int ownerId,
+            int memberId,
             int middleClassificationId,
             String middleClassificationSpecies,
             String nftURL,
             String contractAddress,
             int tokenId
-    ){}
+    ){
+        public nftListWebResponse(int id, String nftTxHash, String image, String name, int age, String feature, int memberId, int middleClassificationId, String middleClassificationSpecies, String nftURL, String contractAddress, int tokenId) {
+            this.id = id;
+            this.nftTxHash = nftTxHash;
+            this.image = image;
+            this.name = name;
+            this.age = age;
+            this.feature = feature;
+            this.memberId = memberId;
+            this.middleClassificationId = middleClassificationId;
+            this.middleClassificationSpecies = middleClassificationSpecies;
+            this.nftURL = nftURL;
+            this.contractAddress = contractAddress;
+            this.tokenId = tokenId;
+        }
+    }
 
     private final CollectionsService collectionsService;
 
@@ -111,7 +125,7 @@ public class CollectionsController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/info/middle/{middleClassificationId}")
-    public Response<middleAnimalInfoWebResponse> getMiddleInfo(@PathVariable Integer middleClassificationId){
+    public Response<middleAnimalInfoWebResponse> getMiddleInfo(@PathVariable int middleClassificationId){
         log.debug("# 중분류 동물에 대한 상제 정보 조회 : {}", middleClassificationId);
         middleAnimalInfoWebResponse middle = collectionsService.getmiddleAnimalInfo(middleClassificationId);
         log.debug("# 중분류 상세 정보 : {}", middle);
@@ -128,9 +142,9 @@ public class CollectionsController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/list/nft/{middleId}")
-    public Response<Page<nftListWebResponse>> getNFTList(@PathVariable Integer middleId, @PageableDefault Pageable pageable){
+    public Response<Page<NftListResponseDto>> getNFTList(@PathVariable Integer middleId, @PageableDefault Pageable pageable){
         log.debug("# 중분류에 속하는 NFT 리스트 요청 : {}", middleId);
-        Page<nftListWebResponse> list = collectionsService.getNFTList(middleId, pageable);
+        Page<NftListResponseDto> list = collectionsService.getNFTList(middleId, pageable);
         log.debug("# 중분류에 속하는 NFT 리스트 : {}", list);
 
         return OK(list);
@@ -146,9 +160,11 @@ public class CollectionsController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/search")
-    public Response<?> searchCollections(@RequestParam("query") String content){
-        log.debug("# 도감 검색 내용 : {}", content);
-        return OK(null);
+    public Response<Page<NftListSearchResponseDto>> searchCollections(@RequestParam("query") String content, @PageableDefault Pageable pageable){
+        log.debug("# 도감 검색 요청 : {}", content);
+        Page<NftListSearchResponseDto> list = collectionsService.searchNFT(content, pageable);
+        log.debug("# 도감 검색 결과 : {}", list);
+        return OK(list);
     }
 
 

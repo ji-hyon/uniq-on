@@ -20,3 +20,7 @@ INSERT INTO uniqon.middle_classifications (main_classification_id, middle_classi
 INSERT INTO uniqon.middle_classifications (main_classification_id, middle_classification_id, species, feature, image) VALUES (6, 6, '킹코브라', '길이 : 5.85m, 무기 : 9kg', 'https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcSITqWtt0Kzh9UNMe1puQ3D8vdkMg0UV17tRtbf1yakrXm9bC6XmWKSpgBpDSgW1gmu');
 INSERT INTO uniqon.middle_classifications (main_classification_id, middle_classification_id, species, feature, image) VALUES (7, 7, '베일드 카멜레온', '수명 : 6~8년, 길이 : 43~61cm', 'https://newrunreptile.co.kr/web/product/big/201903/346ed630ef4e29e3d2dca0ee38c9571c.jpg');
 INSERT INTO uniqon.middle_classifications (main_classification_id, middle_classification_id, species, feature, image) VALUES (8, 8, '아펜 핀셔', '털 색 : 검은색, 크기 : 24~28cm, 무게 : 3~4kg', 'https://mblogthumb-phinf.pstatic.net/20140509_241/nohys23_1399601216289o0LFK_JPEG/%BE%C6%C7%C9%C6%E6%BC%C52.jpg?type=w2');
+
+
+-- NFT 더미
+INSERT INTO uniqon.nfts (age, middle_classification_id, nft_id, token_id, name, contract_address, feature, nft_tx_hash, nft_url, image, member_id) VALUES (13, 8, 1, 123123, '멍뭉이', '0x00000', '개귀여움', 'asdfasf123sfasd', 'http://dfsdf', 'https://gateway.pinata.cloud/ipfs/QmWorfYFv5TWPpoSvfhqTAGSxq2UZFV8e3L9UnG46BKt6W', '1');

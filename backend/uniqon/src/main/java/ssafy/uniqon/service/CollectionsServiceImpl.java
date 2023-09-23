@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssafy.uniqon.controller.CollectionsController;
+import ssafy.uniqon.dto.NftListResponseDto;
+import ssafy.uniqon.dto.NftListSearchResponseDto;
 import ssafy.uniqon.model.MiddleClassifications;
 import ssafy.uniqon.repository.*;
 
@@ -47,7 +49,12 @@ public class CollectionsServiceImpl implements CollectionsService{
     }
 
     @Override
-    public Page<CollectionsController.nftListWebResponse> getNFTList(int middleClassificationId, Pageable pageable) {
+    public Page<NftListResponseDto> getNFTList(int middleClassificationId, Pageable pageable) {
         return nftQueryRepository.getNftList(middleClassificationId, pageable);
+    }
+
+    @Override
+    public Page<NftListSearchResponseDto> searchNFT(String query, Pageable pageable) {
+        return nftQueryRepository.searchNFT(query, pageable);
     }
 }
