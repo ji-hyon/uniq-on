@@ -27,7 +27,7 @@ INSERT INTO uniqon.middle_classifications (main_classification_id, middle_classi
 INSERT INTO uniqon.nfts (age, middle_classification_id, nft_id, token_id, name, contract_address, feature, nft_tx_hash, nft_url, image, wallet_address) VALUES (13, 8, 1, 123123, '멍뭉이', '0x00000', '개귀여움', 'asdfasf123sfasd', 'http://dfsdf', 'https://gateway.pinata.cloud/ipfs/QmWorfYFv5TWPpoSvfhqTAGSxq2UZFV8e3L9UnG46BKt6W', '0x00000000000000');
 
 -- POST 더미
-INSERT INTO uniqon.posts (nft_id, post_id, price, state, create_datetime, sale_completed_datetime, update_datetime, title, content, buyer, seller) VALUES (1, 1, 200, null, '2023-09-23 16:50:56', null, null, '귀여운 강아지~', '강아지 너무 귀엽조', '0x00000000000000', '0x00000000000000');
+INSERT INTO uniqon.posts (nft_id, post_id, price, state, create_datetime, sale_completed_datetime, update_datetime, title, content, buyer, seller) VALUES (1, 1, 200, 0, '2023-09-23 16:50:56', null, null, '귀여운 강아지~', '강아지 너무 귀엽조', '0x00000000000000', '0x00000000000000');
 
 -- Wishlist 더미
 INSERT INTO uniqon.wish_list (post_id, wishlist_id, member_id) VALUES (1, 1, '0x00000000000000');

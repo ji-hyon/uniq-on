@@ -2,6 +2,7 @@ package ssafy.uniqon.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -40,7 +41,8 @@ public class Posts{
     @UpdateTimestamp
     private Timestamp sale_completed_datetime;
 
-    @Column(name = "state")
+    @Column(name = "state", columnDefinition = "int default 0")
+    @ColumnDefault("0")
     private Integer state;
 
     @ManyToOne(fetch = FetchType.LAZY)
