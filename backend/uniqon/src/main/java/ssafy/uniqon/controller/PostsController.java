@@ -32,7 +32,7 @@ import static ssafy.uniqon.global.response.Response.OK;
 public class PostsController {
 
     public record RegisterPostWebRequest(
-            Integer price,
+            String price,
             String content,
             String title,
             Integer nftId
@@ -40,14 +40,14 @@ public class PostsController {
     }
 
     public record UpdatePostWebRequest(
-            Integer price,
+            String price,
             String title,
             String content,
             String walletAddress
     ){}
 
     public record postListsWebResponse(
-            Integer price,
+            String price,
             String title,
             String species,
             String nickname,
@@ -64,7 +64,7 @@ public class PostsController {
             String feature,
             Integer age,
             String image,
-            Integer price,
+            String price,
             String content,
             Timestamp createDatetime,
             String title,

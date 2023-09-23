@@ -20,4 +20,6 @@ public class TransactionHistories {
     @ManyToOne
     @JoinColumn(name="buyer",insertable=false, updatable=false)
     private Members buyer;
+
+    private String txHash;
 }

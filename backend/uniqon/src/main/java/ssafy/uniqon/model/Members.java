@@ -40,8 +40,8 @@ public class Members{
     private Timestamp modifyDateTime;
 
     @OneToMany(mappedBy = "seller")
-    private List<TransactionHistory> soldList=new ArrayList<>();
+    private List<TransactionHistories> soldList=new ArrayList<>();
 
     @OneToMany(mappedBy = "buyer")
-    private List<TransactionHistory> boughtList=new ArrayList<>();
+    private List<TransactionHistories> boughtList=new ArrayList<>();
 }

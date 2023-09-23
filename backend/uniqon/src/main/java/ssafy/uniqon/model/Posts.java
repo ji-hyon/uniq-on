@@ -21,7 +21,7 @@ public class Posts{
     private Integer id;
 
     @Column(name = "price")
-    private Integer price;
+    private String price;
 
     @Column(name = "content", length = 512)
     private String content;
