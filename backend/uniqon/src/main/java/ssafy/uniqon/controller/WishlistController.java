@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ssafy.uniqon.global.response.Response;
+import ssafy.uniqon.service.WishlistService;
 
 import static ssafy.uniqon.global.response.Response.OK;
 
@@ -21,6 +22,13 @@ import static ssafy.uniqon.global.response.Response.OK;
 @Tag(name = "위시리스트 API")
 @CrossOrigin("*")
 public class WishlistController {
+
+    public record addWishlistWebRequest(
+            int memberId,
+            int postId
+    ){}
+
+    private final WishlistService wishlistService;
 
     @Operation(summary = "위시리스트에 추가", description = "위시리스트에 판매글을 추가합니다.")
     @Parameters({
@@ -33,7 +41,8 @@ public class WishlistController {
     })
     @PostMapping("/add/{postId}")
     public Response<?> addWishlist(@PathVariable Integer postId){
-        log.info("# 위시리스트에 추가할 포스트 식별자 : {}", postId);
+        log.info("# 위시리스트에 추가 요청 : {}", postId);
+        wishlistService.addWishlist(new addWishlistWebRequest(1, postId));
         return OK(null);
     }
 
@@ -63,7 +72,9 @@ public class WishlistController {
     })
     @DeleteMapping("/{wishlistId}")
     public Response<?> deleteWishlist(@PathVariable Integer wishlistId){
-        log.info("# 삭제할 위시리스트 식별자 : {}", wishlistId);
+        log.info("# 위시리스트 삭제 요청 : {}", wishlistId);
+        wishlistService.deleteWishlist(wishlistId);
+        log.debug("# 위시리스트 삭제 완료!");
         return OK(null);
     }
 }

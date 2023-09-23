@@ -29,4 +29,4 @@ INSERT INTO uniqon.nfts (age, middle_classification_id, nft_id, token_id, name, 
 INSERT INTO uniqon.posts (nft_id, post_id, price, state, create_datetime, sale_completed_datetime, update_datetime, title, content, buyer, seller) VALUES (1, 1, 200, null, '2023-09-23 16:50:56', null, null, '귀여운 강아지~', '강아지 너무 귀엽조', null, '1');
 
 -- Wishlist 더미
-INSERT INTO uniqon.wish_list (post_id, wishlist_id, member_id) VALUES (1, 1, '1');
+INSERT INTO uniqon.wish_list (post_id, wishlist_id, member_id) VALUES (1, 1, '0x0000000000000000');
