@@ -31,12 +31,12 @@ public class WishlistQueryRepository {
             String sellerWalletAddress,
             String sellerProfileImage,
             String sellerNickname,
-            int price,
+            String price,
             Integer nftMiddleId,
             String nftMiddleSpecies,
             String postTitle
     ){
-        public getWishlistDBResponse(int wishlistId, String nftImage, String sellerWalletAddress, String sellerProfileImage, String sellerNickname, int price, Integer nftMiddleId, String nftMiddleSpecies, String postTitle) {
+        public getWishlistDBResponse(int wishlistId, String nftImage, String sellerWalletAddress, String sellerProfileImage, String sellerNickname, String price, Integer nftMiddleId, String nftMiddleSpecies, String postTitle) {
             this.wishlistId = wishlistId;
             this.nftImage = nftImage;
             this.sellerWalletAddress = sellerWalletAddress;
@@ -67,7 +67,8 @@ public class WishlistQueryRepository {
                 .leftJoin(posts).on(posts.id.eq(wishList.post.id))
                 .leftJoin(nFTs).on(nFTs.id.eq(posts.nft.id))
                 .leftJoin(middleClassifications).on(middleClassifications.id.eq(posts.nft.middle.id))
-                .leftJoin(members).on(members.walletAddress.eq(wishList.member.walletAddress).and(wishList.member.walletAddress.eq(walletAddress)))
+//                .leftJoin(members).on(members.walletAddress.eq(wishList.member.walletAddress).and(wishList.member.walletAddress.eq(walletAddress)))
+                .where(wishList.member.walletAddress.eq(walletAddress))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(wishList.id.desc())
