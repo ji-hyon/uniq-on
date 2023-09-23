@@ -14,15 +14,8 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Builder
 public class Members{
-
     @Id
-    @Column(name = "member_id", length = 255)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
-
-
-    @Id
-    @Column(name = "wallet_Address", length = 255)
+    @Column(name = "wallet_Address")
     private String walletAddress;
 
     private String name;
@@ -33,6 +26,7 @@ public class Members{
 
     private String gender;
 
+    @Column(length = 700)
     private String vpToken;
 
     private String profileImage;

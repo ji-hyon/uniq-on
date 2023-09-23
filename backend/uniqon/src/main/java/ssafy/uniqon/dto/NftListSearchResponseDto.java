@@ -13,7 +13,8 @@ public class NftListSearchResponseDto {
     private String name;
     private Integer age;
     private String feature;
-    private String ownerId;
+    private String ownerNickname;
+    private String ownerProfileImage;
     private String mainType;
     private Integer middleClassificationId;
     private String middleSpecies;
