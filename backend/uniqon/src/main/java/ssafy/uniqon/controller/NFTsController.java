@@ -72,12 +72,13 @@ public class NFTsController {
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @PostMapping("/register")
+    @PostMapping("/register/{userId}")
     public Response<?> registerNFT(@RequestPart(value = "data") RegisterNFTWebRequest req,
-                                   @RequestPart(value = "file") MultipartFile multipartFile) throws Exception {
+                                   @RequestPart(value = "file") MultipartFile multipartFile,
+                                   @PathVariable String userId) throws Exception {
         log.debug("# NFT 등록시 데이터 : {}", req);
         log.debug("# NFT 등록시 이미지 : {}", multipartFile);
-//        nftCreateService.createNFT(req,multipartFile);
+        nftService.createNFT(req,multipartFile,userId);
         return OK("success");
     }
 

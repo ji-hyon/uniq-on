@@ -8,4 +8,5 @@ import ssafy.uniqon.model.MiddleClassifications;
 public interface MiddleClassificationRepository extends JpaRepository<MiddleClassifications, Integer> {
 
     MiddleClassifications findById (int middleClassificationId);
+    MiddleClassifications findBySpecies(String species);
 }
