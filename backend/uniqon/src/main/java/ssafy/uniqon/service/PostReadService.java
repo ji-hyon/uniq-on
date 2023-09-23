@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import ssafy.uniqon.controller.PostsController;
 import ssafy.uniqon.model.Posts;
+import ssafy.uniqon.model.WishList;
 import ssafy.uniqon.repository.PostRepository;
 
 import java.util.ArrayList;
@@ -24,7 +25,8 @@ public class PostReadService {
                     post.getTitle(),
                     post.getNft().getMiddle().getSpecies(),
                     null,
-                    post.getNft().getImage()
+                    post.getNft().getImage(),
+                    null
             ));
         }
         return list;
@@ -59,7 +61,8 @@ public class PostReadService {
                     post.getTitle(),
                     post.getNft().getMiddle().getSpecies(),
                     null,
-                    post.getNft().getImage()
+                    post.getNft().getImage(),
+                    null
             ));
         }
         return list;
