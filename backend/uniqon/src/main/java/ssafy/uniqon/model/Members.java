@@ -6,6 +6,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -36,4 +38,10 @@ public class Members{
 
     @UpdateTimestamp
     private Timestamp modifyDateTime;
+
+    @OneToMany(mappedBy = "seller")
+    private List<TransactionHistory> soldList=new ArrayList<>();
+
+    @OneToMany(mappedBy = "buyer")
+    private List<TransactionHistory> boughtList=new ArrayList<>();
 }
