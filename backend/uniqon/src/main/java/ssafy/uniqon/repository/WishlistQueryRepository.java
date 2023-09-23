@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static ssafy.uniqon.model.QMembers.members;
 import static ssafy.uniqon.model.QMiddleClassifications.middleClassifications;
 import static ssafy.uniqon.model.QNFTs.nFTs;
 import static ssafy.uniqon.model.QPosts.posts;
@@ -31,17 +32,19 @@ public class WishlistQueryRepository {
             String sellerProfileImage,
             String sellerNickname,
             int price,
-//            Integer nftMiddleId,
-//            String nftMiddleSpecies,
+            Integer nftMiddleId,
+            String nftMiddleSpecies,
             String postTitle
     ){
-        public getWishlistDBResponse(int wishlistId, String nftImage, String sellerWalletAddress, String sellerProfileImage, String sellerNickname, int price, String postTitle) {
+        public getWishlistDBResponse(int wishlistId, String nftImage, String sellerWalletAddress, String sellerProfileImage, String sellerNickname, int price, Integer nftMiddleId, String nftMiddleSpecies, String postTitle) {
             this.wishlistId = wishlistId;
             this.nftImage = nftImage;
             this.sellerWalletAddress = sellerWalletAddress;
             this.sellerProfileImage = sellerProfileImage;
             this.sellerNickname = sellerNickname;
             this.price = price;
+            this.nftMiddleId = nftMiddleId;
+            this.nftMiddleSpecies = nftMiddleSpecies;
             this.postTitle = postTitle;
         }
     }
@@ -56,17 +59,23 @@ public class WishlistQueryRepository {
                         wishList.post.seller.profileImage,
                         wishList.post.seller.nickname,
                         wishList.post.price,
-//                        wishList.post.nft.middle.id,
-//                        wishList.post.nft.middle.species,
+                        middleClassifications.id,
+                        middleClassifications.species,
                         wishList.post.title
-                        ))
+                ))
                 .from(wishList)
-//                .leftJoin(middleClassifications).on(wishList.post.id.eq(posts.id))
-                .where(wishList.member.walletAddress.eq(walletAddress))
+                .leftJoin(posts).on(posts.id.eq(wishList.post.id))
+                .leftJoin(nFTs).on(nFTs.id.eq(posts.nft.id))
+                .leftJoin(middleClassifications).on(middleClassifications.id.eq(posts.nft.middle.id))
+                .leftJoin(members).on(members.walletAddress.eq(wishList.member.walletAddress).and(wishList.member.walletAddress.eq(walletAddress)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(wishList.id.desc())
                 .fetch();
+
+        log.debug("조회 테스트 : {}", list);
+
+
 
         int count = jpaQueryFactory
                 .select(wishList.count())
