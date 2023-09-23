@@ -75,5 +75,18 @@ public class PostRepository {
         }
 
     }
+    @Transactional
+    public void deletePost(Integer postId, String walletAddress){
+        Posts post = em.find(Posts.class,postId);
+        if(post==null){
+            throw new IllegalArgumentException("No Post found with postId " + postId);
+        }
+        if(post.getSeller().getWalletAddress().equals(walletAddress)){
+            em.remove(post);
+        }
+        else{
+            throw new IllegalArgumentException("No Access to Post with postId " + postId);
+        }
+    }
 
 }

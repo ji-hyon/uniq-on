@@ -12,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ssafy.uniqon.global.response.Response;
 import ssafy.uniqon.service.PostCreateService;
+import ssafy.uniqon.service.PostDeleteService;
 import ssafy.uniqon.service.PostReadService;
 import ssafy.uniqon.service.PostUpdateService;
 
@@ -72,6 +73,7 @@ public class PostsController {
 private final PostReadService postReadService;
 private final PostCreateService postCreateService;
 private final PostUpdateService postUpdateService;
+private final PostDeleteService postDeleteService;
     @Operation(summary="판매글 등록", description = "판매글을 등록합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
@@ -84,6 +86,7 @@ private final PostUpdateService postUpdateService;
         postCreateService.createPost(req);
         return OK("success");
     }
+
     @Operation(summary="판매글 수정", description = "판매글을 수정합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
@@ -97,9 +100,16 @@ private final PostUpdateService postUpdateService;
         return OK("success");
     }
 
+    @Operation(summary="판매글 삭제", description = "판매글을 삭제합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND")
+    })
     @DeleteMapping("/delete/{postId}")
-    public Response<?> deletePost(@PathVariable int postId){
-        return OK(null);
+    public Response<?> deletePost(@PathVariable int postId,@RequestParam String walletAddress){
+        postDeleteService.deletePost(postId,walletAddress);
+        return OK("success");
     }
     @Operation(summary="판매글 검색", description = "판매글을 검색합니다.")
     @ApiResponses({
