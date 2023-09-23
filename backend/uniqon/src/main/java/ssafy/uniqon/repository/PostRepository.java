@@ -58,7 +58,7 @@ public class PostRepository {
         if (post == null) {
             throw new IllegalArgumentException("No Post found with postId " + postId);
         }
-        if(post.getSeller().getAddress().equals(req.walletAddress())){
+        if(post.getSeller().getWalletAddress().equals(req.walletAddress())){
             post.setPrice(req.price());
             post.setTitle(req.title());
             post.setContent(req.content());
