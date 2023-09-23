@@ -75,6 +75,7 @@ public class WishlistController {
     })
     @GetMapping("/{walletAddress}")
     public Response<?> getWishlist(@PathVariable String walletAddress, @PageableDefault Pageable pageable){
+        log.debug("# 위시리스트 조회 요청 : {}", walletAddress);
         Page<WishlistQueryRepository.getWishlistDBResponse> list =  wishlistService.getWishlist(pageable, walletAddress);
         if (list == null) {
             return ERROR("위시리스트 존재 안 함", HttpStatus.NOT_FOUND);
