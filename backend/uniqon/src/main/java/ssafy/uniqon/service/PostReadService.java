@@ -3,6 +3,7 @@ package ssafy.uniqon.service;
 
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ssafy.uniqon.controller.PostsController;
 import ssafy.uniqon.model.Posts;
@@ -17,9 +18,9 @@ import java.util.List;
 public class PostReadService {
     private final PostRepository postRepository;
 
-    public List<PostsController.postListsWebResponse> getPostAll(String walletAddress){
+    public List<PostsController.postListsWebResponse> getPostAll(String walletAddress, Pageable pageable){
         List<PostsController.postListsWebResponse> list = new ArrayList<>();
-        for(Posts post: postRepository.getPostAll()){
+        for(Posts post: postRepository.getPostAll(pageable)){
             list.add(new PostsController.postListsWebResponse(
                     post.getId(),
                     post.getPrice(),
@@ -58,9 +59,9 @@ public class PostReadService {
                 true
         );
     }
-    public List<PostsController.postListsWebResponse> getSearchPostList(String word, String walletAddress){
+    public List<PostsController.postListsWebResponse> getSearchPostList(String word, String walletAddress, Pageable pageable){
         List<PostsController.postListsWebResponse> list = new ArrayList<>();
-        for(Posts post: postRepository.getSearchPost(word)){
+        for(Posts post: postRepository.getSearchPost(word, pageable)){
             list.add(new PostsController.postListsWebResponse(
                     post.getId(),
                     post.getPrice(),
