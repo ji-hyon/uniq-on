@@ -28,6 +28,11 @@ public class NotificationController {
             int postId
     ){}
 
+    public record deleteNotificationWebRequest(
+            int notificationId,
+            String walletAddress
+    ){}
+
     private final NotificationService notificationService;
 
     @PostMapping("/{postId}")
@@ -54,6 +59,20 @@ public class NotificationController {
             return ERROR("알림 리스트 존재 하지 않음", HttpStatus.NOT_FOUND);
         } else {
             return OK(list);
+        }
+    }
+
+    @DeleteMapping("/{notificationId}")
+    public Response<?> deleteNotification(@PathVariable int notificationId) {
+        log.debug("# 알림 지우기 요청 ... : {}", notificationId);
+        String walletAddress = "0x00000000000000";
+        int result = notificationService.deleteNotification(new deleteNotificationWebRequest(notificationId, walletAddress));
+        if (result == 1) {
+            log.debug("# 알림 삭제 성공!");
+            return OK(null);
+        } else {
+            log.debug("# 알림 삭제 실패!");
+            return ERROR("알림 삭제 실패", HttpStatus.BAD_REQUEST);
         }
 
     }

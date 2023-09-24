@@ -7,4 +7,6 @@ import ssafy.uniqon.model.Notifications;
 public interface NotificationRepository extends JpaRepository<Notifications, Integer> {
 
     Notifications findByPost_IdAndMember_WalletAddress (int postId, String walletAddress);
+
+    Notifications findByIdAndMember_WalletAddress (int NotificationId, String walletAddress);
 }

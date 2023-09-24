@@ -57,4 +57,17 @@ public class NotificationServiceImpl implements NotificationService{
         return list;
 
     }
+
+    @Override
+    public int deleteNotification(NotificationController.deleteNotificationWebRequest req) {
+        Notifications notifications = notificationRepository.findByIdAndMember_WalletAddress(req.notificationId(), req.walletAddress());
+        if (notifications != null) {
+            log.debug("# 알림 삭제중...");
+            notificationRepository.delete(notifications);
+            return 1;
+        } else {
+            return 0;
+        }
+
+    }
 }
