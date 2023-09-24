@@ -48,16 +48,6 @@ public class MyPageController {
         return OK(null);
     }
 
-    @PostMapping("/nft/{myCollectionId}")
-    Response<?> likeNFT(@PathVariable int myCollectionId){
-        return OK(null);
-    }
-
-    @DeleteMapping("/nft/{myCollectionId}")
-    Response<?> undoLikeNFT(@PathVariable int myCollectionId){
-        return OK(null);
-    }
-
     @GetMapping("/nft")
     Response<?> getLikeNFTList(){
         return OK(null);

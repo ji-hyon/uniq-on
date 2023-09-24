@@ -35,6 +35,7 @@ public class NFTServiceImpl implements NFTService {
     private final NFTRepository nftRepository;
     private final TransactionHistoriesRepository transactionHistoriesRepository;
     private final MiddleClassificationRepository middleClassificationRepository;
+    private final MyCollectionsRepository myCollectionsRepository;
 
     private final Pinata pinata = new Pinata("64e7615856edbac52336", "f62623900242c791dc8cb1243c69b2df8664886f50295a79d43ffe5ffdce0b5c");
     private static final String ipfsBaseURL = "https://gateway.pinata.cloud/ipfs/";
@@ -121,7 +122,8 @@ public class NFTServiceImpl implements NFTService {
                     new ArrayList<>(),
                     jsonIpfsHash,
                     contractAddress,
-                    tokenId));
+                    tokenId,
+                    0));
         }
 
 //        System.out.println(contract.balanceOf(credential.getAddress()).send());
@@ -132,6 +134,22 @@ public class NFTServiceImpl implements NFTService {
     public Page<NFTs> getMyNFTList(String owner, Pageable pageable) {
         Members member=memberRepository.findById(owner).get();
         return nftRepository.findByOwner(member,pageable);
+    }
+
+    @Override
+    public void likeNFT(Integer nftId, String userId) {
+        Members member=memberRepository.findById(userId).get();
+        NFTs nft=nftRepository.findById(nftId).get();
+        myCollectionsRepository.save(new MyCollections(null,member,nft));
+        nft.setLiked_cnt(nft.getLiked_cnt()+1);
+    }
+
+    @Override
+    public void undoLikeNFT(Integer nftId, String userId) {
+        Members member=memberRepository.findById(userId).get();
+        NFTs nft=nftRepository.findById(nftId).get();
+        myCollectionsRepository.delete(new MyCollections(null,member,nft));
+        nft.setLiked_cnt(nft.getLiked_cnt()-1);
     }
 
     private String parsingPinataResponse(PinataResponse pinataImageResponse) {

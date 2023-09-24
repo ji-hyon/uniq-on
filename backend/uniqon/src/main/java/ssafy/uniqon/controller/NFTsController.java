@@ -134,4 +134,18 @@ public class NFTsController {
         nftService.transactNFT(nftId,buyer,postId);
         return OK("success");
     }
+
+    @PostMapping("/like/{nftId}/{userId}")
+    public Response<?> likeNFT(@PathVariable Integer nftId,
+                               @PathVariable String userId){
+        nftService.likeNFT(nftId,userId);
+        return OK("liked");
+    }
+
+    @DeleteMapping("/undolike/{nftId}/{userId}")
+    public Response<?> undolikeNFT(@PathVariable Integer nftId,
+                                   @PathVariable String userId){
+        nftService.undoLikeNFT(nftId,userId);
+        return OK("deleted");
+    }
 }

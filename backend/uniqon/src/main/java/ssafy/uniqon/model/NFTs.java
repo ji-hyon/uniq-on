@@ -49,4 +49,7 @@ public class NFTs {
     private String contractAddress;
 
     private int tokenId;
+
+    @Setter
+    private Integer liked_cnt;
 }

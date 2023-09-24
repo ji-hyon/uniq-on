@@ -16,4 +16,8 @@ public interface NFTService {
     public void createNFT(NFTsController.RegisterNFTWebRequest req, MultipartFile multipartFile,String userId) throws Exception;
 
     public Page<NFTs> getMyNFTList(String owner, Pageable pageable);
+
+    void likeNFT(Integer nftId,String userId);
+
+    void undoLikeNFT(Integer nftId,String userId);
 }
