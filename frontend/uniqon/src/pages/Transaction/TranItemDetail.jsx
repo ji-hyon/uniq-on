@@ -35,6 +35,8 @@ export function TranItemDetail () {
       params: params,
     })
     .then((res) => {
+      console.log("여기인가!")
+      console.log(res.data)
       setItem(res.data);
     })
     .catch((err) => {

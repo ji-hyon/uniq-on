@@ -67,8 +67,8 @@ export function ItemDetailCard( { item } ) {
         className="w-2/5 m-0 rounded-r-none shrink-0"
       >
         <img
-          // src="/{item.image}"
-          src={salesItemsList[0].image}
+          src={item.image}
+          // src={salesItemsList[0].image}
           alt="card"
           className="object-cover w-full h-full"
         />
@@ -109,22 +109,9 @@ export function ItemDetailCard( { item } ) {
           of the story {item.content}
         </Typography>
         <a href="#" className="inline-block">
-        <Button onClick={handleOpen} variant="gradient" className="flex" color="red">
+        <Button onClick={handleOpen} variant="gradient" className="flex text-lg" color="red">
             구매하기
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-              className="w-4 h-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-              />
-            </svg>
+            <img  className="w-8 h-8 ml-1" src="/coin.gif" alt="" />
           </Button>
         </a>
       </CardBody>
@@ -151,8 +138,9 @@ export function ItemDetailCard( { item } ) {
           <CardBody className="flex flex-col gap-4">
           <img src="/basket.gif" alt="my-gif" />
 
-        <p>{item.title}{salesItemsList[0].title}를 구매하시겠습니까?</p>
-        <p>가격 | {item.price}{salesItemsList[0].price} ETH </p>
+        <span className="text-lg"><span className="font-bold">{item.title}{salesItemsList[0].title}
+        </span>를 구매하시겠습니까?</span>
+        <span className="text-lg">가격 | <span className="font-bold">{item.price}{salesItemsList[0].price} ETH</span></span>
         </CardBody>
         <CardFooter className="flex justify-end pt-0">
         <Button variant="gradient" color="green" onClick={handleOpen}>
