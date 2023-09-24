@@ -112,6 +112,11 @@ export function Transaction() {
         }
       } 
     
+      const groupedSalesItems = [];
+    for (let i = 0; i < salesItemsList.length; i += 3) {
+      groupedSalesItems.push(salesItemsList.slice(i, i + 3));
+    }
+
 
   return (
     <div className="App">
@@ -159,11 +164,17 @@ export function Transaction() {
         </Card>
       </Dialog> */}
       
-          <div className="flex flex-row justify-evenly">
-            {salesItemsList.map((item, index) => {
-              return <SalesCard key={index} item={item} id={index} />
-            })}
-          </div>
+          <div className="flex flex-col justify-center">
+              {/* 판매글 목록을 3개씩 한 줄에 보여주기 */}
+              {groupedSalesItems.map((salesGroup, index) => (
+                <div key={index} className="flex flex-row justify-evenly">
+                  {salesGroup.map((item) => (
+                    <SalesCard key={item.postId} item={item} id={item.postId} />
+                  ))}
+                </div>
+              ))}
+            </div>
+          
 
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
         <br></br>

@@ -48,7 +48,7 @@ export function TranItemDetail () {
 
     try {
       const data = {
-        price: 1000,
+        price: '1000',
         content: "test",
         title: "test",
         nftId: 1,
