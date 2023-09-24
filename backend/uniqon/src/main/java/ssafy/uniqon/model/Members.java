@@ -51,4 +51,6 @@ public class Members{
 
     @OneToMany(mappedBy = "buyer")
     private List<TransactionHistories> boughtList=new ArrayList<>();
+
+    private MemberRole role;
 }
