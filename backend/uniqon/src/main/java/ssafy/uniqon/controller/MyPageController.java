@@ -72,4 +72,10 @@ public class MyPageController {
         return OK(nftService.getMyNFTList(userId,pageable));
     }
 
+    @GetMapping("/like-nft-list/{userId}")
+    Response<?> getLikedNFTList(@PathVariable String userId,
+                                @PageableDefault Pageable pageable){
+        return OK(myPageService.getLikedNFTList(userId,pageable));
+    }
+
 }

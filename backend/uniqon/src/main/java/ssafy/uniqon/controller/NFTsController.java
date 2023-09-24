@@ -63,7 +63,20 @@ public class NFTsController {
             Integer tokenId,
             @Schema(description = "좋아요 수")
             Integer likedCnt
-    ){}
+    ){
+        public NFTWebResponse(Integer nftId, String owner, String image, String name, Integer age, String feature, String nftURL, String contractAddress, Integer tokenId, Integer likedCnt) {
+            this.nftId = nftId;
+            this.owner = owner;
+            this.image = image;
+            this.name = name;
+            this.age = age;
+            this.feature = feature;
+            this.nftURL = nftURL;
+            this.contractAddress = contractAddress;
+            this.tokenId = tokenId;
+            this.likedCnt = likedCnt;
+        }
+    }
 
 //    private final NFTCreateService nftCreateService;
 //    private final NFTReadService nftReadService;
