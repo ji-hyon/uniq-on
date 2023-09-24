@@ -149,6 +149,8 @@ export function ItemDetailCard( { item } ) {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
+          <img src="/basket.gif" alt="my-gif" />
+
         <p>{item.title}{salesItemsList[0].title}를 구매하시겠습니까?</p>
         <p>가격 | {item.price}{salesItemsList[0].price} ETH </p>
         </CardBody>
