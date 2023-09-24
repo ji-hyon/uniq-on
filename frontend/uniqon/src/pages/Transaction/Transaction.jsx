@@ -20,6 +20,8 @@ export function Transaction() {
   const [postId, setPostId] = React.useState('1');
   const [wishId, setWishId] = React.useState('1');
 
+  const walletAddress = "0x1234567890123456789012345678901234567890";
+
   
 
   const { salesItemsList, setSalesItemsList,
@@ -49,8 +51,13 @@ export function Transaction() {
   async function getSales() {
         
     try{
+      const params = {
+        walletAddress: walletAddress,
+      };
 
-      const res = await axios.get(URL + "/api/sales/post");
+      const res = await axios.get(URL + "/api/sales/post", {
+        params: params,
+      });
             console.log(res.data)
             setSalesItemsList(res.data.response)
             console.log(salesItemsList)

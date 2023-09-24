@@ -7,6 +7,8 @@ import {
   Typography,
   Button,
   IconButton,
+  Dialog,
+  CardFooter,
 } from "@material-tailwind/react";
 
 import { useEffect, useState } from "react";
@@ -16,6 +18,10 @@ export function ItemDetailCard( { item } ) {
 
   const [postId, setPostId] = React.useState('1');
   const [wishId, setWishId] = React.useState('1');
+
+  const [ 구매모달open, set구매모달Open ] = React.useState(false);
+
+  const handleOpen = () => { set구매모달Open(!구매모달open); };
 
 
   // 아직 상세아이템 조회 api가 없어서 하드코딩하려고 거래 store에서 salesItemList 사용
@@ -58,13 +64,13 @@ export function ItemDetailCard( { item } ) {
       <CardHeader
         shadow={false}
         floated={false}
-        className="m-0 w-2/5 shrink-0 rounded-r-none"
+        className="w-2/5 m-0 rounded-r-none shrink-0"
       >
         <img
           // src="/{item.image}"
           src={salesItemsList[0].image}
           alt="card"
-          className="h-full w-full object-cover"
+          className="object-cover w-full h-full"
         />
         <IconButton
           size="sm"
@@ -77,7 +83,7 @@ export function ItemDetailCard( { item } ) {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="h-6 w-6"
+            className="w-6 h-6"
           >
             <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
           </svg>
@@ -103,15 +109,15 @@ export function ItemDetailCard( { item } ) {
           of the story {item.content}
         </Typography>
         <a href="#" className="inline-block">
-          <Button variant="text" className="flex items-center gap-2">
-            Learn More
+        <Button onClick={handleOpen} variant="gradient" className="flex" color="red">
+            구매하기
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
               strokeWidth={2}
-              className="h-4 w-4"
+              className="w-4 h-4"
             >
               <path
                 strokeLinecap="round"
@@ -122,6 +128,47 @@ export function ItemDetailCard( { item } ) {
           </Button>
         </a>
       </CardBody>
+      {/* 모달 */}
+      <Dialog
+        open={구매모달open}
+        handler={handleOpen}
+        className="bg-transparent shadow-none"
+        animate={{
+          mount: { scale: 1, y: 0 },
+          unmount: { scale: 0.9, y: -100 },
+        }}
+      >
+        <Card className="mx-auto w-full max-w-[24rem]">
+        <CardHeader
+            variant="gradient"
+            color="blue"
+            className="grid mb-4 h-28 place-items-center"
+          >
+            <Typography variant="h3" color="white">
+              구매 확인
+            </Typography>
+          </CardHeader>
+          <CardBody className="flex flex-col gap-4">
+        <p>{item.title}{salesItemsList[0].title}를 구매하시겠습니까?</p>
+        <p>가격 | {item.price}{salesItemsList[0].price} ETH </p>
+        </CardBody>
+        <CardFooter className="flex justify-end pt-0">
+        <Button variant="gradient" color="green" onClick={handleOpen}>
+            <span>결제하기</span>
+          </Button>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleOpen}
+            className="mr-1"
+          >
+            <span>취소</span>
+          </Button>
+          
+        </CardFooter>
+        </Card>
+      </Dialog>
+      
     </Card>
   );
 }
