@@ -41,7 +41,7 @@ export function MidCollections() {
         const response = await axios.get(URL + `/api/collections/list/middle/${mainCollecId}`);
         console.log('success', response);
 
-        setMidCardsData(response.data.response);
+        setMidCardsData(response.data.response.content);
       } catch (e) {
         console.log('failed: ', e);
       }

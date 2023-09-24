@@ -28,7 +28,7 @@ export function MainCollections() {
         const response = await axios.get(URL + `/api/collections/list/main`);
         console.log('success', response);
 
-        setMainCardsData(response.data.response);
+        setMainCardsData(response.data.response.content);
       } catch (e) {
         console.log('failed', e);
       }
