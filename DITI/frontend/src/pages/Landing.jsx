@@ -14,7 +14,7 @@ export function Landing() {
             className="text-4xl w-96 h-28 m-3"
             color="blue"
             onClick={() => {
-              navigate("/issue");
+              navigate("issue");
             }}
           >
             전자 신분증 발급
@@ -25,7 +25,7 @@ export function Landing() {
             className="text-4xl w-96 h-28 m-3"
             color="yellow"
             onClick={() => {
-              navigate("/check");
+              navigate("check");
             }}
           >
             전자 신분증 조회 

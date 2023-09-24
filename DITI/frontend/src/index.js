@@ -4,16 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from '@material-tailwind/react'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ThemeProvider>
-      <BrowserRouter basename={process.env.DITI_BASENAME || ""}>
         <App />
-      </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>
 );
