@@ -22,11 +22,11 @@ public class Notifications {
 
     @Column(name = "create_datetime")
     @CreationTimestamp
-    private Timestamp create_datetime;
+    private Timestamp createDatetime;
 
     @Column(name = "update_datetime")
     @UpdateTimestamp
-    private Timestamp update_datetime;
+    private Timestamp updateDatetime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

@@ -2,6 +2,8 @@ package ssafy.uniqon.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ssafy.uniqon.controller.NotificationController;
 import ssafy.uniqon.global.exception.NotFoundException;
@@ -9,6 +11,7 @@ import ssafy.uniqon.model.Members;
 import ssafy.uniqon.model.Notifications;
 import ssafy.uniqon.model.Posts;
 import ssafy.uniqon.repository.MemberRepository;
+import ssafy.uniqon.repository.NotificationQueryRepository;
 import ssafy.uniqon.repository.NotificationRepository;
 import ssafy.uniqon.repository.PostsRepository;
 
@@ -21,6 +24,7 @@ public class NotificationServiceImpl implements NotificationService{
     private final MemberRepository memberRepository;
     private final PostsRepository postsRepository;
     private final NotificationRepository notificationRepository;
+    private final NotificationQueryRepository notificationQueryRepository;
 
     @Override
     public int registerNotification(NotificationController.registerNotificationWebRequest req) {
@@ -42,5 +46,15 @@ public class NotificationServiceImpl implements NotificationService{
             log.debug(" 알림 추가 실패!");
             return 0;
         }
+    }
+
+    @Override
+    public Page<NotificationQueryRepository.getNotificationListDBResponse> getNotificationList(Pageable pageable, String walletAddress) {
+        Members members = memberRepository.findById(walletAddress).orElseThrow(
+                ()-> new NotFoundException(Members.class, walletAddress));
+        Page<NotificationQueryRepository.getNotificationListDBResponse> list = notificationQueryRepository.getNotificationList(pageable, walletAddress);
+        log.debug("# 알림 리스트 조회 결과 : {}", list);
+        return list;
+
     }
 }
