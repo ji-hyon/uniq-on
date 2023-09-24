@@ -163,7 +163,7 @@ private final PostDeleteService postDeleteService;
         data3.put("wishCheck",post.wishCheck);
         obj.put("PostInfo",data3);
 
-        return OK(obj);
+        return OK(obj.toMap());
     }
 
     @Operation(summary="판매글 조회", description = "판매글 리스트를 조회합니다.")
