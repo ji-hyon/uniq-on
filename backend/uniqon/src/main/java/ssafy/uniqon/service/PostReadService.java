@@ -21,6 +21,7 @@ public class PostReadService {
         List<PostsController.postListsWebResponse> list = new ArrayList<>();
         for(Posts post: postRepository.getPostAll()){
             list.add(new PostsController.postListsWebResponse(
+                    post.getId(),
                     post.getPrice(),
                     post.getTitle(),
                     post.getNft().getMiddle().getSpecies(),
@@ -28,6 +29,9 @@ public class PostReadService {
                     post.getNft().getImage(),
                     null
             ));
+        }
+        if(list.isEmpty()){
+            throw new IllegalArgumentException("Post Not Found ");
         }
         return list;
     }
@@ -39,6 +43,7 @@ public class PostReadService {
         }
 
         return new PostsController.postDetailWebResponse(
+                post.getId(),
                 post.getSeller().getProfileImage(),
                 post.getSeller().getNickname(),
                 post.getNft().getMiddle().getSpecies(),
@@ -57,6 +62,7 @@ public class PostReadService {
         List<PostsController.postListsWebResponse> list = new ArrayList<>();
         for(Posts post: postRepository.getSearchPost(word)){
             list.add(new PostsController.postListsWebResponse(
+                    post.getId(),
                     post.getPrice(),
                     post.getTitle(),
                     post.getNft().getMiddle().getSpecies(),

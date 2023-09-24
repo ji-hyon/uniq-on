@@ -47,6 +47,7 @@ public class PostsController {
     ){}
 
     public record postListsWebResponse(
+            Integer postId,
             String price,
             String title,
             String species,
@@ -57,6 +58,7 @@ public class PostsController {
     {}
 
     public record postDetailWebResponse(
+            Integer postId,
             String profileImage,
             String nickname,
             String species,
@@ -139,9 +141,27 @@ private final PostDeleteService postDeleteService;
         postDetailWebResponse post = postReadService.getPostDetail(postId, walletAddress);
 
         JSONObject obj = new JSONObject();
-        obj.put("SellerInfo", Map.of("profileImage", post.profileImage, "nickname", post.nickname));
-        obj.put("nftInfo", Map.of("species", post.species, "name", post.name, "feature", post.feature, "age", post.age, "image", post.image));
-        obj.put("PostInfo", Map.of("price", post.price, "content", post.content, "createDatetime", post.createDatetime, "title", post.title, "wishCheck", post.wishCheck));
+        JSONObject data1=new JSONObject();
+        JSONObject data2=new JSONObject();
+        JSONObject data3=new JSONObject();
+
+        data1.put("profileImage",post.profileImage);
+        data1.put("nickname",post.nickname);
+        obj.put("SellerInfo",data1);
+
+        data2.put("species",post.species);
+        data2.put("name",post.name);
+        data2.put("feature",post.feature);
+        data2.put("age",post.age);
+        data2.put("image",post.image);
+        obj.put("nftInfo",data2);
+
+        data3.put("price",post.price);
+        data3.put("content",post.content);
+        data3.put("createDatetime",post.createDatetime);
+        data3.put("title",post.title);
+        data3.put("wishCheck",post.wishCheck);
+        obj.put("PostInfo",data3);
 
         return OK(obj);
     }
