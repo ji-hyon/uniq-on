@@ -2,6 +2,9 @@ package ssafy.uniqon.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -22,4 +25,7 @@ public class TransactionHistories {
     private Members buyer;
 
     private String txHash;
+
+    @CreationTimestamp
+    private Timestamp transactedAt;
 }

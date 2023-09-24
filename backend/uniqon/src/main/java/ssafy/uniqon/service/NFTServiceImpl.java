@@ -63,7 +63,7 @@ public class NFTServiceImpl implements NFTService {
                     BigInteger.valueOf(nft.getTokenId()),
                     price).send();
             String txHash = receipt.getTransactionHash();
-            transactionHistoriesRepository.save(new TransactionHistories(null, seller, buyerMember, txHash));
+            transactionHistoriesRepository.save(new TransactionHistories(null, seller, buyerMember, txHash,null));
         }
 
         web3j.shutdown();
