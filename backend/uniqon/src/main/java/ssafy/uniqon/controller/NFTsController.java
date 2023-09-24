@@ -60,7 +60,9 @@ public class NFTsController {
             @Schema(description = "컨트랙트 주소")
             String contractAddress,
             @Schema(description = "Token ID")
-            Integer tokenId
+            Integer tokenId,
+            @Schema(description = "좋아요 수")
+            Integer likedCnt
     ){}
 
 //    private final NFTCreateService nftCreateService;
@@ -94,8 +96,7 @@ public class NFTsController {
     @GetMapping("/{nftId}")
     public Response<?> getNFTInfo(@PathVariable Integer nftId){
         log.debug("# NFT 조회 : {}", nftId);
-//        NFTWebResponse response=nftReadService.getNFTById(nftId);
-        return OK(null);
+        return OK(nftService.getNFTInfo(nftId));
     }
 
     @Operation(summary = "NFT 삭제", description = "등록했던 NFT를 삭제합니다.")

@@ -152,6 +152,21 @@ public class NFTServiceImpl implements NFTService {
         nft.setLiked_cnt(nft.getLiked_cnt()-1);
     }
 
+    @Override
+    public NFTsController.NFTWebResponse getNFTInfo(Integer nftId) {
+        NFTs nft=nftRepository.findById(nftId).get();
+        return new NFTsController.NFTWebResponse(nft.getId(),
+                nft.getOwner().getWalletAddress(),
+                nft.getImage(),
+                nft.getName(),
+                nft.getAge(),
+                nft.getFeature(),
+                nft.getNftURL(),
+                nft.getContractAddress(),
+                nft.getTokenId(),
+                nft.getLiked_cnt());
+    }
+
     private String parsingPinataResponse(PinataResponse pinataImageResponse) {
         String[] bodySplit = pinataImageResponse.getBody().split(",");
         return ipfsBaseURL + bodySplit[0].substring(bodySplit[0].indexOf(":") + 2, bodySplit[0].length() - 1);
