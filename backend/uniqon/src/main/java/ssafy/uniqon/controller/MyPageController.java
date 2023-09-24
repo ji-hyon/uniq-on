@@ -55,11 +55,6 @@ public class MyPageController {
         return OK(null);
     }
 
-    @GetMapping("/nft")
-    Response<?> getLikeNFTList(){
-        return OK(null);
-    }
-
     @GetMapping("/boughtList/{userId}")
     Response<?> getPurchaseList(@PathVariable String userId,
                                 @PageableDefault Pageable pageable){
