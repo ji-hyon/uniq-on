@@ -17,7 +17,8 @@ import { authMiddleWare } from "./src/auth.js";
 const app = express();
 const port = 7000;
 
-app.use(express.static("public"));
+// app.use(express.static("public"));
+app.use("/diti", express.static("public"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
