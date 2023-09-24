@@ -18,7 +18,7 @@ const app = express();
 const port = 7000;
 
 // app.use(express.static("public"));
-app.use(express.static("public"));
+app.use("/diti",express.static("public"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,9 +26,10 @@ dotenv.config();
 
 // 모듈화 
 // /api/did 경로로 들어오면 didRouter가 처리 
-app.use("/api/did", authMiddleWare, didRouter);
+app.use("/diti/api/did", authMiddleWare, didRouter);
 // /diti로 요청이 들어오면 springProxy가 처리
-app.use("/diti", authMiddleWare, springProxy)
+app.use("/diti/auth", authMiddleWare, springProxy)
+app.use("/diti/vc", authMiddleWare, springProxy)
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
