@@ -20,4 +20,6 @@ public interface NFTService {
     void likeNFT(Integer nftId,String userId);
 
     void undoLikeNFT(Integer nftId,String userId);
+
+    void deleteNFT(Integer nftId) throws IOException;
 }
