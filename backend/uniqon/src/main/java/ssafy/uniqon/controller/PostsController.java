@@ -119,8 +119,8 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @GetMapping("/search/{word}")
-    public Response<?> searchPost(@PathVariable String word, @RequestParam String walletAddress) {
+    @GetMapping("/search")
+    public Response<?> searchPost(@RequestParam String word, @RequestParam String walletAddress) {
         log.debug("# 검색어 word : {}", word);
         log.debug("# 사용자 walletAddress : {}", walletAddress);
         List<postListsWebResponse> postlist = postReadService.getSearchPostList(word,walletAddress);
@@ -134,7 +134,7 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/detail/{postId}")
-    public Response<?> getDetailPost(@PathVariable int postId, @RequestParam("") String walletAddress){
+    public Response<?> getDetailPost(@PathVariable int postId, @RequestParam() String walletAddress){
         log.debug("# 판매글 식별자 id : {}", postId);
         log.debug("# 사용자 walletAddress : {}", walletAddress);
 
