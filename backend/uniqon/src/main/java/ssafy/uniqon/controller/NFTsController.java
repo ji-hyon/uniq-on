@@ -106,7 +106,7 @@ public class NFTsController {
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @GetMapping("/{nftId}")
+    @GetMapping("/detail/{nftId}")
     public Response<?> getNFTInfo(@PathVariable Integer nftId){
         log.debug("# NFT 조회 : {}", nftId);
         return OK(nftService.getNFTInfo(nftId));
@@ -121,7 +121,7 @@ public class NFTsController {
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @DeleteMapping("/{nftId}")
+    @DeleteMapping("/delete/{nftId}")
     public Response<?> deleteNFT(@PathVariable Integer nftId) throws IOException {
         log.debug("# 삭제할 NFT 식별자 : {}", nftId);
         nftService.deleteNFT(nftId);
@@ -139,7 +139,7 @@ public class NFTsController {
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @PostMapping("/{nftId}/{buyer}/{postId}")
+    @PostMapping("/buy/{nftId}/{buyer}/{postId}")
     public Response<?> transactNFT(@PathVariable Integer nftId,
                                    @PathVariable String buyer,
                                    @PathVariable Integer postId) throws Exception {
