@@ -2,6 +2,7 @@ package ssafy.uniqon.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,4 +50,8 @@ public class NFTs {
     private String contractAddress;
 
     private int tokenId;
+
+    @Setter
+    @ColumnDefault("0")
+    private Integer liked_cnt;
 }

@@ -7,6 +7,4 @@ import ssafy.uniqon.model.Members;
 import ssafy.uniqon.model.NFTs;
 
 public interface NFTRepository extends JpaRepository<NFTs, Integer> {
-
-    Page<NFTs> findByOwner(Members owner, Pageable pageable);
 }

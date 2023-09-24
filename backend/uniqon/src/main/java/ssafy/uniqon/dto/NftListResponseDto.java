@@ -20,4 +20,5 @@ public class NftListResponseDto {
     private String nftURL;
     private String contractAddress;
     private Integer tokenId;
+    private Integer likedCnt;
 }
