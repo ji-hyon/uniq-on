@@ -73,8 +73,8 @@ export function TransactionBanner() {
         </div>
       </div>
     </div>
-    <Button color="red" onClick={searchSales}>판매 검색</Button>
-        <br></br>
+    {/* <Button color="red" onClick={searchSales}>판매 검색</Button>
+        <br></br> */}
     </>
   )
 }
