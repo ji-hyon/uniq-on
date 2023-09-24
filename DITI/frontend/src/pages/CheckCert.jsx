@@ -8,6 +8,7 @@ export function CheckCert() {
   const [VcList, setVcList] = useState([]);
   const walletAddress = useUserInfoStore((state) => state.walletAddress)
   const [decodedJwts, setDecodedJwts] = useState([]);
+  const userInfo = useUserInfoStore()
 
   // 조회 페이지 들어오면 vc 리스트 데이터 불러오기
   // 일회성
@@ -20,7 +21,12 @@ export function CheckCert() {
     }
     async function certList() {
       try {
-        const response = await axios.get(`/diti/vc/list/vc/${walletAddress}`)
+        const response = await axios.get(`/diti/vc/list/vc/${walletAddress}`, {
+        headers: {
+            'Authorization': userInfo.token,
+            'walletAddress': userInfo.walletAddress,
+          },
+        })
         console.log(response)
         console.log("test:", response.data.response.content);
         setVcList(response.data.response.content)

@@ -3,7 +3,9 @@ import { Button } from "@material-tailwind/react";
 import axios from "axios"
 import { ethers } from "ethers"
 import useUserInfoStore from '../stores/UserInfoStore.js'
+import Web3Token from 'web3-token';
 
+// 저장
 export function MetaMask() {
   const [signer, setSigner] = useState(null)
   const [provider, setProvider] = useState(null) 
@@ -99,9 +101,11 @@ export function MetaMask() {
         chainId: String(chainId),
       })
       console.log(address,balance,chainId)
-      const message = "Please issue a certificate"
-      const signedMessage = await signer.signMessage(message)
-      setUserInfo(address, message, signedMessage)
+      // const message = "Please issue a certificate"
+      // const signedMessage = await signer.signMessage(message)
+      // setUserInfo(address, message, signedMessage)
+      const token = await Web3Token.sign(async msg => await signer.signMessage(msg), '1d');
+      setUserInfo(address,token)
     }catch(e){
       console.log("code:",e.code,"message:",e.message)
     }

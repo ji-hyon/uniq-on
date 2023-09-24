@@ -2,7 +2,7 @@ import express from "express"
 const router = express.Router()
 // multipart 데이터를 받기 위해 사용 (신분증 사진)
 import multer from 'multer'
-const upload = multer({ dest: 'uploads/'})
+const upload = multer({ dest: 'uploads/' })
 
 // 메세지로 본인 인증하는 함수 작성한 것 import
 import { verifyLoginMessage } from "../src/auth.js"
@@ -15,14 +15,15 @@ import axios from "axios"
 // https://inpa.tistory.com/entry/EXPRESS-%F0%9F%93%9A-multer-%EB%AF%B8%EB%93%A4%EC%9B%A8%EC%96%B4
 router.post('/vc', upload.single("imgFile"), async (req, res) => {
     // body에는 텍스트 정보
-    const { walletAddress, originalMessage, signedMessage } = req.body
-    if (!verifyLoginMessage(walletAddress, originalMessage, signedMessage)) {
-        res.status(400).send("login failed")
-    }
+    // const { walletAddress, originalMessage, signedMessage } = req.body
+    // if (!verifyLoginMessage(walletAddress, originalMessage, signedMessage)) {
+    //     res.status(400).send("login failed")
+    // }
+    const walletAddress = req.headers.walletaddress
 
     // OCR로 읽어들인 정보 처리 
     // console.log("log:",req.file)
-    const ocrResult=await readImage(req.file)
+    const ocrResult = await readImage(req.file)
     const vcJwt = await createVC(walletAddress, ocrResult)
     // 유저 테이블에 주소가 추가되는 것 (VC없이 지갑주소만 추가)
     try {
@@ -33,7 +34,7 @@ router.post('/vc', upload.single("imgFile"), async (req, res) => {
                     'Content-Type': 'text/plain',
                 }
             })
-    } catch(e) {
+    } catch (e) {
         console.log(e)
         console.log("/diti/auth/join failed")
     }

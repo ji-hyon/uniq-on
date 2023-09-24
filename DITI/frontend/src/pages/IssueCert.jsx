@@ -4,12 +4,13 @@ import axios from "axios"
 import { ethers } from "ethers"
 import useUserInfoStore from '../stores/UserInfoStore';
 
+// 요청
 export function IssueCert() {
   const [signer, setSigner] = useState(null)
   const [provider, setProvider] = useState(null)
   const [wallet, setWallet] = useState({
-    address: "", 
-    balance: "", 
+    address: "",
+    balance: "",
     chainId: "",
   })
   const inputFileRef = useRef(null)
@@ -25,23 +26,25 @@ export function IssueCert() {
     // const signedMessage = await signer.signMessage(message)
     // 백엔드 서버로, message와 signed message와 자신의 지갑 주소를 보내고, 백엔드에서 verifyMessage를 호출해서 나온 값이 자신의 주소와 일치해야 함 
 
-    const data = {
-      "walletAddress": userInfo.walletAddress,
-      "originalMessage": userInfo.originalMessage,
-      "signedMessage": userInfo.signedMessage,
-    };
-    
+    // const data = {
+    //   "walletAddress": userInfo.walletAddress,
+    //   "originalMessage": userInfo.originalMessage,
+    //   "signedMessage": userInfo.signedMessage,
+    // };
+
     const formData = new FormData()
     //formData.append("data", new Blob([JSON.stringify(data)], { type: "application/json" }))
-    formData.append("walletAddress", data["walletAddress"])
-    formData.append("originalMessage", data["originalMessage"])
-    formData.append("signedMessage", data["signedMessage"])
+    // formData.append("walletAddress", data["walletAddress"])
+    // formData.append("originalMessage", data["originalMessage"])
+    // formData.append("signedMessage", data["signedMessage"])
     formData.append("imgFile", inputFileRef.current.files[0])
 
     try {
       const response = await axios.post("/api/did/vc", formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Authorization': userInfo.token,
+          'walletAddress': userInfo.walletAddress,
         },
       });
       console.log(response)
@@ -49,6 +52,7 @@ export function IssueCert() {
       console.error(e)
     }
   }
+  
   async function test() {
     try {
       const response = await axios.get("/api/did/test");
@@ -68,8 +72,8 @@ export function IssueCert() {
           <input className="text-[20px] text-center" ref={inputFileRef} type="file" name="imgFile" />
           <Button className="text-4xl w-96 h-28 mt-1" color="yellow" onClick={requestVC}>전자신분증 발급</Button>
         </div>
-        
-          <Button className="text-base w-50 h-20 m-20" color="blue" onClick={test}>node connect test</Button>
+
+        <Button className="text-base w-50 h-20 m-20" color="blue" onClick={test}>node connect test</Button>
       </header>
 
     </div>
