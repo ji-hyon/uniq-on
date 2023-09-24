@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useCollectionsStore } from '../../stores/CollectionsStore';
+import { MidModal } from '../../components/Collections/NftModal';
 import {
   Card,
   CardHeader,
@@ -9,7 +10,8 @@ import {
   Typography,
   Button,
   Tooltip,
-  IconButton
+  IconButton,
+  Input
 } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 
@@ -30,6 +32,8 @@ export function MidCollections() {
   } = useCollectionsStore();
 
   const [midCardsData, setMidCardsData] = useState([]);
+  const [selectedCard, setSelectedCard] = useState({ id: '', image: '', feature: '' });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     async function middleList() {
@@ -37,7 +41,7 @@ export function MidCollections() {
         const response = await axios.get(URL + `/api/collections/list/middle/${mainCollecId}`);
         console.log('success', response);
 
-        setMidCardsData(response.data.response);
+        setMidCardsData(response.data.response.content);
       } catch (e) {
         console.log('failed: ', e);
       }
@@ -51,6 +55,16 @@ export function MidCollections() {
 
   const goToNFTList = () => {
     navigate('/nftlist');
+  };
+
+  const clickCard = (card) => {
+    console.log('selectedcard', card);
+    setSelectedCard({
+      id: card.id,
+      image: card.image,
+      feature: card.feature
+    });
+    setIsModalOpen(true);
   };
 
   // async function middleList(index) {
@@ -74,7 +88,7 @@ export function MidCollections() {
     <div className="App">
       <header className="App-header">
         <p>중분류 페이지 입니다.</p>
-
+        <br></br>
         <div className="flex space-x-4">
           {midCardsData.map((card, index) => (
             <Card
@@ -82,7 +96,8 @@ export function MidCollections() {
                 setMidCollecId(card.id);
                 setMidCollecType(card.species);
                 setMidCollecImg(card.image);
-                goToNFTList();
+                clickCard(card);
+                // goToNFTList();
               }}
               key={index}
               className="w-full max-w-[26rem] shadow-lg"
@@ -102,7 +117,8 @@ export function MidCollections() {
                     setMidCollecId(card.id);
                     setMidCollecType(card.species);
                     setMidCollecImg(card.image);
-                    goToNFTList();
+                    clickCard(card);
+                    // goToNFTList();
                   }}
                   className="text-lg"
                   size="lg"
@@ -162,6 +178,12 @@ export function MidCollections() {
             </CardFooter>
           </Card> */}
         </div>
+        <MidModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          selectedCard={selectedCard}
+          goToNft={goToNFTList}
+        ></MidModal>
       </header>
     </div>
   );

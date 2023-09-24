@@ -1,4 +1,4 @@
-package ssafy.uniqon.global.config;
+package ssafy.uniqon.global.config.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;

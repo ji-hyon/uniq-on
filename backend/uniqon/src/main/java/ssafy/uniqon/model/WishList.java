@@ -2,13 +2,12 @@ package ssafy.uniqon.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.security.Timestamp;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@SuperBuilder
+@NoArgsConstructor
 public class WishList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +20,6 @@ public class WishList {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private  Posts post;
+    private Posts post;
 
 }

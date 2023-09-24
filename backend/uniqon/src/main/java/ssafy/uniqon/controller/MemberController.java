@@ -5,6 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ssafy.uniqon.global.response.Response;
+import ssafy.uniqon.service.MemberService;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import static ssafy.uniqon.global.response.Response.OK;
 
 @Slf4j
 @RestController
@@ -23,11 +30,12 @@ public class MemberController {
             String vpToken
     ){}
 
-
+    private final MemberService memberService;
 
     @PostMapping("/signup")
-    public void signup(@RequestPart(value = "data")  SignupWebRequest req,
-                       @RequestPart(value = "file") MultipartFile multipartFile){
+    public Response<?> signup(@RequestPart(value = "data")  SignupWebRequest req,
+                           @RequestPart(value = "file") MultipartFile multipartFile) throws SQLException, IOException {
 
+        return OK(memberService.signup(req,multipartFile));
     }
 }

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Modal from '../../components/Collections/NftModal';
+import { NftModal } from '../../components/Collections/NftModal';
 import {
   Card,
   CardHeader,
@@ -9,7 +9,8 @@ import {
   Typography,
   Button,
   Tooltip,
-  IconButton
+  IconButton,
+  Input
 } from '@material-tailwind/react';
 import { useCollectionsStore } from '../../stores/CollectionsStore';
 import { useEffect, useState } from 'react';
@@ -29,6 +30,7 @@ export function NFTList() {
   const [nftData, setNftData] = useState([]);
   const [selectedNft, setSelectedNft] = useState({ id: '', image: '', name: '', age: '', nickname: '', feature: '' });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   useEffect(() => {
     async function nftList() {
@@ -36,7 +38,7 @@ export function NFTList() {
         const response = await axios.get(`/api/collections/list/nft/${midCollecId}`);
         console.log('success', response);
 
-        setNftData(response.data.response);
+        setNftData(response.data.response.content);
       } catch (e) {
         console.log('failed', e);
       }
@@ -60,11 +62,49 @@ export function NFTList() {
     // setMidCollecImg(card.image);
   };
 
+  // 검색 기능
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`/api/collections/search`, {
+        params: {
+          query: searchKeyword
+        }
+      });
+      setNftData(response.data.response.content);
+      console.log('검색 결과', response.data.response.content);
+    } catch (error) {
+      console.log('검색 요청 실패', error);
+    }
+  };
+
+  // 검색 키 다운
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <p>여기는 NFT를 보여주는 소분류 페이지 입니다.</p>
 
+        <div className="relative flex w-full max-w-[24rem]">
+          <Input
+            type="text"
+            placeholder="검색어를 입력하세요"
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
+            onKeyDown={handleKeyDown}
+            style={{ color: 'white', borderColor: 'white' }}
+            containerProps={{ className: 'min-w-0' }}
+          ></Input>
+          <Button size="sm" onClick={handleSearch} className="!absolute right-1 top-2.5 rounded">
+            검색
+          </Button>
+        </div>
+
+        <br></br>
         {/* 선택된 중분류 카드 보여줌 */}
         <Card className="w-full max-w-[26rem] shadow-lg">
           <CardHeader floated={false} color="blue-gray">
@@ -82,7 +122,7 @@ export function NFTList() {
             </Button>
           </CardFooter>
         </Card>
-
+        <br></br>
         {/* NFT 카드 리스트를 보여줌 */}
         <div className="flex space-x-4">
           {nftData.map((card, index) => (
@@ -105,13 +145,13 @@ export function NFTList() {
                   size="lg"
                   fullWidth={true}
                 >
-                  {card.nickname}
+                  {card.ownerNickname}
                 </Button>
               </CardFooter>
             </Card>
           ))}
         </div>
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} selectedNft={selectedNft}></Modal>
+        <NftModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} selectedNft={selectedNft}></NftModal>
       </header>
     </div>
   );
