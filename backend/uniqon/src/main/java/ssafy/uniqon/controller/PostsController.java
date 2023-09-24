@@ -120,10 +120,10 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/search")
-    public Response<?> searchPost(@RequestParam String word, @RequestParam String walletAddress) {
+    public Response<?> searchPost(@RequestParam String word, @RequestParam String walletAddress,@PageableDefault(size=9) Pageable pageable) {
         log.debug("# 검색어 word : {}", word);
         log.debug("# 사용자 walletAddress : {}", walletAddress);
-        List<postListsWebResponse> postlist = postReadService.getSearchPostList(word,walletAddress);
+        List<postListsWebResponse> postlist = postReadService.getSearchPostList(word,walletAddress, pageable);
         return OK(postlist);
     }
 
@@ -173,9 +173,9 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/post")
-    public Response<?> getAllPostList(@RequestParam String walletAddress,@PageableDefault(size=10) Pageable pageable){
+    public Response<?> getAllPostList(@RequestParam String walletAddress,@PageableDefault(size=9) Pageable pageable){
         log.debug("# 판매글 리스트 표시");
-        List<postListsWebResponse> postlist = postReadService.getPostAll(walletAddress);
+        List<postListsWebResponse> postlist = postReadService.getPostAll(walletAddress,pageable);
         return OK(postlist);
     }
 }
