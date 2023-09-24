@@ -54,9 +54,36 @@ export function IssueCert() {
   }
   
   async function test() {
+    // try {
+    //   const response = await axios.get("/api/did/test");
+    //   console.log(response)
+    // } catch (e) {
+    //   console.error(e)
+    // }
+
+    // 임의의 메세지에 사인하는 것
+    // const message = "Please issue a certificate"
+    // const signedMessage = await signer.signMessage(message)
+
+    // const data = {
+      // "walletAddress": await signer.getAddress(),
+      // "originalMessage": message,
+      // "signedMessage": signedMessage,
+    // };
+
     try {
-      const response = await axios.get("/api/did/test");
-      console.log(response)
+      const response = await axios.get("/api/did/vp/"+userInfo.walletAddress+"/idCard",{
+        headers: {
+          'Content-Type': 'application/json',
+          // "walletAddress": data["walletAddress"],
+          'walletAddress': userInfo.walletAddress,
+          'Authorization': userInfo.token,
+          // "originalMessage": data["originalMessage"],
+          // "signedMessage": data["signedMessage"],
+
+        }
+      });
+      console.log(response.data)
     } catch (e) {
       console.error(e)
     }
@@ -73,7 +100,7 @@ export function IssueCert() {
           <Button className="text-4xl w-96 h-28 mt-1" color="yellow" onClick={requestVC}>전자신분증 발급</Button>
         </div>
 
-        <Button className="text-base w-50 h-20 m-20" color="blue" onClick={test}>node connect test</Button>
+        <Button className="text-base w-50 h-20 m-20" color="blue" onClick={test}>Test button</Button>
       </header>
 
     </div>

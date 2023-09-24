@@ -8,8 +8,14 @@ const upload = multer({ dest: 'uploads/' })
 import { verifyLoginMessage } from "../src/auth.js"
 
 import { readImage } from "../src/ocr.js"
-import { createVC } from "../src/did.js"
+import { createVC, createVP } from "../src/did.js"
 import axios from "axios"
+
+// 테스트 코드 
+// router.get("/test", (req, res) => {
+//     res.send("hello")
+// })
+
 
 // /vc 경로로 post 요청이 왔을 때의 로직
 // https://inpa.tistory.com/entry/EXPRESS-%F0%9F%93%9A-multer-%EB%AF%B8%EB%93%A4%EC%9B%A8%EC%96%B4
@@ -57,8 +63,26 @@ router.post('/vc', upload.single("imgFile"), async (req, res) => {
     res.send(vcJwt)
 })
 
-router.get("/test", (req, res) => {
-    res.send("hello")
+
+// VP 발급 
+router.get("/vp/:walletAddress/:type", async (req, res) => {
+    const walletAddress = req.params.walletAddress
+    const type = req.params.type
+    try {
+        const springResponse = await axios.get(process.env.SPRING_SERVER_URI + "/diti/vc/" + walletAddress + "/" + type,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+        const vcJwt = springResponse.data.response.vcJwt
+        console.log("springResponse.data.response.vcJwt:",vcJwt)
+        const vpJwt = await createVP(vcJwt)
+        res.send(vpJwt)
+    } catch {
+        console.log("GET /diti/vc failed")
+    }
+
 })
 
 export default router

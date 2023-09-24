@@ -47,7 +47,7 @@ export async function createVC(walletAddress, data) {
 // createVP
 // 서비스가 요청. 신분증의 주인임을 알기위해 서명 필요 + 특정 인증서 이름(?) 
 // 서비스 -> Spring -> node -> Spring -> 서비스 
-async function createVP(vcJwt) {
+export async function createVP(vcJwt) {
     const vpPayload = {
         vp: {
         '@context': ['https://www.w3.org/2018/credentials/v1'],
@@ -57,6 +57,7 @@ async function createVP(vcJwt) {
     }
         const vpJwt = await createVerifiablePresentationJwt(vpPayload, issuer)
         console.log(vpJwt)
+        return vpJwt
 }
 
 // // verify VC
