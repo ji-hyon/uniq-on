@@ -19,6 +19,7 @@ import org.web3j.utils.Convert;
 import pinata.Pinata;
 import pinata.PinataResponse;
 import ssafy.uniqon.controller.NFTsController;
+import ssafy.uniqon.dto.NftListResponseDto;
 import ssafy.uniqon.model.*;
 import ssafy.uniqon.repository.*;
 
@@ -36,6 +37,7 @@ public class NFTServiceImpl implements NFTService {
     private final TransactionHistoriesRepository transactionHistoriesRepository;
     private final MiddleClassificationRepository middleClassificationRepository;
     private final MyCollectionsRepository myCollectionsRepository;
+    private final NFTQueryRepository nftQueryRepository;
 
     private final Pinata pinata = new Pinata("64e7615856edbac52336", "f62623900242c791dc8cb1243c69b2df8664886f50295a79d43ffe5ffdce0b5c");
     private static final String ipfsBaseURL = "https://gateway.pinata.cloud/ipfs/";
@@ -131,9 +133,9 @@ public class NFTServiceImpl implements NFTService {
     }
 
     @Override
-    public Page<NFTs> getMyNFTList(String owner, Pageable pageable) {
-        Members member=memberRepository.findById(owner).get();
-        return nftRepository.findByOwner(member,pageable);
+    public Page<NftListResponseDto> getMyNFTList(String owner, Pageable pageable) {
+
+        return nftQueryRepository.getMyNftList(owner,pageable);
     }
 
     @Override

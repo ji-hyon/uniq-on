@@ -41,7 +41,8 @@ public class NFTQueryRepository {
                         nFTs.middle.species,
                         nFTs.nftURL,
                         nFTs.contractAddress,
-                        nFTs.tokenId
+                        nFTs.tokenId,
+                        nFTs.liked_cnt
                         ))
                 .from(nFTs)
                 .where(
@@ -81,7 +82,8 @@ public class NFTQueryRepository {
                         nFTs.middle.species,
                         nFTs.nftURL,
                         nFTs.contractAddress,
-                        nFTs.tokenId
+                        nFTs.tokenId,
+                        nFTs.liked_cnt
                 ))
                 .from(nFTs)
                 .where(
@@ -106,6 +108,47 @@ public class NFTQueryRepository {
                                 )
                         )
                 )
+                .fetch().size();
+
+
+        return new PageImpl<>(list, pageable, count);
+    }
+
+    public Page<NftListResponseDto> getMyNftList(String userId, Pageable pageable){
+        log.debug("# DB에서 nft 리스트 조회 ..");
+
+        List<NftListResponseDto> list = jpaQueryFactory
+                .select(Projections.constructor(NftListResponseDto.class,
+                        nFTs.id,
+                        nFTs.nftTxHash,
+                        nFTs.image,
+                        nFTs.name,
+                        nFTs.age,
+                        nFTs.feature,
+                        nFTs.owner.nickname,
+                        nFTs.owner.profileImage,
+                        nFTs.middle.id,
+                        nFTs.middle.species,
+                        nFTs.nftURL,
+                        nFTs.contractAddress,
+                        nFTs.tokenId,
+                        nFTs.liked_cnt
+                ))
+                .from(nFTs)
+                .where(
+                        nFTs.owner.walletAddress.eq(userId)
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(nFTs.id.desc())
+                .fetch();
+
+        log.debug("리스트 조회 : {}", list);
+
+        int count = jpaQueryFactory
+                .select(nFTs.count())
+                .from(nFTs)
+                .where(nFTs.owner.walletAddress.eq(userId))
                 .fetch().size();
 
 
