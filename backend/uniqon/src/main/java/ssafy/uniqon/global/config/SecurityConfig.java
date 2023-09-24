@@ -1,6 +1,8 @@
 package ssafy.uniqon.global.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -8,7 +10,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ssafy.uniqon.global.config.auth.*;
 
@@ -17,6 +23,10 @@ import ssafy.uniqon.global.config.auth.*;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    @Autowired
+    private ApplicationContext context;
+
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -27,6 +37,12 @@ public class SecurityConfig {
 //    public WebSecurityCustomizer webSecurityCustomizer() {
 //        return (web) -> web.ignoring().requestMatchers("/**", "/**");
 //    }
+
+    // PasswordEncoder는 BCryptPasswordEncoder를 사용
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -41,15 +57,18 @@ public class SecurityConfig {
 //                        .requestMatchers("/api/users/login", "/api/users/signup","/transaction").permitAll()
 //                        .anyRequest().authenticated())
                 .authorizeRequests((authorizeRequests) -> authorizeRequests
-                        .requestMatchers("/api/sales/post**","/api/nfts/detail/**").permitAll()
+                        .requestMatchers("/api/sales/post**","/api/nfts/detail/**","/api/users/**").permitAll()
                         .requestMatchers("/api/sales/**", "/api/wallet/**", "/api/myPage/**","api/wishlist/**").authenticated()
                         .requestMatchers("/api/nfts/**").authenticated()
                         .anyRequest().permitAll())
 //                .formLogin(formlogin->formlogin.disable())
                 .formLogin(formLogin -> formLogin
 //                        .loginPage("/api/users/login")
-                        .loginProcessingUrl("/api/users/login")
-                        .successHandler(new LoginSuccessHandler())
+// Content-Type을 application/x-www-form-urlencoded
+                        .usernameParameter("walletAddress")
+                        .passwordParameter("nickname")
+                        .loginProcessingUrl("/api/auth/login")
+                        .successHandler(new LoginSuccessHandler(tokenProvider))
                         .failureHandler(new LoginFailuerHandler()))
                 .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .build();

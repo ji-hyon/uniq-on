@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ssafy.uniqon.global.response.Response;
+import ssafy.uniqon.model.Members;
 import ssafy.uniqon.service.MemberService;
 
 import java.io.IOException;
@@ -30,6 +31,10 @@ public class MemberController {
             String vpToken
     ){}
 
+    record LoginWebRequest(
+            String walletAddress
+    ){}
+
     private final MemberService memberService;
 
     @PostMapping("/signup")
@@ -38,4 +43,9 @@ public class MemberController {
 
         return OK(memberService.signup(req,multipartFile));
     }
+
+//    @GetMapping("/login")
+//    public Response<?> login() {
+//        return OK(memberService.login(String walletAddress));
+//    }
 }
