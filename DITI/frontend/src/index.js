@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ThemeProvider>
-      <BrowserRouter basename="/diti">
+      <BrowserRouter basename={process.env.DITI_BASENAME || ""}>
         <App />
       </BrowserRouter>
     </ThemeProvider>

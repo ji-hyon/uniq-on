@@ -25,12 +25,12 @@ app.use(express.urlencoded({ extended: true }));
 dotenv.config();
 
 // 모듈화 
-// /api/did 경로로 들어오면 didRouter가 처리 
-app.use("/diti/api/did", authMiddleWare, didRouter);
+// /diti/did 경로로 들어오면 didRouter가 처리 
+app.use("/diti/did", authMiddleWare, didRouter);
 // /diti로 요청이 들어오면 springProxy가 처리
 app.use("/diti/auth", authMiddleWare, springProxy)
 app.use("/diti/vc", authMiddleWare, springProxy)
-app.use("/diti/swagger-ui",springProxy)
+app.use("/diti/swagger*",springProxy)
 
 
 app.listen(port, () => {

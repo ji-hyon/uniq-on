@@ -40,7 +40,7 @@ export function IssueCert() {
     formData.append("imgFile", inputFileRef.current.files[0])
 
     try {
-      const response = await axios.post("/api/did/vc", formData, {
+      const response = await axios.post("/diti/did/vc", formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': userInfo.token,
@@ -55,7 +55,7 @@ export function IssueCert() {
   
   async function test() {
     // try {
-    //   const response = await axios.get("/api/did/test");
+    //   const response = await axios.get("/diti/did/test");
     //   console.log(response)
     // } catch (e) {
     //   console.error(e)
@@ -72,7 +72,7 @@ export function IssueCert() {
     // };
 
     try {
-      const response = await axios.get("/api/did/vp/"+userInfo.walletAddress+"/idCard",{
+      const response = await axios.get("/diti/did/vp/"+userInfo.walletAddress+"/idCard",{
         headers: {
           'Content-Type': 'application/json',
           // "walletAddress": data["walletAddress"],
