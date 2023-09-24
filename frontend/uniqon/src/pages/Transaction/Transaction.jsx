@@ -29,7 +29,9 @@ export function Transaction() {
       itemImageList, setItemImageList,
       itemNicknameList, setItemNicknameList,
       itemSpeciesList, setItemSpeciesList,
-      itemTitleList, setItemTitleList } = useTransactionStore();
+      itemTitleList, setItemTitleList,
+      isWishList, setIsWishList,  
+    } = useTransactionStore();
 
   
   const URL = "http://localhost:5000"
