@@ -4,6 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,12 +52,17 @@ public class PostRepository {
         em.persist(post);
     }
 
-    public List<Posts> getPostAll() { return jpaQueryFactory.selectFrom(posts).where(posts.state.eq(0)).fetch();}
+    public List<Posts> getPostAll(Pageable pageable) { return jpaQueryFactory.selectFrom(posts)
+            .where(posts.state.eq(0))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();}
 
     public Posts getPostById(int postId) {
         return jpaQueryFactory.selectFrom(posts).where(posts.state.eq(0).and(posts.id.eq(postId))).fetchOne();
     }
-    public List<Posts> getSearchPost(String word) { return jpaQueryFactory.selectFrom(posts).where(posts.state.eq(0).and(posts.title.contains(word))).fetch();}
+    public List<Posts> getSearchPost(String word, Pageable pageable) { return jpaQueryFactory.selectFrom(posts).where(posts.state.eq(0).and(posts.title.contains(word))).offset(pageable.getOffset())
+            .limit(pageable.getPageSize()).fetch();}
 
     @Transactional
     public void updatePost(Integer postId,PostsController.UpdatePostWebRequest req){

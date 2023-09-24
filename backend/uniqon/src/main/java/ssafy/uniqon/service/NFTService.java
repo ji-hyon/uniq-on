@@ -22,4 +22,6 @@ public interface NFTService {
     void undoLikeNFT(Integer nftId,String userId);
 
     NFTsController.NFTWebResponse getNFTInfo(Integer nftId);
+
+    void deleteNFT(Integer nftId) throws IOException;
 }

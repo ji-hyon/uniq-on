@@ -109,9 +109,10 @@ public class NFTsController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @DeleteMapping("/{nftId}")
-    public Response<?> deleteNFT(@PathVariable Integer nftId){
+    public Response<?> deleteNFT(@PathVariable Integer nftId) throws IOException {
         log.debug("# 삭제할 NFT 식별자 : {}", nftId);
-        return OK(null);
+        nftService.deleteNFT(nftId);
+        return OK("deleted");
     }
 
     @Operation(summary = "NFT 거래", description = "NFT를 거래합니다.")

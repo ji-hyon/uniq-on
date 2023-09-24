@@ -167,6 +167,23 @@ public class NFTServiceImpl implements NFTService {
                 nft.getLiked_cnt());
     }
 
+    @Override
+    public void deleteNFT(Integer nftId) throws IOException {
+        Credentials credential = Credentials.create(userPrivateKey);
+//        System.out.println(credential.getAddress());
+        EthGasPrice ethGasPrice = web3j.ethGasPrice().send();
+        BigInteger gasPrice = ethGasPrice.getGasPrice();
+        ContractGasProvider gasProvider = new StaticGasProvider(gasPrice, BigInteger.valueOf(2_100_000L));
+
+        UniqonNFT contract = UniqonNFT.load(
+                contractAddress, web3j, credential, gasProvider);
+        if(contract.isValid()){
+            contract.burnNFT(BigInteger.valueOf(nftId));
+            nftRepository.delete(nftRepository.findById(nftId).get());
+        }
+        web3j.shutdown();
+    }
+
     private String parsingPinataResponse(PinataResponse pinataImageResponse) {
         String[] bodySplit = pinataImageResponse.getBody().split(",");
         return ipfsBaseURL + bodySplit[0].substring(bodySplit[0].indexOf(":") + 2, bodySplit[0].length() - 1);
