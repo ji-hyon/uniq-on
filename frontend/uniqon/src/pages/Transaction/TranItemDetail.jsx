@@ -14,6 +14,7 @@ export function TranItemDetail () {
   const { id } = useParams();
   const [ item, setItem ] = useState({});
   const URL = "http://localhost:5000"
+  const walletAddress = "0x1234567890123456789012345678901234567890";
 
   // const [수정open, set수정Open] = React.useState(false);
   // const 수정handleOpen = () => { set수정Open(!수정open); };
@@ -25,7 +26,14 @@ export function TranItemDetail () {
 
 
   useEffect(() => {
-    axios.get(URL + `/api/sales/detail/${id}`)
+
+    const params = {
+      walletAddress: walletAddress,
+    };
+
+    axios.get(URL + `/api/sales/detail/${id}`, {
+      params: params,
+    })
     .then((res) => {
       setItem(res.data);
     })
@@ -33,6 +41,8 @@ export function TranItemDetail () {
       console.log(err);
     })
   }, [id]);
+
+  
 
   async function updateSales() {
 
@@ -42,6 +52,7 @@ export function TranItemDetail () {
         content: "test",
         title: "test",
         nftId: 1,
+        walletAddress: walletAddress,
       };
 
 
@@ -59,8 +70,14 @@ export function TranItemDetail () {
 
   async function deleteSales() {
 
+    const params = {
+      walletAddress: walletAddress,
+    };
+
     try {
-      const res = await axios.delete(URL + `/api/sales/delete/${id}`);
+      const res = await axios.delete(URL + `/api/sales/delete/${id}`, {
+        params: params,
+      });
         console.log(res.data)
         goToTransaction();
 

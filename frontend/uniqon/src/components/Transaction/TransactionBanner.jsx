@@ -6,13 +6,20 @@ import { Button, Input } from "@material-tailwind/react";
 export function TransactionBanner() {
 
   const [ word, setWord ] = useState("");
+  const walletAddress = "0x1234567890123456789012345678901234567890";
 
   async function searchSales() {
 
     const URL = "http://localhost:5000"
 
+    const params = {
+      walletAddress: walletAddress,
+    };
+
     try {
-      const res = await axios.get(URL + `/api/sales/search/word=${word}`);
+      const res = await axios.get(URL + `/api/sales/search/word=${word}`, {
+        params: params,
+      });
         console.log(word)
         console.log(res.data)
 
@@ -27,7 +34,7 @@ export function TransactionBanner() {
     <div className="bg-[#c1dcdc] flex flex-row justify-center">
       <div className="bg-[#c1dcdc] w-[1178px] h-[372px] relative">
         <div className="absolute w-[493px] h-[59px] top-[206px] left-[53px] bg-[#ffffff] rounded-[4.67px] overflow-hidden">
-        <div className="flex w-72 flex-col items-end gap-6">
+        <div className="flex flex-col items-end gap-6 w-72">
 
         <Input
           type="word"
