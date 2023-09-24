@@ -27,17 +27,11 @@ export function Transaction() {
 
   
 
-  const { salesItemsList, setSalesItemsList,
-      itemsPriceList, setItemsPriceList,
-      itemImageList, setItemImageList,
-      itemNicknameList, setItemNicknameList,
-      itemSpeciesList, setItemSpeciesList,
-      itemTitleList, setItemTitleList,
-      isWishList, setIsWishList,  
+  const { salesItemsList, setSalesItemsList  
     } = useTransactionStore();
 
   
-  const URL = "http://localhost:5000"
+  // const URL = "http://localhost:5000"
 
 
   useEffect(() => {
@@ -51,12 +45,12 @@ export function Transaction() {
         walletAddress: walletAddress,
       };
 
-      const res = await axios.get(URL + "/api/sales/post", {
+      const res = await axios.get("/api/sales/post", {
         params: params,
       });
-            console.log(res.data)
+            // console.log(res.data.response)
             setSalesItemsList(res.data.response)
-            console.log(salesItemsList)
+            // console.log(salesItemsList)
         } catch(err) {
           console.log(err)
         }
@@ -73,7 +67,7 @@ export function Transaction() {
         };
 
 
-        const res = await axios.post(URL + "/api/sales/register", data, {
+        const res = await axios.post("/api/sales/register", data, {
           headers: {
             },
         });
