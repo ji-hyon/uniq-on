@@ -7,7 +7,7 @@ export function TransactionBanner() {
 
   const [ word, setWord ] = useState("");
   const walletAddress = "0x1234567890123456789012345678901234567890";
-  const URL = "http://localhost:5000"
+  // const URL = "http://localhost:5000"
 
 
 
@@ -22,11 +22,11 @@ export function TransactionBanner() {
     };
 
     try {
-      const res = await axios.get(URL + "/api/sales/search", {
+      const res = await axios.get("/api/sales/search", {
         params: params,
       });
         console.log(word)
-        console.log(res.data)
+        console.log(res.data.response)
 
     } catch(err) {
       console.log(err)
