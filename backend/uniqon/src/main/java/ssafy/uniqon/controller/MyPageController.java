@@ -33,7 +33,14 @@ public class MyPageController {
             String buyer,
             String txHash,
             Timestamp transactedAt
-    ){}
+    ){
+        public TransactionHistoryWebResponse(String seller, String buyer, String txHash, Timestamp transactedAt) {
+            this.seller = seller;
+            this.buyer = buyer;
+            this.txHash = txHash;
+            this.transactedAt = transactedAt;
+        }
+    }
 
     private final MyPageService myPageService;
     private final NFTService nftService;
