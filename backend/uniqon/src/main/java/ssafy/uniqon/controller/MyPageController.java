@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ssafy.uniqon.global.response.Response;
 import ssafy.uniqon.service.MyPageService;
+import ssafy.uniqon.service.NFTService;
 
 import java.sql.Timestamp;
 
@@ -35,6 +36,7 @@ public class MyPageController {
     ){}
 
     private final MyPageService myPageService;
+    private final NFTService nftService;
 
     @GetMapping("/info/{userId}")
     Response<?> myProfile(@PathVariable int userId){
@@ -72,6 +74,12 @@ public class MyPageController {
     Response<?> getSalesList(@PathVariable String userId,
                              @PageableDefault Pageable pageable){
         return OK(myPageService.getSoldList(userId,pageable));
+    }
+
+    @GetMapping("/mynfts/{userId}")
+    Response<?> getMyNFTList(@PathVariable String userId,
+                             @PageableDefault Pageable pageable){
+        return OK(nftService.getMyNFTList(userId,pageable));
     }
 
 }

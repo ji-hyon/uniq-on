@@ -2,6 +2,8 @@ package ssafy.uniqon.service;
 
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -124,6 +126,12 @@ public class NFTServiceImpl implements NFTService {
 
 //        System.out.println(contract.balanceOf(credential.getAddress()).send());
         web3j.shutdown();
+    }
+
+    @Override
+    public Page<NFTs> getMyNFTList(String owner, Pageable pageable) {
+        Members member=memberRepository.findById(owner).get();
+        return nftRepository.findByOwner(member,pageable);
     }
 
     private String parsingPinataResponse(PinataResponse pinataImageResponse) {
