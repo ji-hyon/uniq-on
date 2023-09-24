@@ -36,7 +36,7 @@ export function NFTList() {
         const response = await axios.get(`/api/collections/list/nft/${midCollecId}`);
         console.log('success', response);
 
-        setNftData(response.data.response);
+        setNftData(response.data.response.content);
       } catch (e) {
         console.log('failed', e);
       }
@@ -105,7 +105,7 @@ export function NFTList() {
                   size="lg"
                   fullWidth={true}
                 >
-                  {card.nickname}
+                  {card.ownerNickname}
                 </Button>
               </CardFooter>
             </Card>
