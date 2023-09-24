@@ -10,6 +10,7 @@ import express from "express" // 서버 실행
 import cors from "cors"
 import dotenv from "dotenv" 
 import didRouter from "./routes/didRouter.js";
+import springProxy from "./routes/springProxy.js";
 
 // express서버, 7000번 포트 설정
 const app = express();
@@ -24,6 +25,8 @@ dotenv.config();
 // 모듈화 
 // /api/did 경로로 들어오면 didRouter가 처리 
 app.use("/api/did", didRouter);
+// /diti로 요청이 들어오면 springProxy가 처리
+app.use("/diti", springProxy)
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
