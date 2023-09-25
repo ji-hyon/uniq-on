@@ -14,24 +14,24 @@ export function Landing() {
 
   const navigate = useNavigate();
 
-//   async function loginUser() {
-//     try {
-//       const data = {
-//       walletAddress: "111",
-//       password: "woaud123",
+  async function loginUser() {
+    try {
+      const data = {
+      walletAddress: "111",
+      password: "woaud123",
     
-//     }
-//     const res = await axios.post("/api/auth/login", data, {
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/x-www-form-urlencoded",
-//       },
-//     });
-//     console.log(res.data.response);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+    }
+    const res = await axios.post("/api/auth/login", data, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+    console.log(res.data.response);
+  } catch (err) {
+    console.log(err);
+  }
+}
 
   return (
     <div className="App">
@@ -42,6 +42,8 @@ export function Landing() {
       <Section3 />
       <Section4 />
       </div>
+
+      <Button onClick={loginUser}></Button>
 
         <p>
           여기는 랜딩페이지입니다.
