@@ -3,6 +3,8 @@ package ssafy.uniqon.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.sql.Timestamp;
 
@@ -18,10 +20,12 @@ public class TransactionHistories {
 
     @ManyToOne
     @JoinColumn(name="seller",insertable=false, updatable=false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Members seller;
 
     @ManyToOne
     @JoinColumn(name="buyer",insertable=false, updatable=false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Members buyer;
 
     private String txHash;

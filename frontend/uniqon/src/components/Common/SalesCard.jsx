@@ -23,6 +23,12 @@ export function SalesCard({ item, id }) {
   const [postId, setPostId] = React.useState('1');
   const [wishId, setWishId] = React.useState('1');
 
+  const walletAddress = "0x1234567890123456789012345678901234567890";
+
+  const [ selectedItem, setSelectedItem ] = useState({});
+
+  const { forDetailItem, setForDetailItem } = useTransactionStore();
+
 
   const [itemwishcheck, setItemwishcheck] = React.useState(item.wishCheck);
 
@@ -30,14 +36,40 @@ export function SalesCard({ item, id }) {
     setItemwishcheck((cur) => !cur); // 이전 상태를 반전시켜 새로운 상태 설정
   };
 
-  // useEffect(() => {
+  useEffect(() => {
+    // getSalesDetail();
     
-  // }, []);
+  }, []);
 
-  const goToTranItemDetail = () => {
-    console.log(id);
-    navigate(`/transaction/tranitemdetail/${id}`);
-  };
+  
+
+  async function getSalesDetail() {
+      
+    const params = {
+      walletAddress: walletAddress,
+    };
+
+    try {
+      const res = await axios.get(`/api/sales/detail/${id}`, {
+        params: params,
+      });
+        // console.log(id)
+        // console.log(res.data.response)
+        setForDetailItem(res.data.response)
+
+    } catch(err) {
+      console.log(err)
+    }
+}
+
+async function goToTranItemDetail() {
+  // console.log(id)
+  getSalesDetail()
+  // console.log(item)
+  
+  // console.log(forDetailItem)
+  navigate(`/transaction/tranitemdetail/${id}`);
+};
 
   async function addWishlist() {
       
@@ -96,12 +128,12 @@ export function SalesCard({ item, id }) {
       </CardHeader>
       <CardBody>
         <div className="flex items-center justify-between mb-3">
-          <Typography variant="h5" color="blue-gray" className="font-medium" onClick={goToTranItemDetail}>
+          <Typography variant="h5" color="blue-gray" className="font-large" onClick={()=>{getSalesDetail(); goToTranItemDetail();}}>
             {item.title}
           </Typography>
           <Typography
             color="blue-gray"
-            className="flex items-center gap-1.5 font-normal"
+            className="flex items-center gap-1.5 font-medium font-semibold"
           >
             {/* <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +147,7 @@ export function SalesCard({ item, id }) {
                 clipRule="evenodd"
               />
             </svg> */}
-            가격 : {item.price} ETH
+            {item.price} ETH
           </Typography>
         </div>
         <Typography color="gray">

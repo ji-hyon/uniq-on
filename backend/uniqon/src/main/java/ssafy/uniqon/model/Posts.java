@@ -2,9 +2,7 @@ package ssafy.uniqon.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import java.sql.Timestamp;
 
@@ -47,13 +45,16 @@ public class Posts{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buyer")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Members buyer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Members seller;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nft_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private NFTs nft;
 }

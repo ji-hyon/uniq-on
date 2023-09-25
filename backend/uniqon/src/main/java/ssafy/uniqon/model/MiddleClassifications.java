@@ -2,6 +2,8 @@ package ssafy.uniqon.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -24,6 +26,7 @@ public class MiddleClassifications {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "main_classification_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private MainClassifications main;
 
 }

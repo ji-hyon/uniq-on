@@ -19,6 +19,13 @@ export function ItemDetailCard( { item } ) {
   const [postId, setPostId] = React.useState('1');
   const [wishId, setWishId] = React.useState('1');
 
+  const [title, setTitle] = useState("test");
+  const [content, setContent] = useState("test");
+  const [price, setPrice] = useState("1000");
+  const [species, setSpecies] = useState("1");
+  const [image, setImage] = useState("1");
+  const [nickname, setNickname] = useState("1");
+
   const [ 구매모달open, set구매모달Open ] = React.useState(false);
 
   const handleOpen = () => { set구매모달Open(!구매모달open); };
@@ -27,12 +34,22 @@ export function ItemDetailCard( { item } ) {
   // 아직 상세아이템 조회 api가 없어서 하드코딩하려고 거래 store에서 salesItemList 사용
   const { salesItemsList, setSalesItemsList } = useTransactionStore();
 
+  const { forDetailItem, setForDetailItem } = useTransactionStore();
+
   useEffect(() => {
-    console.log(item);
-    console.log(salesItemsList);
+    // console.log(forDetailItem)
+    // console.log(item);
+    // console.log(salesItemsList);
+    // setTitle(item.PostInfo.title);
+    // setContent(item.PostInfo.content);
+    // setPrice(item.PostInfo.price);
+    // setSpecies(item.nftInfo.species);
+    // setImage(item.nftInfo.image);
+    // setNickname(item.SellerInfo.nickname);
+    
   }, []);
 
-  if (!item) {
+  if (!forDetailItem) {
     // item 정보가 없을 경우 로딩 또는 오류 처리를 할 수 있습니다.
     return <div>Loading...</div>;
   }
@@ -67,8 +84,7 @@ export function ItemDetailCard( { item } ) {
         className="w-2/5 m-0 rounded-r-none shrink-0"
       >
         <img
-          // src="/{item.image}"
-          src={salesItemsList[0].image}
+          src={forDetailItem.nftInfo.image}
           alt="card"
           className="object-cover w-full h-full"
         />
@@ -90,41 +106,25 @@ export function ItemDetailCard( { item } ) {
         </IconButton>
       </CardHeader>
       <CardBody>
-        <Typography variant="h6" color="gray" className="mb-4 uppercase">
-          종 분류 |{item.species}{salesItemsList[0].species}
-        </Typography>
-        <Typography variant="h4" color="blue-gray" className="mb-2">
-          Lyft launching cross-platform lorem ipsum 판매글 제목쓰{item.title}{salesItemsList[0].title}
+      <Typography variant="h4" color="blue-gray" className="mb-2">
+          글 제목 | {forDetailItem.PostInfo.title}.
         </Typography>
         <Typography variant="h6" color="gray" className="mb-4 uppercase">
-          NFT가격 |{item.price}{salesItemsList[0].price}
+          종 분류 | {forDetailItem.nftInfo.species}.
         </Typography>
         <Typography variant="h6" color="gray" className="mb-4 uppercase">
-          판매자 |{item.nickname}{salesItemsList[0].nickname}
+          가격 | {forDetailItem.PostInfo.price} ETH.
+        </Typography>
+        <Typography variant="h6" color="gray" className="mb-4 uppercase">
+          판매자 | {forDetailItem.SellerInfo.nickname}.
         </Typography>
         <Typography color="gray" className="mb-8 font-normal">
-          Like so many organizations these days, Autodesk is a company in
-          transition. It was until recently a traditional boxed software company
-          selling licenses. Yet its own business model disruption is only part
-          of the story {item.content}
+          lorem ipsum {forDetailItem.PostInfo.content}.
         </Typography>
         <a href="#" className="inline-block">
-        <Button onClick={handleOpen} variant="gradient" className="flex" color="red">
+        <Button onClick={handleOpen} variant="gradient" className="flex text-lg" color="red">
             구매하기
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-              className="w-4 h-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-              />
-            </svg>
+            <img  className="w-8 h-8 ml-1" src="/coin.gif" alt="" />
           </Button>
         </a>
       </CardBody>
@@ -151,8 +151,9 @@ export function ItemDetailCard( { item } ) {
           <CardBody className="flex flex-col gap-4">
           <img src="/basket.gif" alt="my-gif" />
 
-        <p>{item.title}{salesItemsList[0].title}를 구매하시겠습니까?</p>
-        <p>가격 | {item.price}{salesItemsList[0].price} ETH </p>
+        <span className="text-lg"><span className="font-bold">{forDetailItem.title}
+        </span>를 구매하시겠습니까?</span>
+        <span className="text-lg">가격 | <span className="font-bold">{forDetailItem.price} ETH</span></span>
         </CardBody>
         <CardFooter className="flex justify-end pt-0">
         <Button variant="gradient" color="green" onClick={handleOpen}>

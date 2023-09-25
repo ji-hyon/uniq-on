@@ -5,6 +5,7 @@ import { ItemDetailCard } from "../../components/Common/ItemDetailCard";
 import { TopNavBar } from "../../components/Common/TopNavBar";
 import { useState } from "react";
 import { Button } from "@material-tailwind/react";
+import { useTransactionStore } from "../../stores/TransactionStore";
 
 
 export function TranItemDetail () {
@@ -13,7 +14,8 @@ export function TranItemDetail () {
 
   const { id } = useParams();
   const [ item, setItem ] = useState({});
-  const URL = "http://localhost:5000"
+  const { forDetailItem, setForDetailItem } = useTransactionStore();
+  // const URL = "http://localhost:5000"
   const walletAddress = "0x1234567890123456789012345678901234567890";
 
   // const [수정open, set수정Open] = React.useState(false);
@@ -27,20 +29,29 @@ export function TranItemDetail () {
 
   useEffect(() => {
 
-    const params = {
-      walletAddress: walletAddress,
-    };
+    // console.log(id)
 
-    axios.get(URL + `/api/sales/detail/${id}`, {
-      params: params,
-    })
-    .then((res) => {
-      setItem(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }, [id]);
+    getSalesDetail();
+  }, []);
+
+  async function getSalesDetail() {
+      
+      const params = {
+        walletAddress: walletAddress,
+      };
+  
+      try {
+        const res = await axios.get(`/api/sales/detail/${id}`, {
+          params: params,
+        });
+          // console.log(id)
+          // console.log(res.data.response)
+          setItem(res.data.response)
+  
+      } catch(err) {
+        console.log(err)
+      }
+  }
 
   
 
@@ -48,16 +59,15 @@ export function TranItemDetail () {
 
     try {
       const data = {
-        price: '1000',
+        price: "1000",
         content: "test",
-        title: "test",
-        nftId: 1,
+        title: "test1",
         walletAddress: walletAddress,
       };
 
 
 
-      const res = await axios.put(URL + `/api/sales/update/${id}`, data, {
+      const res = await axios.put(`/api/sales/update/${id}`, data, {
         headers: { 
           },
       });
@@ -75,9 +85,10 @@ export function TranItemDetail () {
     };
 
     try {
-      const res = await axios.delete(URL + `/api/sales/delete/${id}`, {
+      const res = await axios.delete(`/api/sales/delete/${id}`, {
         params: params,
       });
+        console.log(id)
         console.log(res.data)
         goToTransaction();
 
@@ -107,6 +118,7 @@ export function TranItemDetail () {
         <br></br>
         <Button color="cyan" onClick={deleteSales}>판매 삭제</Button>
         <br></br>
+        <Button color="gray" onClick={getSalesDetail}>판매 상세 조회</Button>
           </div>
           {/* <Button onClick={수정handleOpen} variant="gradient" className="self-end">
         판매글 수정
