@@ -66,10 +66,16 @@ public class SecurityConfig {
 //                        .loginPage("/api/users/login")
 // Content-Type을 application/x-www-form-urlencoded
                         .usernameParameter("walletAddress")
-                        .passwordParameter("nickname")
+                        .passwordParameter("password")
                         .loginProcessingUrl("/api/auth/login")
                         .successHandler(new LoginSuccessHandler(tokenProvider))
                         .failureHandler(new LoginFailuerHandler()))
+                .logout(logout->logout
+                        .logoutUrl("/api/users/logout")
+                        .deleteCookies("JSESSIONID")
+                        .clearAuthentication(true)
+                        .logoutSuccessHandler(((request, response, authentication) ->
+                                response.sendRedirect("http://localhost:3000"))))
                 .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .build();
 

@@ -28,7 +28,8 @@ public class MemberController {
             String nickname,
             String birth,
             String gender,
-            String vpToken
+            String vpToken,
+            String password
     ){}
 
     record LoginWebRequest(
@@ -44,8 +45,9 @@ public class MemberController {
         return OK(memberService.signup(req,multipartFile));
     }
 
-//    @GetMapping("/login")
-//    public Response<?> login() {
+    @GetMapping("/login/{token}")
+    public Response<?> login(@PathVariable String token) {
+        return OK(token);
 //        return OK(memberService.login(String walletAddress));
-//    }
+    }
 }

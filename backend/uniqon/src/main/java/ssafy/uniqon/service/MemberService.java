@@ -34,10 +34,10 @@ public class MemberService {
         validateDuplicateMember(req.walletAddress());
 
         byte[] bytes= multipartFile.getBytes();
-        String encodedPassword = passwordEncoder.encode(req.nickname());
+        String encodedPassword = passwordEncoder.encode(req.password());
         memberRepository.save(new Members(req.walletAddress(),
                 req.name(),
-                encodedPassword,
+                req.nickname(),
                 req.birth(),
                 req.gender(),
                 req.vpToken(),
@@ -46,7 +46,8 @@ public class MemberService {
                 null,
                 new ArrayList<>(),
                 new ArrayList<>(),
-                MemberRole.USER));
+                MemberRole.USER,
+                encodedPassword));
         return req.walletAddress();
     }
 

@@ -53,4 +53,6 @@ public class Members{
     private List<TransactionHistories> boughtList=new ArrayList<>();
 
     private MemberRole role;
+
+    private String password;
 }
