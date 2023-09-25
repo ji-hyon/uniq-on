@@ -2,9 +2,15 @@ import { create } from 'zustand';
 
 const useUserInfoStore = create((set) => ({
   walletAddress: null,
-  token: null,
+  accessToken: null,
   setUserInfo: (walletAddress, token) => {
     set({ walletAddress, token });
+  },
+  setWalletAddress: (payload) => {
+    set({ walletAddress: payload })
+  },
+  setAccessToken: (payload) => {
+    set({ accessToken: payload })
   },
 }));
 

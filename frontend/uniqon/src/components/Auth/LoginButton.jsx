@@ -2,11 +2,14 @@ import { Button } from "@material-tailwind/react"
 import { ethers, verifyMessage } from "ethers"
 import axios from "axios"
 import Web3Token from "web3-token"
+import useUserInfoStore from "../../stores/UserInfoStore"
 
 export function LoginButton() {
 // 메타마스크가 있으면 window에 ethereum이 정의가 돼있어야 함 (확장프로그램에 의해 생성)
 // window에 ethereum이 정의돼있는 것을 injectedProvider라고 함
 // 메타마스크 외에 다른 지갑들도 injectedProvider를 제공하기 때문에, 메타마스크인지 확인하는 절차 필요
+    const setAccessToken = useUserInfoStore(state=>state.setAccessToken)
+    const setWalletAddress = useUserInfoStore(state=>state.setWalletAddress)
 
     function detectMetaMask() {
         let injectedProvider = false
@@ -82,6 +85,7 @@ export function LoginButton() {
 // signer -> 현재 account 정보를 담고 있음
         const signer = await provider.getSigner();
         const address = await signer.getAddress()
+        setWalletAddress(address)
         const balance = await provider.getBalance(address)
         const chainId = (await provider.getNetwork()).chainId
         console.log("address:",address, "balance:",balance, "chainId:",chainId)
@@ -102,6 +106,7 @@ export function LoginButton() {
             },
           });
           console.log("login success",response.data.response)
+          setAccessToken(response.data.response)
         } catch (e) {
           console.log("login failed", e)
         }
