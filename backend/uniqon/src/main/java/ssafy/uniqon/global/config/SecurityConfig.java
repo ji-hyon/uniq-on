@@ -76,7 +76,7 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .clearAuthentication(true)
                         .logoutSuccessHandler(((request, response, authentication) ->
-                                response.sendRedirect("http://localhost:3000"))))
+                                response.sendRedirect("/"))))
                 .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .build();
 
