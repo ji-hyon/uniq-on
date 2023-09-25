@@ -159,7 +159,48 @@ app.post("/api/users/signup", async (req, res) => {
 })
 
 // 로그인 요청 api
+app.get("/api/users/login", async (req, res) => {
+  try {
+    // DITI에 vp 요청
+    console.log('login request form', req.headers.walletaddress)
+    const ditiResponse = await axios.get(process.env.DITI_SERVER_URL + "/diti/did/vp/" + req.headers.walletaddress + "/idCard", {
+      headers: {
+        'Content-Type': 'application/json',
+        'walletAddress': req.headers.walletaddress,
+        'Authorization': req.headers.authorization,
+      }
+    })
+    const vpJwt = ditiResponse.data
+    console.log("vpJwt:", vpJwt)
+    // 유효한 vp인지 검증
+    const vcs = await verifyVP(vpJwt)
+    if (vcs.length == 0) {
+      res.status(400).send("no VC")
+    }
 
+    // 스프링 서버에 로그인 요청
+    try {
+      const springResponse = await axios.get(process.env.SPRING_SERVER_URI + "/api/users/login/"+req.headers.walletaddress,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        },
+      )
+      res.status(springResponse.status).send(springResponse.data)
+    } catch (e) {
+      res.status(springResponse.status).send("GET " + process.env.SPRING_SERVER_URI + "/api/users/login failed")
+      return
+    }
+
+  } catch (e) {
+    console.log("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed")
+    console.log(e)
+    res.status(500).send("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed")
+    return
+  }
+
+})
 
 
 

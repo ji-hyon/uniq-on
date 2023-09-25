@@ -59,7 +59,7 @@ public class MemberService {
 ////            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
 ////        }
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(member.getWalletAddress(), member.getNickname());
+                new UsernamePasswordAuthenticationToken(member.getWalletAddress(), member.getWalletAddress().substring(member.getWalletAddress().length()-20,member.getWalletAddress().length()));
 //        // authenticate 메소드가 실행이 될 때 CustomUserDetailsService class의 loadUserByUsername 메소드가 실행
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         // 해당 객체를 SecurityContextHolder에 저장하고

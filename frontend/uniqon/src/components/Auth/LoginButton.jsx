@@ -1,5 +1,7 @@
 import { Button } from "@material-tailwind/react"
 import { ethers, verifyMessage } from "ethers"
+import axios from "axios"
+import Web3Token from "web3-token"
 
 export function LoginButton() {
 // 메타마스크가 있으면 window에 ethereum이 정의가 돼있어야 함 (확장프로그램에 의해 생성)
@@ -83,14 +85,26 @@ export function LoginButton() {
         const balance = await provider.getBalance(address)
         const chainId = (await provider.getNetwork()).chainId
         console.log("address:",address, "balance:",balance, "chainId:",chainId)
-// 백엔드 서버에 이 주소로 로그인하겠다는 것을 알려야 함. 신원 증명 필요. 
-// private key를 가지고 있고 서명을 만들 수 있다는 것을 증명
-// hello world라는 임의의 메세지에 사인하는 것
-        const message="Hello world"
-        const signedMessage=await signer.signMessage(message)
-// 백엔드 서버로, message와 signed message와 자신의 지갑 주소를 보내고, 백엔드에서 verifyMessage를 호출해서 나온 값이 자신의 주소와 일치해야 함 
-        const rt=verifyMessage(message,signedMessage)
-        console.log(message,signedMessage,rt)
+
+        let token=""
+        try{
+          token = await Web3Token.sign(async msg => await signer.signMessage(msg), '1d');
+        }catch(e){
+          console.log("Could not get a sign", e)
+          return
+        }
+        try {
+          const response = await axios.get("/api/users/login", {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': token,
+              'walletAddress': address,
+            },
+          });
+          console.log("login success",response.data.response)
+        } catch (e) {
+          console.log("login failed", e)
+        }
     }
  
     return (
