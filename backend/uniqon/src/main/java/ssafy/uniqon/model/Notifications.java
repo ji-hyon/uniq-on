@@ -2,35 +2,31 @@ package ssafy.uniqon.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
-import org.hibernate.generator.internal.CurrentTimestampGeneration;
-
-import javax.xml.stream.events.Comment;
-import java.security.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Timestamp;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
 public class Notifications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id")
     private Integer id;
 
-    @Column(name  = "checked")
+    @Column(name ="checked", columnDefinition = "boolean default false")
+    @ColumnDefault("false")
     private Boolean checked;
-
 
     @Column(name = "create_datetime")
     @CreationTimestamp
-    private Timestamp create_datetime;
+    private Timestamp createDatetime;
 
     @Column(name = "update_datetime")
-    @CreationTimestamp
-    private Timestamp update_datetime;
+    @UpdateTimestamp
+    private Timestamp updateDatetime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

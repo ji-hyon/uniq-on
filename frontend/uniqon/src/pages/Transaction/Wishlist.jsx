@@ -69,7 +69,7 @@ export function Wishlist() {
   return (
     <div className="App">
       <header className="App-header">
-      <div className="bg-white flex flex-row justify-center w-full">
+      <div className="flex flex-row justify-center w-full bg-white">
         <div className="bg-white w-[1440px] h-[1024px] relative">
           <TopNavBar />
           <div className="flex flex-col w-[1382px] h-[400px] items-start p-[24px] absolute top-[165px] left-[29px] rounded-[16px] overflow-hidden bg-cover bg-[50%_50%]">
