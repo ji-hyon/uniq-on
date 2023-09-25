@@ -13,6 +13,8 @@ import { MainCollections } from './pages/Collections/MainCollections';
 import { MidCollections } from './pages/Collections/MidCollec';
 import { MidCollecDetail } from './pages/Collections/MidCollecDetail';
 import { NFTList } from './pages/Collections/NFTList';
+import { Login } from './pages/Auth/Login';
+import { SignUp } from './pages/Auth/SignUp';
 
 function App() {
   return (
@@ -30,6 +32,9 @@ function App() {
         <Route path="/midcollections" element={<MidCollections />} />
         <Route path="/midcollecdetail" element={<MidCollecDetail />} />
         <Route path="/nftlist" element={<NFTList />} />
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </div>
   );

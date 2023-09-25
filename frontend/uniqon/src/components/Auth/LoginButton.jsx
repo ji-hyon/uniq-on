@@ -1,7 +1,7 @@
 import { Button } from "@material-tailwind/react"
 import { ethers, verifyMessage } from "ethers"
 
-export default function LoginButton() {
+export function LoginButton() {
 // 메타마스크가 있으면 window에 ethereum이 정의가 돼있어야 함 (확장프로그램에 의해 생성)
 // window에 ethereum이 정의돼있는 것을 injectedProvider라고 함
 // 메타마스크 외에 다른 지갑들도 injectedProvider를 제공하기 때문에, 메타마스크인지 확인하는 절차 필요
@@ -94,6 +94,6 @@ export default function LoginButton() {
     }
  
     return (
-        <Button className="text-3xl w-70 h-30 m-5" color="green" onClick={connectMetaMask}>Login</Button>
+        <Button className="text-3xl w-70 h-30 m-5" color="green" onClick={connectMetaMask}>로그인</Button>
     )
 }
