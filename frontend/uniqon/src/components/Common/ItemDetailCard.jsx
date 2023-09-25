@@ -49,7 +49,7 @@ export function ItemDetailCard( { item } ) {
     
   }, []);
 
-  if (!item) {
+  if (!forDetailItem) {
     // item 정보가 없을 경우 로딩 또는 오류 처리를 할 수 있습니다.
     return <div>Loading...</div>;
   }
@@ -84,7 +84,7 @@ export function ItemDetailCard( { item } ) {
         className="w-2/5 m-0 rounded-r-none shrink-0"
       >
         <img
-          // src={forDetailItem.nftInfo.image}
+          src={forDetailItem.nftInfo.image}
           alt="card"
           className="object-cover w-full h-full"
         />
@@ -107,19 +107,19 @@ export function ItemDetailCard( { item } ) {
       </CardHeader>
       <CardBody>
       <Typography variant="h4" color="blue-gray" className="mb-2">
-          {/* 글 제목 | {forDetailItem.PostInfo.title} */}.
+          글 제목 | {forDetailItem.PostInfo.title}.
         </Typography>
         <Typography variant="h6" color="gray" className="mb-4 uppercase">
-          {/* 종 분류 | {forDetailItem.nftInfo.species} */}.
+          종 분류 | {forDetailItem.nftInfo.species}.
         </Typography>
         <Typography variant="h6" color="gray" className="mb-4 uppercase">
-          {/* 가격 | {forDetailItem.PostInfo.price} ETH */}.
+          가격 | {forDetailItem.PostInfo.price} ETH.
         </Typography>
         <Typography variant="h6" color="gray" className="mb-4 uppercase">
-          {/* 판매자 | {forDetailItem.SellerInfo.nickname} */}.
+          판매자 | {forDetailItem.SellerInfo.nickname}.
         </Typography>
         <Typography color="gray" className="mb-8 font-normal">
-          {/* lorem ipsum {forDetailItem.PostInfo.content} */}.
+          lorem ipsum {forDetailItem.PostInfo.content}.
         </Typography>
         <a href="#" className="inline-block">
         <Button onClick={handleOpen} variant="gradient" className="flex text-lg" color="red">

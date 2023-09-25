@@ -14,7 +14,7 @@ export function Purchase() {
   // 구매 내역
   async function purchaseList() {
     try {
-      const resonse = await axios.get(`/api/myPage/purchaseList`);
+      const resonse = await axios.get(`/api/myPage/boughtList/${1}`);
       console.log('성공', resonse);
     } catch (error) {
       console.log('실패', error);

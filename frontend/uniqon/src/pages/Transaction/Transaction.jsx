@@ -48,9 +48,9 @@ export function Transaction() {
       const res = await axios.get("/api/sales/post", {
         params: params,
       });
-            // console.log(res.data.response)
+            // console.log(res.data.response) // response에 담긴 값 확인
             setSalesItemsList(res.data.response)
-            // console.log(salesItemsList)
+            // console.log(salesItemsList) // salesItemsList에 담긴 값 확인
         } catch(err) {
           console.log(err)
         }
