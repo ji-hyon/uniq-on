@@ -14,7 +14,7 @@ export function Sales() {
   // 판매 내역
   async function salesList() {
     try {
-      const response = await axios.get(`/api/myPage/salesList`);
+      const response = await axios.get(`/api/myPage/soldList/${1}`);
       console.log('성공', response);
     } catch (error) {
       console.log('실패', error);

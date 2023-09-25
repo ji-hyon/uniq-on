@@ -20,12 +20,7 @@ export function Transaction() {
   const [content, setContent] = useState("test");
   const [price, setPrice] = useState("1000");
 
-  const [postId, setPostId] = React.useState('1');
-  const [wishId, setWishId] = React.useState('1');
-
   const walletAddress = "0x1234567890123456789012345678901234567890";
-
-  
 
   const { salesItemsList, setSalesItemsList  
     } = useTransactionStore();
@@ -48,9 +43,9 @@ export function Transaction() {
       const res = await axios.get("/api/sales/post", {
         params: params,
       });
-            // console.log(res.data.response)
+            // console.log(res.data.response) // response에 담긴 값 확인
             setSalesItemsList(res.data.response)
-            // console.log(salesItemsList)
+            // console.log(salesItemsList) // salesItemsList에 담긴 값 확인
         } catch(err) {
           console.log(err)
         }
@@ -78,27 +73,6 @@ export function Transaction() {
       }
     }
 
-    async function addWishlist() {
-      
-      try {
-          const res = await axios.post(`/api/wishlist/add/${postId}`);
-            console.log(res.data)
-  
-        } catch(err) {
-          console.log(err)
-        }
-      }
-  
-    async function deleteWishlist() {
-        
-      try {
-          const res = await axios.delete(`/api/wishlist/${wishId}`);
-            console.log(res.data)
-  
-        } catch(err) {
-          console.log(err)
-        }
-      } 
     
       const groupedSalesItems = [];
     for (let i = 0; i < salesItemsList.length; i += 3) {

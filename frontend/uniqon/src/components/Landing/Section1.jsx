@@ -50,7 +50,7 @@ export function Section1() {
               <br />
               유니콘에서 희동이를 만나고 소유해보세요
             </p>
-            <img src="/snake.gif" alt="" />
+            <img src="snake.gif" alt="" />
           </div>
         </div>
       </div>

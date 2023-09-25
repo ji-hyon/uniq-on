@@ -20,10 +20,10 @@ export function SalesCard({ item, id }) {
 
   const navigate = useNavigate();
 
-  const [postId, setPostId] = React.useState('1');
-  const [wishId, setWishId] = React.useState('1');
+  const [postId, setPostId] = React.useState('');
+  const [wishId, setWishId] = React.useState('');
 
-  const walletAddress = "0x1234567890123456789012345678901234567890";
+  const walletAddress = "0x00000000000000";
 
   const [ selectedItem, setSelectedItem ] = useState({});
 
@@ -40,7 +40,6 @@ export function SalesCard({ item, id }) {
     // getSalesDetail();
     
   }, []);
-
   
 
   async function getSalesDetail() {
@@ -62,7 +61,7 @@ export function SalesCard({ item, id }) {
     }
 }
 
-const goToTranItemDetail = () => {
+async function goToTranItemDetail() {
   // console.log(id)
   getSalesDetail()
   // console.log(item)
@@ -72,15 +71,33 @@ const goToTranItemDetail = () => {
 };
 
   async function addWishlist() {
+
+    console.log(id)
+    console.log(postId)
       
     try {
-        const res = await axios.post(`/api/wishlist/add/${postId}`);
+        const res = await axios.post(`/api/wishlist/add/${id}`);
+        console.log(id)
           console.log(res.data)
 
       } catch(err) {
         console.log(err)
       }
     }
+
+  async function getWishlist() {
+
+    try {
+      const res = await axios.get(`/api/wishlist/${walletAddress}`, 
+      {params: {
+        page: 0,
+        size: 9,
+      }})
+        console.log(res.data.response)
+    } catch(err) {
+      console.log(err)
+    }
+  }
 
   async function deleteWishlist() {
       
@@ -97,6 +114,8 @@ const goToTranItemDetail = () => {
     <Card 
       id={id}
       className="w-full w-[27rem] shadow-lg">
+        <Button onClick={deleteWishlist}>위시리스트 삭제</Button>
+        <Button onClick={getWishlist}>위시리스트 조회</Button>
       <CardHeader floated={false} color="blue-gray">
         <img
           src={item.image}

@@ -59,7 +59,7 @@ public class PostsController {
 
     public record postDetailWebResponse(
             Integer postId,
-            String profileImage,
+            byte[] profileImage,
             String nickname,
             String species,
             String name,
