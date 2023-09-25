@@ -19,19 +19,19 @@ export function Section4() {
             alt="Element"
             src="mockup.png"
           />
-          <div className="absolute w-[359px] h-[298px] top-[170px] left-[859px]">
+          <div className="absolute w-[380px] h-[298px] top-[170px] left-[859px]">
             <div className="absolute h-[32px] top-[-5px] left-0 text-[#10b0b0] text-[24px] leading-[normal] [font-family:'Segoe_UI-Bold',Helvetica] font-bold tracking-[0]">
               NFT 거래
             </div>
             <div className="inline-flex flex-col items-start pl-0 pr-[64.91px] py-0 absolute top-[34px] left-0">
-              <div className="relative w-fit mt-[-1.00px] text-[#212529] text-[42px] leading-[57px] [font-family:'Segoe_UI-Bold',Helvetica] font-bold tracking-[0]">
+              <div className="relative w-fit mt-[-1.00px] [text-shadow:0px_4px_4px_#00000040] text-[#212529] text-[42px] leading-[57px] [font-family:'Segoe_UI-Bold',Helvetica] font-bold tracking-[0]">
                 나만의 NFT
                 <br />
                 희동이 거래하기
               </div>
             </div>
             <div className="absolute w-[232px] h-[60px] top-[158px] left-0">
-              <p className="absolute h-[60px] -top-px left-0 [font-family:'Segoe_UI-Regular',Helvetica] font-normal text-[#7c7c7c] text-[20px] tracking-[0] leading-[30px]">
+              <p className="absolute h-[60px] mt-1 -top-px left-0 [font-family:'Segoe_UI-Regular',Helvetica] font-semibold text-[#7c7c7c] text-[20px] tracking-[0] leading-[30px]">
                 쉽고, 편하게 유니콘으로 <br />
                 희동이를 구할 수 있어요.
               </p>
