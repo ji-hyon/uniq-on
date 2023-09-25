@@ -33,7 +33,14 @@ public class MyPageController {
             String buyer,
             String txHash,
             Timestamp transactedAt
-    ){}
+    ){
+        public TransactionHistoryWebResponse(String seller, String buyer, String txHash, Timestamp transactedAt) {
+            this.seller = seller;
+            this.buyer = buyer;
+            this.txHash = txHash;
+            this.transactedAt = transactedAt;
+        }
+    }
 
     private final MyPageService myPageService;
     private final NFTService nftService;
@@ -45,16 +52,6 @@ public class MyPageController {
 
     @PutMapping("/info")
     Response<?> modifyMyProfile(@RequestBody ModifyMyProfileWebRequest req){
-        return OK(null);
-    }
-
-    @PostMapping("/nft/{myCollectionId}")
-    Response<?> likeNFT(@PathVariable int myCollectionId){
-        return OK(null);
-    }
-
-    @DeleteMapping("/nft/{myCollectionId}")
-    Response<?> undoLikeNFT(@PathVariable int myCollectionId){
         return OK(null);
     }
 
@@ -80,6 +77,12 @@ public class MyPageController {
     Response<?> getMyNFTList(@PathVariable String userId,
                              @PageableDefault Pageable pageable){
         return OK(nftService.getMyNFTList(userId,pageable));
+    }
+
+    @GetMapping("/like-nft-list/{userId}")
+    Response<?> getLikedNFTList(@PathVariable String userId,
+                                @PageableDefault Pageable pageable){
+        return OK(myPageService.getLikedNFTList(userId,pageable));
     }
 
 }

@@ -60,8 +60,23 @@ public class NFTsController {
             @Schema(description = "컨트랙트 주소")
             String contractAddress,
             @Schema(description = "Token ID")
-            Integer tokenId
-    ){}
+            Integer tokenId,
+            @Schema(description = "좋아요 수")
+            Integer likedCnt
+    ){
+        public NFTWebResponse(Integer nftId, String owner, String image, String name, Integer age, String feature, String nftURL, String contractAddress, Integer tokenId, Integer likedCnt) {
+            this.nftId = nftId;
+            this.owner = owner;
+            this.image = image;
+            this.name = name;
+            this.age = age;
+            this.feature = feature;
+            this.nftURL = nftURL;
+            this.contractAddress = contractAddress;
+            this.tokenId = tokenId;
+            this.likedCnt = likedCnt;
+        }
+    }
 
 //    private final NFTCreateService nftCreateService;
 //    private final NFTReadService nftReadService;
@@ -91,11 +106,10 @@ public class NFTsController {
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @GetMapping("/{nftId}")
+    @GetMapping("/detail/{nftId}")
     public Response<?> getNFTInfo(@PathVariable Integer nftId){
         log.debug("# NFT 조회 : {}", nftId);
-//        NFTWebResponse response=nftReadService.getNFTById(nftId);
-        return OK(null);
+        return OK(nftService.getNFTInfo(nftId));
     }
 
     @Operation(summary = "NFT 삭제", description = "등록했던 NFT를 삭제합니다.")
@@ -107,10 +121,11 @@ public class NFTsController {
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @DeleteMapping("/{nftId}")
-    public Response<?> deleteNFT(@PathVariable Integer nftId){
+    @DeleteMapping("/delete/{nftId}")
+    public Response<?> deleteNFT(@PathVariable Integer nftId) throws IOException {
         log.debug("# 삭제할 NFT 식별자 : {}", nftId);
-        return OK(null);
+        nftService.deleteNFT(nftId);
+        return OK("deleted");
     }
 
     @Operation(summary = "NFT 거래", description = "NFT를 거래합니다.")
@@ -124,7 +139,7 @@ public class NFTsController {
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @PostMapping("/{nftId}/{buyer}/{postId}")
+    @PostMapping("/buy/{nftId}/{buyer}/{postId}")
     public Response<?> transactNFT(@PathVariable Integer nftId,
                                    @PathVariable String buyer,
                                    @PathVariable Integer postId) throws Exception {
@@ -133,5 +148,19 @@ public class NFTsController {
         log.debug("# NFT 판매글 식별자 : {}", postId);
         nftService.transactNFT(nftId,buyer,postId);
         return OK("success");
+    }
+
+    @PostMapping("/like/{nftId}/{userId}")
+    public Response<?> likeNFT(@PathVariable Integer nftId,
+                               @PathVariable String userId){
+        nftService.likeNFT(nftId,userId);
+        return OK("liked");
+    }
+
+    @DeleteMapping("/undolike/{nftId}/{userId}")
+    public Response<?> undolikeNFT(@PathVariable Integer nftId,
+                                   @PathVariable String userId){
+        nftService.undoLikeNFT(nftId,userId);
+        return OK("deleted");
     }
 }

@@ -2,6 +2,9 @@ package ssafy.uniqon.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +36,12 @@ public class NFTs {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wallet_address")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Members owner;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "middle_classification_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private MiddleClassifications middle;
 
     @OneToMany(mappedBy = "nfts")
@@ -49,4 +54,8 @@ public class NFTs {
     private String contractAddress;
 
     private int tokenId;
+
+    @Setter
+    @ColumnDefault("0")
+    private Integer liked_cnt;
 }

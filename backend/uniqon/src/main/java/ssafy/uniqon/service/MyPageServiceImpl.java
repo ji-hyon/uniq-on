@@ -2,33 +2,31 @@ package ssafy.uniqon.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import ssafy.uniqon.controller.MyPageController;
-import ssafy.uniqon.model.Members;
-import ssafy.uniqon.model.TransactionHistories;
-import ssafy.uniqon.repository.MemberRepository;
-import ssafy.uniqon.repository.TransactionHistoriesRepository;
+import ssafy.uniqon.controller.NFTsController;
+import ssafy.uniqon.repository.*;
+
 
 @Service
 @RequiredArgsConstructor
 public class MyPageServiceImpl implements MyPageService{
 
-    private final TransactionHistoriesRepository transactionHistoriesRepository;
-    private final MemberRepository memberRepository;
+    private final TransactionHistoriesQueryRepository transactionHistoriesQueryRepository;
+    private final MyCollectionsQueryRepository myCollectionsRepository;
     @Override
-    public Page<TransactionHistories> getBoughtList(String buyer,Pageable pageable) {
-        Members member=memberRepository.findById(buyer).get();
-        Page<TransactionHistories> txHistories = transactionHistoriesRepository.findByBuyerOrderByTransactedAtDesc(member,pageable);
-        return txHistories;
+    public Page<MyPageController.TransactionHistoryWebResponse> getBoughtList(String buyer, Pageable pageable) {
+        return transactionHistoriesQueryRepository.getBoughtTxHistories(buyer,pageable);
     }
 
     @Override
-    public Page<TransactionHistories> getSoldList(String seller,Pageable pageable) {
-        Members member=memberRepository.findById(seller).get();
-        Page<TransactionHistories> txHistories = transactionHistoriesRepository.findByBuyerOrderByTransactedAtDesc(member,pageable);
-        return txHistories;
+    public Page<MyPageController.TransactionHistoryWebResponse> getSoldList(String seller,Pageable pageable) {
+        return transactionHistoriesQueryRepository.getSoldTxHistories(seller,pageable);
+    }
+
+    @Override
+    public Page<NFTsController.NFTWebResponse> getLikedNFTList(String userId, Pageable pageable) {
+        return myCollectionsRepository.getMyCollectionList(userId,pageable);
     }
 }

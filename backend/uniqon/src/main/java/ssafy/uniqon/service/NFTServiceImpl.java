@@ -19,6 +19,7 @@ import org.web3j.utils.Convert;
 import pinata.Pinata;
 import pinata.PinataResponse;
 import ssafy.uniqon.controller.NFTsController;
+import ssafy.uniqon.dto.NftListResponseDto;
 import ssafy.uniqon.model.*;
 import ssafy.uniqon.repository.*;
 
@@ -35,6 +36,8 @@ public class NFTServiceImpl implements NFTService {
     private final NFTRepository nftRepository;
     private final TransactionHistoriesRepository transactionHistoriesRepository;
     private final MiddleClassificationRepository middleClassificationRepository;
+    private final MyCollectionsRepository myCollectionsRepository;
+    private final NFTQueryRepository nftQueryRepository;
 
     private final Pinata pinata = new Pinata("64e7615856edbac52336", "f62623900242c791dc8cb1243c69b2df8664886f50295a79d43ffe5ffdce0b5c");
     private static final String ipfsBaseURL = "https://gateway.pinata.cloud/ipfs/";
@@ -121,7 +124,8 @@ public class NFTServiceImpl implements NFTService {
                     new ArrayList<>(),
                     jsonIpfsHash,
                     contractAddress,
-                    tokenId));
+                    tokenId,
+                    0));
         }
 
 //        System.out.println(contract.balanceOf(credential.getAddress()).send());
@@ -129,9 +133,57 @@ public class NFTServiceImpl implements NFTService {
     }
 
     @Override
-    public Page<NFTs> getMyNFTList(String owner, Pageable pageable) {
-        Members member=memberRepository.findById(owner).get();
-        return nftRepository.findByOwner(member,pageable);
+    public Page<NftListResponseDto> getMyNFTList(String owner, Pageable pageable) {
+
+        return nftQueryRepository.getMyNftList(owner,pageable);
+    }
+
+    @Override
+    public void likeNFT(Integer nftId, String userId) {
+        Members member=memberRepository.findById(userId).get();
+        NFTs nft=nftRepository.findById(nftId).get();
+        myCollectionsRepository.save(new MyCollections(null,member,nft));
+        nft.setLiked_cnt(nft.getLiked_cnt()+1);
+    }
+
+    @Override
+    public void undoLikeNFT(Integer nftId, String userId) {
+        Members member=memberRepository.findById(userId).get();
+        NFTs nft=nftRepository.findById(nftId).get();
+        myCollectionsRepository.delete(new MyCollections(null,member,nft));
+        nft.setLiked_cnt(nft.getLiked_cnt()-1);
+    }
+
+    @Override
+    public NFTsController.NFTWebResponse getNFTInfo(Integer nftId) {
+        NFTs nft=nftRepository.findById(nftId).get();
+        return new NFTsController.NFTWebResponse(nft.getId(),
+                nft.getOwner().getWalletAddress(),
+                nft.getImage(),
+                nft.getName(),
+                nft.getAge(),
+                nft.getFeature(),
+                nft.getNftURL(),
+                nft.getContractAddress(),
+                nft.getTokenId(),
+                nft.getLiked_cnt());
+    }
+
+    @Override
+    public void deleteNFT(Integer nftId) throws IOException {
+        Credentials credential = Credentials.create(userPrivateKey);
+//        System.out.println(credential.getAddress());
+        EthGasPrice ethGasPrice = web3j.ethGasPrice().send();
+        BigInteger gasPrice = ethGasPrice.getGasPrice();
+        ContractGasProvider gasProvider = new StaticGasProvider(gasPrice, BigInteger.valueOf(2_100_000L));
+
+        UniqonNFT contract = UniqonNFT.load(
+                contractAddress, web3j, credential, gasProvider);
+        if(contract.isValid()){
+            contract.burnNFT(BigInteger.valueOf(nftId));
+            nftRepository.delete(nftRepository.findById(nftId).get());
+        }
+        web3j.shutdown();
     }
 
     private String parsingPinataResponse(PinataResponse pinataImageResponse) {

@@ -13,9 +13,12 @@ import { useEffect, useState } from "react";
 
 export function Transaction() {
   const navigate = useNavigate();
-  // const [open, setOpen] = React.useState(false);
-  // const handleOpen = () => { setOpen(!open); };
-  // const [등록할NFTid, set등록할NFTid] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => { setOpen(!open); };
+  const [nftId, setnftId] = useState("1");
+  const [title, setTitle] = useState("test");
+  const [content, setContent] = useState("test");
+  const [price, setPrice] = useState("1000");
 
   const [postId, setPostId] = React.useState('1');
   const [wishId, setWishId] = React.useState('1');
@@ -24,29 +27,16 @@ export function Transaction() {
 
   
 
-  const { salesItemsList, setSalesItemsList,
-      itemsPriceList, setItemsPriceList,
-      itemImageList, setItemImageList,
-      itemNicknameList, setItemNicknameList,
-      itemSpeciesList, setItemSpeciesList,
-      itemTitleList, setItemTitleList } = useTransactionStore();
+  const { salesItemsList, setSalesItemsList  
+    } = useTransactionStore();
 
   
-  const URL = "http://localhost:5000"
+  // const URL = "http://localhost:5000"
 
 
-  // useEffect(() => {
-  //   getDefaultSales();
-  // }, []);
-
-  // function getDefaultSales() {
-  //   axios.get(URL + "/api/sales/post")
-  //   .then((res) => {
-  //     console.log(res.data)
-  //     setSalesItemsList(res.data.response)
-  //     console.log(salesItemsList)
-  //   })
-  // }
+  useEffect(() => {
+    getSales();
+  }, []);
 
   async function getSales() {
         
@@ -55,29 +45,29 @@ export function Transaction() {
         walletAddress: walletAddress,
       };
 
-      const res = await axios.get(URL + "/api/sales/post", {
+      const res = await axios.get("/api/sales/post", {
         params: params,
       });
-            console.log(res.data)
+            // console.log(res.data.response) // response에 담긴 값 확인
             setSalesItemsList(res.data.response)
-            console.log(salesItemsList)
+            // console.log(salesItemsList) // salesItemsList에 담긴 값 확인
         } catch(err) {
           console.log(err)
         }
       }
 
-  async function registerSales() {
+  async function registerSales(title, content, price, nftId) {
 
       try {
         const data = {
-          price: 1000,
-          content: "test",
-          title: "test",
-          nftId: 1,
+          price: price,
+          content: content,
+          title: title,
+          nftId: nftId,
         };
 
 
-        const res = await axios.post(URL + "/api/sales/register", data, {
+        const res = await axios.post("/api/sales/register", data, {
           headers: {
             },
         });
@@ -110,6 +100,11 @@ export function Transaction() {
         }
       } 
     
+      const groupedSalesItems = [];
+    for (let i = 0; i < salesItemsList.length; i += 3) {
+      groupedSalesItems.push(salesItemsList.slice(i, i + 3));
+    }
+
 
   return (
     <div className="App">
@@ -124,7 +119,7 @@ export function Transaction() {
           </p>
           <br></br>
           <TransactionBanner />
-          {/* <Button onClick={handleOpen} variant="gradient" className="self-end">
+          <Button onClick={handleOpen} variant="gradient" className="self-end">
         판매글 등록
       </Button>
       <Dialog
@@ -144,28 +139,34 @@ export function Transaction() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="판매 NFT 선택" value={등록할NFTit} size="lg" onChange={(e) => set등록할NFTid(e.target.value)}/>
+            <Input label="판매 NFT선택" value={nftId} size="lg" onChange={(e) => setnftId(e.target.value)}/>
             <Input label="판매글 제목" value={title} size="lg" onChange={(e) => setTitle(e.target.value)} />
             <Input label="판매글 내용" value={content} size="lg" onChange={(e) => setContent(e.target.value)}/>
             <Input label="판매 가격" value={price} size="lg" onChange={(e) => setPrice(e.target.value)}/>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={() => {handleOpen(); registerSales(title, content, price)}} fullWidth>
+            <Button variant="gradient" onClick={() => {handleOpen(); registerSales(title, content, price, nftId)}} fullWidth>
               등록
             </Button>
           </CardFooter>
         </Card>
-      </Dialog> */}
+      </Dialog>
       
-          <div className="flex flex-row justify-evenly">
-            {salesItemsList.map((item, index) => {
-              return <SalesCard key={index} item={item} id={index} />
-            })}
-          </div>
+          <div className="flex flex-col justify-center">
+              {/* 판매글 목록을 3개씩 한 줄에 보여주기 */}
+              {groupedSalesItems.map((salesGroup, index) => (
+                <div key={index} className="flex flex-row justify-evenly">
+                  {salesGroup.map((item) => (
+                    <SalesCard key={item.postId} item={item} id={item.postId} />
+                  ))}
+                </div>
+              ))}
+            </div>
+          
 
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
         <br></br>
-        <RegisterSalesItem />
+        {/* <RegisterSalesItem /> */}
         </div>
         </div>
       </header>

@@ -7,21 +7,26 @@ export function TransactionBanner() {
 
   const [ word, setWord ] = useState("");
   const walletAddress = "0x1234567890123456789012345678901234567890";
+  // const URL = "http://localhost:5000"
+
+
+
 
   async function searchSales() {
 
-    const URL = "http://localhost:5000"
-
     const params = {
+      word: word,
       walletAddress: walletAddress,
+      page: 0,
+      size: 9,
     };
 
     try {
-      const res = await axios.get(URL + `/api/sales/search/word=${word}`, {
+      const res = await axios.get("/api/sales/search", {
         params: params,
       });
         console.log(word)
-        console.log(res.data)
+        console.log(res.data.response)
 
     } catch(err) {
       console.log(err)
@@ -73,8 +78,8 @@ export function TransactionBanner() {
         </div>
       </div>
     </div>
-    <Button color="red" onClick={searchSales}>판매 검색</Button>
-        <br></br>
+    {/* <Button color="red" onClick={searchSales}>판매 검색</Button>
+        <br></br> */}
     </>
   )
 }
