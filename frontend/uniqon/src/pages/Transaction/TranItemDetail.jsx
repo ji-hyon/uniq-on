@@ -4,8 +4,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ItemDetailCard } from "../../components/Common/ItemDetailCard";
 import { TopNavBar } from "../../components/Common/TopNavBar";
 import { useState } from "react";
-import { Button } from "@material-tailwind/react";
+import { Button, Dialog, 
+  Card, CardBody, Input, CardFooter, CardHeader, Typography } from "@material-tailwind/react";
 import { useTransactionStore } from "../../stores/TransactionStore";
+
 
 
 export function TranItemDetail () {
@@ -14,13 +16,16 @@ export function TranItemDetail () {
 
   const { id } = useParams();
   const [ item, setItem ] = useState({});
+  const [title, setTitle] = useState("test");
+  const [content, setContent] = useState("test");
+  const [price, setPrice] = useState("1000");
   const { forDetailItem, setForDetailItem } = useTransactionStore();
   // const URL = "http://localhost:5000"
   const walletAddress = "0x1234567890123456789012345678901234567890";
 
-  // const [수정open, set수정Open] = React.useState(false);
-  // const 수정handleOpen = () => { set수정Open(!수정open); };
-  // const [수정할NFTid, set수정할NFTid] = useState("");
+  const [수정open, set수정Open] = React.useState(false);
+  const 수정handleOpen = () => { set수정Open(!수정open); };
+  const [수정할NFTid, set수정할NFTid] = useState("");
 
   function goToTransaction() {
     navigate("/transaction");
@@ -114,13 +119,13 @@ export function TranItemDetail () {
               ) : (
                 <p>Loading...</p>
               )}
-              <Button color="blue" onClick={updateSales}>판매 수정</Button>
-        <br></br>
+              {/* <Button color="blue" onClick={updateSales}>판매 수정</Button>
+        <br></br> */}
         <Button color="cyan" onClick={deleteSales}>판매 삭제</Button>
         <br></br>
         <Button color="gray" onClick={getSalesDetail}>판매 상세 조회</Button>
-          </div>
-          {/* <Button onClick={수정handleOpen} variant="gradient" className="self-end">
+          
+          <Button onClick={수정handleOpen} variant="gradient" className="self-end">
         판매글 수정
       </Button>
       <Dialog
@@ -140,19 +145,19 @@ export function TranItemDetail () {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="판매 NFT 선택" value={수정할NFTit} size="lg" onChange={(e) => set수정할NFTid(e.target.value)}/>
+            <Input label="판매 NFT 선택" value={수정할NFTid} size="lg" onChange={(e) => set수정할NFTid(e.target.value)}/>
             <Input label="판매글 제목" value={title} size="lg" onChange={(e) => setTitle(e.target.value)} />
             <Input label="판매글 내용" value={content} size="lg" onChange={(e) => setContent(e.target.value)}/>
             <Input label="판매 가격" value={price} size="lg" onChange={(e) => setPrice(e.target.value)}/>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={() => {수정handleOpen(); updateSales(title, content, price)}} fullWidth>
+            <Button variant="gradient" onClick={() => {수정handleOpen(); updateSales(title, content, price, 수정할NFTid)}} fullWidth>
               등록
             </Button>
           </CardFooter>
         </Card>
-      </Dialog> */}
-      
+      </Dialog>
+      </div>
         
         </div>
           
