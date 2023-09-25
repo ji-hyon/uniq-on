@@ -120,7 +120,7 @@ export function MetaMask() {
       <header className="App-header">
         <div>
           <div className='border-while border-solid border-4 m-3'>
-            <Button className="text-4xl w-96 h-28 m-5" color="orange" onClick={connectMetaMask}>로그인</Button>
+            <Button className="text-2xl w-70 h-20 m-5" color="orange" onClick={connectMetaMask}>로그인</Button>
             {/* <ul style={{ borderStyle: "solid", borderWidth:"5px", borderColor : "white" }}> */}
             {/* <div className="text-2xl border-while p-5 m-7 border-solid border-4"> */}
             <div className="text-2xl container m-5">
