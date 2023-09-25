@@ -43,15 +43,15 @@ export function TransactionBanner() {
 
   return(
     <>
-    <div className="bg-[#c1dcdc] flex flex-row justify-center">
-      <div className="bg-[#c1dcdc] w-[1178px] h-[372px] relative">
-        <div className="absolute w-[493px] h-[59px] top-[206px] left-[53px] bg-[#ffffff] rounded-[4.67px] overflow-hidden">
+    <div className="bg-[#c1dcdc] flex flex-row justify-center rounded-[20px]">
+      <div className="bg-[#c1dcdc] w-[1178px] h-[372px] relative rounded-md">
+        <div className="absolute w-[493px] h-[59px] top-[206px] left-[53px] bg-[#ffffff] rounded-[7px] overflow-hidden">
         <div className="flex flex-col items-end gap-6 w-72">
 
         <Input
           type="word"
           label="판매글 검색"
-          size="lg"
+          className="w-[500px] mt-2 bg-white"
           value={word}
           onChange={(e) => setWord(e.target.value)}
           onKeyDown={(e) => {
@@ -62,9 +62,6 @@ export function TransactionBanner() {
           }}
           style={{ color: 'black' }}
         ></Input>
-
-
-        <Input type="word" name="word" size="lg" label="Input Large" />
         </div>
           <div className="absolute w-[41px] h-[38px] top-[11px] left-[438px] bg-[100%_100%]">
             
@@ -78,10 +75,10 @@ export function TransactionBanner() {
         />
         <img className="absolute w-[350px] h-[320px] top-[50px] left-[778px] bg-[100%_100%]" src="heedong2.png" alt="heedong2">
         </img>
-        <p className="absolute w-[673px] top-[52px] left-[53px] [font-family:'Pretendard-ExtraBold',Helvetica] font-extrabold text-black text-[40px] tracking-[0] leading-[24.9px]">
+        <p className="absolute w-[800px] top-[87px] left-[-40px] [font-family:'Segoe_UI-Bold',Helvetica] font-bold text-black [text-shadow:0px_4px_4px_#00000040] text-[40px] tracking-[0] leading-[24.9px]">
           비밀의 동물원, 여기서 NFT로 만나보세요!
         </p>
-        <div className="absolute w-[375px] top-[131px] left-[53px] [font-family:'Pretendard-SemiBold',Helvetica] font-semibold text-black text-[23px] tracking-[0] leading-[24.9px]">
+        <div className="absolute w-[375px] top-[150px] left-[-10px] [font-family:'Segoe_UI-Bold',Helvetica] font-bold [text-shadow:0px_4px_4px_#00000040] text-black text-[23px] tracking-[0] leading-[24.9px]">
           디지털 아카이브: 희귀동물의 이야기
         </div>
       </div>
