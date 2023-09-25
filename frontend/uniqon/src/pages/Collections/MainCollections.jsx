@@ -81,7 +81,7 @@ export function MainCollections() {
             </Badge>
 
             <br></br>
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 mt-20">
               {currentPageData.map((card, index) => (
                 <Card
                   onClick={() => {
@@ -126,7 +126,7 @@ export function MainCollections() {
               ))}
             </div>
             <br></br>
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-36">
               <Pagination
                 totalPages={Math.ceil(mainCardsData.length / pageSize)}
                 currentPage={currentPage}
