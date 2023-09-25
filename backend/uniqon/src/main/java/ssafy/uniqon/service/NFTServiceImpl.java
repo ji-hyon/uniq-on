@@ -68,7 +68,9 @@ public class NFTServiceImpl implements NFTService {
                     BigInteger.valueOf(nft.getTokenId()),
                     price).send();
             String txHash = receipt.getTransactionHash();
-            transactionHistoriesRepository.save(new TransactionHistories(null, seller, buyerMember, txHash,null));
+            transactionHistoriesRepository.save(new TransactionHistories(null, seller, buyerMember, txHash,null,nft));
+            nft.setOwner(buyerMember);
+            post.setState(1);
         }
 
         web3j.shutdown();
@@ -125,7 +127,8 @@ public class NFTServiceImpl implements NFTService {
                     jsonIpfsHash,
                     contractAddress,
                     tokenId,
-                    0));
+                    0,
+                    new ArrayList<>()));
         }
 
 //        System.out.println(contract.balanceOf(credential.getAddress()).send());
