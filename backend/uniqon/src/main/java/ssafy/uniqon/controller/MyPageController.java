@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ssafy.uniqon.global.response.Response;
+import ssafy.uniqon.service.MemberService;
 import ssafy.uniqon.service.MyPageService;
 import ssafy.uniqon.service.NFTService;
 
@@ -42,12 +43,23 @@ public class MyPageController {
         }
     }
 
+    public record MemberInfoWebResponse(
+            String walletAddress,
+            String name,
+            String nickname,
+            String birth,
+            String gender,
+            String vpToken,
+            byte[] profileImage
+    ){}
+
     private final MyPageService myPageService;
     private final NFTService nftService;
+    private final MemberService memberService;
 
     @GetMapping("/info/{userId}")
-    Response<?> myProfile(@PathVariable int userId){
-        return OK(null);
+    Response<?> myProfile(@PathVariable String userId){
+        return OK(memberService.getUserInfo(userId));
     }
 
     @PutMapping("/info")
