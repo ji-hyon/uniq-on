@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ssafy.uniqon.controller.MemberController;
+import ssafy.uniqon.controller.MyPageController;
 import ssafy.uniqon.global.config.auth.TokenProvider;
 import ssafy.uniqon.model.MemberRole;
 import ssafy.uniqon.model.Members;
@@ -65,6 +66,19 @@ public class MemberService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token=tokenProvider.createToken(authenticationToken);
         return token;
+    }
+
+    public MyPageController.MemberInfoWebResponse getUserInfo(String walletAddress){
+        Members member=memberRepository.findById(walletAddress).get();
+        return new MyPageController.MemberInfoWebResponse(
+                member.getWalletAddress(),
+                member.getName(),
+                member.getNickname(),
+                member.getBirth(),
+                member.getGender(),
+                member.getVpToken(),
+                member.getProfileImage()
+        );
     }
 
     private void validateDuplicateMember(String userId) {
