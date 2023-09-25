@@ -1,13 +1,19 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { Button, Input } from "@material-tailwind/react";
+import { Button, Input,
+Dialog, Typography, Card, CardBody, CardFooter, CardHeader } from "@material-tailwind/react";
 
 export function TransactionBanner() {
 
   const [ word, setWord ] = useState("");
   const walletAddress = "0x1234567890123456789012345678901234567890";
   // const URL = "http://localhost:5000"
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => { setOpen(!open); };
+
+  const [searchList, setSearchList] = useState([]);
+
 
 
 
@@ -27,6 +33,7 @@ export function TransactionBanner() {
       });
         console.log(word)
         console.log(res.data.response)
+        setSearchList(res.data.response)
 
     } catch(err) {
       console.log(err)
@@ -50,6 +57,7 @@ export function TransactionBanner() {
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               searchSales();
+              handleOpen();
             }
           }}
           style={{ color: 'black' }}
@@ -80,6 +88,46 @@ export function TransactionBanner() {
     </div>
     {/* <Button color="red" onClick={searchSales}>판매 검색</Button>
         <br></br> */}
+    <Dialog
+        size="xs"
+        open={open}
+        handler={handleOpen}
+        className="bg-transparent shadow-none"
+      >
+        <Card className="mx-auto w-full max-w-[24rem]">
+          <CardHeader
+            variant="gradient"
+            color="blue"
+            className="grid mb-4 h-28 place-items-center"
+          >
+            <Typography variant="h3" color="white">
+              검색 목록
+            </Typography>
+          </CardHeader>
+
+          <CardBody className="overflow-y-scroll max-h-[400px]">
+      {searchList.map((item) => (
+        <div key={item.id} className="flex flex-col gap-4">
+          <img src={item.image} alt="my-gif" />
+          <span className="text-lg">
+            <span className="font-bold">{item.title}</span>
+          </span>
+          <span className="text-lg">
+            가격 | <span className="font-bold">{item.price} ETH</span>
+          </span>
+        </div>
+      ))}
+    </CardBody>
+          
+
+
+          <CardFooter className="pt-0">
+            <Button variant="gradient" onClick={() => {handleOpen();}} fullWidth>
+              목록 닫기
+            </Button>
+          </CardFooter>
+        </Card>
+      </Dialog>
     </>
   )
 }
