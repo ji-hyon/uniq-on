@@ -36,7 +36,7 @@ export function Section3() {
                   희귀동물정보
                 </div>
                 <div className="flex flex-col w-[150px] items-start pl-0 pr-[21px] py-0 absolute top-[101px] left-0">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Segoe_UI-Regular',Helvetica] font-normal text-[#7c7c7c] text-[13px] tracking-[0] leading-[17px]">
+                  <div className="relative w-fit mt-[-1.00px] [font-family:'Segoe_UI-Regular',Helvetica] font-semibold text-[#7c7c7c] text-[13px] tracking-[0] leading-[17px]">
                     해당 동물의 정보를
                     <br />
                     탐색해보세요.
@@ -51,7 +51,7 @@ export function Section3() {
                   NFT 목록
                 </div>
                 <div className="flex flex-col w-[150px] items-start pl-0 pr-[21px] py-0 absolute top-[101px] left-0">
-                  <div className="relative w-fit mt-[-1.00px] mr-[-11.00px] [font-family:'Segoe_UI-Regular',Helvetica] font-normal text-[#7c7c7c] text-[13px] tracking-[0] leading-[17px]">
+                  <div className="relative w-fit mt-[-1.00px] mr-[-11.00px] [font-family:'Segoe_UI-Regular',Helvetica] font-semibold text-[#7c7c7c] text-[13px] tracking-[0] leading-[17px]">
                     해당 동물의 NFT들을
                     <br />
                     구경해보세요.
