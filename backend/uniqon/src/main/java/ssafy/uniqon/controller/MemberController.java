@@ -45,7 +45,7 @@ public class MemberController {
         return OK(memberService.signup(req,multipartFile));
     }
 
-    @GetMapping("/login/{token}")
+    @RequestMapping (value = "/login/{token}",method = {RequestMethod.GET,RequestMethod.POST})
     public Response<?> login(@PathVariable String token) {
         return OK(token);
 //        return OK(memberService.login(String walletAddress));
