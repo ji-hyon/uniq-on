@@ -14,7 +14,7 @@ export function MyNft() {
   // 나의 NFT 조회
   async function getMyNft() {
     try {
-      const resonse = await axios.get(`/api/mypage/mynfts`);
+      const resonse = await axios.get(`/api/mypage/mynfts/${1}`);
       console.log('성공', resonse);
     } catch (error) {
       console.log('실패', error);
