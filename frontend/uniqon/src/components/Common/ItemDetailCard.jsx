@@ -145,7 +145,7 @@ export function ItemDetailCard( { item } ) {
             className="grid mb-4 h-28 place-items-center"
           >
             <Typography variant="h3" color="white">
-              구매 확인
+              구매 확인.
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
