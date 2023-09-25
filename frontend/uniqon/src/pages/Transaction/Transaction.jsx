@@ -20,7 +20,7 @@ export function Transaction() {
   const [content, setContent] = useState("test");
   const [price, setPrice] = useState("1000");
 
-  const walletAddress = "0x1234567890123456789012345678901234567890";
+  const walletAddress = "111";
 
   const { salesItemsList, setSalesItemsList  
     } = useTransactionStore();

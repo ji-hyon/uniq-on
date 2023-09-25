@@ -21,7 +21,7 @@ export function TranItemDetail () {
   const [price, setPrice] = useState("1000");
   const { forDetailItem, setForDetailItem } = useTransactionStore();
   // const URL = "http://localhost:5000"
-  const walletAddress = "0x1234567890123456789012345678901234567890";
+  const walletAddress = "111";
 
   const [수정open, set수정Open] = React.useState(false);
   const 수정handleOpen = () => { set수정Open(!수정open); };
@@ -144,12 +144,16 @@ export function TranItemDetail () {
               판매글 수정
             </Typography>
           </CardHeader>
+          {item ? (
           <CardBody className="flex flex-col gap-4">
             <Input label="판매 NFT 선택" value={수정할NFTid} size="lg" onChange={(e) => set수정할NFTid(e.target.value)}/>
-            <Input label="판매글 제목" value={title} size="lg" onChange={(e) => setTitle(e.target.value)} />
-            <Input label="판매글 내용" value={content} size="lg" onChange={(e) => setContent(e.target.value)}/>
-            <Input label="판매 가격" value={price} size="lg" onChange={(e) => setPrice(e.target.value)}/>
+            <Input label="판매글 제목" value={item.title} size="lg" onChange={(e) => setTitle(e.target.value)} />
+            <Input label="판매글 내용" value={item.content} size="lg" onChange={(e) => setContent(e.target.value)}/>
+            <Input label="판매 가격" value={item.price} size="lg" onChange={(e) => setPrice(e.target.value)}/>
           </CardBody>
+          ) : (
+            <p>Loading...</p>
+          )}
           <CardFooter className="pt-0">
             <Button variant="gradient" onClick={() => {수정handleOpen(); updateSales(title, content, price, 수정할NFTid)}} fullWidth>
               등록

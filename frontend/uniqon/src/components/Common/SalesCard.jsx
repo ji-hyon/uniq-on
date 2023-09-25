@@ -23,7 +23,7 @@ export function SalesCard({ item, id }) {
   const [postId, setPostId] = React.useState('');
   const [wishId, setWishId] = React.useState('');
 
-  const walletAddress = "0x00000000000000";
+  const walletAddress = "111";
 
   const [ selectedItem, setSelectedItem ] = useState({});
 
@@ -114,8 +114,8 @@ async function goToTranItemDetail() {
     <Card 
       id={id}
       className="w-full w-[27rem] shadow-lg">
-        <Button onClick={deleteWishlist}>위시리스트 삭제</Button>
-        <Button onClick={getWishlist}>위시리스트 조회</Button>
+        {/* <Button onClick={deleteWishlist}>위시리스트 삭제</Button> */}
+        {/* <Button onClick={getWishlist}>위시리스트 조회</Button> */}
       <CardHeader floated={false} color="blue-gray">
         <img
           src={item.image}
