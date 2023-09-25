@@ -63,7 +63,7 @@ export function Section3() {
         </div>
         <img
           className="absolute w-[650px] h-[550px] top-[60px] left-[444px]"
-          alt="Rebranded image"
+          alt="Rebranded"
           src="dogambook.png"
         />
       </div>
