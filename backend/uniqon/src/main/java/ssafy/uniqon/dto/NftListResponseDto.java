@@ -14,7 +14,7 @@ public class NftListResponseDto {
     private Integer age;
     private String feature;
     private String ownerNickname;
-    private String ownerProfileImage;
+    private byte[] ownerProfileImage;
     private Integer middleClassificationId;
     private String middleSpecies;
     private String nftURL;
