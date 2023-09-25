@@ -9,7 +9,7 @@ export function Section2() {
       <div className="relative w-[1024px] h-[750px] ml-[-240.00px] mr-[-240.00px]">
         <img
           className="absolute w-[469px] h-[469px] top-[149px] left-0"
-          alt="Rebranded image"
+          alt="Rebranded"
           src="fox-large.png"
         />
         <div className="absolute w-[369px] h-[346px] top-[202px] left-[655px]">

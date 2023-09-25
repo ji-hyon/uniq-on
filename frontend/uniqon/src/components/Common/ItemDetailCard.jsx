@@ -124,7 +124,7 @@ export function ItemDetailCard( { item } ) {
         <a href="#" className="inline-block">
         <Button onClick={handleOpen} variant="gradient" className="flex text-lg" color="red">
             구매하기
-            <img  className="w-8 h-8 ml-1" src="/coin.gif" alt="" />
+            <img className="w-8 h-8 ml-1" src="/coin.gif" alt="" />
           </Button>
         </a>
       </CardBody>
