@@ -14,7 +14,7 @@ export function WishList() {
   // 위시리스트 조회
   async function likeCollecList() {
     try {
-      const resonse = await axios.get(`/api/mypage/nft`);
+      const resonse = await axios.get(`/api/mypage/like-nft-list/${1}`);
       console.log('성공', resonse);
     } catch (error) {
       console.log('실패', error);
