@@ -5,6 +5,7 @@ import { IssueCert } from "./pages/IssueCert"
 import { CheckCert } from './pages/CheckCert';
 import { Routes, Route, BrowserRouter } from "react-router-dom"
 import { MetaMask } from './components/MetaMask';
+import { TestPage } from './pages/TestPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route index path="/diti/" element={<Landing />} />
           <Route path="/diti/issue" element={<IssueCert />} />
           <Route path="/diti/check" element={<CheckCert />} />
+          <Route path="/diti/test" element={<TestPage />} />
         </Routes>
       </BrowserRouter>
     </div>

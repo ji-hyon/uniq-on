@@ -37,10 +37,13 @@ export function MetaMask() {
       "method": "wallet_addEthereumChain",
       "params": [
         {
-          "chainId": "0x79F5",
-          "chainName": "SSAFY",
+          // "chainId": "0x79F5",
+          "chainId": "0x562",
+          // "chainName": "SSAFY",
+          "chainName": "STG-GETH",
           "rpcUrls": [
-            "https://rpc.ssafy-blockchain.com"
+            // "https://rpc.ssafy-blockchain.com"
+            "https://gethrpc.ssafy-blockchain.com"
           ],
           "iconUrls": [
             "https://xdaichain.com/fake/example/url/xdai.svg",
@@ -80,7 +83,8 @@ export function MetaMask() {
     // add와 switch가 있는데, add는 없으면 추가한 다음 switch를 하고, switch는 없으면 에러 발생 -> add 사용
     // switch : https://docs.metamask.io/wallet/reference/wallet_switchethereumchain/
     // add : https://docs.metamask.io/wallet/reference/wallet_addethereumchain/
-    if (currentChainId !== "0x79F5") {
+    // if (currentChainId !== "0x79F5") {
+    if (currentChainId !== "0x562") {
       await addStgGeth()
     }
 
