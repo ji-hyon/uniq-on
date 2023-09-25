@@ -5,11 +5,10 @@ spring:
     group:
       local:
         - db-local
+        - log-local
       dev:
         - db-dev
+        - log-dev
     include:
       - db
-
-logging:
-  level:
-    org.hibernate.SQL: debug
+      - log
