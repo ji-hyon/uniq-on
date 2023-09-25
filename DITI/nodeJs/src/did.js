@@ -1,24 +1,7 @@
-// const express = require('express');
-// const router = express.Router();
-
-// const EthrDID = require('ethr-did');
-// const Resolver = require('did-resolver');
-// const getResolver = require('ethr-did-resolver');
-// const { createVerifiableCredentialJwt, createVerifiablePresentationJwt, verifyCredential, verifyPresentation } = require('did-jwt-vc');
-
-import express from "express"
-const router = express.Router()
 import { EthrDID } from "ethr-did"
 import { Resolver } from "did-resolver"
 import { getResolver } from "ethr-did-resolver"
 import { createVerifiableCredentialJwt, createVerifiablePresentationJwt, verifyCredential, verifyPresentation } from "did-jwt-vc"
-
-// multipart 데이터를 받기 위해 사용 (신분증 사진)
-import multer from 'multer'
-const upload = multer()
-
-// 메세지로 본인 인증하는 함수 작성한 것 import
-import { verifyLoginMessage } from "../src/auth.js"
 
 // ssafy 네트워크로 수정하기
 const rpcUrl = 'https://rpc.sepolia.org/'
@@ -42,7 +25,7 @@ const providerConfig = {
 const resolver = new Resolver(getResolver(providerConfig))
 
 
-async function createVC(walletAddress, data) {
+export async function createVC(walletAddress, data) {
     // create VC
     const vcPayload = {
         // 유저 지갑 주소 기반으로 did 생성
@@ -61,6 +44,22 @@ async function createVC(walletAddress, data) {
     return vcJwt
 }
 
+// createVP
+// 서비스가 요청. 신분증의 주인임을 알기위해 서명 필요 + 특정 인증서 이름(?) 
+// 서비스 -> Spring -> node -> Spring -> 서비스 
+export async function createVP(vcJwt) {
+    const vpPayload = {
+        vp: {
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        type: ['VerifiablePresentation'],
+        verifiableCredential: [vcJwt]
+        }
+    }
+        const vpJwt = await createVerifiablePresentationJwt(vpPayload, issuer)
+        console.log(vpJwt)
+        return vpJwt
+}
+
 // // verify VC
 // try {
 //     const verifiedVC = await verifyCredential(vcJwt, resolver)
@@ -70,24 +69,3 @@ async function createVC(walletAddress, data) {
 //     console.log(e)
 // }
 // // process.exit(1)
-// /vc 경로로 post 요청이 왔을 때의 로직
-// https://inpa.tistory.com/entry/EXPRESS-%F0%9F%93%9A-multer-%EB%AF%B8%EB%93%A4%EC%9B%A8%EC%96%B4
-router.post('/vc', upload.single("imgFile"), async (req, res) => {
-    // body에는 텍스트 정보
-    const { walletAddress, originalMessage, signedMessage } = req.body
-    if (!verifyLoginMessage(walletAddress, originalMessage, signedMessage)) {
-        res.status(400).send("login failed")
-    }
-    // OCR로 읽어들인 정보 처리 아래와 같이 진행하면 될듯  
-    // console.log(req.file)
-    // const img2text=readText(req.file)    
-    // {"name":img2text.name, "personalID":img2text.id}
-    const vcJwt = await createVC(walletAddress, { "name": "서지현", "IDnumber": "123456-1234567" })
-    res.send(vcJwt)
-})
-
-router.get("/test", (req, res) => {
-    res.send("hello")
-})
-
-export default router

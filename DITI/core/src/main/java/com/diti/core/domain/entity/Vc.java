@@ -24,6 +24,7 @@ public class Vc {
     @JoinColumn(name = "wallet_address")
     private Auth auth;
 
+    @Column(length=2000)
     private String vcJwt;
 
     @CreationTimestamp

@@ -9,21 +9,32 @@
 import express from "express" // 서버 실행
 import cors from "cors"
 import dotenv from "dotenv" 
-import didRouter from "./routes/did.js";
+import didRouter from "./routes/didRouter.js";
+import springProxy from "./routes/springProxy.js";
+import { authMiddleWare } from "./src/auth.js";
 
 // express서버, 7000번 포트 설정
 const app = express();
 const port = 7000;
 
-app.use("/api/node", express.static("public"));
+// app.use(express.static("public"));
+app.use("/diti",express.static("public"));
+// app.use(express.static("../frontend/build"));
+// app.use("/diti",express.static("../frontend/build"));
+// app.use("/diti/**",express.static("../frontend/build"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 dotenv.config();
 
 // 모듈화 
-// /api/did 경로로 들어오면 didRouter가 처리 
-app.use("/api/did", didRouter);
+// /diti/did 경로로 들어오면 didRouter가 처리 
+app.use("/diti/did", authMiddleWare, didRouter);
+// /diti로 요청이 들어오면 springProxy가 처리
+app.use("/diti/auth", authMiddleWare, springProxy)
+app.use("/diti/vc", authMiddleWare, springProxy)
+app.use("/diti/swagger*",springProxy)
+
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
