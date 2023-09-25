@@ -33,7 +33,7 @@ public class Members{
     @Column(length = 30)
     private String gender;
 
-    @Column(length = 700)
+    @Column(length = 3000)
     private String vpToken;
 
     @Lob

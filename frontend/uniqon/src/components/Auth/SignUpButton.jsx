@@ -86,7 +86,14 @@ export function SignUpButton() {
     const balance = await provider.getBalance(address)
     const chainId = (await provider.getNetwork()).chainId
     console.log("address:", address, "balance:", balance, "chainId:", chainId)
-    const token = await Web3Token.sign(async msg => await signer.signMessage(msg), '1d');
+
+    let token=""
+    try{
+      token = await Web3Token.sign(async msg => await signer.signMessage(msg), '1d');
+    }catch(e){
+      console.log("Could not get a sign", e)
+      return
+    }
 
     const formData = new FormData()
     formData.append("profileImg", profileRef.current.files[0])
