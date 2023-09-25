@@ -62,7 +62,7 @@ export function SalesCard({ item, id }) {
     }
 }
 
-const goToTranItemDetail = () => {
+async function goToTranItemDetail() {
   // console.log(id)
   getSalesDetail()
   // console.log(item)
