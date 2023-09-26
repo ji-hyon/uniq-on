@@ -64,7 +64,7 @@ public class MemberService {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         // 해당 객체를 SecurityContextHolder에 저장하고
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token=tokenProvider.createToken(authenticationToken);
+        String token=tokenProvider.createToken(authentication);
         return token;
     }
 

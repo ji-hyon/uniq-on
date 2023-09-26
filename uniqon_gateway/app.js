@@ -117,7 +117,7 @@ app.post("/api/users/signup", async (req, res) => {
     // vp안의 여러 vc들 중 첫 번째 vc만 검증 (프로젝트에서 vc하나만 담도록 설계했기 때문)
     const data = {
       "walletAddress": req.headers.walletaddress,
-      "name": vcs[0].data.idName,
+      "name": vcs[0].data.name,
       "nickname": "nonickname",
       "birth": vcs[0].data.birth,
       "gender": vcs[0].data.gender,
@@ -189,7 +189,8 @@ app.get("/api/users/login", async (req, res) => {
       )
       res.status(springResponse.status).send(springResponse.data)
     } catch (e) {
-      res.status(springResponse.status).send("GET " + process.env.SPRING_SERVER_URI + "/api/users/login failed")
+      console.log(e.status)
+      res.status(500).send("GET " + process.env.SPRING_SERVER_URI + "/api/users/login failed")
       return
     }
 
