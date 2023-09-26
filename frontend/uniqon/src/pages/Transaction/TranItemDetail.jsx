@@ -21,7 +21,7 @@ export function TranItemDetail () {
   const [price, setPrice] = useState("1000");
   const { forDetailItem, setForDetailItem } = useTransactionStore();
   // const URL = "http://localhost:5000"
-  const walletAddress = "111";
+  const walletAddress = "0x00000000000000";
 
   const [수정open, set수정Open] = React.useState(false);
   const 수정handleOpen = () => { set수정Open(!수정open); };
