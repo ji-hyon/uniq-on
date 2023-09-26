@@ -10,7 +10,7 @@ export function Wishlist() {
 
   const [postId, setPostId] = React.useState('1');
   const [wishId, setWishId] = React.useState('1');
-  const [walletAddress, setWalletAddress] = React.useState('111');
+  const [walletAddress, setWalletAddress] = React.useState('0x00000000000000');
 
   // useEffect(() => {
   //   getDefaultWishlist();

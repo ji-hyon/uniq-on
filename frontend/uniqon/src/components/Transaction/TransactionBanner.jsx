@@ -7,7 +7,7 @@ Dialog, Typography, Card, CardBody, CardFooter, CardHeader } from "@material-tai
 export function TransactionBanner() {
 
   const [ word, setWord ] = useState("");
-  const walletAddress = "111";
+  const walletAddress = "0x00000000000000";
   // const URL = "http://localhost:5000"
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => { setOpen(!open); };
