@@ -34,7 +34,7 @@ export function TranItemDetail () {
 
   useEffect(() => {
 
-    // console.log(id)
+    console.log(id)
 
     getSalesDetail();
   }, []);
@@ -60,17 +60,17 @@ export function TranItemDetail () {
 
   
 
-  async function updateSales() {
+  async function updateSales(price, title, content) {
 
     try {
       const data = {
-        price: "1000",
-        content: "test",
-        title: "test1",
+        price: price,
+        title: title,
+        content: content,
         walletAddress: walletAddress,
       };
 
-
+      console.log(id)
 
       const res = await axios.put(`/api/sales/update/${id}`, data, {
         headers: { 
@@ -146,7 +146,6 @@ export function TranItemDetail () {
           </CardHeader>
           {item ? (
           <CardBody className="flex flex-col gap-4">
-            <Input label="판매 NFT 선택" value={수정할NFTid} size="lg" onChange={(e) => set수정할NFTid(e.target.value)}/>
             <Input label="판매글 제목" value={item.title} size="lg" onChange={(e) => setTitle(e.target.value)} />
             <Input label="판매글 내용" value={item.content} size="lg" onChange={(e) => setContent(e.target.value)}/>
             <Input label="판매 가격" value={item.price} size="lg" onChange={(e) => setPrice(e.target.value)}/>
@@ -155,7 +154,7 @@ export function TranItemDetail () {
             <p>Loading...</p>
           )}
           <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={() => {수정handleOpen(); updateSales(title, content, price, 수정할NFTid)}} fullWidth>
+            <Button variant="gradient" onClick={() => {수정handleOpen(); updateSales( price, title, content)}} fullWidth>
               등록
             </Button>
           </CardFooter>
