@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,11 +33,11 @@ public class SecurityConfig {
     private final TokenProvider tokenProvider;
 
 //    웹 전체 Security 비활성화
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/**", "/**");
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+////        return (web) -> web.ignoring().requestMatchers("/**", "/**");
 //        return (web) -> web.ignoring().requestMatchers("/static/js/**", "/static/image/**", "/static/css/**", "/static/scss/**").anyRequest();
-    }
+//    }
 
     // PasswordEncoder는 BCryptPasswordEncoder를 사용
     @Bean
@@ -49,7 +48,7 @@ public class SecurityConfig {
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf.disable())
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                         .accessDeniedHandler(jwtAccessDeniedHandler))
@@ -58,11 +57,11 @@ public class SecurityConfig {
 //                .authorizeRequests((authorizeRequests) -> authorizeRequests
 //                        .requestMatchers("/api/users/login", "/api/users/signup","/transaction").permitAll()
 //                        .anyRequest().authenticated())
-                .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
+                .authorizeRequests((authorizeRequests) -> authorizeRequests
+                        .requestMatchers("/**").permitAll()
 //                        .requestMatchers("/api/sales/post**","/api/nfts/detail/**","/api/users/**").permitAll()
 //                        .requestMatchers("/api/sales/**", "/api/wallet/**", "/api/myPage/**","api/wishlist/**").authenticated()
 //                        .requestMatchers("/api/nfts/**").authenticated()
-                        .requestMatchers("/api/**").permitAll()
                         .anyRequest().permitAll())
 //                .formLogin(formlogin->formlogin.disable())
                 .formLogin(formLogin -> formLogin
