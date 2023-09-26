@@ -19,16 +19,16 @@ export function Purchase() {
   useEffect(() => {
     async function purchaseList() {
       try {
-        const resonse = await axios.get(`/api/myPage/boughtList`, {
+        const response = await axios.get(`/api/myPage/boughtList`, {
           params: {
             page: page,
             size: 10,
           },
         });
-        if (resonse.success) {
-          console.log("성공", resonse);
-          setpurchaseList(resonse.resonse.content);
-          setTotalPage(resonse.resonse.tototalPages);
+        if (response.success) {
+          console.log("성공", response);
+          setpurchaseList(response.resonse.content);
+          setTotalPage(response.resonse.tototalPages);
         }
       } catch (error) {
         console.log("실패", error);
