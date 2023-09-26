@@ -56,10 +56,11 @@ public class WishlistController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @PostMapping("/add/{postId}")
-    public Response<?> addWishlist(@PathVariable Integer postId, @AuthenticationPrincipal UserDetails userDetails){
+    public Response<?> addWishlist(@PathVariable Integer postId){
         log.info("# 위시리스트에 추가 요청 : {}", postId);
-        log.debug("# 요청 지갑 : {}", userDetails.getUsername());
-        int result = wishlistService.addWishlist(new addWishlistWebRequest(userDetails.getUsername(), postId));
+//        log.debug("# 요청 지갑 : {}", userDetails.getUsername());
+//        int result = wishlistService.addWishlist(new addWishlistWebRequest(userDetails.getUsername(), postId));
+        int result = wishlistService.addWishlist(new addWishlistWebRequest("0x00000000000000", postId));
         if (result == 1) {
             log.debug("# 위시리스트 추가 성공");
             return OK(null);
@@ -71,17 +72,18 @@ public class WishlistController {
 
     @Operation(summary = "위시리스트 조회", description = "지갑 주소를 통해 위시리스트 조회합니다.")
     @Parameters({
-            @Parameter(name = "walletAddress", description = "지갑 주소", example = "0xF2a7423475C6240321732Ed5f9e29d94dAB603A9")
+            @Parameter(name = "walletAddress", description = "지갑 주소", example = "0x00000000000000")
     })
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @GetMapping
-    public Response<?> getWishlist(@PageableDefault Pageable pageable, @AuthenticationPrincipal UserDetails userDetails){
-        log.debug("# 위시리스트 조회 요청 : {}", userDetails.getUsername());
-        Page<WishlistQueryRepository.getWishlistDBResponse> list =  wishlistService.getWishlist(pageable, userDetails.getUsername());
+    @GetMapping("/{walletAddress}")
+    public Response<?> getWishlist(@PageableDefault Pageable pageable, @PathVariable String walletAddress ){
+//        log.debug("# 위시리스트 조회 요청 : {}", userDetails.getUsername());
+//        Page<WishlistQueryRepository.getWishlistDBResponse> list =  wishlistService.getWishlist(pageable, userDetails.getUsername());
+        Page<WishlistQueryRepository.getWishlistDBResponse> list =  wishlistService.getWishlist(pageable, walletAddress);
         if (list == null) {
             return ERROR("위시리스트 존재 안 함", HttpStatus.NOT_FOUND);
         } else {
@@ -100,9 +102,10 @@ public class WishlistController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @DeleteMapping("/{wishlistId}")
-    public Response<?> deleteWishlist(@PathVariable Integer wishlistId, @AuthenticationPrincipal UserDetails userDetails){
+//    public Response<?> deleteWishlist(@PathVariable Integer wishlistId, @AuthenticationPrincipal UserDetails userDetails){
+    public Response<?> deleteWishlist(@PathVariable Integer wishlistId){
         log.info("# 위시리스트 삭제 요청 : {}", wishlistId);
-        int result = wishlistService.deleteWishlist(new deleteWishlistWebRequest(userDetails.getUsername(), wishlistId));
+        int result = wishlistService.deleteWishlist(new deleteWishlistWebRequest("0x00000000000000", wishlistId));
         if (result == 1) {
             log.debug("# 위시리스트 삭제 성공");
             return OK(null);
