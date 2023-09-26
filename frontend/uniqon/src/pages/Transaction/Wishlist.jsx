@@ -10,9 +10,7 @@ export function Wishlist() {
 
   const [postId, setPostId] = React.useState('1');
   const [wishId, setWishId] = React.useState('1');
-  const [walletAddress, setWalletAddress] = React.useState('0xF2a7423475C6240321732Ed5f9e29d94dAB603A9');
-
-  const URL = "http://localhost:5000"
+  const [walletAddress, setWalletAddress] = React.useState('0x00000000000000');
 
   // useEffect(() => {
   //   getDefaultWishlist();
@@ -33,38 +31,17 @@ export function Wishlist() {
 
   async function getWishlist() {
 
-    
-
-      try {
-        const res = await axios.get(URL + `/api/wishlist/${walletAddress}`);
-          console.log(res.data)
-
-      } catch(err) {
-        console.log(err)
-      }
-    }
-
-  async function addWishlist() {
-      
     try {
-        const res = await axios.post(`/api/wishlist/add/${postId}`);
-          console.log(res.data)
-
-      } catch(err) {
-        console.log(err)
-      }
+      const res = await axios.get(`/api/wishlist/${walletAddress}`, 
+      {params: {
+        page: 0,
+        size: 9,
+      }})
+        console.log(res.data.response)
+    } catch(err) {
+      console.log(err)
     }
-
-  async function deleteWishlist() {
-      
-    try {
-        const res = await axios.delete(`/api/wishlist/${wishId}`);
-          console.log(res.data)
-
-      } catch(err) {
-        console.log(err)
-      }
-    }  
+  }
 
   return (
     <div className="App">
@@ -82,6 +59,7 @@ export function Wishlist() {
                         <div className="relative w-fit mt-[-1.00px] [font-family:'Consolas-Regular',_Helvetica] font-normal text-white text-[16px] tracking-[0] leading-[20px] whitespace-nowrap">
                           Wishlist
                         </div>
+                        <Button onClick={getWishlist}>getWishlist</Button>
                       </div>
                     </div>
                     <div className="inline-flex flex-col items-start gap-[8px] relative flex-[0_0_auto] mr-[-123.00px]">
@@ -428,13 +406,9 @@ export function Wishlist() {
               </div>
             </div>
         </div>
-      </div>
-        <p>
-          Wishlist
-        </p>
-        <Button onClick={getWishlist}>getWishlist</Button>
-        <Button onClick={addWishlist}>addWishlist</Button>
-        <Button onClick={deleteWishlist}>deleteWishlist</Button>
+      </div>       
+        {/* <Button onClick={addWishlist}>addWishlist</Button>
+        <Button onClick={deleteWishlist}>deleteWishlist</Button> */}
         
       </header>
     </div>

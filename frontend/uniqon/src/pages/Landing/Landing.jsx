@@ -36,14 +36,14 @@ export function Landing() {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="flex flex-col w-[1440px] items-start relative">
-          <Section1 />
-          <Section2 />
-          <Section3 />
-          <Section4 />
-        </div>
+      <div className="flex flex-col w-[1440px] items-start relative">
+      <Section1 />
+      <Section2 />
+      <Section3 />
+      <Section4 />
+      </div>
 
-        <Button onClick={loginUser}></Button>
+      <Button onClick={loginUser}></Button>
 
         <p>
           여기는 랜딩페이지입니다.

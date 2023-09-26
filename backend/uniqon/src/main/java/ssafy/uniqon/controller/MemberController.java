@@ -29,20 +29,20 @@ public class MemberController {
             String birth,
             String gender,
             String vpToken,
-            String password
-    ){}
+            String password) {
+    }
 
     record LoginWebRequest(
-            String walletAddress
-    ){}
+            String walletAddress) {
+    }
 
     private final MemberService memberService;
 
     @PostMapping("/signup")
-    public Response<?> signup(@RequestPart(value = "data")  SignupWebRequest req,
-                           @RequestPart(value = "file") MultipartFile multipartFile) throws SQLException, IOException {
+    public Response<?> signup(@RequestPart(value = "data") SignupWebRequest req,
+            @RequestPart(value = "file") MultipartFile multipartFile) throws SQLException, IOException {
 
-        return OK(memberService.signup(req,multipartFile));
+        return OK(memberService.signup(req, multipartFile));
     }
 
     // @GetMapping("/login/{token}")
@@ -50,6 +50,6 @@ public class MemberController {
     @GetMapping("/login/{walletAddress}")
     public Response<?> login(@PathVariable String walletAddress) {
         // return OK(token);
-       return OK(memberService.login(walletAddress));
+        return OK(memberService.login(walletAddress));
     }
 }

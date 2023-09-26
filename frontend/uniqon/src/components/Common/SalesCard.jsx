@@ -114,8 +114,8 @@ async function goToTranItemDetail() {
     <Card 
       id={id}
       className="w-full w-[27rem] shadow-lg">
-        <Button onClick={deleteWishlist}>위시리스트 삭제</Button>
-        <Button onClick={getWishlist}>위시리스트 조회</Button>
+        {/* <Button onClick={deleteWishlist}>위시리스트 삭제</Button> */}
+        {/* <Button onClick={getWishlist}>위시리스트 조회</Button> */}
       <CardHeader floated={false} color="blue-gray">
         <img
           src={item.image}
