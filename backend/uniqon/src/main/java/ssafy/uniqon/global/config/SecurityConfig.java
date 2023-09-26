@@ -34,11 +34,11 @@ public class SecurityConfig {
     private final TokenProvider tokenProvider;
 
 //    웹 전체 Security 비활성화
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/**", "/**");
-//        return (web) -> web.ignoring().requestMatchers("/static/js/**", "/static/image/**", "/static/css/**", "/static/scss/**").anyRequest();
-    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+////        return (web) -> web.ignoring().requestMatchers("/**", "/**");
+////        return (web) -> web.ignoring().requestMatchers("/static/js/**", "/static/image/**", "/static/css/**", "/static/scss/**").anyRequest();
+//    }
 
     // PasswordEncoder는 BCryptPasswordEncoder를 사용
     @Bean
