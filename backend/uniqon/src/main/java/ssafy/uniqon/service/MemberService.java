@@ -54,7 +54,7 @@ public class MemberService {
 
     public String login(String walletAddress){
         Members member = memberRepository.findById(walletAddress)
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 유저 입니다."));
 ////        if (!passwordEncoder.matches(user.get("password"), member.getPassword())) {
 ////            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
 ////        }

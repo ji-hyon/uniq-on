@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(MemberRole.USER.name()));
-        grantedAuthorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.name()));
+        //grantedAuthorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.name()));
 
         return new org.springframework.security.core.userdetails.User(member.getWalletAddress(),
                 member.getPassword(),
