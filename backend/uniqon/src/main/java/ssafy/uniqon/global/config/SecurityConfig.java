@@ -57,11 +57,11 @@ public class SecurityConfig {
 //                .authorizeRequests((authorizeRequests) -> authorizeRequests
 //                        .requestMatchers("/api/users/login", "/api/users/signup","/transaction").permitAll()
 //                        .anyRequest().authenticated())
-//                .authorizeRequests((authorizeRequests) -> authorizeRequests
+                .authorizeRequests((authorizeRequests) -> authorizeRequests
 //                        .requestMatchers("/api/sales/post**","/api/nfts/detail/**","/api/users/**").permitAll()
 //                        .requestMatchers("/api/sales/**", "/api/wallet/**", "/api/myPage/**","api/wishlist/**").authenticated()
 //                        .requestMatchers("/api/nfts/**").authenticated()
-//                        .anyRequest().permitAll())
+                        .anyRequest().permitAll())
 //                .formLogin(formlogin->formlogin.disable())
                 .formLogin(formLogin -> formLogin
 //                        .loginPage("/api/users/login")
