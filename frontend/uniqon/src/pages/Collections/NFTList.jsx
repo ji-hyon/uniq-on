@@ -107,11 +107,11 @@ export function NFTList() {
             <div className="relative flex w-full max-w-[24rem] mt-12 top-10 left-[65rem]">
               <Input
                 type="text"
-                placeholder="검색어를 입력하세요"
+                label="검색어를 입력하세요"
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
                 onKeyDown={handleKeyDown}
-                style={{ color: 'black ', borderColor: 'black' }}
+                // style={{ color: 'black ', borderColor: 'black' }}
                 containerProps={{ className: 'min-w-0' }}
               ></Input>
               <Button size="sm" onClick={handleSearch} className="!absolute right-1 top-2.5 rounded">
