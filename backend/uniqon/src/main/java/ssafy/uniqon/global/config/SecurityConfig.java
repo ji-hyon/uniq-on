@@ -62,7 +62,7 @@ public class SecurityConfig {
 //                        .requestMatchers("/api/sales/post**","/api/nfts/detail/**","/api/users/**").permitAll()
 //                        .requestMatchers("/api/sales/**", "/api/wallet/**", "/api/myPage/**","api/wishlist/**").authenticated()
 //                        .requestMatchers("/api/nfts/**").authenticated()
-                        .requestMatchers("**").permitAll()
+                        .requestMatchers("/api/**").permitAll()
                         .anyRequest().permitAll())
 //                .formLogin(formlogin->formlogin.disable())
                 .formLogin(formLogin -> formLogin
