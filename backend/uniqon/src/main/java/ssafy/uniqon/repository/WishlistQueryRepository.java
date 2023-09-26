@@ -27,17 +27,19 @@ public class WishlistQueryRepository {
 
     public record getWishlistDBResponse(
             int wishlistId,
+            int postId,
             String nftImage,
             String sellerWalletAddress,
-            String sellerProfileImage,
+            byte[] sellerProfileImage,
             String sellerNickname,
             String price,
             Integer nftMiddleId,
             String nftMiddleSpecies,
             String postTitle
     ){
-        public getWishlistDBResponse(int wishlistId, String nftImage, String sellerWalletAddress, String sellerProfileImage, String sellerNickname, String price, Integer nftMiddleId, String nftMiddleSpecies, String postTitle) {
+        public getWishlistDBResponse(int wishlistId, int postId, String nftImage, String sellerWalletAddress, byte[] sellerProfileImage, String sellerNickname, String price, Integer nftMiddleId, String nftMiddleSpecies, String postTitle) {
             this.wishlistId = wishlistId;
+            this.postId = postId;
             this.nftImage = nftImage;
             this.sellerWalletAddress = sellerWalletAddress;
             this.sellerProfileImage = sellerProfileImage;
@@ -54,6 +56,7 @@ public class WishlistQueryRepository {
         List<getWishlistDBResponse> list = jpaQueryFactory
                 .select(Projections.constructor(getWishlistDBResponse.class,
                         wishList.id,
+                        wishList.post.id,
                         wishList.post.nft.image,
                         wishList.post.seller.walletAddress,
                         wishList.post.seller.profileImage,

@@ -32,4 +32,9 @@ public class TransactionHistories {
 
     @CreationTimestamp
     private Timestamp transactedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "nft_id", insertable = false,updatable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private NFTs nftTxHis;
 }

@@ -107,19 +107,19 @@ export function ItemDetailCard( { item } ) {
       </CardHeader>
       <CardBody>
       <Typography variant="h4" color="blue-gray" className="mb-2">
-          글 제목 | {forDetailItem.PostInfo.title}.
+          글 제목 | {forDetailItem.PostInfo.title}
         </Typography>
         <Typography variant="h6" color="gray" className="mb-4 uppercase">
-          종 분류 | {forDetailItem.nftInfo.species}.
+          종 분류 | {forDetailItem.nftInfo.species}
         </Typography>
         <Typography variant="h6" color="gray" className="mb-4 uppercase">
-          가격 | {forDetailItem.PostInfo.price} ETH.
+          가격 | {forDetailItem.PostInfo.price} ETH
         </Typography>
         <Typography variant="h6" color="gray" className="mb-4 uppercase">
-          판매자 | {forDetailItem.SellerInfo.nickname}.
+          판매자 | {forDetailItem.SellerInfo.nickname}
         </Typography>
         <Typography color="gray" className="mb-8 font-normal">
-          lorem ipsum {forDetailItem.PostInfo.content}.
+          lorem ipsum {forDetailItem.PostInfo.content}
         </Typography>
         <a href="#" className="inline-block">
         <Button onClick={handleOpen} variant="gradient" className="flex text-lg" color="red">
@@ -151,9 +151,9 @@ export function ItemDetailCard( { item } ) {
           <CardBody className="flex flex-col gap-4">
           <img src="/basket.gif" alt="my-gif" />
 
-        <span className="text-lg"><span className="font-bold">{forDetailItem.title}
+        <span className="text-lg"><span className="font-bold">{forDetailItem.PostInfo.title}
         </span>를 구매하시겠습니까?</span>
-        <span className="text-lg">가격 | <span className="font-bold">{forDetailItem.price} ETH</span></span>
+        <span className="text-lg">가격 | <span className="font-bold">{forDetailItem.PostInfo.price} ETH</span></span>
         </CardBody>
         <CardFooter className="flex justify-end pt-0">
         <Button variant="gradient" color="green" onClick={handleOpen}>

@@ -14,6 +14,8 @@ import {
 } from '@material-tailwind/react';
 import { useCollectionsStore } from '../../stores/CollectionsStore';
 import { useEffect, useState } from 'react';
+import { Pagination } from './Pagination';
+import { TopNavBar } from '../../components/Common/TopNavBar';
 
 export function NFTList() {
   const {
@@ -32,6 +34,12 @@ export function NFTList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(4);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   useEffect(() => {
     async function nftList() {
       try {
@@ -44,7 +52,11 @@ export function NFTList() {
       }
     }
     nftList();
-  }, []);
+  }, [currentPage]);
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const currentPageData = nftData.slice(startIndex, endIndex);
 
   const clickNft = (card) => {
     console.log('selectednft', card);
@@ -87,71 +99,94 @@ export function NFTList() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>여기는 NFT를 보여주는 소분류 페이지 입니다.</p>
+        <div className="flex flex-row justify-center w-full bg-white">
+          <div className="bg-white w-[1440px] h-[1024px] relative">
+            <p>여기는 NFT를 보여주는 소분류 페이지 입니다.</p>
+            <TopNavBar></TopNavBar>
 
-        <div className="relative flex w-full max-w-[24rem]">
-          <Input
-            type="text"
-            placeholder="검색어를 입력하세요"
-            value={searchKeyword}
-            onChange={(e) => setSearchKeyword(e.target.value)}
-            onKeyDown={handleKeyDown}
-            style={{ color: 'white', borderColor: 'white' }}
-            containerProps={{ className: 'min-w-0' }}
-          ></Input>
-          <Button size="sm" onClick={handleSearch} className="!absolute right-1 top-2.5 rounded">
-            검색
-          </Button>
-        </div>
+            <div className="relative flex w-full max-w-[24rem] mt-12 top-10 left-[65rem]">
+              <Input
+                type="text"
+                label="검색어를 입력하세요"
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
+                onKeyDown={handleKeyDown}
+                // style={{ color: 'black ', borderColor: 'black' }}
+                containerProps={{ className: 'min-w-0' }}
+              ></Input>
+              <Button size="sm" onClick={handleSearch} className="!absolute right-1 top-2.5 rounded">
+                검색
+              </Button>
+            </div>
 
-        <br></br>
-        {/* 선택된 중분류 카드 보여줌 */}
-        <Card className="w-full max-w-[26rem] shadow-lg">
-          <CardHeader floated={false} color="blue-gray">
-            <img src={midCollecImg} alt="ui/ux review check" />
-            <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
-            <IconButton size="sm" color="red" variant="text" className="!absolute top-4 right-4 rounded-full">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
-                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-              </svg>
-            </IconButton>
-          </CardHeader>
-          <CardFooter className="pt-5">
-            <Button className="text-lg" size="lg" fullWidth={true}>
-              {midCollecType}
-            </Button>
-          </CardFooter>
-        </Card>
-        <br></br>
-        {/* NFT 카드 리스트를 보여줌 */}
-        <div className="flex space-x-4">
-          {nftData.map((card, index) => (
-            <Card onClick={() => clickNft(card)} key={index} className="w-full max-w-[26rem] shadow-lg">
-              <CardHeader floated={false} color="blue-gray">
-                <img src={card.image} alt="ui/ux review check" />
-                <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
-                <IconButton size="sm" color="red" variant="text" className="!absolute top-4 right-4 rounded-full">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
-                    <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                  </svg>
-                </IconButton>
-              </CardHeader>
-              <CardFooter className="pt-5">
-                <Button
-                  onClick={() => {
-                    clickNft(card);
-                  }}
-                  className="text-lg"
-                  size="lg"
-                  fullWidth={true}
-                >
-                  {card.ownerNickname}
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
+            <br></br>
+            {/* 선택된 중분류 카드 보여줌 */}
+            <div className="flex flex-col items-center">
+              <Card className="w-full max-w-[20rem] shadow-lg ">
+                <CardHeader floated={false} color="blue-gray">
+                  <img src={midCollecImg} alt="ui/ux review check" />
+                  <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
+                  <IconButton size="sm" color="red" variant="text" className="!absolute top-4 right-4 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
+                      <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                    </svg>
+                  </IconButton>
+                </CardHeader>
+                <CardFooter className="pt-5">
+                  <Button className="text-lg" size="lg" fullWidth={true}>
+                    {midCollecType}
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+            <br></br>
+            <div></div>
+            {/* NFT 카드 리스트를 보여줌 */}
+            <div className="flex space-x-4">
+              {nftData.map((card, index) => (
+                <Card onClick={() => clickNft(card)} key={index} className="w-full max-w-[20rem] shadow-lg">
+                  <CardHeader floated={false} color="blue-gray">
+                    <img src={card.image} alt="ui/ux review check" />
+                    <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
+                    <IconButton size="sm" color="red" variant="text" className="!absolute top-4 right-4 rounded-full">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="h-6 w-6"
+                      >
+                        <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                      </svg>
+                    </IconButton>
+                  </CardHeader>
+                  <CardFooter className="pt-5">
+                    <Button
+                      onClick={() => {
+                        clickNft(card);
+                      }}
+                      className="text-lg"
+                      size="lg"
+                      fullWidth={true}
+                    >
+                      {card.ownerNickname}
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+            <br></br>
+            <div>
+              <NftModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} selectedNft={selectedNft}></NftModal>
+            </div>
+            <div className="flex justify-center">
+              <Pagination
+                totalPages={Math.ceil(nftData.length / pageSize)}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              ></Pagination>
+            </div>
+          </div>
         </div>
-        <NftModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} selectedNft={selectedNft}></NftModal>
       </header>
     </div>
   );
