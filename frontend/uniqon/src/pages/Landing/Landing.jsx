@@ -23,7 +23,7 @@ export function Landing() {
       <Section1 />
       <Section2 />
       <Section3 />
-      <Section4 />
+      {/* <Section4 /> */}
       </div>
       <Button
           className="text-4xl w-96 h-28"
