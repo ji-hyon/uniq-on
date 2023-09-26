@@ -23,7 +23,7 @@ export function SalesCard({ item, id }) {
   const [postId, setPostId] = React.useState('');
   const [wishId, setWishId] = React.useState('');
 
-  const walletAddress = "111";
+  const walletAddress = "0x00000000000000";
 
   const [ selectedItem, setSelectedItem ] = useState({});
 

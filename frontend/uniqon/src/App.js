@@ -13,12 +13,15 @@ import { MainCollections } from './pages/Collections/MainCollections';
 import { MidCollections } from './pages/Collections/MidCollec';
 import { MidCollecDetail } from './pages/Collections/MidCollecDetail';
 import { NFTList } from './pages/Collections/NFTList';
+import { ContemLogin } from './pages/Landing/ContemLogin';
 
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/contemlogin" element={<ContemLogin />} />
+
         {/* <Route path="/collections" element={<Collections />} /> */}
         <Route path="/transaction" element={<Transaction />} />
         <Route path="/transaction/tranItemDetail/:id" element={<TranItemDetail />} />
