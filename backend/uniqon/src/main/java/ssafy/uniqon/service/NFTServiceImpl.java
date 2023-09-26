@@ -41,9 +41,10 @@ public class NFTServiceImpl implements NFTService {
 
     private final Pinata pinata = new Pinata("64e7615856edbac52336", "f62623900242c791dc8cb1243c69b2df8664886f50295a79d43ffe5ffdce0b5c");
     private static final String ipfsBaseURL = "https://gateway.pinata.cloud/ipfs/";
-    private final Web3j web3j = Web3j.build(new HttpService("http://127.0.0.1:7545"));
-    private final String userPrivateKey = "0x522357c8829606f187fb3511522ba2efa2ff35658325a695903106306c623894";
-    private final String contractAddress = "0x459f50D8faC1a605a47d661d4abD360E82F21bb6";
+    private final Web3j web3j = Web3j.build(new HttpService("https://gethrpc.ssafy-blockchain.com"));
+    private final String userPrivateKey = "0x47d40c989f723476275eae83ca83cb6d3a85c1bdcee1e9afdfe854830c3f56b0";
+    private final String contractAddress = "0xbc0e8f2ce45ce309bd20f331628676b107cd59ac";
+    //0xbc0e8f2ce45ce309bd20f331628676b107cd59ac
     private final BigInteger fee = Convert.toWei("0.0005", Convert.Unit.ETHER).toBigInteger();
 
     @Override
