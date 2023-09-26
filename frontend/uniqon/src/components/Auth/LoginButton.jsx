@@ -11,6 +11,14 @@ export function LoginButton() {
     const setAccessToken = useUserInfoStore(state=>state.setAccessToken)
     const setWalletAddress = useUserInfoStore(state=>state.setWalletAddress)
 
+    function setAuthorizationToken(token) {
+      if (token) {
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      } else {
+        delete axios.defaults.headers.common["Authorization"];
+      }
+    }
+
     function detectMetaMask() {
         let injectedProvider = false
         if (typeof window.ethereum !== 'undefined') {
@@ -107,6 +115,7 @@ export function LoginButton() {
           });
           console.log("login success",response.data.response)
           setAccessToken(response.data.response)
+          setAuthorizationToken(response.data.response)
         } catch (e) {
           console.log("login failed", e)
         }
