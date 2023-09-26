@@ -9,6 +9,7 @@ export function ContemLogin() {
 
   const [walletAddress, setwalletAddress] = React.useState("111");
   const [password, setPassword] = React.useState("woaud123");
+  
 
   const navigate = useNavigate();
 
@@ -32,9 +33,8 @@ export function ContemLogin() {
 
 
   return (
-    <>
-    <Dialog
-        size="xs"
+    <div>
+    <div
         className="bg-transparent shadow-none"
       >
         <Card className="mx-auto w-full max-w-[24rem]">
@@ -58,7 +58,7 @@ export function ContemLogin() {
             </Button>
           </CardFooter>
         </Card>
-      </Dialog>
-    </>
+      </div>
+      </div>
   );
 }
