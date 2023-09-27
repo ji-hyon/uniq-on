@@ -41,7 +41,7 @@ public class NFTServiceImpl implements NFTService {
 //    private final BigInteger fee = Convert.toWei("0.0005", Convert.Unit.ETHER).toBigInteger();
 
     @Override
-    public void transactNFT(Integer nftId, Integer postId, UserDetails buyer) throws Exception {
+    public void transactNFT(NFTsController.TransactNFTWebRequest req, UserDetails buyer) throws Exception {
 //        Credentials credential = Credentials.create(userPrivateKey);
 ////        System.out.println(credential.getAddress());
 //        EthGasPrice ethGasPrice = web3j.ethGasPrice().send();
@@ -61,14 +61,13 @@ public class NFTServiceImpl implements NFTService {
 //        }
 //        web3j.shutdown();
 
-
-//        Members buyerMember = memberRepository.findById(buyer.getUsername()).get();
-//        Posts post = postsRepository.findById(postId).get();
-//        NFTs nft = nftRepository.findById(nftId).get();
-//        Members seller = post.getSeller();
-//        transactionHistoriesRepository.save(new TransactionHistories(null, seller, buyerMember, txHash,null,nft));
-//        nft.setOwner(buyerMember);
-//        post.setState(1);
+        Members buyerMember = memberRepository.findById(buyer.getUsername()).get();
+        Posts post = postsRepository.findById(req.postId()).get();
+        NFTs nft = nftRepository.findByTokenId(req.tokenId()).get();
+        Members seller = post.getSeller();
+        transactionHistoriesRepository.save(new TransactionHistories(null, seller, buyerMember, req.txHash(),null,nft));
+        nft.setOwner(buyerMember);
+        post.setState(1);
     }
 
     @Override

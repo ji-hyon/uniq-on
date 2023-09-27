@@ -107,6 +107,12 @@ public class NFTsController {
             String imageIpfsHash
     ){}
 
+    public record TransactNFTWebRequest(
+            Integer tokenId,
+            String txHash,
+            Integer postId
+    ){}
+
 //    private final NFTCreateService nftCreateService;
 //    private final NFTReadService nftReadService;
     private final NFTService nftService;
@@ -179,14 +185,13 @@ public class NFTsController {
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @PostMapping("/buy/{nftId}/{postId}")
-    public Response<?> transactNFT(@PathVariable Integer nftId,
-                                   @PathVariable Integer postId,
+    @PostMapping("/buy")
+    public Response<?> transactNFT(@RequestBody TransactNFTWebRequest req,
                                    @AuthenticationPrincipal UserDetails buyer) throws Exception {
-        log.debug("# 거래할 NFT 식별자 : {}", nftId);
-        log.debug("# 구매자 지갑 주소 : {}", buyer);
-        log.debug("# NFT 판매글 식별자 : {}", postId);
-        nftService.transactNFT(nftId,postId,buyer);
+        log.debug("# 거래할 NFT 식별자 : {}", req.tokenId());
+        log.debug("# 구매자 지갑 주소 : {}", buyer.getUsername());
+        log.debug("# NFT 판매글 식별자 : {}", req.postId());
+        nftService.transactNFT(req,buyer);
         return OK("success");
     }
 

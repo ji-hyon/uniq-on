@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public interface NFTService {
 
-    void transactNFT(Integer nftId, Integer postId, UserDetails buyer) throws Exception;
+    void transactNFT(NFTsController.TransactNFTWebRequest req, UserDetails buyer) throws Exception;
     public void createNFT(NFTsController.RegisterNFTWebRequest req, UserDetails user) throws Exception;
 
     public Page<NftListResponseDto> getMyNFTList(String owner, Pageable pageable);
