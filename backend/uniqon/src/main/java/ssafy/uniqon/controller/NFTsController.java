@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pinata.PinataException;
@@ -31,15 +33,23 @@ public class NFTsController {
             @Schema(description = "지갑 주소")
             String walletAddress,
             @Schema(description = "중분류")
-            String middleClassificationId,
-            @Schema(description = "nft 주소")
-            String nftAddress,
+            String middleClassificationName,
+            @Schema(description = "트랜잭션 해시")
+            String txHash,
             @Schema(description = "이름")
             String name,
             @Schema(description = "특징")
             String feature,
             @Schema(description = "나이")
-            Integer age
+            Integer age,
+            @Schema(description = "이미지 ipfs url")
+            String image,
+            @Schema(description = "NFT ipfs url")
+            String nftMetadata,
+            @Schema(description = "토큰 아이디")
+            Integer tokenId,
+            @Schema(description = "컨트랙트 주소")
+            String contractAddress
     ){}
 
     public record NFTWebResponse(
@@ -62,9 +72,11 @@ public class NFTsController {
             @Schema(description = "Token ID")
             Integer tokenId,
             @Schema(description = "좋아요 수")
-            Integer likedCnt
+            Integer likedCnt,
+            @Schema(description = "creater")
+            String creater
     ){
-        public NFTWebResponse(Integer nftId, String owner, String image, String name, Integer age, String feature, String nftURL, String contractAddress, Integer tokenId, Integer likedCnt) {
+        public NFTWebResponse(Integer nftId, String owner, String image, String name, Integer age, String feature, String nftURL, String contractAddress, Integer tokenId, Integer likedCnt, String creater) {
             this.nftId = nftId;
             this.owner = owner;
             this.image = image;
@@ -75,8 +87,31 @@ public class NFTsController {
             this.contractAddress = contractAddress;
             this.tokenId = tokenId;
             this.likedCnt = likedCnt;
+            this.creater= creater;
         }
     }
+
+    public record PinIpfsWebRequest(
+            @Schema(description = "이름")
+            String name,
+            @Schema(description = "중분류")
+            String middleClassificationName,
+            @Schema(description = "특징")
+            String feature,
+            @Schema(description = "나이")
+            Integer age
+    ){}
+
+    public record IPFSWebResponse(
+            String nftMetadataHash,
+            String imageIpfsHash
+    ){}
+
+    public record TransactNFTWebRequest(
+            Integer tokenId,
+            String txHash,
+            Integer postId
+    ){}
 
 //    private final NFTCreateService nftCreateService;
 //    private final NFTReadService nftReadService;
@@ -87,14 +122,25 @@ public class NFTsController {
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @PostMapping("/register/{userId}")
-    public Response<?> registerNFT(@RequestPart(value = "data") RegisterNFTWebRequest req,
-                                   @RequestPart(value = "file") MultipartFile multipartFile,
-                                   @PathVariable String userId) throws Exception {
+    @PostMapping("/register")
+    public Response<?> registerNFT(@RequestBody RegisterNFTWebRequest req,
+                                   @AuthenticationPrincipal UserDetails user) throws Exception {
         log.debug("# NFT 등록시 데이터 : {}", req);
-        log.debug("# NFT 등록시 이미지 : {}", multipartFile);
-        nftService.createNFT(req,multipartFile,userId);
+        nftService.createNFT(req,user);
         return OK("success");
+    }
+
+    @Operation(summary = "IPFS에 저장", description = "IPFS에 NFT 메타데이터 저장")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND")
+    })
+    @PostMapping("/ipfs")
+    public Response<?> pinToIpfs(@RequestPart(value = "file") MultipartFile multipartFile,
+                                 @RequestPart(value = "data") PinIpfsWebRequest req,
+                                 @AuthenticationPrincipal UserDetails user) throws PinataException, IOException {
+        return OK(nftService.pinToIpfs(req,multipartFile,user));
     }
 
     @Operation(summary = "NFT 조회", description = "지갑 주소를 통해 위시리스트 조회합니다.")
@@ -113,18 +159,15 @@ public class NFTsController {
     }
 
     @Operation(summary = "NFT 삭제", description = "등록했던 NFT를 삭제합니다.")
-    @Parameters({
-            @Parameter(name = "nftId", description = "NFT 식별자", example = "1")
-    })
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @DeleteMapping("/delete/{nftId}")
-    public Response<?> deleteNFT(@PathVariable Integer nftId) throws IOException {
-        log.debug("# 삭제할 NFT 식별자 : {}", nftId);
-        nftService.deleteNFT(nftId);
+    @DeleteMapping("/delete/{tokenId}")
+    public Response<?> deleteNFT(@PathVariable Integer tokenId, @AuthenticationPrincipal UserDetails user) throws IOException {
+        log.debug("# 삭제할 NFT 식별자 : {}", tokenId);
+        nftService.deleteNFT(tokenId,user);
         return OK("deleted");
     }
 
@@ -139,14 +182,13 @@ public class NFTsController {
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @PostMapping("/buy/{nftId}/{buyer}/{postId}")
-    public Response<?> transactNFT(@PathVariable Integer nftId,
-                                   @PathVariable String buyer,
-                                   @PathVariable Integer postId) throws Exception {
-        log.debug("# 거래할 NFT 식별자 : {}", nftId);
-        log.debug("# 구매자 지갑 주소 : {}", buyer);
-        log.debug("# NFT 판매글 식별자 : {}", postId);
-        nftService.transactNFT(nftId,buyer,postId);
+    @PostMapping("/buy")
+    public Response<?> transactNFT(@RequestBody TransactNFTWebRequest req,
+                                   @AuthenticationPrincipal UserDetails buyer) throws Exception {
+        log.debug("# 거래할 NFT 식별자 : {}", req.tokenId());
+        log.debug("# 구매자 지갑 주소 : {}", buyer.getUsername());
+        log.debug("# NFT 판매글 식별자 : {}", req.postId());
+        nftService.transactNFT(req,buyer);
         return OK("success");
     }
 

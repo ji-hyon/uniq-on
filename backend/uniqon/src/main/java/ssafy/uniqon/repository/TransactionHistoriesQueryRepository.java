@@ -24,7 +24,8 @@ public class TransactionHistoriesQueryRepository {
                         transactionHistories.seller.walletAddress,
                         transactionHistories.buyer.walletAddress,
                         transactionHistories.txHash,
-                        transactionHistories.transactedAt))
+                        transactionHistories.transactedAt,
+                        transactionHistories.nftTxHis))
                 .from(transactionHistories)
                 .where(transactionHistories.buyer.walletAddress.eq(buyer))
                 .orderBy(transactionHistories.transactedAt.desc())
@@ -47,7 +48,8 @@ public class TransactionHistoriesQueryRepository {
                         transactionHistories.seller.walletAddress,
                         transactionHistories.buyer.walletAddress,
                         transactionHistories.txHash,
-                        transactionHistories.transactedAt))
+                        transactionHistories.transactedAt,
+                        transactionHistories.nftTxHis))
                 .from(transactionHistories)
                 .where(transactionHistories.buyer.walletAddress.eq(seller))
                 .orderBy(transactionHistories.transactedAt.desc())

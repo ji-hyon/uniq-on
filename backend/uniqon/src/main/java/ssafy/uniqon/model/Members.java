@@ -55,4 +55,7 @@ public class Members{
     private MemberRole role;
 
     private String password;
+
+    @OneToMany(mappedBy = "creater")
+    private List<NFTs> createdNFT=new ArrayList<>();
 }

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import ssafy.uniqon.dto.NftListResponseDto;
 import ssafy.uniqon.dto.NftListSearchResponseDto;
+import ssafy.uniqon.model.NFTs;
 
 import java.util.List;
 
@@ -153,6 +154,10 @@ public class NFTQueryRepository {
 
 
         return new PageImpl<>(list, pageable, count);
+    }
+
+    public NFTs findByCreaterAndName(String userId,String name){
+        return jpaQueryFactory.selectFrom(nFTs).where(nFTs.creater.walletAddress.eq(userId).and(nFTs.name.eq(name))).fetchOne();
     }
 
 }
