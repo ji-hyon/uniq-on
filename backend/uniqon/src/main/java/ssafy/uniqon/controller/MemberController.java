@@ -47,9 +47,9 @@ public class MemberController {
 
     // @GetMapping("/login/{token}")
     // public Response<?> login(@PathVariable String token) {
-    @GetMapping("/login/{walletAddress}")
-    public Response<?> login(@PathVariable String walletAddress) {
-        // return OK(token);
-        return OK(memberService.login(walletAddress));
+    @GetMapping("/login/{token}")
+    public Response<?> login(@PathVariable String token) {
+         return OK(token);
+//        return OK(memberService.login(walletAddress));
     }
 }

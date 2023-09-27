@@ -56,11 +56,11 @@ public class WishlistController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @PostMapping("/add/{postId}")
-    public Response<?> addWishlist(@PathVariable Integer postId){
+    public Response<?> addWishlist(@PathVariable Integer postId, @AuthenticationPrincipal UserDetails userDetails){
         log.info("# 위시리스트에 추가 요청 : {}", postId);
 //        log.debug("# 요청 지갑 : {}", userDetails.getUsername());
 //        int result = wishlistService.addWishlist(new addWishlistWebRequest(userDetails.getUsername(), postId));
-        int result = wishlistService.addWishlist(new addWishlistWebRequest("0x00000000000000", postId));
+        int result = wishlistService.addWishlist(new addWishlistWebRequest(userDetails.getUsername(), postId));
         if (result == 1) {
             log.debug("# 위시리스트 추가 성공");
             return OK(null);

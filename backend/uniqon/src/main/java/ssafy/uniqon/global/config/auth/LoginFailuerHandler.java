@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,11 +16,23 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class LoginFailuerHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+        log.warn("자격 증명 실패!!!!!");
         exception.printStackTrace();
-        writePrintErrorResponse(response, exception);
+        Map<String, Object> responseMap = new HashMap<>();
+        String message = getExceptionMessage(exception);
+        log.warn("자격 증명 실패 메시지 : {}", message);
+        responseMap.put("status", 401);
+        responseMap.put("message", message);
+
+        // ResponseEntity를 사용하여 JSON 응답을 생성하고 반환
+        ResponseEntity<Map<String, Object>> jsonResponse = new ResponseEntity<>(responseMap, HttpStatus.UNAUTHORIZED);
+        response.setContentType("application/json");
+        response.getWriter().write(jsonResponse.getBody().toString());
+
     }
 
     private void writePrintErrorResponse(HttpServletResponse response, AuthenticationException exception) {

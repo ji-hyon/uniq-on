@@ -6,7 +6,7 @@ import { verifyCredential, verifyPresentation } from "did-jwt-vc";
 import { Resolver } from "did-resolver";
 import { getResolver } from "ethr-did-resolver";
 import cors from "cors";
-import axios from "axios"
+import axios from "axios";
 
 dotenv.config();
 const app = express();
@@ -39,27 +39,29 @@ async function verifyVP(vpJwt) {
     // 결과가 있고, 유효하면
     if (result && result.verified) {
       // vp배열 안 vc들 하나씩 검증
-      console.log("result:", result.payload)
-      const vcs = await Promise.all(result.payload.vp.verifiableCredential.map(async vcJwt => {
-        try {
-          const vcJwtResolved = await verifyCredential(vcJwt, resolver)
-          if (vcJwtResolved && vcJwtResolved.verified) {
-            // ocr로 읽은 정보들이 들어있는 부분 배열에 담기
-            console.log("vcJwtResolved:", vcJwtResolved.payload)
-            return vcJwtResolved.payload.vc.credentialSubject
-          } else {
-            throw new Error("verify VC failed")
+      console.log("result:", result.payload);
+      const vcs = await Promise.all(
+        result.payload.vp.verifiableCredential.map(async (vcJwt) => {
+          try {
+            const vcJwtResolved = await verifyCredential(vcJwt, resolver);
+            if (vcJwtResolved && vcJwtResolved.verified) {
+              // ocr로 읽은 정보들이 들어있는 부분 배열에 담기
+              console.log("vcJwtResolved:", vcJwtResolved.payload);
+              return vcJwtResolved.payload.vc.credentialSubject;
+            } else {
+              throw new Error("verify VC failed");
+            }
+          } catch (e) {
+            throw e;
           }
-        } catch (e) {
-          throw e
-        }
-      }))
-      return vcs
+        })
+      );
+      return vcs;
     } else {
-      throw new Error("verify VP failed")
+      throw new Error("verify VP failed");
     }
   } catch (e) {
-    throw (e)
+    throw e;
   }
 }
 
@@ -93,117 +95,164 @@ process.on("uncaughtException", (error) => {
   console.error("Uncaught Exception 발생:", error);
 });
 
-
 // 회원가입 요청 api
 app.post("/api/users/signup", async (req, res) => {
   try {
     // DITI에 vp 요청
-    console.log('singup request form', req.headers.walletaddress)
-    const ditiResponse = await axios.get(process.env.DITI_SERVER_URL + "/diti/did/vp/" + req.headers.walletaddress + "/idCard", {
-      headers: {
-        'Content-Type': 'application/json',
-        'walletAddress': req.headers.walletaddress,
-        'Authorization': req.headers.authorization,
+    console.log("singup request form", req.headers.walletaddress);
+    const ditiResponse = await axios.get(
+      process.env.DITI_SERVER_URL +
+        "/diti/did/vp/" +
+        req.headers.walletaddress +
+        "/idCard",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          walletAddress: req.headers.walletaddress,
+          Authorization: req.headers.authorization,
+        },
       }
-    })
-    const vpJwt = ditiResponse.data
-    console.log("vpJwt:", vpJwt)
+    );
+    console.log("-------------------------");
+    const vpJwt = ditiResponse.data;
+    console.log("vpJwt:", vpJwt);
     // 유효한 vp인지 검증
-    const vcs = await verifyVP(vpJwt)
+    const vcs = await verifyVP(vpJwt);
     if (vcs.length == 0) {
-      res.status(400).send("no VC")
+      res.status(400).send("no VC");
     }
-    console.log("vcs:", vcs[0])
+    console.log("vcs:", vcs[0]);
     // vp안의 여러 vc들 중 첫 번째 vc만 검증 (프로젝트에서 vc하나만 담도록 설계했기 때문)
     const data = {
-      "walletAddress": req.headers.walletaddress,
-      "name": vcs[0].data.name,
-      "nickname": "nonickname",
-      "birth": vcs[0].data.birth,
-      "gender": vcs[0].data.gender,
-      "vpToken": vpJwt,
+      walletAddress: req.headers.walletaddress,
+      name: vcs[0].data.name,
+      nickname: "nonickname",
+      birth: vcs[0].data.birth,
+      gender: vcs[0].data.gender,
+      vpToken: vpJwt,
       // password는 지갑주소 마지막 20자리로 설정함
-      "password": req.headers.walletaddress.slice(-20)
-    }
-    const formData = new FormData()
-    formData.append("data", new Blob([JSON.stringify(data)], { type: "application/json" }))
+      password: req.headers.walletaddress.slice(-20),
+    };
+    console.log("------------------");
+    console.log(data.walletAddress);
+    console.log(data.password);
+    const formData = new FormData();
+    formData.append(
+      "data",
+      new Blob([JSON.stringify(data)], { type: "application/json" })
+    );
     // file이 null값일 때 에러나는지 체크할 용도
-    formData.append("file", new Blob([], { type: "file" }))
+    formData.append("file", new Blob([], { type: "file" }));
 
     // 스프링 서버에 회원가입 요청
     try {
-      const springResponse = await axios.post(process.env.SPRING_SERVER_URI + "/api/users/signup",
+      const springResponse = await axios.post(
+        process.env.SPRING_SERVER_URI + "/api/users/signup",
         formData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
-          }
-        },
-      )
-      if(springResponse.status==200){
-        res.status(200).send("success")
-      }else{
-        res.status(springResponse.status).send(springResponse.data)
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (springResponse.status == 200) {
+        console.log(springResponse);
+        res.status(200).send("success");
+      } else {
+        res.status(springResponse.status).send(springResponse.data);
       }
     } catch (e) {
-      res.status(500).send("POST " + process.env.SPRING_SERVER_URI + "/api/users/signup failed")
+      console.log("오류" + e);
+      res
+        .status(500)
+        .send(
+          "POST " + process.env.SPRING_SERVER_URI + "/api/users/signup failed"
+        );
     }
-
   } catch (e) {
-    console.log("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed")
-    console.log(e)
-    res.status(500).send("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed")
-    return
+    console.log(
+      "GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed"
+    );
+    console.log(e);
+    res
+      .status(500)
+      .send("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed");
+    return;
   }
-
-})
+});
 
 // 로그인 요청 api
 app.get("/api/users/login", async (req, res) => {
   try {
     // DITI에 vp 요청
-    console.log('login request form', req.headers.walletaddress)
-    const ditiResponse = await axios.get(process.env.DITI_SERVER_URL + "/diti/did/vp/" + req.headers.walletaddress + "/idCard", {
-      headers: {
-        'Content-Type': 'application/json',
-        'walletAddress': req.headers.walletaddress,
-        'Authorization': req.headers.authorization,
+    console.log("login request form", req.headers.walletaddress);
+    const ditiResponse = await axios.get(
+      process.env.DITI_SERVER_URL +
+        "/diti/did/vp/" +
+        req.headers.walletaddress +
+        "/idCard",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          walletAddress: req.headers.walletaddress,
+          Authorization: req.headers.authorization,
+        },
       }
-    })
-    const vpJwt = ditiResponse.data
-    console.log("vpJwt:", vpJwt)
+    );
+    const walletAddress = req.headers.walletaddress;
+    const vpJwt = ditiResponse.data;
+    console.log("vpJwt:", vpJwt);
     // 유효한 vp인지 검증
-    const vcs = await verifyVP(vpJwt)
+    const vcs = await verifyVP(vpJwt);
     if (vcs.length == 0) {
-      res.status(400).send("no VC")
+      res.status(400).send("no VC");
     }
 
     // 스프링 서버에 로그인 요청
     try {
-      const springResponse = await axios.get(process.env.SPRING_SERVER_URI + "/api/users/login/"+req.headers.walletaddress,
+      const userInfo = {
+        walletAddress: walletAddress,
+        password: walletAddress.slice(-20),
+      };
+      console.log("유저정보: " + userInfo.walletAddress);
+      console.log("유저정보: " + userInfo.password);
+      const springResponse = await axios.post(
+        process.env.SPRING_SERVER_URI + "/api/auth/login",
+        userInfo,
         {
           headers: {
-            'Content-Type': 'application/json',
-          }
-        },
-      )
-      res.status(springResponse.status).send(springResponse.data)
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+      if (springResponse.data.success) {
+        res.status(springResponse.status).send(springResponse.data);
+      } else {
+        console.log("스프링 응답 에러 발생!!");
+        console.log(springResponse.data);
+      }
     } catch (e) {
-      console.log(e.status)
-      res.status(500).send("GET " + process.env.SPRING_SERVER_URI + "/api/users/login failed")
-      return
+      console.log("로그인 오류 발생!!");
+      console.log(e);
+      console.log(e.status);
+      res
+        .status(500)
+        .send(
+          "GET " + process.env.SPRING_SERVER_URI + "/api/users/login failed"
+        );
+      return;
     }
-
   } catch (e) {
-    console.log("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed")
-    console.log(e)
-    res.status(500).send("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed")
-    return
+    console.log(
+      "GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed"
+    );
+    console.log(e);
+    res
+      .status(500)
+      .send("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed");
+    return;
   }
-
-})
-
-
+});
 
 // 스프링 서버 세팅
 const springProxy = createProxyMiddleware({
