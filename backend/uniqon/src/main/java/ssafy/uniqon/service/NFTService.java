@@ -24,9 +24,9 @@ public interface NFTService {
 
     void undoLikeNFT(Integer nftId,String userId);
 
-    NFTsController.NFTWebResponse getNFTInfo(Integer nftId);
+    NFTsController.NFTWebResponse getNFTInfo(Integer tokenId);
 
-    void deleteNFT(Integer nftId) throws IOException;
+    void deleteNFT(Integer tokenId,UserDetails user) throws IOException;
 
     NFTsController.IPFSWebResponse pinToIpfs(NFTsController.PinIpfsWebRequest req, MultipartFile multipartFile, UserDetails user) throws PinataException, IOException;
 }

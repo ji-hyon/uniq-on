@@ -159,18 +159,15 @@ public class NFTsController {
     }
 
     @Operation(summary = "NFT 삭제", description = "등록했던 NFT를 삭제합니다.")
-    @Parameters({
-            @Parameter(name = "nftId", description = "NFT 식별자", example = "1")
-    })
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @DeleteMapping("/delete/{nftId}")
-    public Response<?> deleteNFT(@PathVariable Integer nftId) throws IOException {
-        log.debug("# 삭제할 NFT 식별자 : {}", nftId);
-        nftService.deleteNFT(nftId);
+    @DeleteMapping("/delete/{tokenId}")
+    public Response<?> deleteNFT(@PathVariable Integer tokenId, @AuthenticationPrincipal UserDetails user) throws IOException {
+        log.debug("# 삭제할 NFT 식별자 : {}", tokenId);
+        nftService.deleteNFT(tokenId,user);
         return OK("deleted");
     }
 

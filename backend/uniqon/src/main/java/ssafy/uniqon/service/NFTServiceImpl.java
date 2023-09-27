@@ -128,8 +128,8 @@ public class NFTServiceImpl implements NFTService {
     }
 
     @Override
-    public NFTsController.NFTWebResponse getNFTInfo(Integer nftId) {
-        NFTs nft=nftRepository.findById(nftId).get();
+    public NFTsController.NFTWebResponse getNFTInfo(Integer tokenId) {
+        NFTs nft=nftRepository.findByTokenId(tokenId).get();
         return new NFTsController.NFTWebResponse(nft.getId(),
                 nft.getOwner().getWalletAddress(),
                 nft.getImage(),
@@ -144,7 +144,7 @@ public class NFTServiceImpl implements NFTService {
     }
 
     @Override
-    public void deleteNFT(Integer nftId) throws IOException {
+    public void deleteNFT(Integer tokenId,UserDetails user) throws IOException {
 //        Credentials credential = Credentials.create(userPrivateKey);
 ////        System.out.println(credential.getAddress());
 //        EthGasPrice ethGasPrice = web3j.ethGasPrice().send();
@@ -155,9 +155,10 @@ public class NFTServiceImpl implements NFTService {
 //                contractAddress, web3j, credential, gasProvider);
 //        if(contract.isValid()){
 //            contract.burnNFT(BigInteger.valueOf(nftId));
-//            nftRepository.delete(nftRepository.findById(nftId).get());
+//
 //        }
 //        web3j.shutdown();
+        nftRepository.delete(nftRepository.findByTokenId(tokenId).get());
     }
 
     @Override
