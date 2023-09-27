@@ -62,4 +62,9 @@ public class NFTs {
 
     @OneToMany(mappedBy = "nftTxHis")
     List<TransactionHistories> txHistories=new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creater")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Members creater;
 }

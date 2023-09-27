@@ -48,7 +48,8 @@ public class MemberService {
                 new ArrayList<>(),
                 new ArrayList<>(),
                 MemberRole.USER,
-                encodedPassword));
+                encodedPassword,
+                new ArrayList<>()));
         return req.walletAddress();
     }
 

@@ -33,13 +33,15 @@ public class MyPageController {
             String seller,
             String buyer,
             String txHash,
-            Timestamp transactedAt
+            Timestamp transactedAt,
+            Integer nftId
     ){
-        public TransactionHistoryWebResponse(String seller, String buyer, String txHash, Timestamp transactedAt) {
+        public TransactionHistoryWebResponse(String seller, String buyer, String txHash, Timestamp transactedAt,Integer nftId) {
             this.seller = seller;
             this.buyer = buyer;
             this.txHash = txHash;
             this.transactedAt = transactedAt;
+            this.nftId=nftId;
         }
     }
 
