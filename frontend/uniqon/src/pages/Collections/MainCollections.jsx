@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   Card,
   CardHeader,
@@ -10,27 +10,33 @@ import {
   Tooltip,
   IconButton,
   Badge
-} from '@material-tailwind/react';
-import { useCollectionsStore } from '../../stores/CollectionsStore';
-import { useEffect, useState } from 'react';
-import { Pagination } from './Pagination';
-import { TopNavBar } from '../../components/Common/TopNavBar';
+} from "@material-tailwind/react";
+import { useCollectionsStore } from "../../stores/CollectionsStore";
+import { useEffect, useState } from "react";
+import { Pagination } from "./Pagination";
+import { TopNavBar } from "../../components/Common/TopNavBar";
 
 export function MainCollections() {
   const navigate = useNavigate();
-  const { mainCollecId, setMainCollecId, mainCollecType, setMainCollecType, mainCollecImg, setMainCollecImg } =
-    useCollectionsStore();
+  const {
+    mainCollecId,
+    setMainCollecId,
+    mainCollecType,
+    setMainCollecType,
+    mainCollecImg,
+    setMainCollecImg
+  } = useCollectionsStore();
 
   const [mainCardsData, setMainCardsData] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(4); // 한 페이지에 보여줄 아이템 개수
+  const [pageSize] = useState(8); // 한 페이지에 보여줄 아이템 개수
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  console.log('현재 페이지', currentPage);
-  console.log('카드 데이터', mainCardsData);
+  console.log("현재 페이지", currentPage);
+  console.log("카드 데이터", mainCardsData);
 
   useEffect(() => {
     async function mainList() {
@@ -41,11 +47,11 @@ export function MainCollections() {
           //   size: pageSize
           // }
         });
-        console.log('success', response);
+        console.log("success", response);
 
         setMainCardsData(response.data.response.content);
       } catch (e) {
-        console.log('failed', e);
+        console.log("failed", e);
       }
     }
     mainList();
@@ -56,7 +62,7 @@ export function MainCollections() {
   const currentPageData = mainCardsData.slice(startIndex, endIndex);
 
   const goToMiddle = () => {
-    navigate('/midcollections');
+    navigate("/midcollections");
   };
   return (
     <div className="App">
@@ -81,58 +87,69 @@ export function MainCollections() {
             </Badge>
 
             <br></br>
-            <div className="flex space-x-4 mt-20">
+            <div className="flex -mx-4 flex-wrap">
               {currentPageData.map((card, index) => (
-                <Card
-                  onClick={() => {
-                    setMainCollecId(card.id);
-                    setMainCollecType(card.type);
-                    setMainCollecImg(card.image);
-                    goToMiddle();
-                  }}
+                <div
+                  className="w-full sm:w-1/2 md:w-1/4 lg:w-1/4, xl:w-1/4 mb-4"
                   key={index}
-                  className="w-full max-w-[26rem] shadow-lg"
                 >
-                  <CardHeader floated={false} color="blue-gray">
-                    <img src={card.image} alt="ui/ux review check" />
-                    <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
-                    <IconButton size="sm" color="red" variant="text" className="!absolute top-4 right-4 rounded-full">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="h-6 w-6"
+                  <Card
+                    onClick={() => {
+                      setMainCollecId(card.id);
+                      setMainCollecType(card.type);
+                      setMainCollecImg(card.image);
+                      goToMiddle();
+                    }}
+                    key={index}
+                    className="max-w-xs md:max-w-sm lg:max-w-full mx-auto shadow-lg"
+                    style={{ margin: "0.5rem" }}
+                  >
+                    <CardHeader floated={false} color="blue-gray">
+                      <img src={card.image} alt="ui/ux review check" />
+                      <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
+                      {/* <IconButton
+                        size="sm"
+                        color="red"
+                        variant="text"
+                        className="!absolute top-4 right-4 rounded-full"
                       >
-                        <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                      </svg>
-                    </IconButton>
-                  </CardHeader>
-                  <CardFooter className="pt-5">
-                    <Button
-                      onClick={() => {
-                        setMainCollecId(card.id);
-                        setMainCollecType(card.type);
-                        setMainCollecImg(card.image);
-                        goToMiddle();
-                      }}
-                      className="text-lg"
-                      size="lg"
-                      fullWidth={true}
-                    >
-                      {card.type}
-                    </Button>
-                  </CardFooter>
-                </Card>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="h-6 w-6"
+                        >
+                          <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                        </svg>
+                      </IconButton> */}
+                    </CardHeader>
+                    <CardFooter className="pt-5">
+                      <Button
+                        onClick={() => {
+                          setMainCollecId(card.id);
+                          setMainCollecType(card.type);
+                          setMainCollecImg(card.image);
+                          goToMiddle();
+                        }}
+                        className="text-lg"
+                        size="lg"
+                        fullWidth={true}
+                      >
+                        {card.type}
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </div>
               ))}
             </div>
             <br></br>
-            <div className="flex justify-center mt-36">
+            {/* <div className="flex justify-center mt-36">
               <Pagination
                 totalPages={Math.ceil(mainCardsData.length / pageSize)}
                 currentPage={currentPage}
                 onPageChange={handlePageChange}
               ></Pagination>
-            </div>
+            </div> */}
           </div>
         </div>
       </header>

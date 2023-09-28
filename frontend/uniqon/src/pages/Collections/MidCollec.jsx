@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useCollectionsStore } from '../../stores/CollectionsStore';
-import { MidModal } from '../../components/Collections/NftModal';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useCollectionsStore } from "../../stores/CollectionsStore";
+import { MidModal } from "../../components/Collections/NftModal";
 import {
   Card,
   CardHeader,
@@ -12,10 +12,10 @@ import {
   Tooltip,
   IconButton,
   Input
-} from '@material-tailwind/react';
-import { useEffect, useState } from 'react';
-import { Pagination } from './Pagination';
-import { TopNavBar } from '../../components/Common/TopNavBar';
+} from "@material-tailwind/react";
+import { useEffect, useState } from "react";
+import { Pagination } from "./Pagination";
+import { TopNavBar } from "../../components/Common/TopNavBar";
 
 export function MidCollections() {
   const navigate = useNavigate();
@@ -32,8 +32,13 @@ export function MidCollections() {
   } = useCollectionsStore();
 
   const [midCardsData, setMidCardsData] = useState([]);
-  const [selectedCard, setSelectedCard] = useState({ id: '', image: '', feature: '' });
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({
+    id: "",
+    image: "",
+    feature: ""
+  });
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(8);
@@ -41,15 +46,32 @@ export function MidCollections() {
     setCurrentPage(page);
   };
 
+  const handleHovered = (card) => {
+    if (card) {
+      setSelectedCard({
+        id: card.id,
+        image: card.image,
+        feature: card.feature
+      });
+    }
+    setIsHovered(!isHovered);
+  };
+
+  // const handleMouseLeave = () => {
+  //   setIsHovered(false);
+  // };
+
   useEffect(() => {
     async function middleList() {
       try {
-        const response = await axios.get(`/api/collections/list/middle/${mainCollecId}`);
-        console.log('success', response);
+        const response = await axios.get(
+          `/api/collections/list/middle/${mainCollecId}`
+        );
+        console.log("success", response);
 
         setMidCardsData(response.data.response.content);
       } catch (e) {
-        console.log('failed: ', e);
+        console.log("failed: ", e);
       }
     }
     middleList();
@@ -60,18 +82,19 @@ export function MidCollections() {
   const currentPageData = midCardsData.slice(startIndex, endIndex);
 
   const goToNFTList = () => {
-    navigate('/nftlist');
+    navigate("/nftlist");
   };
 
-  const clickCard = (card) => {
-    console.log('selectedcard', card);
-    setSelectedCard({
-      id: card.id,
-      image: card.image,
-      feature: card.feature
-    });
-    setIsModalOpen(true);
-  };
+  // const handleMouseEnter = (card) => {
+  //   console.log("selectedcard", card);
+  //   setSelectedCard({
+  //     id: card.id,
+  //     image: card.image,
+  //     feature: card.feature
+  //   });
+  //   setIsModalOpen(true);
+  //   setIsHovered(true);
+  // };
 
   return (
     <div className="App">
@@ -80,69 +103,131 @@ export function MidCollections() {
           <div className="bg-white w-[1440px] h-[1024px] relative">
             <TopNavBar></TopNavBar>
             <p>중분류 페이지 입니다.</p>
+
             <br></br>
             <div className="flex space-x-4 mt-16  6">
               {currentPageData.map((card, index) => (
-                <Card
-                  onClick={() => {
-                    setMidCollecId(card.id);
-                    setMidCollecType(card.species);
-                    setMidCollecImg(card.image);
-                    clickCard(card);
-                  }}
+                <div
+                  className="w-full sm:w-1/2 md:w-1/4 lg:w-1/4 xl:w-1/4 mb-4"
                   key={index}
-                  className="w-full max-w-[20rem] shadow-lg"
                 >
-                  <CardHeader floated={false} color="blue-gray">
-                    <img src={card.image} alt="ui/ux review check" />
-                    <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
-                    <IconButton size="sm" color="red" variant="text" className="!absolute top-4 right-4 rounded-full">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="h-6 w-6"
+                  <div className="cards" key={index}>
+                    {!isHovered ? (
+                      // <div className="card card-front">
+                      <Card
+                        onClick={() => {
+                          setMidCollecId(card.id);
+                          setMidCollecType(card.species);
+                          setMidCollecImg(card.image);
+                          goToNFTList();
+
+                          // handleMouseEnter(card);
+                        }}
+                        // onMouseEnter={() => handleMouseEnter(card)}
+                        // onMouseLeave={handleMouseLeave}
+                        // key={index}
+                        onMouseEnter={() => handleHovered(card)}
+                        className="max-w-xs md:max-w-sm lg:max-w-full mx-auto shadow-lg"
+                        style={{ position: "relative", margin: "0.5rem" }}
                       >
-                        <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                      </svg>
-                    </IconButton>
-                  </CardHeader>
-                  <CardFooter className="pt-5">
-                    <Button
-                      onClick={() => {
-                        setMidCollecId(card.id);
-                        setMidCollecType(card.species);
-                        setMidCollecImg(card.image);
-                        clickCard(card);
-                      }}
-                      className="text-lg"
-                      size="lg"
-                      fullWidth={true}
-                    >
-                      {card.species}
-                    </Button>
-                  </CardFooter>
-                </Card>
+                        <CardHeader floated={false} color="blue-gray">
+                          <img
+                            src={card.image}
+                            alt="ui/ux review check"
+                            style={{ maxWidth: "100%", height: "auto" }}
+                          />
+                          <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
+                          {/* <IconButton
+                            size="sm"
+                            color="red"
+                            variant="text"
+                            className="!absolute top-4 right-4 rounded-full"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="currentColor"
+                              className="h-6 w-6"
+                            >
+                              <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                            </svg>
+                          </IconButton> */}
+                        </CardHeader>
+                        <CardFooter className="pt-5">
+                          <Button
+                            onClick={() => {
+                              setMidCollecId(card.id);
+                              setMidCollecType(card.species);
+                              setMidCollecImg(card.image);
+                              goToNFTList();
+
+                              // handleMouseEnter(card);
+                            }}
+                            className="text-lg"
+                            size="lg"
+                            fullWidth={true}
+                          >
+                            {card.species}
+                          </Button>
+                        </CardFooter>
+                      </Card>
+                    ) : (
+                      // </div>
+                      // <div className="card card-back">
+                      <Card
+                        key={index}
+                        className="max-w-xs md:max-w-sm lg:max-w-full mx-auto shadow-lg"
+                        onMouseLeave={() => handleHovered()}
+                        onClick={() => {
+                          setMidCollecId(card.id);
+                          setMidCollecType(card.species);
+                          setMidCollecImg(card.image);
+                          goToNFTList();
+
+                          // handleMouseEnter(card);
+                        }}
+                      >
+                        <CardHeader floated={false} color="blue-gray">
+                          {/* <img src="fox.png" alt="ui/ux review check" /> */}
+                          <div
+                            className="gray-box flex items-center justify-center" // 회색 네모 박스에 스타일을 적용하기 위한 클래스
+                            style={{
+                              // width: "30vw", // 너비를 100%로 설정
+                              height: "31vh", // 높이를 100%로 설정
+                              background: "gray" // 배경색을 회색으로 설정
+                              // whiteSpace: "pre-line"
+                              // position: "absolute" // 상대 위치 설정
+                            }}
+                          >
+                            <p>{selectedCard.feature}</p>
+                          </div>
+                          <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
+                        </CardHeader>
+                        {/* <CardFooter className="pt-5"></CardFooter> */}
+                      </Card>
+                      // </div>
+                    )}
+                  </div>
+                </div>
               ))}
             </div>
             <br></br>
-            <div>
-              <MidModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                selectedCard={selectedCard}
-                goToNft={goToNFTList}
-              ></MidModal>
+            <div
+              className="flex justify-center flex-col "
+              style={{
+                position: "fixed",
+                bottom: "20px",
+                left: "50%",
+                transform: "translateX(-50%)"
+              }}
+            >
+              <Pagination
+                totalPages={Math.ceil(midCardsData.length / pageSize)}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              ></Pagination>
+              <Button onClick={() => navigate(-1)}>뒤로가기</Button>
             </div>
-            {isModalOpen ? null : (
-              <div className="flex justify-center">
-                <Pagination
-                  totalPages={Math.ceil(midCardsData.length / pageSize)}
-                  currentPage={currentPage}
-                  onPageChange={handlePageChange}
-                ></Pagination>
-              </div>
-            )}
           </div>
         </div>
       </header>
