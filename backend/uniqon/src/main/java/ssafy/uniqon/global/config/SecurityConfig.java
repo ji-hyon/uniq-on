@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,7 +49,7 @@ public class SecurityConfig {
         @Bean
         protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                 return http
-                                .csrf(csrf -> csrf.disable())
+                                .csrf(AbstractHttpConfigurer::disable)
                                 .exceptionHandling(exceptionHandling -> exceptionHandling
                                                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                                                 .accessDeniedHandler(jwtAccessDeniedHandler))
@@ -58,7 +59,7 @@ public class SecurityConfig {
                                 // .requestMatchers("/api/users/login",
                                 // "/api/users/signup","/transaction").permitAll()
                                 // .anyRequest().authenticated())
-                                .authorizeRequests((authorizeRequests) -> authorizeRequests
+                                .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
                                                 .requestMatchers("/**").permitAll()
                                                 // .requestMatchers("/api/sales/post**","/api/nfts/detail/**","/api/users/**").permitAll()
                                                 // .requestMatchers("/api/sales/**", "/api/wallet/**",
@@ -84,5 +85,5 @@ public class SecurityConfig {
                                                 UsernamePasswordAuthenticationFilter.class)
                                 .build();
 
-        }
+    }
 }

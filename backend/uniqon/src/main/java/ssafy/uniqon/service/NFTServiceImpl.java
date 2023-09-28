@@ -128,8 +128,8 @@ public class NFTServiceImpl implements NFTService {
     }
 
     @Override
-    public NFTsController.NFTWebResponse getNFTInfo(Integer tokenId) {
-        NFTs nft=nftRepository.findByTokenId(tokenId).get();
+    public NFTsController.NFTWebResponse getNFTInfo(Integer nftId) {
+        NFTs nft=nftRepository.findById(nftId).get();
         return new NFTsController.NFTWebResponse(nft.getId(),
                 nft.getOwner().getWalletAddress(),
                 nft.getImage(),
