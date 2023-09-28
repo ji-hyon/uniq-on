@@ -30,7 +30,7 @@ export function WishList() {
 
   return (
     <div className="App">
-      <p>위시리스트</p>
+      <p>내가 좋아요 한 도감</p>
       <div className="flex w-[1200px] items-start gap-[32px] relative flex-wrap">
         {wishLIst.map((index, wishlist) => (
           <div
