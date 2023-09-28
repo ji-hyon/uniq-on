@@ -15,7 +15,6 @@ export function Purchase() {
   // 구매 내역
   const [purchaseList, setpurchaseList] = useState([]);
   const [page, setPage] = useState(0);
-  const [totalPage, setTotalPage] = useState(0);
   useEffect(() => {
     async function purchaseList() {
       try {
@@ -25,10 +24,9 @@ export function Purchase() {
             size: 10,
           },
         });
-        if (response.success) {
-          console.log("성공", response);
-          setpurchaseList(response.resonse.content);
-          setTotalPage(response.resonse.tototalPages);
+        if (response.status === 200) {
+          console.log(response);
+          setpurchaseList(response.data.response.content);
         }
       } catch (error) {
         console.log("실패", error);
@@ -39,29 +37,27 @@ export function Purchase() {
 
   return (
     <div className="App">
-      <p>구매이력</p>
-      {purchaseList.map((purchase, index) => (
-        <div
-          key={index}
-          className="flex w-[1200px] items-start gap-[32px] relative flex-wrap"
-        >
-          <div className="inline-flex flex-col min-w-[320px] items-start relative flex-[0_0_auto] bg-white rounded-[8px] overflow-hidden shadow-[0px_8px_40px_#0000000a,0px_2px_5px_#0000000d,0px_0px_2px_#00000026]">
-            {/* 카드 넣기 */}
+      <div className="flex w-[1200px] items-start gap-[32px] relative flex-wrap">
+        {purchaseList.map((purchase, index) => (
+          <div
+            key={index}
+            className="inline-flex flex-col min-w-[320px] items-start relative flex-[0_0_auto] bg-white rounded-[8px] overflow-hidden shadow-[0px_8px_40px_#0000000a,0px_2px_5px_#0000000d,0px_0px_2px_#00000026]"
+          >
             <Card className="w-full max-w-[20rem] shadow-lg">
               <CardHeader floated={false} color="blue-gray">
-                <img src="fox.png" alt="ui/ux review check" />
+                <img src={purchase.nftImage} alt="ui/ux review check" />
                 <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
               </CardHeader>
               <CardFooter className="pt-3 pb-3">
+                <h3>판매자 : {purchase.seller}</h3>
                 <Button className="text-sm" size="sm" fullWidth={true}>
-                  {purchase.title}
-                  {/* 이부분 한결이형이랑 체크 */}
+                  {purchase.nftName}
                 </Button>
               </CardFooter>
             </Card>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
