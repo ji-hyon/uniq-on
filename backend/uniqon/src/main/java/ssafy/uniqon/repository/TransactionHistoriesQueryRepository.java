@@ -21,11 +21,13 @@ public class TransactionHistoriesQueryRepository {
     public Page<MyPageController.TransactionHistoryWebResponse> getBoughtTxHistories(String buyer, Pageable pageable){
         List<MyPageController.TransactionHistoryWebResponse> list=jpaQueryFactory
                 .select(Projections.constructor(MyPageController.TransactionHistoryWebResponse.class,
-                        transactionHistories.seller.walletAddress,
-                        transactionHistories.buyer.walletAddress,
+                        transactionHistories.seller.nickname,
+                        transactionHistories.buyer.nickname,
                         transactionHistories.txHash,
                         transactionHistories.transactedAt,
-                        transactionHistories.nftTxHis))
+                        transactionHistories.nftTxHis.id,
+                        transactionHistories.nftTxHis.name,
+                        transactionHistories.nftTxHis.image))
                 .from(transactionHistories)
                 .where(transactionHistories.buyer.walletAddress.eq(buyer))
                 .orderBy(transactionHistories.transactedAt.desc())
@@ -45,13 +47,15 @@ public class TransactionHistoriesQueryRepository {
     public Page<MyPageController.TransactionHistoryWebResponse> getSoldTxHistories(String seller, Pageable pageable){
         List<MyPageController.TransactionHistoryWebResponse> list=jpaQueryFactory
                 .select(Projections.constructor(MyPageController.TransactionHistoryWebResponse.class,
-                        transactionHistories.seller.walletAddress,
-                        transactionHistories.buyer.walletAddress,
+                        transactionHistories.seller.nickname,
+                        transactionHistories.buyer.nickname,
                         transactionHistories.txHash,
                         transactionHistories.transactedAt,
-                        transactionHistories.nftTxHis))
+                        transactionHistories.nftTxHis.id,
+                        transactionHistories.nftTxHis.name,
+                        transactionHistories.nftTxHis.image))
                 .from(transactionHistories)
-                .where(transactionHistories.buyer.walletAddress.eq(seller))
+                .where(transactionHistories.seller.walletAddress.eq(seller))
                 .orderBy(transactionHistories.transactedAt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -60,7 +64,7 @@ public class TransactionHistoriesQueryRepository {
         int count = jpaQueryFactory
                 .select(transactionHistories.count())
                 .from(transactionHistories)
-                .where(transactionHistories.buyer.walletAddress.eq(seller))
+                .where(transactionHistories.seller.walletAddress.eq(seller))
                 .fetch()
                 .size();
         return new PageImpl<>(list,pageable,count);
