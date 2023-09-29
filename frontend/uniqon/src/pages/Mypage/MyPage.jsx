@@ -1,59 +1,78 @@
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { Menu, MenuHandler, MenuList, MenuItem, Button } from '@material-tailwind/react';
-import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from '@material-tailwind/react';
-import { useState } from 'react';
-import { MyNft } from './MyNft';
-import { Purchase } from './Purchase';
-import { Sales } from './Sales';
-import { WishList } from './WishList';
-import { TopNavBar } from '../../components/Common/TopNavBar';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import {
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Button,
+} from "@material-tailwind/react";
+import {
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
+} from "@material-tailwind/react";
+import { useEffect, useState } from "react";
+import { MyNft } from "./MyNft";
+import { Purchase } from "./Purchase";
+import { Sales } from "./Sales";
+import { WishList } from "./WishList";
+import { TopNavBar } from "../../components/Common/TopNavBar";
 
 export function MyPage() {
   const navigate = useNavigate();
-
-  const [selectedTab, setSelectedTab] = useState('myNft');
+  const [selectedTab, setSelectedTab] = useState("myNft");
+  const [userInfo, setUserInfo] = useState();
   const data = [
     {
-      value: 'myNft',
-      label: '나의 NFT'
+      value: "myNft",
+      label: "나의 NFT",
     },
     {
-      value: 'purchaseList',
-      label: '구매 내역'
+      value: "purchaseList",
+      label: "구매 내역",
     },
     {
-      value: 'salesList',
-      label: '판매 내역'
+      value: "salesList",
+      label: "판매 내역",
     },
     {
-      value: 'wishList',
-      label: '위시리스트'
-    }
+      value: "wishList",
+      label: "내가 좋아요 한 도감",
+    },
   ];
 
   // 정보 조회
-  async function getuserInfo() {
-    try {
-      const response = await axios.get(`/api/myPage/info/${1}`);
-      console.log('성공', response);
-    } catch (error) {
-      console.log('실패', error);
+  useEffect(() => {
+    async function getuserInfo() {
+      try {
+        const response = await axios.get(`/api/myPage/info`);
+        if (response.status === 200) {
+          setUserInfo(response.data.response);
+        } else {
+          console.log(response);
+        }
+      } catch (error) {
+        console.log("실패", error);
+      }
     }
-  }
+    getuserInfo();
+  }, []);
 
   // 정보 수정
   async function updateInfo() {
     try {
       const data = {
-        password: 'string',
-        nickname: 'string',
-        profileImage: 'string'
+        password: "string",
+        nickname: "string",
+        profileImage: "string",
       };
       const response = await axios.put(`/api/myPage/info`, data);
-      console.log('성공', response);
+      console.log("성공", response);
     } catch (error) {
-      console.log('실패', error);
+      console.log("실패", error);
     }
   }
 
@@ -108,10 +127,25 @@ export function MyPage() {
             </div> */}
 
           <div className="mt-36">
+            {userInfo && (
+              <div>
+                <strong>회원 정보</strong>
+                <li>지갑 주소 : {userInfo.walletAddress}</li>
+                <li>이름 : {userInfo.name}</li>
+                <li>닉네임 : {userInfo.nickname}</li>
+                <li>성별 : {userInfo.gender}</li>
+                <li>생년월일 : {userInfo.birth}</li>
+                <li>프로필 이미지 : {userInfo.profileImage}</li>
+              </div>
+            )}
             <Tabs value={selectedTab}>
               <TabsHeader>
                 {data.map(({ label, value }) => (
-                  <Tab key={value} value={value} onClick={() => setSelectedTab(value)}>
+                  <Tab
+                    key={value}
+                    value={value}
+                    onClick={() => setSelectedTab(value)}
+                  >
                     {label}
                   </Tab>
                 ))}

@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ssafy.uniqon.global.response.Response;
 import ssafy.uniqon.service.MemberService;
@@ -34,14 +36,18 @@ public class MyPageController {
             String buyer,
             String txHash,
             Timestamp transactedAt,
-            Integer nftId
+            Integer nftId,
+            String nftName,
+            String nftImage
     ){
-        public TransactionHistoryWebResponse(String seller, String buyer, String txHash, Timestamp transactedAt,Integer nftId) {
+        public TransactionHistoryWebResponse(String seller, String buyer, String txHash, Timestamp transactedAt, Integer nftId, String nftName, String nftImage) {
             this.seller = seller;
             this.buyer = buyer;
             this.txHash = txHash;
             this.transactedAt = transactedAt;
-            this.nftId=nftId;
+            this.nftId = nftId;
+            this.nftName = nftName;
+            this.nftImage = nftImage;
         }
     }
 
@@ -59,9 +65,11 @@ public class MyPageController {
     private final NFTService nftService;
     private final MemberService memberService;
 
-    @GetMapping("/info/{userId}")
-    Response<?> myProfile(@PathVariable String userId){
-        return OK(memberService.getUserInfo(userId));
+    @GetMapping("/info")
+    Response<?> myProfile(@AuthenticationPrincipal UserDetails userDetails){
+
+        log.warn("유저 정보 : {}", userDetails.getUsername());
+        return OK(memberService.getUserInfo(userDetails.getUsername()));
     }
 
     @PutMapping("/info")
@@ -69,29 +77,35 @@ public class MyPageController {
         return OK(null);
     }
 
-    @GetMapping("/boughtList/{userId}")
-    Response<?> getPurchaseList(@PathVariable String userId,
-                                @PageableDefault Pageable pageable){
+    @GetMapping("/boughtList")
+    Response<?> getPurchaseList(
+                                @PageableDefault Pageable pageable, @AuthenticationPrincipal UserDetails userDetails){
 
-        return OK(myPageService.getBoughtList(userId,pageable));
+        log.warn("내 구매 리스트 유저 정보 : {}", userDetails.getUsername());
+        return OK(myPageService.getBoughtList(userDetails.getUsername(),pageable));
     }
 
-    @GetMapping("/soldList/{userId}")
-    Response<?> getSalesList(@PathVariable String userId,
-                             @PageableDefault Pageable pageable){
-        return OK(myPageService.getSoldList(userId,pageable));
+    @GetMapping("/soldList")
+    Response<?> getSalesList(
+                             @PageableDefault Pageable pageable, @AuthenticationPrincipal UserDetails userDetails){
+
+        log.warn("내 판매 리스트 유저 정보 : {}", userDetails.getUsername());
+        return OK(myPageService.getSoldList(userDetails.getUsername(),pageable));
     }
 
-    @GetMapping("/mynfts/{userId}")
-    Response<?> getMyNFTList(@PathVariable String userId,
-                             @PageableDefault Pageable pageable){
-        return OK(nftService.getMyNFTList(userId,pageable));
+    @GetMapping("/mynfts")
+    Response<?> getMyNFTList(
+                             @PageableDefault Pageable pageable, @AuthenticationPrincipal UserDetails userDetails){
+
+        log.warn("내 nft 리스트 유저 정보 : {}", userDetails.getUsername());
+        return OK(nftService.getMyNFTList(userDetails.getUsername(),pageable));
     }
 
-    @GetMapping("/like-nft-list/{userId}")
-    Response<?> getLikedNFTList(@PathVariable String userId,
-                                @PageableDefault Pageable pageable){
-        return OK(myPageService.getLikedNFTList(userId,pageable));
+    @GetMapping("/like-nft-list")
+    Response<?> getLikedNFTList(
+                                @PageableDefault Pageable pageable, @AuthenticationPrincipal UserDetails userDetails){
+        log.warn("내가 좋아요 한 nft 리스트 유저 정보 : {}", userDetails.getUsername());
+        return OK(myPageService.getLikedNFTList(userDetails.getUsername(),pageable));
     }
 
 }
