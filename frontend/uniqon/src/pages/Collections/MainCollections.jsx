@@ -104,9 +104,13 @@ export function MainCollections() {
                     className="max-w-xs md:max-w-sm lg:max-w-full mx-auto shadow-lg"
                     style={{ margin: "0.5rem" }}
                   >
-                    <CardHeader floated={false} color="blue-gray">
+                    <CardHeader
+                      floated={false}
+                      color="white"
+                      className="h-72 flex items-center"
+                    >
                       <img src={card.image} alt="ui/ux review check" />
-                      <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
+                      {/* <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " /> */}
                       {/* <IconButton
                         size="sm"
                         color="red"
