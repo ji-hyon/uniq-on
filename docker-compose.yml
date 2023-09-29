@@ -54,10 +54,8 @@ services:
     container_name: uniqonNodejsServer
     environment:
       SPRING_SERVER_URI: http://uniqonSpringServer:5001
-      DITI_SERVER_URL: http://host.docker.internal:7000
     ports:
       - '5000:4000'
     networks:
       - uniqon_network
-    extra_hosts:
-      - host.docker.internal:host-gateway 
+    
