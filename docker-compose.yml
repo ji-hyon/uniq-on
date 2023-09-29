@@ -54,6 +54,7 @@ services:
     container_name: uniqonNodejsServer
     environment:
       SPRING_SERVER_URI: http://uniqonSpringServer:5001
+      DITI_SERVER_URL: https://j9c201.p.ssafy.io
     ports:
       - '5000:4000'
     networks:
