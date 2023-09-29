@@ -184,18 +184,34 @@ export function NFT() {
 
   async function CreateNft() {
     // 위에 aiimg에 요청해서 받은 이미지 url 담아서 요청
+    var formData = new FormData();
+    // formData.append('data', {
+    //   middleClassificationId: selectedMiddle,
+    //   name: name,
+    //   feature: feature,
+    //   age: Number(age)
+    // }, { contentType: 'application/json' });
+    // const reqData = {file: nftImg.current.files[0],
+    //   data:{
+    //   middleClassificationName: selectedMiddle,
+    //   name: name,
+    //   feature: feature,
+    //   age: age}
+    // };
+    formData.append("file",  nftImg.current.files[0]);
+    const json=JSON.stringify({
+      name: name,
+      middleClassificationName: selectedMiddle,
+      feature: feature,
+      age: age
+    })
+    formData.append("data", new Blob([json], { type: 'application/json' }));
     try {
       console.log("실행1");
-      const response2 = await axios.post("/api/nfts/ipfs", {
-        file: aiImgUrl,
-        data: {
-          name: name,
-          middleClassificaitonName: selectedMiddle,
-          feature: feature,
-          age: Number(age)
-        },
+      const response2 = await axios.post("/api/nfts/ipfs", formData, {
         headers: {
-          Authorization: "Bearer " + accessToken
+          Authorization: "Bearer " + accessToken,
+          "Content-Type": 'multipart/form-data',
         }
       });
       console.log("IPFS 저장 성공", response2);
