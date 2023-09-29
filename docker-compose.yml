@@ -1,0 +1,63 @@
+version: '3'
+
+volumes:
+  uniqon_main_data:
+    external:
+      name: uniqon_main_data
+
+networks:
+  uniqon_network:
+    driver: bridge
+
+services:
+  uniqon_mysql:
+    restart: on-failure
+    image: 'mysql:latest'
+    container_name: 'uniqon_mysql'
+    environment:
+      MYSQL_DATABASE: uniqon
+      MYSQL_ROOT_PASSWORD: ssafyuniqon
+      TZ: Asia/Seoul
+    networks:
+      - uniqon_network
+    volumes:
+      - uniqon_main_data:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - '3306:3306'
+
+  
+# url에 언더바가 있으면 안돼서 카멜케이스로 변경
+  uniqonSpringServer:
+    restart: on-failure
+    depends_on:
+      - uniqon_mysql
+    image: 'jihyon/c201-backend:latest'
+    container_name: uniqonSpringServer
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:mysql://uniqon_mysql:3306/uniqon'
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ssafyuniqon
+      SERVER_PORT: 5001
+    networks:
+      - uniqon_network
+
+  
+# 게이트웨이 서버 
+  uniqonNodejsServer:
+    restart: on-failure
+    depends_on:
+      - uniqonSpringServer
+    image: 'jihyon/c201-gateway:latest'
+    container_name: uniqonNodejsServer
+    environment:
+      SPRING_SERVER_URI: http://uniqonSpringServer:5001
+      DITI_SERVER_URL: http://host.docker.internal:7000
+    ports:
+      - '5000:4000'
+    networks:
+      - uniqon_network
+    extra_hosts:
+      - host.docker.internal:host-gateway 
