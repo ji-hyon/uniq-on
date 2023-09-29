@@ -79,11 +79,10 @@ public class WishlistController {
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @GetMapping("/{walletAddress}")
-    public Response<?> getWishlist(@PageableDefault Pageable pageable, @PathVariable String walletAddress ){
-//        log.debug("# 위시리스트 조회 요청 : {}", userDetails.getUsername());
-//        Page<WishlistQueryRepository.getWishlistDBResponse> list =  wishlistService.getWishlist(pageable, userDetails.getUsername());
-        Page<WishlistQueryRepository.getWishlistDBResponse> list =  wishlistService.getWishlist(pageable, walletAddress);
+    @GetMapping
+    public Response<?> getWishlist(@PageableDefault Pageable pageable, @AuthenticationPrincipal UserDetails userDetails ){
+        log.debug("# 위시리스트 조회 요청 : {}", userDetails.getUsername());
+        Page<WishlistQueryRepository.getWishlistDBResponse> list =  wishlistService.getWishlist(pageable, userDetails.getUsername());
         if (list == null) {
             return ERROR("위시리스트 존재 안 함", HttpStatus.NOT_FOUND);
         } else {
@@ -102,10 +101,9 @@ public class WishlistController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @DeleteMapping("/{wishlistId}")
-//    public Response<?> deleteWishlist(@PathVariable Integer wishlistId, @AuthenticationPrincipal UserDetails userDetails){
-    public Response<?> deleteWishlist(@PathVariable Integer wishlistId){
-        log.info("# 위시리스트 삭제 요청 : {}", wishlistId);
-        int result = wishlistService.deleteWishlist(new deleteWishlistWebRequest("0x00000000000000", wishlistId));
+    public Response<?> deleteWishlist(@PathVariable Integer wishlistId, @AuthenticationPrincipal UserDetails userDetails){
+        log.info("# 위시리스트 삭제 요청 : {}", userDetails.getUsername());
+        int result = wishlistService.deleteWishlist(new deleteWishlistWebRequest(userDetails.getUsername(), wishlistId));
         if (result == 1) {
             log.debug("# 위시리스트 삭제 성공");
             return OK(null);

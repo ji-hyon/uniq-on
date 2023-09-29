@@ -7,18 +7,16 @@ import { TopNavBar } from "../../components/Common/TopNavBar";
 import { useEffect, useState } from "react";
 
 export function Wishlist() {
-
-  const [postId, setPostId] = React.useState('1');
-  const [wishId, setWishId] = React.useState('1');
-  const [walletAddress, setWalletAddress] = React.useState('0x00000000000000');
+  const [postId, setPostId] = React.useState("1");
+  const [wishId, setWishId] = React.useState("1");
+  const [walletAddress, setWalletAddress] = React.useState("0x00000000000000");
 
   // useEffect(() => {
   //   getDefaultWishlist();
   // }, []);
 
-
   // function getDefaultWishlist() {
-      
+
   //     axios
   //       .get("/api/wishlist/1")
   //       .then((res) => {
@@ -30,26 +28,61 @@ export function Wishlist() {
   //   }
 
   async function getWishlist() {
-
     try {
-      const res = await axios.get(`/api/wishlist/${walletAddress}`, 
-      {params: {
-        page: 0,
-        size: 9,
-      }})
-        console.log(res.data.response)
-    } catch(err) {
-      console.log(err)
+      const res = await axios.get(`/api/wishlist`, {
+        params: {
+          page: 0,
+          size: 10, // 추후에 불러올 만큼 사이즈 설정
+        },
+      });
+      if (res.status === 200 && res.data.success) {
+        console.log(res.data.response.content);
+      } else if (res.data.error.status === 404) {
+        alert("위시리스트가 존재하지 않습니다");
+        console.log(res);
+      } else {
+        console.log(res);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function deleteWishlist() {
+    const wishListId = 2;
+    try {
+      const res = await axios.delete(`/api/wishlist/${wishListId}`);
+      if (res.status === 200 && res.data.success) {
+        alert(`위시리스트에 정상적으로 삭제되었습니다.`);
+      } else {
+        console.log(res.data.error);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function addWishlist() {
+    const postId = 5;
+    try {
+      const res = await axios.post(`/api/wishlist/add/${postId}`);
+      if (res.status === 200 && res.data.success) {
+        alert(`위시리스트에 ${postId}번 포스트가 정상적으로 등록되었습니다.`);
+      } else {
+        console.log(res.data.error);
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 
   return (
     <div className="App">
       <header className="App-header">
-      <div className="flex flex-row justify-center w-full bg-white">
-        <div className="bg-white w-[1440px] h-[1024px] relative">
-          <TopNavBar />
-          <div className="flex flex-col w-[1382px] h-[400px] items-start p-[24px] absolute top-[165px] left-[29px] rounded-[16px] overflow-hidden bg-cover bg-[50%_50%]">
+        <div className="flex flex-row justify-center w-full bg-white">
+          <div className="bg-white w-[1440px] h-[1024px] relative">
+            <TopNavBar />
+            <div className="flex flex-col w-[1382px] h-[400px] items-start p-[24px] absolute top-[165px] left-[29px] rounded-[16px] overflow-hidden bg-cover bg-[50%_50%]">
               <div className="w-[1382px] h-[400px] left-0 bg-[#0000008a] absolute top-0" />
               <div className="flex w-[1309px] items-start gap-[32px] relative flex-[0_0_auto] mb-[-8.00px]">
                 <div className="flex flex-col w-[217px] h-[357px] items-start justify-end gap-[24px] relative">
@@ -59,6 +92,10 @@ export function Wishlist() {
                         <div className="relative w-fit mt-[-1.00px] [font-family:'Consolas-Regular',_Helvetica] font-normal text-white text-[16px] tracking-[0] leading-[20px] whitespace-nowrap">
                           Wishlist
                         </div>
+                        <Button onClick={deleteWishlist}>
+                          위시리스트 삭제
+                        </Button>
+                        <Button onClick={addWishlist}>위시리스트 추가</Button>
                         <Button onClick={getWishlist}>getWishlist</Button>
                       </div>
                     </div>
@@ -96,7 +133,10 @@ export function Wishlist() {
                   <div className="inline-flex flex-col min-w-[340px] items-start relative flex-[0_0_auto] bg-white rounded-[8px] overflow-hidden shadow-[0px_8px_40px_#0000000a,0px_2px_5px_#0000000d,0px_0px_2px_#00000026]">
                     <div className="inline-flex flex-col h-[233px] items-start relative">
                       <div className="inline-flex flex-col h-[278px] items-start relative mb-[-45.00px]">
-                        <img className="relative max-w-[340px] w-[340px] h-[233px]" alt="Nft png" />
+                        <img
+                          className="relative max-w-[340px] w-[340px] h-[233px]"
+                          alt="Nft png"
+                        />
                       </div>
                     </div>
                     <div className="inline-flex flex-col items-start p-[20px] relative flex-[0_0_auto]">
@@ -138,7 +178,10 @@ export function Wishlist() {
                   <div className="inline-flex flex-col min-w-[340px] items-start relative flex-[0_0_auto] bg-white rounded-[8px] overflow-hidden shadow-[0px_8px_40px_#0000000a,0px_2px_5px_#0000000d,0px_0px_2px_#00000026]">
                     <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
                       <div className="inline-flex flex-col h-[235px] items-start relative">
-                        <img className="h-[235px] relative max-w-[340px] w-[340px]" alt="Nft png" />
+                        <img
+                          className="h-[235px] relative max-w-[340px] w-[340px]"
+                          alt="Nft png"
+                        />
                       </div>
                     </div>
                     <div className="inline-flex flex-col items-start p-[20px] relative flex-[0_0_auto]">
@@ -180,7 +223,10 @@ export function Wishlist() {
                   <div className="inline-flex flex-col min-w-[340px] items-start relative flex-[0_0_auto] mr-[-96.00px] bg-white rounded-[8px] overflow-hidden shadow-[0px_8px_40px_#0000000a,0px_2px_5px_#0000000d,0px_0px_2px_#00000026]">
                     <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
                       <div className="inline-flex flex-col h-[236px] items-start relative">
-                        <img className="h-[236px] relative max-w-[340px] w-[340px]" alt="Nft png" />
+                        <img
+                          className="h-[236px] relative max-w-[340px] w-[340px]"
+                          alt="Nft png"
+                        />
                       </div>
                       <div className="top-[236px] absolute w-[340px] h-px left-0 bg-[#0000000d]" />
                     </div>
@@ -243,7 +289,10 @@ export function Wishlist() {
                       <div className="inline-flex flex-col h-[278px] items-start relative mb-[-45.00px] overflow-hidden">
                         <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
                           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
-                            <img className="relative max-w-[340px] w-[340px] h-[233px]" alt="Nft png" />
+                            <img
+                              className="relative max-w-[340px] w-[340px] h-[233px]"
+                              alt="Nft png"
+                            />
                           </div>
                           <div className="top-[339px] absolute w-[340px] h-px left-0 bg-[#0000000d]" />
                         </div>
@@ -291,7 +340,10 @@ export function Wishlist() {
                       <div className="inline-flex flex-col h-[235px] items-start relative overflow-hidden">
                         <div className="flex flex-col w-[340px] items-start relative flex-[0_0_auto]">
                           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
-                            <img className="h-[235px] relative max-w-[340px] w-[340px]" alt="Nft png" />
+                            <img
+                              className="h-[235px] relative max-w-[340px] w-[340px]"
+                              alt="Nft png"
+                            />
                           </div>
                           <div className="top-[339px] absolute w-[340px] h-px left-0 bg-[#0000000d]" />
                         </div>
@@ -339,7 +391,10 @@ export function Wishlist() {
                       <div className="inline-flex flex-col h-[236px] items-start relative overflow-hidden">
                         <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
                           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
-                            <img className="h-[236px] relative max-w-[340px] w-[340px]" alt="Nft png" />
+                            <img
+                              className="h-[236px] relative max-w-[340px] w-[340px]"
+                              alt="Nft png"
+                            />
                           </div>
                           <div className="top-[339px] absolute w-[340px] h-px left-0 bg-[#0000000d]" />
                         </div>
@@ -405,11 +460,10 @@ export function Wishlist() {
                 </button>
               </div>
             </div>
+          </div>
         </div>
-      </div>       
         {/* <Button onClick={addWishlist}>addWishlist</Button>
         <Button onClick={deleteWishlist}>deleteWishlist</Button> */}
-        
       </header>
     </div>
   );
