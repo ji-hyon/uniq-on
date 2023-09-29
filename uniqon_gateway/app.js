@@ -254,12 +254,15 @@ app.get("/api/users/login", async (req, res) => {
   }
 });
 
+
 // 스프링 서버 세팅
 const springProxy = createProxyMiddleware({
+  host: '0.0.0.0',
   target: process.env.SPRING_SERVER_URI,
   changeOrigin: true,
 });
 
+// app.listen(5000)
 // 프록시 세팅
-// app.use("/api", springProxy);
+// app.use("/api/**", springProxy);
 app.use(springProxy);
