@@ -4,26 +4,30 @@ import { getResolver } from "ethr-did-resolver"
 import { createVerifiableCredentialJwt, createVerifiablePresentationJwt, verifyCredential, verifyPresentation } from "did-jwt-vc"
 
 // ssafy 네트워크로 수정하기
-const rpcUrl = 'https://rpc.sepolia.org/'
+// const rpcUrl = 'https://rpc.sepolia.org/'
+const rpcUrl = 'https://gethrpc.ssafy-blockchain.com/'
 
 // issuer
-// ssafy 네트워크에 배포한 스마트 컨트랙트 주소로 수정하기
+// DITI(발급자)의 private key사용. 내 지갑 주소와 private key로 사용함
 const issuer = new EthrDID({
-    identifier: '0xaaef0b23300e48A68eD859Dc8E102B1884b74bf0',
-    privateKey: 'c530543a2e9f13415d72265f7e7ae0dca577f10ff3a68fd499e9c8db9aca4f73',
+    // identifier: '0xaaef0b23300e48A68eD859Dc8E102B1884b74bf0',
+    identifier: '0xA92Ae66964863A04A143201AFBc825a590740B24',
+    // privateKey: 'c530543a2e9f13415d72265f7e7ae0dca577f10ff3a68fd499e9c8db9aca4f73',
+    privateKey: '186eea98dc8c85012b67612687b928d8a8394002312daba8cc8368051dbdea93',
     rpcUrl: rpcUrl,
     chainNameOrId: 'sepolia',
 })
 
 // resolver
 // see also https://github.com/decentralized-identity/ethr-did-resolver#multi-network-configuration
-const providerConfig = {
-    rpcUrl: rpcUrl,
-    registry: '0xb4884e21e276a2d42b2969ae9ca220639d2abe73',
-    name: 'sepolia'
-}
-const resolver = new Resolver(getResolver(providerConfig))
-
+// const providerConfig = {
+//     rpcUrl: rpcUrl,
+//     // 배포한 스마트 컨트랙트 주소 
+//     // registry: '0xb4884e21e276a2d42b2969ae9ca220639d2abe73',
+//     // ssafy 네트워크에 배포한 contract address로 수정함 
+//     registry: '0xc9C8Db9F05bF5A0ab10511Bc6Df56c300fbcf3B3',
+//     name: 'sepolia'
+// }
 
 export async function createVC(walletAddress, data) {
     // create VC
