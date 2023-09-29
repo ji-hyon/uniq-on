@@ -215,7 +215,7 @@ export function NFT() {
         }
       });
       console.log("IPFS 저장 성공", response2);
-      setIpfsUrl(response2.file);
+      setIpfsUrl(response2.data.response);
       console.log("ipfsurl", ipfsUrl);
     } catch (error) {
       console.log("IPFS 저장 실패", error);
@@ -228,7 +228,7 @@ export function NFT() {
     // 위에 IPFS에 요청해서 받은 ipfsJsonUrl 담아서 요청
     const provider = new ethers.BrowserProvider(window.ethereum);
     // 싸피 네트워크 주소로 변경
-    const net = new ethers.JsonRpcProvider("http://127.0.0.1:7545");
+    const net = new ethers.JsonRpcProvider("https://gethrpc.ssafy-blockchain.com");
     // console.log(net)
     const signer = await provider.getSigner();
     //나중에 싸피 네트워크 컨트랙트 주소로 변경 필요
@@ -245,12 +245,12 @@ export function NFT() {
     const fee = ethers.parseEther("0.0005");
     const options = { value: fee };
     //백에서 받은 ipfsJsonUrl 넣어주기
-    const ipfsJsonUrl = ipfsUrl;
+    const ipfsJsonUrl = ipfsUrl.nftMetadataHash;
     const receipt = await contractInstance
       .connect(signer)
       .mintNFT(signer.address, ipfsJsonUrl, options);
     const txReceipt = await net.getTransactionReceipt(receipt.hash);
-
+    console.log(txReceipt)
     setStatus(txReceipt.status);
 
     setHash(receipt.hash);
