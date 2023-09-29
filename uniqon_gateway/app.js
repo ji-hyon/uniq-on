@@ -33,7 +33,9 @@ app.listen(process.env.PORT, () => {
 async function verifyVP(vpJwt) {
   try {
     // Resolver : did documnet 가져오는 역할
-    const resolver = new Resolver(getResolver(providerConfig));
+    // const resolver = new Resolver(getResolver(providerConfig));
+    // 캐시 옵션 추가
+    const resolver = new Resolver(getResolver(providerConfig), {cache:true});
     // vp 검증
     const result = await verifyPresentation(vpJwt, resolver);
     // 결과가 있고, 유효하면

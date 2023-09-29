@@ -20,16 +20,14 @@ const issuer = new EthrDID({
 
 // resolver
 // see also https://github.com/decentralized-identity/ethr-did-resolver#multi-network-configuration
-const providerConfig = {
-    rpcUrl: rpcUrl,
-    // 배포한 스마트 컨트랙트 주소 
-    // registry: '0xb4884e21e276a2d42b2969ae9ca220639d2abe73',
-    // ssafy 네트워크에 배포한 contract address로 수정함 
-    registry: '0xc9C8Db9F05bF5A0ab10511Bc6Df56c300fbcf3B3',
-    name: 'sepolia'
-}
-const resolver = new Resolver(getResolver(providerConfig))
-
+// const providerConfig = {
+//     rpcUrl: rpcUrl,
+//     // 배포한 스마트 컨트랙트 주소 
+//     // registry: '0xb4884e21e276a2d42b2969ae9ca220639d2abe73',
+//     // ssafy 네트워크에 배포한 contract address로 수정함 
+//     registry: '0xc9C8Db9F05bF5A0ab10511Bc6Df56c300fbcf3B3',
+//     name: 'sepolia'
+// }
 
 export async function createVC(walletAddress, data) {
     // create VC
