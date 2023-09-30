@@ -186,18 +186,23 @@ export function NFT() {
     // 위에 aiimg에 요청해서 받은 이미지 url 담아서 요청
     try {
       console.log("실행1");
-      const response2 = await axios.post("/api/nfts/ipfs", {
-        file: aiImgUrl,
-        data: {
-          name: name,
-          middleClassificaitonName: selectedMiddle,
-          feature: feature,
-          age: Number(age)
+      const response2 = await axios.post(
+        "/api/nfts/ipfs",
+        {
+          file: aiImgUrl,
+          data: {
+            name: name,
+            middleClassificaitonName: selectedMiddle,
+            feature: feature,
+            age: Number(age)
+          }
         },
-        headers: {
-          Authorization: "Bearer " + accessToken
+        {
+          headers: {
+            Authorization: "Bearer " + accessToken
+          }
         }
-      });
+      );
       console.log("IPFS 저장 성공", response2);
       setIpfsUrl(response2.file);
       console.log("ipfsurl", ipfsUrl);
