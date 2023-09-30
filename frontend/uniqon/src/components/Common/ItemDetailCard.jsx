@@ -11,6 +11,10 @@ import {
   CardFooter,
 } from "@material-tailwind/react";
 
+import { ethers } from "ethers"
+import useUserInfoStore from "../../stores/UserInfoStore";
+// import contractAbi from './contractAbi.json';
+
 import { useEffect, useState } from "react";
 import { useTransactionStore } from "../../stores/TransactionStore";
 
@@ -18,6 +22,8 @@ export function ItemDetailCard( { item } ) {
 
   const [postId, setPostId] = React.useState('1');
   const [wishId, setWishId] = React.useState('1');
+
+  const { selectedPostId, selectedNftId } = useTransactionStore();
 
   const [title, setTitle] = useState("test");
   const [content, setContent] = useState("test");
@@ -30,15 +36,21 @@ export function ItemDetailCard( { item } ) {
 
   const handleOpen = () => { set구매모달Open(!구매모달open); };
 
+  // const { accessToken, walletAddress } = useUserInfoStore();
+
 
   // 아직 상세아이템 조회 api가 없어서 하드코딩하려고 거래 store에서 salesItemList 사용
   const { salesItemsList, setSalesItemsList } = useTransactionStore();
 
   const { forDetailItem, setForDetailItem } = useTransactionStore();
 
+  const [ 진행중open, set진행중Open ] = React.useState(false);
+
+  const 진행중handleOpen = () => { set진행중Open(!진행중open); };
+
   useEffect(() => {
-    // console.log(forDetailItem)
-    // console.log(item);
+    console.log(forDetailItem)
+    console.log(item);
     // console.log(salesItemsList);
     // setTitle(item.PostInfo.title);
     // setContent(item.PostInfo.content);
@@ -75,6 +87,38 @@ export function ItemDetailCard( { item } ) {
         console.log(err)
       }
     } 
+
+    // async function transact(price,sellerAddress,tokenId){
+    //   //price는 판매자가 등록한 가격 단위는 이더
+    //   //sellerAddress 판매자 지갑 주소
+    //   //tokenId 거래 될 NFT tokenId
+    //   const provider = new ethers.BrowserProvider(window.ethereum);
+    //   // 싸피 네트워크로 바꾸기
+    //   const net=new ethers.JsonRpcProvider("http://127.0.0.1:7545")
+  
+    //   const signer = await provider.getSigner();
+  
+    //   //나중에 싸피 네트워크 컨트랙트 주소로 변경 필요
+    //   const contractAddress="0x6fc6B313E41117C2Bf293C9E7a12cc8248d95245"
+    //   const gasProvider=await provider.getFeeData()
+    //   const contractInstance = new ethers.Contract(contractAddress, contractAbi, signer,gasProvider);
+  
+    //   const fee=ethers.parseEther(price)
+    //   const options = {value: fee}
+  
+    //   const receipt=await contractInstance.connect(signer).saleNFT(sellerAddress,price,tokenId,fee,options)
+    //   const txReceipt = await net.getTransactionReceipt(receipt.hash)
+  
+    //   // status 1이면 성공 아니면 실패
+    //   // 에러 처리 해서 실패했을 경우엔 백에 다음 요청 보내지 않기
+    //   console.log(txReceipt.status)
+  
+    //   //다음 요청에 보내야 하는 값들
+    //   console.log(receipt.hash)  //tx hash
+    //   console.log(parseInt(txReceipt.logs[1].data,16)) //tokenId
+    //   //판매자 주소
+    //   //구매자 주소
+    // }
 
   return (
     <Card className="w-full max-w-[48rem] flex-row">
@@ -171,6 +215,46 @@ export function ItemDetailCard( { item } ) {
         </CardFooter>
         </Card>
       </Dialog>
+
+      {/* 결제 진행 중 */}
+      {/* <Dialog
+        open={진행중open}
+        handler={진행중handleOpen}
+        className="bg-transparent shadow-none"
+        animate={{
+          mount: { scale: 1, y: 0 },
+          unmount: { scale: 0.9, y: -100 },
+        }}
+      >
+        <Card className="mx-auto w-full max-w-[24rem]">
+        <CardHeader
+            variant="gradient"
+            color="blue"
+            className="grid mb-4 h-28 place-items-center"
+          >
+            <Typography variant="h3" color="white">
+              결제 진행 중
+            </Typography>
+          </CardHeader>
+          <CardBody className="flex flex-col gap-4">
+          <img src="/basket.gif" alt="my-gif" />
+          귀여운 친구를 구매하고 있는 중입니다.
+        </CardBody>
+        <CardFooter className="flex justify-end pt-0">
+        <Button variant="gradient" color="green" onClick={handleOpen}>
+            <span>결제하기</span>
+          </Button>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleOpen}
+            className="mr-1"
+          >.
+          </Button>
+          
+        </CardFooter>
+        </Card>
+      </Dialog> */}
       
     </Card>
   );

@@ -22,6 +22,7 @@ export function TranItemDetail () {
   const { forDetailItem, setForDetailItem } = useTransactionStore();
   // const URL = "http://localhost:5000"
   const walletAddress = "0x00000000000000";
+  const { selectedNftId, setSelectedNftId, selectedPostId, setSelectedPostId } = useTransactionStore();
 
   const [수정open, set수정Open] = React.useState(false);
   const 수정handleOpen = () => { set수정Open(!수정open); };
@@ -35,7 +36,9 @@ export function TranItemDetail () {
   useEffect(() => {
 
     console.log(id)
-
+    setSelectedPostId(id)
+    // setSelectedNftId(forDetailItem.nftId)
+    console.log(forDetailItem)
     getSalesDetail();
   }, []);
 
