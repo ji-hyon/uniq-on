@@ -120,7 +120,7 @@ export function NFT() {
   // const [aiImgUrl, setAiImgUrl] = useState("");
   const aiImgUrl =
     "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Indianfox.jpg/300px-Indianfox.jpg";
-  const [ipfsUrl, setIpfsUrl] = useState("");
+  const [ipfsUrl, setIpfsUrl] = useState({imageIpfsHash:"",nftMetadataHash:""});
   const [status, setStatus] = useState(0);
   const [hash, setHash] = useState("");
   const [tokenId, setTokenId] = useState(0);
