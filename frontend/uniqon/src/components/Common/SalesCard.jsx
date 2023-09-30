@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import { useTransactionStore } from "../../stores/TransactionStore";
+import useUserInfoStore from "../../stores/UserInfoStore";
 
 export function SalesCard({ item, id }) {
 
@@ -23,7 +24,7 @@ export function SalesCard({ item, id }) {
   const [postId, setPostId] = React.useState('');
   const [wishId, setWishId] = React.useState('');
 
-  const walletAddress = "0x00000000000000";
+  const { accessToken, walletAddress } = useUserInfoStore();
 
   const [ selectedItem, setSelectedItem ] = useState({});
 

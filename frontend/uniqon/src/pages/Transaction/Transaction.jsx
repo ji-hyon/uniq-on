@@ -6,12 +6,16 @@ import { TopNavBar } from "../../components/Common/TopNavBar";
 import { SalesCard } from "../../components/Common/SalesCard";
 import { TransactionBanner } from "../../components/Transaction/TransactionBanner";
 import { RegisterSalesItem } from "./RegisterSalesItem";
+import useUserInfoStore from "../../stores/UserInfoStore";
 
 import { useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 
 export function Transaction() {
+
+  const { accessToken, walletAddress } = useUserInfoStore();
+
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => { setOpen(!open); };
@@ -20,16 +24,12 @@ export function Transaction() {
   const [content, setContent] = useState("test");
   const [price, setPrice] = useState("1000");
 
-  const walletAddress = "0x00000000000000";
-
   const { salesItemsList, setSalesItemsList  
     } = useTransactionStore();
 
-  
-  // const URL = "http://localhost:5000"
-
 
   useEffect(() => {
+    // console.log(accessToken)
     getSales();
   }, []);
 
@@ -38,14 +38,20 @@ export function Transaction() {
     try{
       const params = {
         walletAddress: walletAddress,
+        page: 1,
+        size: 9,
       };
 
       const res = await axios.get("/api/sales/post", {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          },
+      } , {
         params: params,
       });
-            // console.log(res.data.response) // response에 담긴 값 확인
+            console.log(res.data.response) // response에 담긴 값 확인
             setSalesItemsList(res.data.response)
-            // console.log(salesItemsList) // salesItemsList에 담긴 값 확인
+            console.log(salesItemsList) // salesItemsList에 담긴 값 확인
         } catch(err) {
           console.log(err)
         }
@@ -63,8 +69,9 @@ export function Transaction() {
 
 
         const res = await axios.post("/api/sales/register", data, {
-          headers: {
-            },
+          // headers: {
+          //   Authorization: "Bearer " + accessToken,
+          //   },
         });
         console.log(res.data)
         
