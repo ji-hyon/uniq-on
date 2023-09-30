@@ -16,6 +16,7 @@ import static com.diti.core.global.response.Response.OK;
 @RequiredArgsConstructor
 @RequestMapping("/diti/auth")
 @Tag(name = "인증 API")
+@CrossOrigin("*")
 public class AuthController {
 
     private final AuthService authService;

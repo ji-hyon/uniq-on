@@ -24,6 +24,7 @@ import static com.diti.core.global.response.Response.OK;
 @RequiredArgsConstructor
 @RequestMapping("/diti/vc")
 @Tag(name = "VC API")
+@CrossOrigin("*")
 public class VcController {
 
     private final VcQueryService vcQueryService;
