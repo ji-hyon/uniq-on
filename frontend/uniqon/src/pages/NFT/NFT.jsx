@@ -198,20 +198,20 @@ export function NFT() {
     //   feature: feature,
     //   age: age}
     // };
-    formData.append("file",  nftImg.current.files[0]);
-    const json=JSON.stringify({
+    formData.append("file", nftImg.current.files[0]);
+    const json = JSON.stringify({
       name: name,
       middleClassificationName: selectedMiddle,
       feature: feature,
       age: age
-    })
-    formData.append("data", new Blob([json], { type: 'application/json' }));
+    });
+    formData.append("data", new Blob([json], { type: "application/json" }));
     try {
       console.log("실행1");
       const response2 = await axios.post("/api/nfts/ipfs", formData, {
         headers: {
           Authorization: "Bearer " + accessToken,
-          "Content-Type": 'multipart/form-data',
+          "Content-Type": "multipart/form-data"
         }
       });
       console.log("IPFS 저장 성공", response2);
@@ -228,7 +228,9 @@ export function NFT() {
     // 위에 IPFS에 요청해서 받은 ipfsJsonUrl 담아서 요청
     const provider = new ethers.BrowserProvider(window.ethereum);
     // 싸피 네트워크 주소로 변경
-    const net = new ethers.JsonRpcProvider("https://gethrpc.ssafy-blockchain.com");
+    const net = new ethers.JsonRpcProvider(
+      "https://gethrpc.ssafy-blockchain.com"
+    );
     // console.log(net)
     const signer = await provider.getSigner();
     //나중에 싸피 네트워크 컨트랙트 주소로 변경 필요
@@ -250,7 +252,7 @@ export function NFT() {
       .connect(signer)
       .mintNFT(signer.address, ipfsJsonUrl, options);
     const txReceipt = await net.getTransactionReceipt(receipt.hash);
-    console.log(txReceipt)
+    console.log(txReceipt);
     setStatus(txReceipt.status);
 
     setHash(receipt.hash);
