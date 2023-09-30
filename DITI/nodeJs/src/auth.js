@@ -25,12 +25,14 @@ export function verifyLoginMessage(walletAddress, originalMessage, signedMessage
 //     next()
 // }
 
+
 export async function authMiddleWare(req,res,next){
     console.log(req.headers)
     const walletAddress=req.headers.walletaddress
     const token=req.headers.authorization
-// token 안에는 메세지, 서명된 메세지가 들어있음
-// 샘플코드에는  {address, body}로 되어있는데, body는 부가정보를 담고 있음
+    // token 안에는 메세지, 서명된 메세지가 들어있음
+    // 샘플코드에는  {address, body}로 되어있는데, body는 부가정보를 담고 있음
+
     const { address } = Web3Token.verify(token);
     console.log("address:'",address,"'walletAddress:'",walletAddress,"'")
     if (address!=walletAddress.toLowerCase()) {
@@ -39,4 +41,5 @@ export async function authMiddleWare(req,res,next){
     console.log("DITI/nodeJs: login success for " + walletAddress)
     next()
     }
+
 }

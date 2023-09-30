@@ -32,6 +32,7 @@ export function MetaMask() {
     const isMetaMask = injectedProvider ? window.ethereum.isMetaMask : false
     return isMetaMask
   }
+  
   async function addStgGeth() {
     const response = await window.ethereum.request({
       "method": "wallet_addEthereumChain",

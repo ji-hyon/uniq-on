@@ -11,7 +11,16 @@ export function Landing() {
     <div className="App">
       <div className="App-header">
           {/* 메타마스크 연동 버튼 */}
-          < MetaMask />
+          {/* < MetaMask /> */}
+          <Button
+            className="text-4xl w-96 h-28 m-3"
+            color="green"
+            onClick={() => {
+              navigate("login");
+            }}
+          >
+            MetaMask 로그인
+          </Button>
 
           {/* 신분증 발급 버튼 */}
           <Button

@@ -17,8 +17,24 @@ export function IssueCert() {
   const userInfo = useUserInfoStore()
   // const walletAddress = useUserInforStore((state)=>state.walletAddress)
   // const {walletAddress, originalMessage, signedMessage } = useUserInfoStore()
-
+  
+  
   async function requestVC() {
+        // 메타마스크 설치 확인
+        if (typeof window.ethereum === 'undefined') {
+          alert("MetaMask를 설치해주세요");
+          // 메타마스크 홈페이지로 이동 
+          window.location.href = 'https://metamask.io/';
+          return;
+      }
+  
+      // 메타마스크 로그인 확인
+      if (!window.ethereum.selectedAddress) {
+          alert("MetaMask에 먼저 로그인 해주세요");
+          // 로그인 페이지로 이동
+          window.location.href = '/diti/login';
+          return;
+      }
     // 백엔드 서버에 이 주소로 로그인하겠다는 것을 알려야 함. 신원 증명 필요. 
     // private key를 가지고 있고 서명을 만들 수 있다는 것을 증명
     // 임의의 메세지에 사인하는 것
@@ -47,9 +63,18 @@ export function IssueCert() {
           'walletAddress': userInfo.walletAddress,
         },
       });
-      console.log(response)
-    } catch (e) {
-      console.error(e)
+      console.log(response)        
+        
+      if (response.status === 200) {
+        console.log("작업이 성공했습니다");
+      } else {
+          // console.error(response.data); 
+          console.log(response.data);
+      }
+
+
+      } catch (e) {
+        console.error(e)
     }
   }
   
