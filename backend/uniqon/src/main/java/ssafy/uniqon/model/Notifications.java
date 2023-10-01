@@ -16,6 +16,7 @@ public class Notifications {
     @Column(name = "notification_id")
     private Integer id;
 
+    @Setter
     @Column(name ="checked", columnDefinition = "boolean default false")
     @ColumnDefault("false")
     private Boolean checked;
@@ -23,10 +24,6 @@ public class Notifications {
     @Column(name = "create_datetime")
     @CreationTimestamp
     private Timestamp createDatetime;
-
-    @Column(name = "update_datetime")
-    @UpdateTimestamp
-    private Timestamp updateDatetime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -38,4 +35,9 @@ public class Notifications {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Posts post;
 
+    @Column(length = 100)
+    private String title;
+
+    @Column(length = 255)
+    private String content;
 }
