@@ -7,9 +7,10 @@ import { Resolver } from "did-resolver";
 import { getResolver } from "ethr-did-resolver";
 import cors from "cors";
 import axios from "axios";
+import multer from "multer";
 
 dotenv.config();
-const app = express();
+const app = express(); // express : 서버, 요청받는 역할
 app.use(cors()); // cors 설정
 app.use(bodyParser.json()); // json 응답 설정
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -98,7 +99,8 @@ process.on("uncaughtException", (error) => {
 });
 
 // 회원가입 요청 api
-app.post("/api/users/signup", async (req, res) => {
+const upload=multer()
+app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
   try {
     // DITI에 vp 요청
     console.log("singup request form", req.headers.walletaddress);
@@ -128,7 +130,8 @@ app.post("/api/users/signup", async (req, res) => {
     const data = {
       walletAddress: req.headers.walletaddress,
       name: vcs[0].data.name,
-      nickname: "nonickname",
+      // nickname: "nonickname",
+      nickname: req.body.nickname,
       birth: vcs[0].data.birth,
       gender: vcs[0].data.gender,
       vpToken: vpJwt,
@@ -136,8 +139,10 @@ app.post("/api/users/signup", async (req, res) => {
       password: req.headers.walletaddress.slice(-20),
     };
     console.log("------------------");
+    console.log(req.body);
     console.log(data.walletAddress);
     console.log(data.password);
+    console.log(data.nickname);
     const formData = new FormData();
     formData.append(
       "data",
@@ -158,7 +163,7 @@ app.post("/api/users/signup", async (req, res) => {
         }
       );
       if (springResponse.status == 200) {
-        console.log(springResponse);
+        //console.log(springResponse);
         res.status(200).send("success");
       } else {
         res.status(springResponse.status).send(springResponse.data);
@@ -176,9 +181,13 @@ app.post("/api/users/signup", async (req, res) => {
       "GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed"
     );
     console.log(e);
-    res
-      .status(500)
-      .send("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed");
+    // res
+    //   .status(500)
+    //   .send("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed");
+    res.status(401).json({
+      "error" : "DITI 인증서가 유효하지 않습니다! DITI 인증서를 새로 발급해주세요.",
+      "ditiAddress" : process.env.DITI_SERVER_URL + "/diti"
+    });
     return;
   }
 });
