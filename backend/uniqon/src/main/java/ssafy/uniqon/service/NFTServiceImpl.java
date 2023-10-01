@@ -38,6 +38,7 @@ public class NFTServiceImpl implements NFTService {
     private final MiddleClassificationRepository middleClassificationRepository;
     private final MyCollectionsRepository myCollectionsRepository;
     private final NFTQueryRepository nftQueryRepository;
+    private final NotificationService notificationService;
 
     private final Pinata pinata = new Pinata("64e7615856edbac52336", "f62623900242c791dc8cb1243c69b2df8664886f50295a79d43ffe5ffdce0b5c");
     private static final String ipfsBaseURL = "https://gateway.pinata.cloud/ipfs/";
@@ -69,6 +70,7 @@ public class NFTServiceImpl implements NFTService {
                     price).send();
             String txHash = receipt.getTransactionHash();
             transactionHistoriesRepository.save(new TransactionHistories(null, seller, buyerMember, txHash,null));
+            notificationService.createNotification(seller,post);
         }
 
         web3j.shutdown();
