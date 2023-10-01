@@ -1,16 +1,24 @@
 import { Button } from "@material-tailwind/react";
 import useUserInfoStore from "../../stores/UserInfoStore";
 import axios from "axios";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ethers } from "ethers";
 import Web3Token from "web3-token";
 import { useNavigate } from "react-router";
+import { Input } from "@material-tailwind/react";
+
 
 export function SignUpButton() {
   const setUserInfo = useUserInfoStore((state) => state.setUserInfo);
   const navigate = useNavigate();
 
   const profileRef = useRef(null);
+
+  const [nickname, setNickname] = useState('');
+  const handleNicknameChange = (e) => {
+    setNickname(e.target.value);
+  };
+
   function detectMetaMask() {
     let injectedProvider = false;
     if (typeof window.ethereum !== "undefined") {
@@ -23,6 +31,7 @@ export function SignUpButton() {
     return isMetaMask;
   }
 
+  // 네트워크 추가
   async function addStgGeth() {
     const response = await window.ethereum.request({
       method: "wallet_addEthereumChain",
@@ -107,6 +116,7 @@ export function SignUpButton() {
           "Content-Type": "multipart/form-data",
           Authorization: token,
           walletAddress: address,
+          nickname: nickname,
         },
       });
       if (response.status === 200) {
@@ -116,20 +126,40 @@ export function SignUpButton() {
         alert(
           "블록체인과의 통신이 원할하지 않습니다. 잠시후에 다시 시도해주세요!"
         );
-      }
+      } 
       console.log("signup success");
     } catch (e) {
       console.log("signup failed", e);
+      // catch는 axios 외의 에러도 오기 때문에, e.response가 없을 수도 있어서 조건 추가
+      if(e.response) {
+        if (e.response.status === 401) {
+          window.alert("DITI 인증서가 유효하지 않습니다! DITI 인증서를 새로 발급해주세요.");
+          console.log(e.response);
+          window.location.href = e.response.data.ditiAddress
+          return
+        }
+      }
     }
   }
 
   return (
-    <>
-      <input type="file" ref={profileRef}></input>
-      <Button onClick={signUp} className="text-3xl w-70 h-30 m-5" color="blue">
-        {" "}
-        회원가입{" "}
-      </Button>
-    </>
+    <div>
+      {/* 닉네임 입력칸 */}
+      <div className="border-2 border-gray-400 m-10 p-5 max-w-3xl mx-auto">
+        <p className="m-5 text-lg font-bold">닉네입 입력</p>
+        <Input label="닉네임을 입력해주세요" type="text" value={nickname} onChange={handleNicknameChange} />
+      </div>
+
+      {/* 프로필 사진 업로드칸 */}
+      <div className="border-2 border-gray-400 m-10 max-w-3xl mx-auto">
+        <p className="m-5 text-lg font-bold">프로필 사진 업로드</p>
+        <input type="file" ref={profileRef} className="m-5"></input>
+      </div>
+
+      {/* 회원가입 버튼 */}
+        <Button onClick={signUp} className="text-3xl w-70 h-30 m-5" color="blue">
+          회원가입
+        </Button>
+    </div>
   );
 }

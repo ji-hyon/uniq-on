@@ -128,7 +128,8 @@ app.post("/api/users/signup", async (req, res) => {
     const data = {
       walletAddress: req.headers.walletaddress,
       name: vcs[0].data.name,
-      nickname: "nonickname",
+      // nickname: "nonickname",
+      nickname: req.headers.nickname,
       birth: vcs[0].data.birth,
       gender: vcs[0].data.gender,
       vpToken: vpJwt,
@@ -138,6 +139,7 @@ app.post("/api/users/signup", async (req, res) => {
     console.log("------------------");
     console.log(data.walletAddress);
     console.log(data.password);
+    console.log(data.nickname);
     const formData = new FormData();
     formData.append(
       "data",
@@ -176,9 +178,13 @@ app.post("/api/users/signup", async (req, res) => {
       "GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed"
     );
     console.log(e);
-    res
-      .status(500)
-      .send("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed");
+    // res
+    //   .status(500)
+    //   .send("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed");
+    res.status(401).json({
+      "error" : "DITI 인증서가 유효하지 않습니다! DITI 인증서를 새로 발급해주세요.",
+      "ditiAddress" : process.env.DITI_SERVER_URL + "/diti"
+    });
     return;
   }
 });
