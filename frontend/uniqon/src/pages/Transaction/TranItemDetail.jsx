@@ -5,7 +5,7 @@ import { ItemDetailCard } from "../../components/Common/ItemDetailCard";
 import { TopNavBar } from "../../components/Common/TopNavBar";
 import { useState } from "react";
 import { Button, Dialog, 
-  Card, CardBody, Input, CardFooter, CardHeader, Typography } from "@material-tailwind/react";
+  Card, CardBody, Input, CardFooter, CardHeader, Typography, Textarea } from "@material-tailwind/react";
 import { useTransactionStore } from "../../stores/TransactionStore";
 import useUserInfoStore from "../../stores/UserInfoStore";
 
@@ -160,16 +160,16 @@ export function TranItemDetail () {
           </CardHeader>
           {item ? (
           <CardBody className="flex flex-col gap-4">
-            <Input label="판매글 제목" value={item.title} size="lg" onChange={(e) => setTitle(e.target.value)} />
-            <Input label="판매글 내용" value={item.content} size="lg" onChange={(e) => setContent(e.target.value)}/>
-            <Input label="판매 가격" value={item.price} size="lg" onChange={(e) => setPrice(e.target.value)}/>
+            <Input color="blue" label="판매글 제목" value={item.title} size="lg" onChange={(e) => setTitle(e.target.value)} />
+            <Input color="blue" label="판매 가격" value={item.price} size="lg" onChange={(e) => setPrice(e.target.value)}/>
+            <Textarea color="blue" label="판매글 내용" value={item.content} size="lg" onChange={(e) => setContent(e.target.value)}/>
           </CardBody>
           ) : (
             <p>Loading...</p>
           )}
           <CardFooter className="pt-0">
             <Button variant="gradient" onClick={() => {수정handleOpen(); updateSales( price, title, content)}} fullWidth>
-              등록
+              수정
             </Button>
           </CardFooter>
         </Card>
