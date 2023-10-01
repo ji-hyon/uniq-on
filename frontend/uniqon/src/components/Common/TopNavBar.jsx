@@ -64,12 +64,8 @@ export function TopNavBar() {
             <div className="relative h-[48px] rounded-full">
               <div className="flex w-[500px] min-h-[48px] items-center pl-[48px] pr-[32px] py-px absolute top-0 left-0 bg-[#0000000d] rounded-full overflow-hidden">
                 <div className="inline-flex flex-col items-start pl-0 pr-[330px] py-0 relative flex-[0_0_auto]">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Pretendard-Regular',_Helvetica] font-normal text-[#00000066] text-[16px] tracking-[0] leading-[normal] whitespace-nowrap">
-                    Search NFT
-                  </div>
                 </div>
               </div>
-              <img src="/search.png" className="absolute w-[18px] h-[18px] top-[15px] left-[20px]" alt="Svg" />
             </div>
           </div>
         </div>

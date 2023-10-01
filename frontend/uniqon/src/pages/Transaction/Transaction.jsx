@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Button, Card, CardBody, CardFooter, CardHeader, Dialog, Input, Typography } from "@material-tailwind/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, Dialog, Input, Typography,Textarea } from "@material-tailwind/react";
 import { useTransactionStore } from "../../stores/TransactionStore";
 import { TopNavBar } from "../../components/Common/TopNavBar";
 import { SalesCard } from "../../components/Common/SalesCard";
@@ -32,6 +32,32 @@ export function Transaction() {
     // console.log(accessToken)
     getSales();
   }, []);
+  
+
+  // 판매글 등록시에 내가 가지고 있는 NFT 조회
+  
+  // const [nftList, setNftList] = useState([]);
+  // const [page, setPage] = useState(0);
+  // // const [totalPage, setTotalPage] = useState(0);
+  // // 나의 NFT 조회
+  // useEffect(() => {
+  //   async function getMyNft() {
+  //     try {
+  //       const response = await axios.get(`/api/myPage/mynfts`, {
+  //         params: {
+  //           page: page,
+  //           size: 3, // 추후에 이 부분은 원하는 갯수로 변경
+  //         },
+  //       });
+  //       if (response.status === 200) {
+  //         setNftList(response.data.response.content);
+  //       }
+  //     } catch (error) {
+  //       console.log("실패", error);
+  //     }
+  //   }
+  //   getMyNft();
+  // }, [page]);
 
   async function getSales() {
         
@@ -120,10 +146,32 @@ export function Transaction() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="판매 NFT선택" value={nftId} size="lg" onChange={(e) => setnftId(e.target.value)}/>
-            <Input label="판매글 제목" value={title} size="lg" onChange={(e) => setTitle(e.target.value)} />
-            <Input label="판매글 내용" value={content} size="lg" onChange={(e) => setContent(e.target.value)}/>
-            <Input label="판매 가격" value={price} size="lg" onChange={(e) => setPrice(e.target.value)}/>
+
+            
+          {/* 내가 가진 nft 목록 중에서 선택하기 */}
+          {/* {nftList.map((nft, index) => (
+          <div className="inline-flex flex-col min-w-[320px] items-start relative flex-[0_0_auto] bg-white rounded-[8px] overflow-hidden shadow-[0px_8px_40px_#0000000a,0px_2px_5px_#0000000d,0px_0px_2px_#00000026]">
+            <div>
+             // 카드 넣기
+              <Card key={index} className="w-full max-w-[20rem] shadow-lg">
+                <CardHeader floated={false} color="blue-gray">
+                  <img src={nft.image} alt="ui/ux review check" />
+                  <div className="absolute inset-0 w-full h-full to-bg-black-10 bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
+                </CardHeader>
+                <CardFooter className="pt-3 pb-3">
+                  <Button className="text-sm" size="sm" fullWidth={true}>
+                    {nft.name}
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+          </div>
+        ))} */}
+
+            <Input color="blue" label="판매 NFT선택" value={nftId} size="lg" onChange={(e) => setnftId(e.target.value)}/>
+            <Input color="blue" label="판매글 제목" value={title} size="lg" onChange={(e) => setTitle(e.target.value)} />
+            <Input color="blue" label="판매 가격(ETH)" value={price} size="lg" onChange={(e) => setPrice(e.target.value)}/>
+            <Textarea color="blue" label="판매글 내용" value={content} size="lg" onChange={(e) => setContent(e.target.value)}/>
           </CardBody>
           <CardFooter className="pt-0">
             <Button variant="gradient" onClick={() => {handleOpen(); registerSales(title, content, price, nftId)}} fullWidth>
