@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Button, Dialog, 
   Card, CardBody, Input, CardFooter, CardHeader, Typography } from "@material-tailwind/react";
 import { useTransactionStore } from "../../stores/TransactionStore";
+import useUserInfoStore from "../../stores/UserInfoStore";
 
 
 
@@ -21,8 +22,9 @@ export function TranItemDetail () {
   const [price, setPrice] = useState("1000");
   const { forDetailItem, setForDetailItem } = useTransactionStore();
   // const URL = "http://localhost:5000"
-  const walletAddress = "0x00000000000000";
   const { selectedNftId, setSelectedNftId, selectedPostId, setSelectedPostId } = useTransactionStore();
+
+  const { accessToken, walletAddress } = useUserInfoStore();
 
   const [수정open, set수정Open] = React.useState(false);
   const 수정handleOpen = () => { set수정Open(!수정open); };
@@ -49,7 +51,11 @@ export function TranItemDetail () {
       };
   
       try {
-        const res = await axios.get(`/api/sales/detail/${id}`, {
+        const res = await axios.get(`/api/sales/detail/${id}`,{
+          headers: {
+            Authorization: "Bearer " + accessToken,
+            },
+        }, {
           params: params,
         });
           // console.log(id)
@@ -76,7 +82,8 @@ export function TranItemDetail () {
       console.log(id)
 
       const res = await axios.put(`/api/sales/update/${id}`, data, {
-        headers: { 
+        headers: {
+          Authorization: "Bearer " + accessToken,
           },
       });
         console.log(res.data)
@@ -93,7 +100,11 @@ export function TranItemDetail () {
     };
 
     try {
-      const res = await axios.delete(`/api/sales/delete/${id}`, {
+      const res = await axios.delete(`/api/sales/delete/${id}`,{
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          },
+      }, {
         params: params,
       });
         console.log(id)

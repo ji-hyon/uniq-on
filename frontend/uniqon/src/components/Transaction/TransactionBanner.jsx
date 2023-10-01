@@ -4,10 +4,12 @@ import axios from "axios";
 import { Button, Input,
 Dialog, Typography, Card, CardBody, CardFooter, CardHeader } from "@material-tailwind/react";
 
+import useUserInfoStore from "../../stores/UserInfoStore";
+
 export function TransactionBanner() {
 
   const [ word, setWord ] = useState("");
-  const walletAddress = "0x00000000000000";
+  const { accessToken, walletAddress } = useUserInfoStore();
   // const URL = "http://localhost:5000"
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => { setOpen(!open); };
@@ -28,7 +30,11 @@ export function TransactionBanner() {
     };
 
     try {
-      const res = await axios.get("/api/sales/search", {
+      const res = await axios.get("/api/sales/search",{
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          },
+      }, {
         params: params,
       });
         console.log(word)

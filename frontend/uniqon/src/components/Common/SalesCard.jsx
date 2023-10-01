@@ -50,7 +50,11 @@ export function SalesCard({ item, id }) {
     };
 
     try {
-      const res = await axios.get(`/api/sales/detail/${id}`, {
+      const res = await axios.get(`/api/sales/detail/${id}`,{
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          },
+      }, {
         params: params,
       });
         // console.log(id)
@@ -77,7 +81,11 @@ async function goToTranItemDetail() {
     console.log(postId)
       
     try {
-        const res = await axios.post(`/api/wishlist/add/${id}`);
+        const res = await axios.post(`/api/wishlist/add/${id}`, {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+            },
+        });
         console.log(id)
           console.log(res.data)
 
@@ -89,7 +97,11 @@ async function goToTranItemDetail() {
   async function getWishlist() {
 
     try {
-      const res = await axios.get(`/api/wishlist/${walletAddress}`, 
+      const res = await axios.get(`/api/wishlist/${walletAddress}`, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          },
+      },
       {params: {
         page: 0,
         size: 9,
@@ -103,7 +115,11 @@ async function goToTranItemDetail() {
   async function deleteWishlist() {
       
     try {
-        const res = await axios.delete(`/api/wishlist/${wishId}`);
+        const res = await axios.delete(`/api/wishlist/${wishId}`, {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+            },
+        });
           console.log(res.data)
 
       } catch(err) {
