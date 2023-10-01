@@ -56,7 +56,8 @@ public class PostReadService {
                 post.getContent(),
                 post.getCreate_datetime(),
                 post.getTitle(),
-                true
+                true,
+                post.getNft().getId()
         );
     }
     public List<PostsController.postListsWebResponse> getSearchPostList(String word, Pageable pageable){

@@ -71,7 +71,8 @@ public class PostsController {
             String content,
             Timestamp createDatetime,
             String title,
-            Boolean wishCheck
+            Boolean wishCheck,
+            Integer nftId
     ){}
 private final PostReadService postReadService;
 private final PostCreateService postCreateService;
@@ -154,6 +155,7 @@ private final PostDeleteService postDeleteService;
         data1.put("nickname",post.nickname);
         obj.put("SellerInfo",data1);
 
+        data2.put("nftId",post.nftId);
         data2.put("species",post.species);
         data2.put("name",post.name);
         data2.put("feature",post.feature);
@@ -161,6 +163,7 @@ private final PostDeleteService postDeleteService;
         data2.put("image",post.image);
         obj.put("nftInfo",data2);
 
+        data3.put("postId",post.postId);
         data3.put("price",post.price);
         data3.put("content",post.content);
         data3.put("createDatetime",post.createDatetime);
