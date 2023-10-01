@@ -16,6 +16,7 @@ import { useCollectionsStore } from "../../stores/CollectionsStore";
 import { useEffect, useState } from "react";
 import { Pagination } from "./Pagination";
 import { TopNavBar } from "../../components/Common/TopNavBar";
+import useUserInfoStore from "../../stores/UserInfoStore";
 
 export function NFTList() {
   const {
@@ -47,6 +48,9 @@ export function NFTList() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
+  const [liked, setLiked] = useState(false);
+  const { accessToken, walletAddress } = useUserInfoStore();
 
   useEffect(() => {
     async function nftList() {
@@ -82,6 +86,60 @@ export function NFTList() {
 
     // setMidCollecType(card.species);
     // setMidCollecImg(card.image);
+  };
+
+  useEffect(() => {
+    const nftIds = nftData.map((card) => card.id);
+    nftIds.forEach((nftId) => {
+      const likeStatus = localStorage.getItem(`liked_${nftId}`);
+      if (likeStatus === "liked") {
+        setLiked(true);
+      }
+    });
+  }, [nftData]);
+
+  // 좋아요 버튼 클릭 시 처리할 함수
+  console.log("좋아요 ", liked);
+  const toggleLike = (card) => {
+    setLiked(!liked);
+
+    const nftId = card.id;
+    const userId = walletAddress;
+
+    console.log("지갑주소", walletAddress);
+
+    if (!liked) {
+      localStorage.setItem(`liked_${nftId}`, "liked");
+
+      axios
+        .post(`api/nfts/like/${nftId}`, {
+          headers: {
+            Authorization: "Bearer " + accessToken
+          }
+        })
+        .then((response) => {
+          console.log("좋아요 성공", response.data);
+          console.log("nftId", nftId);
+        })
+        .catch((error) => {
+          console.log("좋아요 실패", error);
+        });
+    } else {
+      localStorage.removeItem(`liked_${nftId}`);
+
+      axios
+        .delete(`/api/nfts/undolike/${nftId}`, {
+          headers: {
+            Authorization: "Bearer " + accessToken
+          }
+        })
+        .then((response) => {
+          console.log("좋아요 취소 성공", response.data);
+        })
+        .catch((error) => {
+          console.log("좋아요 취소 요청 실패", error);
+        });
+    }
   };
 
   // 검색 기능
@@ -169,9 +227,9 @@ export function NFTList() {
             <div></div>
             {/* NFT 카드 리스트를 보여줌 */}
             <div className="flex space-x-4">
-              {nftData.map((card, index) => (
+              {currentPageData.map((card, index) => (
                 <Card
-                  onClick={() => clickNft(card)}
+                  // onClick={() => clickNft(card)}
                   key={index}
                   className="w-full max-w-[20rem] shadow-lg"
                 >
@@ -180,9 +238,10 @@ export function NFTList() {
                     <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
                     <IconButton
                       size="sm"
-                      color="red"
+                      color={liked ? "red" : "white"}
                       variant="text"
                       className="!absolute top-4 right-4 rounded-full"
+                      onClick={() => toggleLike(card)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
