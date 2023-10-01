@@ -1,6 +1,7 @@
 package ssafy.uniqon.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -69,5 +70,23 @@ public class NotificationServiceImpl implements NotificationService{
             return 0;
         }
 
+    }
+
+    @Override
+    public NotificationController.NotificationWebResponse readNotification(String userId, Integer notiId) {
+        Notifications noti=notificationRepository.findByIdAndMember_WalletAddress(notiId,userId);
+        if(noti==null){
+            throw new NotFoundException(Notifications.class,"없는 알림");
+        }
+        noti.setChecked(true);
+
+        return new NotificationController.NotificationWebResponse(
+                noti.getId(),
+                noti.getChecked(),
+                noti.getCreateDatetime(),
+                noti.getPost().getId(),
+                noti.getTitle(),
+                noti.getContent()
+        );
     }
 }

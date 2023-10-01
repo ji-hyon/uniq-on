@@ -13,4 +13,6 @@ public interface NotificationService {
     Page<NotificationQueryRepository.getNotificationListDBResponse> getNotificationList (Pageable pageable, String walletAddress);
 
     int deleteNotification (NotificationController.deleteNotificationWebRequest req);
+
+    NotificationController.NotificationWebResponse readNotification(String userId,Integer notiId);
 }
