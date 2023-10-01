@@ -11,6 +11,10 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 
+import { FaEthereum } from "react-icons/fa6";
+
+import { BiDetail } from "react-icons/bi";
+
 import { useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
@@ -130,7 +134,7 @@ async function goToTranItemDetail() {
   return (
     <Card 
       id={id}
-      className="w-full w-[27rem] shadow-lg">
+      className="w-full w-[27rem] shadow-lg mb-12">
         {/* <Button onClick={deleteWishlist}>위시리스트 삭제</Button> */}
         {/* <Button onClick={getWishlist}>위시리스트 조회</Button> */}
       <CardHeader floated={false} color="blue-gray">
@@ -163,14 +167,14 @@ async function goToTranItemDetail() {
         </IconButton>
       </CardHeader>
       <CardBody>
-        <div className="flex items-center justify-between mb-3">
-          <Typography variant="h5" color="blue-gray" className="font-large" onClick={()=>{getSalesDetail(); goToTranItemDetail();}}>
+        <div className="flex items-center justify-between mb-4">
+          <Typography variant="h5" color="blue-gray" className="text-2xl font-larg" onClick={()=>{getSalesDetail(); goToTranItemDetail();}}>
             {item.title}
           </Typography>
           <Typography
             color="blue-gray"
             className="flex items-center gap-1.5 font-medium font-semibold"
-          >
+          ><FaEthereum />
             {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -183,16 +187,16 @@ async function goToTranItemDetail() {
                 clipRule="evenodd"
               />
             </svg> */}
-            {item.price} ETH
+            {item.price} ETH 
           </Typography>
         </div>
         <Typography color="gray">
-          분류 | {item.species}
+        {item.species}
         </Typography>
         <Typography color="gray">
-          판매자 | {item.nickname}
+          by {item.nickname}
         </Typography>
-        <div className="inline-flex flex-wrap items-center gap-3 mt-8 group">
+        {/* <div className="inline-flex flex-wrap items-center gap-3 mt-8 group">
           <Tooltip content="$129 per night">
             <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
               <svg
@@ -273,17 +277,13 @@ async function goToTranItemDetail() {
               </svg>
             </span>
           </Tooltip>
-          <Tooltip content="And +20 more">
-            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-              +20
-            </span>
-          </Tooltip>
-        </div>
+        </div> */}
       </CardBody>
-      <CardFooter className="pt-3">
+      <CardFooter className="pt-1">
         <Button className="flex justify-center gap-2" size="lg" fullWidth={true} onClick={goToTranItemDetail}>
+        <BiDetail className="w-5 h-5"/>
           상세보기
-          <svg
+          {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 -4 24 24"
@@ -296,7 +296,8 @@ async function goToTranItemDetail() {
                 strokeLinejoin="round"
                 d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
               />
-            </svg>
+            </svg> */}
+            
         </Button>
       </CardFooter>
     </Card>

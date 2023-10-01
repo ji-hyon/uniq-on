@@ -8,6 +8,8 @@ import { TransactionBanner } from "../../components/Transaction/TransactionBanne
 import { RegisterSalesItem } from "./RegisterSalesItem";
 import useUserInfoStore from "../../stores/UserInfoStore";
 
+import { MdOutlinePostAdd } from "react-icons/md";
+
 import { useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
@@ -19,10 +21,10 @@ export function Transaction() {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => { setOpen(!open); };
-  const [nftId, setnftId] = useState("1");
-  const [title, setTitle] = useState("test");
-  const [content, setContent] = useState("test");
-  const [price, setPrice] = useState("1000");
+  const [tokenId, setTokenId] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [price, setPrice] = useState("");
 
   const { salesItemsList, setSalesItemsList  
     } = useTransactionStore();
@@ -78,26 +80,27 @@ export function Transaction() {
             console.log(res.data.response) // response에 담긴 값 확인
             setSalesItemsList(res.data.response)
             console.log(salesItemsList) // salesItemsList에 담긴 값 확인
+            console.log(accessToken)
         } catch(err) {
           console.log(err)
         }
       }
 
-  async function registerSales(title, content, price, nftId) {
+  async function registerSales(title, content, price, tokenId) {
 
       try {
         const data = {
           price: price,
           content: content,
           title: title,
-          nftId: nftId,
+          tokenId: tokenId,
         };
 
 
         const res = await axios.post("/api/sales/register", data, {
-          // headers: {
-          //   Authorization: "Bearer " + accessToken,
-          //   },
+          headers: {
+            Authorization: "Bearer " + accessToken,
+            },
         });
         console.log(res.data)
         
@@ -126,9 +129,12 @@ export function Transaction() {
           </p>
           <br></br>
           <TransactionBanner />
-          <Button onClick={handleOpen} variant="gradient" className="self-end">
+          <div className="flex justify-end my-3">
+          <Button onClick={handleOpen} variant="gradient" className="flex items-center self-end">
+            <MdOutlinePostAdd className="w-6 h-6 mr-1"/>
         판매글 등록
       </Button>
+      </div>
       <Dialog
         size="xs"
         open={open}
@@ -167,14 +173,15 @@ export function Transaction() {
             </div>
           </div>
         ))} */}
+        
 
-            <Input color="blue" label="판매 NFT선택" value={nftId} size="lg" onChange={(e) => setnftId(e.target.value)}/>
+            <Input color="blue" label="판매 NFT선택" value={tokenId} size="lg" onChange={(e) => setTokenId(e.target.value)}/>
             <Input color="blue" label="판매글 제목" value={title} size="lg" onChange={(e) => setTitle(e.target.value)} />
             <Input color="blue" label="판매 가격(ETH)" value={price} size="lg" onChange={(e) => setPrice(e.target.value)}/>
             <Textarea color="blue" label="판매글 내용" value={content} size="lg" onChange={(e) => setContent(e.target.value)}/>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={() => {handleOpen(); registerSales(title, content, price, nftId)}} fullWidth>
+            <Button variant="gradient" onClick={() => {handleOpen(); registerSales(title, content, price, tokenId)}} fullWidth>
               등록
             </Button>
           </CardFooter>

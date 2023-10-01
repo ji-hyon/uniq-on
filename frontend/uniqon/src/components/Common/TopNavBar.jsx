@@ -62,10 +62,10 @@ export function TopNavBar() {
         <div className="flex items-center justify-center pl-[8.65px] pr-[8.68px] py-0 relative flex-1 grow">
           <div className="relative w-[500px] h-[48px] ml-[-26.67px] mr-[-26.67px]">
             <div className="relative h-[48px] rounded-full">
-              <div className="flex w-[500px] min-h-[48px] items-center pl-[48px] pr-[32px] py-px absolute top-0 left-0 bg-[#0000000d] rounded-full overflow-hidden">
+              {/* <div className="flex w-[500px] min-h-[48px] items-center pl-[48px] pr-[32px] py-px absolute top-0 left-0 bg-[#0000000d] rounded-full overflow-hidden">
                 <div className="inline-flex flex-col items-start pl-0 pr-[330px] py-0 relative flex-[0_0_auto]">
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

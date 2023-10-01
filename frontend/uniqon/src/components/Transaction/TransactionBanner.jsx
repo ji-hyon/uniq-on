@@ -6,7 +6,11 @@ Dialog, Typography, Card, CardBody, CardFooter, CardHeader } from "@material-tai
 
 import useUserInfoStore from "../../stores/UserInfoStore";
 
+import { useNavigate, Link } from "react-router-dom";
+
 export function TransactionBanner() {
+
+  const navigate = useNavigate();
 
   const [ word, setWord ] = useState("");
   const { accessToken, walletAddress } = useUserInfoStore();
@@ -30,11 +34,7 @@ export function TransactionBanner() {
     };
 
     try {
-      const res = await axios.get("/api/sales/search",{
-        headers: {
-          Authorization: "Bearer " + accessToken,
-          },
-      }, {
+      const res = await axios.get("/api/sales/search", {
         params: params,
       });
         console.log(word)
@@ -42,6 +42,8 @@ export function TransactionBanner() {
         setSearchList(res.data.response)
 
     } catch(err) {
+      console.log(word)
+      console.log(accessToken)
       console.log(err)
     }
   }
@@ -52,11 +54,11 @@ export function TransactionBanner() {
     <div className="bg-[#c1dcdc] flex flex-row justify-center rounded-[20px]">
       <div className="bg-[#c1dcdc] w-[1178px] h-[372px] relative rounded-md">
         <div className="absolute w-[493px] h-[59px] top-[206px] left-[53px] bg-[#ffffff] rounded-[7px] overflow-hidden">
-        <div className="flex flex-col items-end gap-6 w-72">
+        <div className="flex flex-col items-end gap-6 ml-1.5 w-[480px]">
 
         <Input
           type="word"
-          label="판매글 검색"
+          placeholder="판매글 검색"
           className="w-[500px] mt-2 bg-white"
           value={word}
           onChange={(e) => setWord(e.target.value)}
@@ -75,7 +77,7 @@ export function TransactionBanner() {
           </div>
         </div>
         <img
-          className="absolute w-[207px] h-[100px] top-[198px] left-[571px]"
+          className="absolute w-[207px] h-[100px] top-[170px] left-[543px]"
           alt="Vector stroke"
           src="Vector186.svg"
         />
@@ -97,7 +99,7 @@ export function TransactionBanner() {
         handler={handleOpen}
         className="bg-transparent shadow-none"
       >
-        <Card className="mx-auto w-full max-w-[24rem]">
+        <Card className="mx-auto w-full max-w-[48rem]">
           <CardHeader
             variant="gradient"
             color="blue"
@@ -108,10 +110,12 @@ export function TransactionBanner() {
             </Typography>
           </CardHeader>
 
-          <CardBody className="overflow-y-scroll max-h-[400px]">
+          {/* <CardBody className="overflow-y-scroll max-h-[400px]"> */}
+          <CardBody className="grid grid-cols-3 gap-4">  
       {searchList.map((item) => (
-        <div key={item.id} className="flex flex-col gap-4">
-          <img src={item.image} alt="my-gif" />
+        <Link to={`/transaction/tranitemdetail/${item.id}`} key={item.id}>
+        <div className="flex flex-col gap-4 cursor-pointer">
+          <img src={item.image} alt="my-gif" className="w-[48rem] h-[8rem]" />
           <span className="text-lg">
             <span className="font-bold">{item.title}</span>
           </span>
@@ -119,6 +123,7 @@ export function TransactionBanner() {
             가격 | <span className="font-bold">{item.price} ETH</span>
           </span>
         </div>
+        </Link>
       ))}
     </CardBody>
           
