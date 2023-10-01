@@ -1,6 +1,7 @@
 import { create } from 'zustand';
+import { persist } from "zustand/middleware";
 
-const useUserInfoStore = create((set) => ({
+const useUserInfoStore = create(persist((set) => ({
   walletAddress: null,
   accessToken: null,
   setUserInfo: (walletAddress, token) => {
@@ -12,6 +13,7 @@ const useUserInfoStore = create((set) => ({
   setAccessToken: (payload) => {
     set({ accessToken: payload })
   },
-}));
+}), { name: "user_info" }));
+
 
 export default useUserInfoStore;
