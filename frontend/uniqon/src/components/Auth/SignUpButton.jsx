@@ -13,8 +13,9 @@ export function SignUpButton() {
   const navigate = useNavigate();
 
   const profileRef = useRef(null);
-
+  // const nicknameRef = useRef(null);
   const [nickname, setNickname] = useState('');
+
   const handleNicknameChange = (e) => {
     setNickname(e.target.value);
   };
@@ -109,6 +110,10 @@ export function SignUpButton() {
 
     const formData = new FormData();
     formData.append("profileImg", profileRef.current.files[0]);
+    // formData.append("nickname", nicknameRef.current.value)
+    formData.append("nickname", nickname)
+    console.log("nickname", nickname);
+    // console.log("nickname:",nicknameRef.current.value,nicknameRef.current)
 
     try {
       const response = await axios.post("/api/users/signup", formData, {
@@ -116,7 +121,6 @@ export function SignUpButton() {
           "Content-Type": "multipart/form-data",
           Authorization: token,
           walletAddress: address,
-          nickname: nickname,
         },
       });
       if (response.status === 200) {
@@ -147,6 +151,7 @@ export function SignUpButton() {
       {/* 닉네임 입력칸 */}
       <div className="border-2 border-gray-400 m-10 p-5 max-w-3xl mx-auto">
         <p className="m-5 text-lg font-bold">닉네입 입력</p>
+        {/* <Input label="닉네임을 입력해주세요" type="text" ref={nicknameRef} value="" /> */}
         <Input label="닉네임을 입력해주세요" type="text" value={nickname} onChange={handleNicknameChange} />
       </div>
 

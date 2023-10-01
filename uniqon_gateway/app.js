@@ -7,6 +7,7 @@ import { Resolver } from "did-resolver";
 import { getResolver } from "ethr-did-resolver";
 import cors from "cors";
 import axios from "axios";
+import multer from "multer";
 
 dotenv.config();
 const app = express(); // express : 서버, 요청받는 역할
@@ -98,7 +99,8 @@ process.on("uncaughtException", (error) => {
 });
 
 // 회원가입 요청 api
-app.post("/api/users/signup", async (req, res) => {
+const upload=multer()
+app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
   try {
     // DITI에 vp 요청
     console.log("singup request form", req.headers.walletaddress);
@@ -129,7 +131,7 @@ app.post("/api/users/signup", async (req, res) => {
       walletAddress: req.headers.walletaddress,
       name: vcs[0].data.name,
       // nickname: "nonickname",
-      nickname: req.headers.nickname,
+      nickname: req.body.nickname,
       birth: vcs[0].data.birth,
       gender: vcs[0].data.gender,
       vpToken: vpJwt,
@@ -137,6 +139,7 @@ app.post("/api/users/signup", async (req, res) => {
       password: req.headers.walletaddress.slice(-20),
     };
     console.log("------------------");
+    console.log(req.body);
     console.log(data.walletAddress);
     console.log(data.password);
     console.log(data.nickname);
@@ -160,7 +163,7 @@ app.post("/api/users/signup", async (req, res) => {
         }
       );
       if (springResponse.status == 200) {
-        console.log(springResponse);
+        //console.log(springResponse);
         res.status(200).send("success");
       } else {
         res.status(springResponse.status).send(springResponse.data);
