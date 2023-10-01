@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ssafy.uniqon.global.response.Response;
 import ssafy.uniqon.service.PostCreateService;
@@ -35,15 +37,14 @@ public class PostsController {
             String price,
             String content,
             String title,
-            Integer nftId
+            Integer tokenId
     ) {
     }
 
     public record UpdatePostWebRequest(
             String price,
             String title,
-            String content,
-            String walletAddress
+            String content
     ){}
 
     public record postListsWebResponse(
@@ -83,9 +84,10 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @PostMapping("/register")
-    public Response<?> registerPost(@RequestBody RegisterPostWebRequest req) {
+    public Response<?> registerPost(@RequestBody RegisterPostWebRequest req,
+                                    @AuthenticationPrincipal UserDetails user) {
         log.debug("# 판매글 등록시 데이터 : {}", req);
-        postCreateService.createPost(req);
+        postCreateService.createPost(req,user);
         return OK("success");
     }
 
@@ -96,9 +98,11 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @PutMapping("/update/{postId}")
-    public Response<?> updatePost(@PathVariable Integer postId, @RequestBody UpdatePostWebRequest req){
+    public Response<?> updatePost(@PathVariable Integer postId,
+                                  @RequestBody UpdatePostWebRequest req,
+                                  @AuthenticationPrincipal UserDetails user){
         log.debug("# 판매글 수정 데이터 : {}",req);
-        postUpdateService.updatePost(postId,req);
+        postUpdateService.updatePost(postId,req,user);
         return OK("success");
     }
 
@@ -109,8 +113,9 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @DeleteMapping("/delete/{postId}")
-    public Response<?> deletePost(@PathVariable int postId,@RequestParam String walletAddress){
-        postDeleteService.deletePost(postId,walletAddress);
+    public Response<?> deletePost(@PathVariable Integer postId,
+                                  @AuthenticationPrincipal UserDetails user){
+        postDeleteService.deletePost(postId,user.getUsername());
         return OK("success");
     }
     @Operation(summary="판매글 검색", description = "판매글을 검색합니다.")
@@ -120,10 +125,10 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/search")
-    public Response<?> searchPost(@RequestParam String word, @RequestParam String walletAddress,@PageableDefault(size=9) Pageable pageable) {
+    public Response<?> searchPost(@RequestParam String word,@PageableDefault(size=9) Pageable pageable) {
         log.debug("# 검색어 word : {}", word);
-        log.debug("# 사용자 walletAddress : {}", walletAddress);
-        List<postListsWebResponse> postlist = postReadService.getSearchPostList(word,walletAddress, pageable);
+//        log.debug("# 사용자 walletAddress : {}", walletAddress);
+        List<postListsWebResponse> postlist = postReadService.getSearchPostList(word, pageable);
         return OK(postlist);
     }
 
@@ -134,11 +139,11 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/detail/{postId}")
-    public Response<?> getDetailPost(@PathVariable int postId, @RequestParam String walletAddress){
+    public Response<?> getDetailPost(@PathVariable Integer postId){
         log.debug("# 판매글 식별자 id : {}", postId);
-        log.debug("# 사용자 walletAddress : {}", walletAddress);
+//        log.debug("# 사용자 walletAddress : {}", walletAddress);
 
-        postDetailWebResponse post = postReadService.getPostDetail(postId, walletAddress);
+        postDetailWebResponse post = postReadService.getPostDetail(postId);
 
         JSONObject obj = new JSONObject();
         JSONObject data1=new JSONObject();
@@ -173,9 +178,9 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/post")
-    public Response<?> getAllPostList(@RequestParam String walletAddress,@PageableDefault(size=9) Pageable pageable){
+    public Response<?> getAllPostList(@PageableDefault(size=9) Pageable pageable){
         log.debug("# 판매글 리스트 표시");
-        List<postListsWebResponse> postlist = postReadService.getPostAll(walletAddress,pageable);
+        List<postListsWebResponse> postlist = postReadService.getPostAll(pageable);
         return OK(postlist);
     }
 }

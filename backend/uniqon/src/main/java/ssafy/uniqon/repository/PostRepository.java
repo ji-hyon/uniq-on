@@ -4,6 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
@@ -30,11 +31,7 @@ public class PostRepository {
     private final QPosts posts = QPosts.posts;
 
     @Transactional
-    public void createPost(PostsController.RegisterPostWebRequest req){
-        NFTs nft = em.find(NFTs.class, req.nftId());
-        if (nft == null) {
-            throw new IllegalArgumentException("No NFT found with nftId " + req.nftId());
-        }
+    public void createPost(PostsController.RegisterPostWebRequest req,Members member,NFTs nft){
 
         Posts post = new Posts(
                 null,
@@ -46,7 +43,7 @@ public class PostRepository {
                 null,
                 0,
                 null,
-                nft.getOwner(),
+                member,
                 nft
         );
         em.persist(post);
@@ -65,13 +62,13 @@ public class PostRepository {
             .limit(pageable.getPageSize()).fetch();}
 
     @Transactional
-    public void updatePost(Integer postId,PostsController.UpdatePostWebRequest req){
+    public void updatePost(Integer postId,PostsController.UpdatePostWebRequest req,Members member){
         Posts post = em.find(Posts.class, postId);
 
         if (post == null) {
             throw new IllegalArgumentException("No Post found with postId " + postId);
         }
-        if(post.getSeller().getWalletAddress().equals(req.walletAddress())){
+        if(post.getSeller().getWalletAddress().equals(member.getWalletAddress())){
             post.setPrice(req.price());
             post.setTitle(req.title());
             post.setContent(req.content());

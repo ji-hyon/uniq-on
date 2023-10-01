@@ -18,7 +18,7 @@ import java.util.List;
 public class PostReadService {
     private final PostRepository postRepository;
 
-    public List<PostsController.postListsWebResponse> getPostAll(String walletAddress, Pageable pageable){
+    public List<PostsController.postListsWebResponse> getPostAll(Pageable pageable){
         List<PostsController.postListsWebResponse> list = new ArrayList<>();
         for(Posts post: postRepository.getPostAll(pageable)){
             list.add(new PostsController.postListsWebResponse(
@@ -37,7 +37,7 @@ public class PostReadService {
         return list;
     }
 
-    public PostsController.postDetailWebResponse getPostDetail(int postId, String walletAddress){
+    public PostsController.postDetailWebResponse getPostDetail(int postId){
         Posts post = postRepository.getPostById(postId);
         if(post==null) {
             throw new IllegalArgumentException("No Post found with postId " + postId);
@@ -59,7 +59,7 @@ public class PostReadService {
                 true
         );
     }
-    public List<PostsController.postListsWebResponse> getSearchPostList(String word, String walletAddress, Pageable pageable){
+    public List<PostsController.postListsWebResponse> getSearchPostList(String word, Pageable pageable){
         List<PostsController.postListsWebResponse> list = new ArrayList<>();
         for(Posts post: postRepository.getSearchPost(word, pageable)){
             list.add(new PostsController.postListsWebResponse(
