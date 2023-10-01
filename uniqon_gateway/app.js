@@ -9,7 +9,7 @@ import cors from "cors";
 import axios from "axios";
 
 dotenv.config();
-const app = express();
+const app = express(); // express : 서버, 요청받는 역할
 app.use(cors()); // cors 설정
 app.use(bodyParser.json()); // json 응답 설정
 app.use(bodyParser.urlencoded({ extended: true }));
