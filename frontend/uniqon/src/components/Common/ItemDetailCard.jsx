@@ -20,10 +20,10 @@ import { useTransactionStore } from "../../stores/TransactionStore";
 
 export function ItemDetailCard( { item } ) {
 
-  const [postId, setPostId] = React.useState('1');
-  const [wishId, setWishId] = React.useState('1');
 
   const { selectedPostId, selectedNftId } = useTransactionStore();
+
+  const { accessToken, walletAddress } = useUserInfoStore();
 
   const [title, setTitle] = useState("test");
   const [content, setContent] = useState("test");
@@ -48,6 +48,11 @@ export function ItemDetailCard( { item } ) {
 
   const 진행중handleOpen = () => { set진행중Open(!진행중open); };
 
+  const [itemwishcheck, setItemwishcheck] = React.useState(forDetailItem.PostInfo.wishCheck);
+
+  const [postId, setPostId] = React.useState(forDetailItem.PostInfo.id);
+  const [wishId, setWishId] = React.useState('1');
+
   useEffect(() => {
     console.log(forDetailItem)
     console.log(item);
@@ -61,15 +66,36 @@ export function ItemDetailCard( { item } ) {
     
   }, []);
 
+  const toggleWishlist = () => {
+    // setItemwishcheck((cur) => !cur); // 이전 상태를 반전시켜 새로운 상태 설정
+    console.log(forDetailItem.PostInfo.wishCheck)
+    console.log(itemwishcheck)
+
+    if (itemwishcheck === 1) {
+      deleteWishlist();
+      setItemwishcheck(0);
+    } else {
+      addWishlist();
+      setItemwishcheck(1);
+    }
+  };
+
   if (!forDetailItem) {
     // item 정보가 없을 경우 로딩 또는 오류 처리를 할 수 있습니다.
     return <div>Loading...</div>;
   }
 
   async function addWishlist() {
+
+    console.log(postId)
       
     try {
-        const res = await axios.post(`/api/wishlist/add/${postId}`);
+        const res = await axios.post(`/api/wishlist/add/${postId}`, {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+            },
+        });
+        console.log(postId)
           console.log(res.data)
 
       } catch(err) {
@@ -77,16 +103,20 @@ export function ItemDetailCard( { item } ) {
       }
     }
 
-  async function deleteWishlist() {
+    async function deleteWishlist() {
       
-    try {
-        const res = await axios.delete(`/api/wishlist/${wishId}`);
-          console.log(res.data)
-
-      } catch(err) {
-        console.log(err)
-      }
-    } 
+      try {
+          const res = await axios.delete(`/api/wishlist/${wishId}`, {
+            headers: {
+              Authorization: "Bearer " + accessToken,
+              },
+          });
+            console.log(res.data)
+  
+        } catch(err) {
+          console.log(err)
+        }
+      } 
 
     // async function transact(price,sellerAddress,tokenId){
     //   //price는 판매자가 등록한 가격 단위는 이더
@@ -134,15 +164,19 @@ export function ItemDetailCard( { item } ) {
         />
         <IconButton
           size="sm"
-          color="red"
+          color={itemwishcheck === 1 ? "red" : "gray"}
           variant="text"
           className="!absolute top-4 right-4 rounded-full"
+          onClick={()=>{toggleWishlist();}}
 
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="currentColor"
+            fill={itemwishcheck ? "red" : "none"}
+            stroke={itemwishcheck ? "none" : "currentColor"}
+            // fill={itemwishcheck ? "currentColor" : "none"}
+            // stroke={itemwishcheck ? "none" : "currentColor"}
             className="w-6 h-6"
           >
             <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />

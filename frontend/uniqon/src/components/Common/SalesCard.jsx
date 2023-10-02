@@ -38,7 +38,17 @@ export function SalesCard({ item, id }) {
   const [itemwishcheck, setItemwishcheck] = React.useState(item.wishCheck);
 
   const toggleWishlist = () => {
-    setItemwishcheck((cur) => !cur); // 이전 상태를 반전시켜 새로운 상태 설정
+    // setItemwishcheck((cur) => !cur); // 이전 상태를 반전시켜 새로운 상태 설정
+    console.log(item.wishCheck)
+    console.log(itemwishcheck)
+
+    if (itemwishcheck === 1) {
+      deleteWishlist();
+      setItemwishcheck(0);
+    } else {
+      addWishlist();
+      setItemwishcheck(1);
+    }
   };
 
   useEffect(() => {
@@ -150,7 +160,7 @@ async function goToTranItemDetail() {
           color={itemwishcheck === 1 ? "red" : "gray"}
           variant="text"
           className="!absolute top-4 right-4 rounded-full"
-          onClick={()=>{addWishlist(); toggleWishlist();}}
+          onClick={()=>{toggleWishlist();}}
 
         >
           <svg
