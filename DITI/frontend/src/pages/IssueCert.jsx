@@ -69,14 +69,19 @@ export function IssueCert() {
       if (response.status === 200) {
         console.log("작업이 성공했습니다");
       } else {
-          // console.error(response.data); 
-          console.log(response.data);
+        console.log('response : ', response);
       }
 
 
       } catch (e) {
         console.error(e)
-    }
+        console.log(e.response.data);
+        // console.log(e.response.status);
+        if(e.response.status === 400) {
+          alert(e.response.data)
+          return
+        }
+      }
   }
   
   async function test() {
