@@ -40,7 +40,7 @@ export function NFT() {
   ];
   const middleOptions = {
     여우: [
-      "벵골여우",
+      "뱅골여우",
       "아프간여우",
       "케이프여우",
       "코사크여우",
@@ -120,12 +120,13 @@ export function NFT() {
   // const [aiImgUrl, setAiImgUrl] = useState("");
   const aiImgUrl =
     "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Indianfox.jpg/300px-Indianfox.jpg";
-  const [ipfsUrl, setIpfsUrl] = useState({imageIpfsHash:"",nftMetadataHash:""});
+  const [ipfsUrl, setIpfsUrl] = useState({ imageIpfsHash: "", nftMetadataHash: "" });
   const [status, setStatus] = useState(0);
   const [hash, setHash] = useState("");
   const [tokenId, setTokenId] = useState(0);
   const contractAddress = "0x303a548f56ff203d435190ea3a082b59d726ce36";
   const [address, setAddress] = useState("");
+
 
   // 대분류 값 변경
   const mainChange = (selectedMain) => {
@@ -140,6 +141,14 @@ export function NFT() {
     setSelectedMiddle(selectedMiddle);
     console.log("중분류 변경 후", selectedMiddle);
   };
+
+  useEffect(() => {
+    console.log(ipfsUrl)
+  }, [ipfsUrl]);
+
+  useEffect(() => {
+    console.log(status)
+  }, [status]);
 
   // useEffect(() => {
   //   setSelectedMiddle("");
@@ -185,19 +194,6 @@ export function NFT() {
   async function CreateNft() {
     // 위에 aiimg에 요청해서 받은 이미지 url 담아서 요청
     var formData = new FormData();
-    // formData.append('data', {
-    //   middleClassificationId: selectedMiddle,
-    //   name: name,
-    //   feature: feature,
-    //   age: Number(age)
-    // }, { contentType: 'application/json' });
-    // const reqData = {file: nftImg.current.files[0],
-    //   data:{
-    //   middleClassificationName: selectedMiddle,
-    //   name: name,
-    //   feature: feature,
-    //   age: age}
-    // };
     formData.append("file", nftImg.current.files[0]);
     const json = JSON.stringify({
       name: name,
@@ -206,6 +202,7 @@ export function NFT() {
       age: age
     });
     formData.append("data", new Blob([json], { type: "application/json" }));
+    let ipfsResponse={}
     try {
       console.log("실행1");
       const response2 = await axios.post("/api/nfts/ipfs", formData, {
@@ -216,6 +213,7 @@ export function NFT() {
       });
       console.log("IPFS 저장 성공", response2);
       setIpfsUrl(response2.data.response);
+      ipfsResponse=response2.data.response
       console.log("ipfsurl", ipfsUrl);
     } catch (error) {
       console.log("IPFS 저장 실패", error);
@@ -247,14 +245,14 @@ export function NFT() {
     const fee = ethers.parseEther("0.0005");
     const options = { value: fee };
     //백에서 받은 ipfsJsonUrl 넣어주기
-    const ipfsJsonUrl = ipfsUrl.nftMetadataHash;
+    const ipfsJsonUrl = ipfsResponse.nftMetadataHash;
     const receipt = await contractInstance
       .connect(signer)
       .mintNFT(signer.address, ipfsJsonUrl, options);
+    const rr = await receipt.wait()
     const txReceipt = await net.getTransactionReceipt(receipt.hash);
-    console.log(txReceipt);
-    setStatus(txReceipt.status);
 
+    setStatus(txReceipt.status);
     setHash(receipt.hash);
     setTokenId(parseInt(txReceipt.logs[1].data, 16));
     setAddress(signer.address);
@@ -269,30 +267,29 @@ export function NFT() {
     console.log(contractAddress); //컨트랙트 주소
     console.log(signer.address);
 
-    if (status === 1) {
+    if (txReceipt.status === 1) {
       console.log("3번째");
       try {
-        // const data = {
-        //   middleClassificationName: selectedMiddle,
-        //   name: name,
-        //   feature: feature,
-        //   age: age
-        // };
+        const registerData={
+          walletAddress: signer.address,
+          middleClassificationName: selectedMiddle,
+          txHash: receipt.hash,
+          name: name,
+          feature: feature,
+          age: age,
+          image:ipfsResponse.imageIpfsHash,
+          nftMetadata: ipfsResponse.nftMetadataHash,
+          tokenId: parseInt(txReceipt.logs[1].data, 16),
+          contractAddress: contractAddress
+        }
+        const registerFormdata=new FormData()
+        registerFormdata.append("data", new Blob([JSON.stringify(registerData)], { type: "application/json" }));
         const response4 = await axios.post(
           "/api/nfts/register",
-          {
-            middleClassificaitonName: selectedMiddle,
-            txHash: hash,
-            tokenId: tokenId,
-            contractAddress: contractAddress,
-            walletAddress: address,
-            name: name,
-            age: age,
-            feature: feature
-          },
+          registerFormdata,
           {
             headers: {
-              Authorization: "Bearer " + accessToken
+              Authorization: "Bearer " + accessToken,
             }
           }
         );

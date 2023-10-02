@@ -123,7 +123,7 @@ public class NFTsController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @PostMapping("/register")
-    public Response<?> registerNFT(@RequestBody RegisterNFTWebRequest req,
+    public Response<?> registerNFT(@RequestPart(value = "data") RegisterNFTWebRequest req,
                                    @AuthenticationPrincipal UserDetails user) throws Exception {
         log.debug("# NFT 등록시 데이터 : {}", req);
         nftService.createNFT(req,user);
