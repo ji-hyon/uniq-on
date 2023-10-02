@@ -3,6 +3,7 @@ import { Button } from "@material-tailwind/react";
 import axios from "axios"
 import { ethers } from "ethers"
 import useUserInfoStore from '../stores/UserInfoStore';
+import { useNavigate } from 'react-router-dom'
 
 // 요청
 export function IssueCert() {
@@ -15,6 +16,8 @@ export function IssueCert() {
   })
   const inputFileRef = useRef(null)
   const userInfo = useUserInfoStore()
+  const navigate = useNavigate()
+
   // const walletAddress = useUserInforStore((state)=>state.walletAddress)
   // const {walletAddress, originalMessage, signedMessage } = useUserInfoStore()
   
@@ -34,7 +37,8 @@ export function IssueCert() {
       if (!userInfo.walletAddress||!userInfo.token||userInfo.token === "") {
           alert("MetaMask에 먼저 로그인 해주세요");
           // 로그인 페이지로 이동
-          window.location.href = '/diti/login';
+          // window.location.href = '/diti/login';
+          navigate("/diti/login");
           return;
       }
     // 백엔드 서버에 이 주소로 로그인하겠다는 것을 알려야 함. 신원 증명 필요. 
