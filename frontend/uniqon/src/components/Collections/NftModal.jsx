@@ -17,17 +17,19 @@ export function NftModal({ isOpen, onClose, selectedNft }) {
           <img
             src={selectedNft.image}
             alt={selectedNft.nickname}
-            className="my-4 max-w-full mb-4"
+            className="my-4 w-96 mb-4"
             style={{ maxWidth: "60%", display: "inline-block" }}
           />
         </div>
+
+        <hr className="border-t border-gray-300 my-4"></hr>
         {/* 여기에 카드에 관한 추가 정보를 표시하세요 */}
         <div
           style={{
             color: "black",
             display: "flex",
             alignItems: "center",
-            marginLeft: "30px"
+            marginLeft: "20px"
           }}
         >
           <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
@@ -38,7 +40,7 @@ export function NftModal({ isOpen, onClose, selectedNft }) {
             color: "black",
             display: "flex",
             alignItems: "center",
-            marginLeft: "30px"
+            marginLeft: "20px"
           }}
         >
           <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
@@ -49,7 +51,7 @@ export function NftModal({ isOpen, onClose, selectedNft }) {
             color: "black",
             display: "flex",
             alignItems: "center",
-            marginLeft: "30px"
+            marginLeft: "20px"
           }}
         >
           <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
@@ -60,13 +62,15 @@ export function NftModal({ isOpen, onClose, selectedNft }) {
             color: "black",
             display: "flex",
             alignItems: "center",
-            marginLeft: "30px"
+            marginLeft: "20px"
           }}
         >
           <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
           <p>특징: {selectedNft.feature}</p>
         </div>
-        <div className="mt-4">
+        <hr className="border-t border-gray-300 my-4"></hr>
+
+        <div className="mt-4 ml-64">
           <Button
             onClick={onClose}
             variant="outlined"
