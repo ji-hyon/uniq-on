@@ -11,10 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.diti.core.global.response.Response.ERROR;
 import static com.diti.core.global.response.Response.OK;
 
 @Slf4j
@@ -22,6 +24,7 @@ import static com.diti.core.global.response.Response.OK;
 @RequiredArgsConstructor
 @RequestMapping("/diti/vc")
 @Tag(name = "VC API")
+@CrossOrigin("*")
 public class VcController {
 
     private final VcQueryService vcQueryService;
@@ -43,8 +46,13 @@ public class VcController {
         getVcWebRequest req = new getVcWebRequest(walletAddress, type);
         log.debug("# VC 요청 : {}", req);
         VcService.getVcWebResponse res = vcService.getVc(req);
-        log.debug("# VC : {}", res);
-        return OK(res);
+        if (res == null) {
+            log.debug("# VC가 존재하지 않습니다. 발급을 해 주세요!");
+            return ERROR("VC가 존재하지 않습니다. 발급을 해 주세요!", HttpStatus.NOT_FOUND);
+        } else {
+            log.debug("# VC : {}", res);
+            return OK(res);
+        }
     }
 
 
@@ -59,7 +67,14 @@ public class VcController {
     @PostMapping
     public Response<?> registerVc(@RequestBody registerVcWebRequest req){
         log.debug("# VC 등록 요청: {}", req);
-        vcService.registerVc(req);
-        return OK(null);
+        int result = vcService.registerVc(req);
+        if (result == 1){
+            return OK(null);
+        } else if (result == 2){
+            return ERROR("등록되지 않은 회원입니다 : " + req.walletAddress, HttpStatus.NOT_FOUND);
+        } else {
+            return ERROR("이미 등록된 VC입니다", HttpStatus.BAD_REQUEST);
+        }
+
     }
 }

@@ -6,7 +6,7 @@ import { Section1 } from '../../components/Landing/Section1';
 import { Section2 } from '../../components/Landing/Section2';
 import { Section3 } from '../../components/Landing/Section3';
 import { Section4 } from '../../components/Landing/Section4';
-// import LoginButton from '../../components/Auth/LoginButton';
+import { LoginButton } from '../../components/Auth/LoginButton';
 
 export function Landing() {
 
@@ -48,6 +48,8 @@ export function Landing() {
         <p>
           여기는 랜딩페이지입니다.
         </p>
+
+        <LoginButton />
 
         <Button
           className="text-4xl w-96 h-28"

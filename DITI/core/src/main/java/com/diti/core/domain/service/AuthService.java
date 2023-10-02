@@ -3,6 +3,6 @@ package com.diti.core.domain.service;
 
 public interface AuthService {
 
-    void registerAuth(String walletAddress);
-    void loginAuth(String walletAddress);
+    int registerAuth(String walletAddress);
+    int loginAuth(String walletAddress);
 }
