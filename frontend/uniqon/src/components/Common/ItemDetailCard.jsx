@@ -11,8 +11,11 @@ import {
   CardFooter,
 } from "@material-tailwind/react";
 
+import { FaEthereum } from "react-icons/fa6";
+
 import { ethers } from "ethers"
 import useUserInfoStore from "../../stores/UserInfoStore";
+
 // import contractAbi from './contractAbi.json';
 
 import { useEffect, useState } from "react";
@@ -50,12 +53,14 @@ export function ItemDetailCard( { item } ) {
 
   const [itemwishcheck, setItemwishcheck] = React.useState(forDetailItem.PostInfo.wishCheck);
 
-  const [postId, setPostId] = React.useState(forDetailItem.PostInfo.id);
+  const [postId, setPostId] = React.useState('');
   const [wishId, setWishId] = React.useState('1');
 
   useEffect(() => {
     console.log(forDetailItem);
     console.log(item);
+    setPostId(forDetailItem.PostInfo.postId);
+    console.log(postId);
     // console.log(salesItemsList);
     // setTitle(item.PostInfo.title);
     // setContent(item.PostInfo.content);
@@ -71,7 +76,7 @@ export function ItemDetailCard( { item } ) {
     console.log(forDetailItem.PostInfo.wishCheck)
     console.log(itemwishcheck)
 
-    if (itemwishcheck === 1) {
+    if (itemwishcheck === true) {
       deleteWishlist();
       setItemwishcheck(0);
     } else {
@@ -151,7 +156,7 @@ export function ItemDetailCard( { item } ) {
     // }
 
   return (
-    <Card className="w-full max-w-[48rem] flex-row">
+    <Card className="w-full h-[24rem] max-w-[60rem] flex-row">
       <CardHeader
         shadow={false}
         floated={false}
@@ -183,21 +188,21 @@ export function ItemDetailCard( { item } ) {
           </svg>
         </IconButton>
       </CardHeader>
-      <CardBody>
-      <Typography variant="h4" color="blue-gray" className="mb-2">
-          글 제목 | {forDetailItem.PostInfo.title}
+      <CardBody className="flex flex-col items-center justify-center w-[600px]">
+      <Typography variant="h4" color="blue-gray" className="mb-4">
+          {forDetailItem.PostInfo.title}
         </Typography>
         <Typography variant="h6" color="gray" className="mb-4 uppercase">
-          종 분류 | {forDetailItem.nftInfo.species}
+          {forDetailItem.nftInfo.species}
         </Typography>
-        <Typography variant="h6" color="gray" className="mb-4 uppercase">
-          가격 | {forDetailItem.PostInfo.price} ETH
+        <Typography variant="h6" color="gray" className="flex items-center mb-4 uppercase">
+        <FaEthereum /> {forDetailItem.PostInfo.price} ETH
         </Typography>
-        <Typography variant="h6" color="gray" className="mb-4 uppercase">
-          판매자 | {forDetailItem.SellerInfo.nickname}
+        <Typography variant="h6" color="gray" className="mb-4 font-normal">
+          by {forDetailItem.SellerInfo.nickname}
         </Typography>
         <Typography color="gray" className="mb-8 font-normal">
-          lorem ipsum {forDetailItem.PostInfo.content}
+          {forDetailItem.PostInfo.content}
         </Typography>
         <a href="#" className="inline-block">
         <Button onClick={handleOpen} variant="gradient" className="flex text-lg" color="red">
@@ -228,10 +233,11 @@ export function ItemDetailCard( { item } ) {
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
           <img src="/basket.gif" alt="my-gif" />
-
+        <div className="flex justify-center">
         <span className="text-lg"><span className="font-bold">{forDetailItem.PostInfo.title}
         </span>를 구매하시겠습니까?</span>
-        <span className="text-lg">가격 | <span className="font-bold">{forDetailItem.PostInfo.price} ETH</span></span>
+        </div>
+        <span className="flex items-center justify-center text-lg"><FaEthereum /> <span className="font-bold">{forDetailItem.PostInfo.price} ETH</span></span>
         </CardBody>
         <CardFooter className="flex justify-end pt-0">
         <Button variant="gradient" color="green" onClick={handleOpen}>

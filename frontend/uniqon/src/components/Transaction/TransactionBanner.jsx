@@ -96,7 +96,7 @@ export function TransactionBanner() {
     {/* <Button color="red" onClick={searchSales}>판매 검색</Button>
         <br></br> */}
     <Dialog
-        size="xs"
+        size="sm"
         open={open}
         handler={handleOpen}
         className="bg-transparent shadow-none"

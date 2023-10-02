@@ -129,7 +129,7 @@ export function Transaction() {
           </p>
           <br></br>
           <TransactionBanner />
-          <div className="flex justify-end my-3">
+          <div className="flex justify-end mt-3 mb-1">
           <Button onClick={handleOpen} variant="gradient" className="flex items-center self-end">
             <MdOutlinePostAdd className="w-6 h-6 mr-1"/>
         판매글 등록
@@ -191,7 +191,7 @@ export function Transaction() {
           <div className="flex flex-col justify-center">
               {/* 판매글 목록을 3개씩 한 줄에 보여주기 */}
               {groupedSalesItems.map((salesGroup, index) => (
-                <div key={index} className="flex flex-row justify-evenly">
+                <div key={index} className="flex flex-row justify-between">
                   {salesGroup.map((item) => (
                     <SalesCard key={item.postId} item={item} id={item.postId} />
                   ))}

@@ -35,12 +35,14 @@ export function SalesCard({ item, id }) {
   const { forDetailItem, setForDetailItem } = useTransactionStore();
 
 
-  const [itemwishcheck, setItemwishcheck] = React.useState(item.wishCheck);
+  const [itemwishcheck, setItemwishcheck] = React.useState('');
 
   const toggleWishlist = () => {
     // setItemwishcheck((cur) => !cur); // 이전 상태를 반전시켜 새로운 상태 설정
-    console.log(item.wishCheck)
-    console.log(itemwishcheck)
+    // console.log(item)
+    // console.log(item.wishCheck)
+    setItemwishcheck(item.wishCheck);
+    // console.log(itemwishcheck)
 
     if (itemwishcheck === 1) {
       deleteWishlist();
@@ -52,6 +54,9 @@ export function SalesCard({ item, id }) {
   };
 
   useEffect(() => {
+    // console.log(item.wishCheck)
+    setItemwishcheck(item.wishCheck);
+    // console.log(itemwishcheck)
     // getSalesDetail();
     
   }, []);

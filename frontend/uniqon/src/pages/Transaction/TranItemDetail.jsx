@@ -9,6 +9,9 @@ import { Button, Dialog,
 import { useTransactionStore } from "../../stores/TransactionStore";
 import useUserInfoStore from "../../stores/UserInfoStore";
 
+import { LuFileEdit } from "react-icons/lu";
+import { MdDeleteOutline } from "react-icons/md";
+
 
 
 export function TranItemDetail () {
@@ -128,7 +131,7 @@ export function TranItemDetail () {
     <div className="flex flex-row justify-center w-full bg-white">
       <div className="bg-white w-[1440px] h-[1024px] relative">
           <TopNavBar />
-          <div className="relative top-28">
+          <div className="relative flex items-center justify-center top-28">
           {item ? (
                 <ItemDetailCard item={item} />
                 
@@ -137,13 +140,20 @@ export function TranItemDetail () {
               )}
               {/* <Button color="blue" onClick={updateSales}>판매 수정</Button>
         <br></br> */}
-        <Button color="cyan" onClick={deleteSales}>판매 삭제</Button>
-        <br></br>
-        <Button color="gray" onClick={getSalesDetail}>판매 상세 조회</Button>
-          
-          <Button onClick={수정handleOpen} variant="gradient" className="self-end">
+        </div>
+        <div className="relative flex justify-end right-[240px] top-[140px]">
+        <Button onClick={수정handleOpen} variant="gradient" className="flex items-center self-end">
+          <LuFileEdit className="w-5 h-5 mr-1"/>
         판매글 수정
       </Button>
+        <Button variant="gradient" onClick={deleteSales} className="flex items-center self-end">
+        <MdDeleteOutline className="w-5 h-5 mr-1"/>
+        판매글 삭제
+        </Button>
+        
+        {/* <Button color="gray" onClick={getSalesDetail}>판매 상세 조회</Button> */}
+          
+        
       <Dialog
         size="xs"
         open={수정open}
@@ -177,6 +187,7 @@ export function TranItemDetail () {
         </Card>
       </Dialog>
       </div>
+      
         
         </div>
           
