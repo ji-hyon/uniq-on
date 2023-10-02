@@ -55,13 +55,10 @@ router.post("/vc", upload.single("imgFile"), async (req, res) => {
     }
 
   } catch (e) {
-    if (e.response.status === 400) {
-    } else {
       console.log(e);
       console.log("/diti/auth/join failed");
       res.status(500).send("/diti/auth/join failed");
       return;
-    }
   }
 
   // VC 테이블에 vcJwt 추가

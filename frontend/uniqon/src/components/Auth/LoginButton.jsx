@@ -117,24 +117,31 @@ export function LoginButton() {
           walletAddress: address,
         },
       });
-      if (response.status === 200) {
-        console.log("로그인 성공 !! : ", response.data.response);
-        setAccessToken(response.data.response);
-        setAuthorizationToken(response.data.response);
-        alert("로그인에 성공하였습니다!");
-        navigate("/transaction");
-      } else if (response.status === 500) {
-        alert(
-          "블록체인과의 통신이 원할하지 않습니다. 잠시후에 다시 시도해주세요!"
-        );
-      }
+
+        if (response.status === 200) {
+          console.log("로그인 성공 !! : ", response.data.response);
+          setAccessToken(response.data.response);
+          setAuthorizationToken(response.data.response);
+          alert("로그인에 성공하였습니다!");
+          navigate("/transaction");
+        } 
+
     } catch (e) {
-      if (e.response && e.response.status === 500) {
+      if (e.response && e.response.status === 404) {
+        console.log("login failed", e.response);
+        console.log('e.response.data', e.response.data);
+        alert(
+          "DITI 인증서 등록이 되어있지 않습니다."
+        );
+        window.location.href = e.response.data.ditiAddress;
+
+      } else if(e.response && e.response.status === 500) {
         console.log("login failed", e.response);
         alert(
-          "블록체인과의 통신이 원할하지 않습니다. 잠시후에 다시 시도해주세요!"
+          "DITI 인증서 로그인에 실패했습니다."
         );
       }
+      return
     }
   }
 

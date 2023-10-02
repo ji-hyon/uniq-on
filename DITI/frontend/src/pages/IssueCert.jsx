@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from "@material-tailwind/react";
 import axios from "axios"
 import { ethers } from "ethers"
@@ -18,7 +18,7 @@ export function IssueCert() {
   // const walletAddress = useUserInforStore((state)=>state.walletAddress)
   // const {walletAddress, originalMessage, signedMessage } = useUserInfoStore()
   
-  
+  // const requestVC=useCallback(async ()=>{
   async function requestVC() {
         // 메타마스크 설치 확인
         if (typeof window.ethereum === 'undefined') {
@@ -30,6 +30,7 @@ export function IssueCert() {
   
       // 메타마스크 로그인 확인
       // if (!window.ethereum.selectedAddress) {
+      console.log(userInfo.walletAddress)
       if (!userInfo.walletAddress||!userInfo.token||userInfo.token === "") {
           alert("MetaMask에 먼저 로그인 해주세요");
           // 로그인 페이지로 이동
@@ -83,6 +84,7 @@ export function IssueCert() {
         }
       }
   }
+  // },[userInfo.walletAddress])
   
   async function test() {
     // try {
@@ -117,6 +119,10 @@ export function IssueCert() {
       console.log(response.data)
     } catch (e) {
       console.error(e)
+      if (e.response.status === 404) {
+        alert(e.response.data)
+        return
+      }
     }
   }
 
