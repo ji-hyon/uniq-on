@@ -40,3 +40,7 @@ app.listen(port, () => {
   console.log(`http://localhost:${port}`);
 });
 
+// 에러 발생해도 서버가 꺼지지 않게 강제
+process.on("uncaughtException", (error) => {
+  console.error("Uncaught Exception 발생:", error);
+});

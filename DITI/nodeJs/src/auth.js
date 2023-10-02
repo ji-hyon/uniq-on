@@ -33,7 +33,15 @@ export async function authMiddleWare(req,res,next){
     // token 안에는 메세지, 서명된 메세지가 들어있음
     // 샘플코드에는  {address, body}로 되어있는데, body는 부가정보를 담고 있음
 
-    const { address } = Web3Token.verify(token);
+    let address=""
+    try {
+        address = Web3Token.verify(token).address;
+    } catch (e) {
+        // console.log(e)
+        res.status(401).json({error:e.message})
+        return
+    }
+    
     console.log("address:'",address,"'walletAddress:'",walletAddress,"'")
     if (address!=walletAddress.toLowerCase()) {
         res.status(401).send("login failed")
@@ -41,5 +49,4 @@ export async function authMiddleWare(req,res,next){
     console.log("DITI/nodeJs: login success for " + walletAddress)
     next()
     }
-
 }

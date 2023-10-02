@@ -34,19 +34,26 @@ public class VcServiceImpl implements VcService{
     }
 
     @Override
-    public void registerVc(VcController.registerVcWebRequest req) {
+    public int registerVc(VcController.registerVcWebRequest req) {
         log.debug("# VC 등록중..");
         Vc vc = vcRepository.findByAuth_WalletAddressAndType(req.walletAddress(), req.type());
         Auth auth = authRepository.findByWalletAddress(req.walletAddress());
-        if (vc == null && auth != null) {
-            vcRepository.save(Vc.builder()
-                    .auth(auth)
-                    .vcJwt(req.vcJwt())
-                    .type(req.type())
-                    .build());
-            log.debug("# VC 등록 성공!");
-        } else{
+        if (auth != null) {
+            if (vc == null) {
+                vcRepository.save(Vc.builder()
+                        .auth(auth)
+                        .vcJwt(req.vcJwt())
+                        .type(req.type())
+                        .build());
+                log.debug("# VC 등록 성공!");
+                return 1;
+            } else {
+                return 3;
+            }
+        } else {
+            log.warn("# 등록되지 않은 회원입니다!! : {}", req.walletAddress());
             log.warn("# VC 등록 실패!");
+            return 2;
         }
     }
 }

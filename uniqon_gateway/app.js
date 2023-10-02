@@ -36,7 +36,7 @@ async function verifyVP(vpJwt) {
     // Resolver : did documnet 가져오는 역할
     // const resolver = new Resolver(getResolver(providerConfig));
     // 캐시 옵션 추가
-    const resolver = new Resolver(getResolver(providerConfig), {cache:true});
+    const resolver = new Resolver(getResolver(providerConfig), { cache: true });
     // vp 검증
     const result = await verifyPresentation(vpJwt, resolver);
     // 결과가 있고, 유효하면
@@ -99,7 +99,7 @@ process.on("uncaughtException", (error) => {
 });
 
 // 회원가입 요청 api
-const upload=multer()
+const upload = multer();
 app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
   try {
     // DITI에 vp 요청
@@ -162,6 +162,7 @@ app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
           },
         }
       );
+
       if (springResponse.status == 200) {
         //console.log(springResponse);
         res.status(200).send("success");
@@ -170,11 +171,16 @@ app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
       }
     } catch (e) {
       console.log("오류" + e);
+      if(e.response.status === 405) {
+        res.status(405).send("이미 가입된 회원입니다.")
+      } else {
       res
         .status(500)
         .send(
           "POST " + process.env.SPRING_SERVER_URI + "/api/users/signup failed"
         );
+      }
+      return
     }
   } catch (e) {
     console.log(
@@ -185,8 +191,9 @@ app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
     //   .status(500)
     //   .send("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed");
     res.status(401).json({
-      "error" : "DITI 인증서가 유효하지 않습니다! DITI 인증서를 새로 발급해주세요.",
-      "ditiAddress" : process.env.DITI_SERVER_URL + "/diti"
+      error:
+        "DITI 인증서가 유효하지 않습니다! DITI 인증서를 새로 발급해주세요.",
+      ditiAddress: process.env.DITI_SERVER_URL + "/diti",
     });
     return;
   }
@@ -194,9 +201,12 @@ app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
 
 // 로그인 요청 api
 app.get("/api/users/login", async (req, res) => {
+  console.log("login request form", req.headers.walletaddress);
+  const walletAddress = req.headers.walletaddress;
+  const web3token = req.headers.authorization;
+  let vpJwt = "";
   try {
     // DITI에 vp 요청
-    console.log("login request form", req.headers.walletaddress);
     const ditiResponse = await axios.get(
       process.env.DITI_SERVER_URL +
         "/diti/did/vp/" +
@@ -205,70 +215,103 @@ app.get("/api/users/login", async (req, res) => {
       {
         headers: {
           "Content-Type": "application/json",
-          walletAddress: req.headers.walletaddress,
-          Authorization: req.headers.authorization,
+          walletAddress: walletAddress,
+          Authorization: web3token,
         },
       }
     );
-    const walletAddress = req.headers.walletaddress;
-    const vpJwt = ditiResponse.data;
-    console.log("vpJwt:", vpJwt);
-    // 유효한 vp인지 검증
-    const vcs = await verifyVP(vpJwt);
-    if (vcs.length == 0) {
-      res.status(400).send("no VC");
-    }
-
-    // 스프링 서버에 로그인 요청
-    try {
-      const userInfo = {
-        walletAddress: walletAddress,
-        password: walletAddress.slice(-20),
-      };
-      console.log("유저정보: " + userInfo.walletAddress);
-      console.log("유저정보: " + userInfo.password);
-      const springResponse = await axios.post(
-        process.env.SPRING_SERVER_URI + "/api/auth/login",
-        userInfo,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
-      if (springResponse.data.success) {
-        res.status(springResponse.status).send(springResponse.data);
-      } else {
-        console.log("스프링 응답 에러 발생!!");
-        console.log(springResponse.data);
-      }
-    } catch (e) {
-      console.log("로그인 오류 발생!!");
-      console.log(e);
-      console.log(e.status);
-      res
-        .status(500)
-        .send(
-          "GET " + process.env.SPRING_SERVER_URI + "/api/users/login failed"
-        );
-      return;
-    }
+    vpJwt = ditiResponse.data;
   } catch (e) {
     console.log(
       "GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed"
     );
+    if (e.response) {
+      if (e.response.status == 404) {
+        // VC가 없을 경우
+        // res.status(e.response.status).send(e.response.data);
+        res.status(e.response.status).json({
+          error: e.response.data,
+          ditiAddress: process.env.DITI_SERVER_URL + "/diti",
+        });
+      } else {
+        // 알 수 없는 DITI에러
+        res
+          .status(500)
+          .send(
+            "GET /diti/did/vp/" +
+              req.headers.walletaddress +
+              "/idCard failed, DITI error"
+          );
+      }
+    } else {
+      // response가 없는 에러
+      console.log(e);
+      res
+        .status(500)
+        .send(
+          "GET /diti/did/vp/" +
+            req.headers.walletaddress +
+            "/idCard failed, no response from DITI"
+        );
+    }
+    return;
+  }
+
+  // VP 검증
+  try {
+    console.log("vpJwt:", vpJwt);
+    // 유효한 vp인지 검증
+    const vcs = await verifyVP(vpJwt);
+    if (vcs.length == 0) {
+      res.status(404).send("zero VC");
+      return;
+    }
+  } catch (e) {
     console.log(e);
+    res.status(500).send("VP 검증 실패");
+    return;
+  }
+
+  // 유니콘 스프링 서버에 로그인 요청
+  try {
+    const userInfo = {
+      walletAddress: walletAddress,
+      password: walletAddress.slice(-20),
+    };
+    console.log("유저정보: " + userInfo.walletAddress);
+    console.log("유저정보: " + userInfo.password);
+    const springResponse = await axios.post(
+      process.env.SPRING_SERVER_URI + "/api/auth/login",
+      userInfo,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+    if (springResponse.data.success) {
+      res.status(springResponse.status).send(springResponse.data);
+      return;
+    } else {
+      console.log("스프링 응답 에러 발생!!");
+      console.log(springResponse.data);
+      res.status(500).send("스프링 응답 에러 발생!!");
+      return;
+    }
+  } catch (e) {
+    console.log("로그인 오류 발생!!");
+    console.log(e);
+    console.log(e.status);
     res
       .status(500)
-      .send("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed");
+      .send("GET " + process.env.SPRING_SERVER_URI + "/api/users/login failed");
     return;
   }
 });
 
-
 // 스프링 서버 세팅
 const springProxy = createProxyMiddleware({
-  host: '0.0.0.0',
+  host: "0.0.0.0",
   target: process.env.SPRING_SERVER_URI,
   changeOrigin: true,
 });

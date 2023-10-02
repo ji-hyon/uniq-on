@@ -124,14 +124,11 @@ export function SignUpButton() {
         },
       });
       if (response.status === 200) {
-        alert("회원가입에 성공하였습니다!!");
+        alert("회원가입에 성공하였습니다.");
         navigate("/login");
-      } else if (response.status === 500) {
-        alert(
-          "블록체인과의 통신이 원할하지 않습니다. 잠시후에 다시 시도해주세요!"
-        );
       } 
       console.log("signup success");
+
     } catch (e) {
       console.log("signup failed", e);
       // catch는 axios 외의 에러도 오기 때문에, e.response가 없을 수도 있어서 조건 추가
@@ -141,6 +138,13 @@ export function SignUpButton() {
           console.log(e.response);
           window.location.href = e.response.data.ditiAddress
           return
+        // 이미 가입된 회원인 경우
+        } else if (e.response.status === 405) {
+          alert(e.response.data)
+          navigate("/login")
+          return
+        } else {
+          alert("회원가입에 실패했습니다.");
         }
       }
     }
