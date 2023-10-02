@@ -36,7 +36,7 @@ async function verifyVP(vpJwt) {
     // Resolver : did documnet 가져오는 역할
     // const resolver = new Resolver(getResolver(providerConfig));
     // 캐시 옵션 추가
-    const resolver = new Resolver(getResolver(providerConfig), {cache:true});
+    const resolver = new Resolver(getResolver(providerConfig), { cache: true });
     // vp 검증
     const result = await verifyPresentation(vpJwt, resolver);
     // 결과가 있고, 유효하면
@@ -99,7 +99,7 @@ process.on("uncaughtException", (error) => {
 });
 
 // 회원가입 요청 api
-const upload=multer()
+const upload = multer();
 app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
   try {
     // DITI에 vp 요청
@@ -171,11 +171,16 @@ app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
       }
     } catch (e) {
       console.log("오류" + e);
+      if(e.response.status === 405) {
+        res.status(405).send("이미 가입된 회원입니다.")
+      } else {
       res
         .status(500)
         .send(
           "POST " + process.env.SPRING_SERVER_URI + "/api/users/signup failed"
         );
+      }
+      return
     }
   } catch (e) {
     console.log(
@@ -186,8 +191,9 @@ app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
     //   .status(500)
     //   .send("GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed");
     res.status(401).json({
-      "error" : "DITI 인증서가 유효하지 않습니다! DITI 인증서를 새로 발급해주세요.",
-      "ditiAddress" : process.env.DITI_SERVER_URL + "/diti"
+      error:
+        "DITI 인증서가 유효하지 않습니다! DITI 인증서를 새로 발급해주세요.",
+      ditiAddress: process.env.DITI_SERVER_URL + "/diti",
     });
     return;
   }
@@ -224,8 +230,8 @@ app.get("/api/users/login", async (req, res) => {
         // VC가 없을 경우
         // res.status(e.response.status).send(e.response.data);
         res.status(e.response.status).json({
-          "error" : e.response.data,
-          "ditiAddress" : process.env.DITI_SERVER_URL + "/diti"
+          error: e.response.data,
+          ditiAddress: process.env.DITI_SERVER_URL + "/diti",
         });
       } else {
         // 알 수 없는 DITI에러
@@ -289,7 +295,7 @@ app.get("/api/users/login", async (req, res) => {
     } else {
       console.log("스프링 응답 에러 발생!!");
       console.log(springResponse.data);
-      res.status(500).send("스프링 응답 에러 발생!!")
+      res.status(500).send("스프링 응답 에러 발생!!");
       return;
     }
   } catch (e) {
@@ -303,10 +309,9 @@ app.get("/api/users/login", async (req, res) => {
   }
 });
 
-
 // 스프링 서버 세팅
 const springProxy = createProxyMiddleware({
-  host: '0.0.0.0',
+  host: "0.0.0.0",
   target: process.env.SPRING_SERVER_URI,
   changeOrigin: true,
 });
