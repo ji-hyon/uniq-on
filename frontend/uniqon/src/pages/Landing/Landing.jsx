@@ -14,25 +14,6 @@ export function Landing() {
 
   const navigate = useNavigate();
 
-  async function loginUser() {
-    try {
-      const data = {
-        walletAddress: "111",
-        password: "woaud123",
-
-      }
-      const res = await axios.post("/api/auth/login", data, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      });
-      console.log(res.data.response);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   return (
     <div className="App">
       <header className="App-header">
@@ -42,12 +23,14 @@ export function Landing() {
       <Section3 />
       {/* <Section4 /> */}
       </div>
+      <Button
+        variant='gradient'
+          className="text-4xl w-96 h-28 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"
+          onClick={() => {
+            navigate("/forlogin");
 
-      <Button onClick={loginUser}></Button>
-
-        <p>
-          여기는 랜딩페이지입니다.
-        </p>
+          }}
+        >로그인 페이지 제작중 뚝딱뚝딱</Button>
 
         <LoginButton />
 
@@ -128,6 +111,9 @@ export function Landing() {
 
           NFT
         </Button>
+
+        
+
       </header>
 
     </div>

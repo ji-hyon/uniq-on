@@ -1,6 +1,4 @@
-import logo from './logo.svg';
 import './App.css';
-import { Button } from '@material-tailwind/react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { Collections } from './pages/Collections/Collections';
 import { Transaction } from './pages/Transaction/Transaction';
@@ -15,14 +13,18 @@ import { MidCollecDetail } from './pages/Collections/MidCollecDetail';
 import { NFTList } from './pages/Collections/NFTList';
 import { Login } from './pages/Auth/Login';
 import { SignUp } from './pages/Auth/SignUp';
-import { ContemLogin } from './pages/Landing/ContemLogin';
+
+// import { ForLogin } from './pages/Landing/ForLogin';
+
+import { Suspense } from 'react';
 
 function App() {
   return (
     <div className="App">
+      <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/contemlogin" element={<ContemLogin />} />
+        {/* <Route path="/forlogin" element={<ForLogin />} /> */}
 
         {/* <Route path="/collections" element={<Collections />} /> */}
         <Route path="/transaction" element={<Transaction />} />
@@ -39,6 +41,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>
+      </Suspense>
     </div>
   );
 }
