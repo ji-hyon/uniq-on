@@ -10,6 +10,7 @@ import { verifyLoginMessage } from "../src/auth.js";
 import { readImage } from "../src/ocr.js";
 import { createVC, createVP } from "../src/did.js";
 import axios from "axios";
+import e from "express";
 
 // 테스트 코드
 // router.get("/test", (req, res) => {
@@ -72,12 +73,12 @@ router.post("/vc", upload.single("imgFile"), async (req, res) => {
   } catch {
     console.log("/diti/vc failed");
     // 등록되지 않은 회원일 경우 예외처리
-    if (e.response.status == 404) {
+    if (e.response.status === 404) {
       res.status(404).send("등록되지 않은 회원입니다. 예기치 않은 결과.");
       return;
     }
     // 이미 등록된 VC인 경우 예외처리
-    else if (e.response.status == 400) {
+    else if (e.response.status === 400) {
       res.status(400).send("이미 등록된 VC입니다.");
       return;
     } else {
@@ -101,12 +102,25 @@ router.get("/vp/:walletAddress/:type", async (req, res) => {
         },
       }
     );
+    // console.log(springResponse.data)
+    if(!springResponse.data.success){
+        if(springResponse.data?.error?.status===404){
+            res.status(404).send("VC가 등록되지 않았습니다.");
+            return;
+        }else{
+            res.status(500).send("unknown error");
+            return
+        }
+    }
     const vcJwt = springResponse.data.response.vcJwt;
     console.log("springResponse.data.response.vcJwt:", vcJwt);
     const vpJwt = await createVP(vcJwt);
     res.send(vpJwt);
-  } catch {
+  } catch (e){
     console.log("GET /diti/vc failed");
+    console.log(e)
+    res.status(500).send("unknown error");
+    return
   }
 });
 

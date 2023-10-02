@@ -126,7 +126,7 @@ export function IssueCert() {
           <Button className="text-4xl w-96 h-28 mt-1" color="yellow" onClick={requestVC}>전자신분증 발급</Button>
         </div>
 
-        <Button className="text-base w-50 h-20 m-20" color="blue" onClick={test}>Test button</Button>
+        <Button className="text-base w-50 h-20 m-20" color="blue" onClick={test}>VP검증 테스트 버튼</Button>
       </header>
 
     </div>
