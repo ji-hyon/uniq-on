@@ -1,16 +1,19 @@
 package ssafy.uniqon.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ssafy.uniqon.controller.MemberController;
 import ssafy.uniqon.controller.MyPageController;
 import ssafy.uniqon.global.config.auth.TokenProvider;
+import ssafy.uniqon.global.exception.NotFoundException;
 import ssafy.uniqon.model.MemberRole;
 import ssafy.uniqon.model.Members;
 import ssafy.uniqon.repository.MemberRepository;
@@ -24,6 +27,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -87,5 +91,19 @@ public class MemberService {
         if (member.isPresent()) {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
+    }
+
+    @Transactional
+    public int modifyUserInfo (String walletAddress, MultipartFile multipartFile ,MyPageController.ModifyMyProfileWebRequest req) throws IOException {
+        Members members = memberRepository.findById(walletAddress).orElseThrow(() -> new NotFoundException(Members.class, walletAddress));
+        if (members != null) {
+            log.debug("# 회원정보 수정중..");
+            members.setNickname(req.nickname());
+            members.setProfileImage(multipartFile.getBytes());
+            members.setPassword(passwordEncoder.encode(req.password()));
+            memberRepository.save(members);
+            return 1;
+        }
+        return 0;
     }
 }

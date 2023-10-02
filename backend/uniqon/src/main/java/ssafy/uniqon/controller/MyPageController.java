@@ -5,16 +5,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ssafy.uniqon.global.response.Response;
 import ssafy.uniqon.service.MemberService;
 import ssafy.uniqon.service.MyPageService;
 import ssafy.uniqon.service.NFTService;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 
+import static ssafy.uniqon.global.response.Response.ERROR;
 import static ssafy.uniqon.global.response.Response.OK;
 
 @Slf4j
@@ -25,10 +29,9 @@ import static ssafy.uniqon.global.response.Response.OK;
 @CrossOrigin("*")
 public class MyPageController {
 
-    record ModifyMyProfileWebRequest(
+    public record ModifyMyProfileWebRequest(
             String password,
-            String nickname,
-            String profileImage
+            String nickname
     ){}
 
     public record TransactionHistoryWebResponse(
@@ -73,8 +76,17 @@ public class MyPageController {
     }
 
     @PutMapping("/info")
-    Response<?> modifyMyProfile(@RequestBody ModifyMyProfileWebRequest req){
-        return OK(null);
+    Response<?> modifyMyProfile(@RequestPart(value = "data") ModifyMyProfileWebRequest req,
+                                @RequestPart(value = "file")MultipartFile multipartFile, @AuthenticationPrincipal UserDetails userDetails) throws IOException {
+        log.debug("# 회원정보 수정 요청 회원 : {}", userDetails.getUsername());
+        int result = memberService.modifyUserInfo(userDetails.getUsername(), multipartFile, req);
+        if (result == 1){
+            log.debug("# 정상적으로 회원정보가 수정되었습니다!");
+            return OK(null);
+        } else {
+            log.debug("# 회원정보 수정을 실패하였습니다!");
+            return ERROR("회원정보 수정을 실패하였습니다!", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/boughtList")
