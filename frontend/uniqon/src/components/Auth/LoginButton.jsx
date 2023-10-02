@@ -141,10 +141,10 @@ export function LoginButton() {
   return (
     <Button
       className="text-3xl w-70 h-30 m-5"
-      color="green"
+      color="yellow"
       onClick={connectMetaMask}
     >
-      로그인
+      DITI 인증서 로그인
     </Button>
   );
 }

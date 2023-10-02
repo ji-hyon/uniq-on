@@ -29,7 +29,8 @@ export function IssueCert() {
       }
   
       // 메타마스크 로그인 확인
-      if (!window.ethereum.selectedAddress) {
+      // if (!window.ethereum.selectedAddress) {
+      if (!userInfo.walletAddress||!userInfo.token||userInfo.token === "") {
           alert("MetaMask에 먼저 로그인 해주세요");
           // 로그인 페이지로 이동
           window.location.href = '/diti/login';
