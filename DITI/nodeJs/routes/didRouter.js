@@ -42,11 +42,20 @@ router.post("/vc", upload.single("imgFile"), async (req, res) => {
         },
       }
     );
+
+    if (springJoin.data.success !== true) {
+      if(springJoin.data.error.status === 400){
+          // 이미 가입된 회원에 대해 400에러 처리를 하면,
+          // 기존에 가입했던 회원이 vc삭제 후 다시 vc를 요청했을 때
+          // 회원정보가 남아있기 때문에 발급이 안 되는 문제가 발생하기 때문에 에러처리X
+      }else{
+        res.status(500).send("/diti/auth/join failed");
+        return
+      }
+    }
+
   } catch (e) {
     if (e.response.status === 400) {
-      // 이미 가입된 회원에 대해 400에러 처리를 하면,
-      // 기존에 가입했던 회원이 vc삭제 후 다시 vc를 요청했을 때
-      // 회원정보가 남아있기 때문에 발급이 안 되는 문제가 발생하기 때문에 에러처리X
     } else {
       console.log(e);
       console.log("/diti/auth/join failed");
@@ -54,6 +63,7 @@ router.post("/vc", upload.single("imgFile"), async (req, res) => {
       return;
     }
   }
+
   // VC 테이블에 vcJwt 추가
   try {
     const springResponse = await axios.post(
@@ -69,23 +79,32 @@ router.post("/vc", upload.single("imgFile"), async (req, res) => {
         },
       }
     );
+
+    // success => 200 status
+    // axios문제 처리해주는 부분 (http response status가 200이 아닐 때)
+    // 원래는 catch구문에서 처리하는 형식이지만, spring에서 넘어오는 status 코드를 제대로 읽지 못하는 문제 발생
+    if (springResponse.data.success !== true) {
+      if (springResponse.data.error.status === 404) {
+        res.status(404).send("등록되지 않은 회원입니다. 예기치 않은 결과.");
+        return;
+      } else if (springResponse.data.error.status === 400) {
+        res.status(400).send("이미 등록된 VC입니다.");
+        return;
+      } else {
+        res.status(500).send("POST /diti/vc 알 수 없는 에러");
+        return;
+      }
+    }
+
     console.log("DITI에서 VC 등록 성공");
-  } catch {
+
+  } catch (e) {
     console.log("/diti/vc failed");
-    // 등록되지 않은 회원일 경우 예외처리
-    if (e.response.status === 404) {
-      res.status(404).send("등록되지 않은 회원입니다. 예기치 않은 결과.");
-      return;
-    }
-    // 이미 등록된 VC인 경우 예외처리
-    else if (e.response.status === 400) {
-      res.status(400).send("이미 등록된 VC입니다.");
-      return;
-    } else {
-      res.status(500).send("unknown error");
-      return;
-    }
+    console.log(e);
+    res.status(500).send("unknown error");
+    return;
   }
+  //   }
   res.send(vcJwt);
 });
 
@@ -103,24 +122,24 @@ router.get("/vp/:walletAddress/:type", async (req, res) => {
       }
     );
     // console.log(springResponse.data)
-    if(!springResponse.data.success){
-        if(springResponse.data?.error?.status===404){
-            res.status(404).send("VC가 등록되지 않았습니다.");
-            return;
-        }else{
-            res.status(500).send("unknown error");
-            return
-        }
+    if (!springResponse.data.success) {
+      if (springResponse.data?.error?.status === 404) {
+        res.status(404).send("VC가 등록되지 않았습니다.");
+        return;
+      } else {
+        res.status(500).send("unknown error");
+        return;
+      }
     }
     const vcJwt = springResponse.data.response.vcJwt;
     console.log("springResponse.data.response.vcJwt:", vcJwt);
     const vpJwt = await createVP(vcJwt);
     res.send(vpJwt);
-  } catch (e){
+  } catch (e) {
     console.log("GET /diti/vc failed");
-    console.log(e)
+    console.log(e);
     res.status(500).send("unknown error");
-    return
+    return;
   }
 });
 
