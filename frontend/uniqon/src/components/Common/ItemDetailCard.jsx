@@ -54,7 +54,7 @@ export function ItemDetailCard( { item } ) {
   const [wishId, setWishId] = React.useState('1');
 
   useEffect(() => {
-    console.log(forDetailItem)
+    console.log(forDetailItem);
     console.log(item);
     // console.log(salesItemsList);
     // setTitle(item.PostInfo.title);
