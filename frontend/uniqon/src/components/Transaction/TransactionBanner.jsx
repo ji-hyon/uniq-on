@@ -8,6 +8,8 @@ import useUserInfoStore from "../../stores/UserInfoStore";
 
 import { useNavigate, Link } from "react-router-dom";
 
+import { FaEthereum } from "react-icons/fa6";
+
 export function TransactionBanner() {
 
   const navigate = useNavigate();
@@ -113,14 +115,14 @@ export function TransactionBanner() {
           {/* <CardBody className="overflow-y-scroll max-h-[400px]"> */}
           <CardBody className="grid grid-cols-3 gap-4">  
       {searchList.map((item) => (
-        <Link to={`/transaction/tranitemdetail/${item.id}`} key={item.id}>
-        <div className="flex flex-col gap-4 cursor-pointer">
+        <Link to={`/transaction/tranitemdetail/${item.postId}`} key={item.postId}>
+        <div className="flex flex-col gap-4 cursor-pointer" onClick={console.log(item)}>
           <img src={item.image} alt="my-gif" className="w-[48rem] h-[8rem]" />
           <span className="text-lg">
             <span className="font-bold">{item.title}</span>
           </span>
-          <span className="text-lg">
-            가격 | <span className="font-bold">{item.price} ETH</span>
+          <span className="flex items-center text-lg">
+          <FaEthereum className="mr-1" /> <span className="font-semibold">{item.price} ETH</span>
           </span>
         </div>
         </Link>

@@ -40,6 +40,7 @@ export function TranItemDetail () {
     console.log(id)
     setSelectedPostId(id)
     // setSelectedNftId(forDetailItem.nftId)
+    
     console.log(forDetailItem)
     getSalesDetail();
   }, []);
@@ -61,6 +62,7 @@ export function TranItemDetail () {
           // console.log(id)
           // console.log(res.data.response)
           setItem(res.data.response)
+          setForDetailItem(res.data.response)
   
       } catch(err) {
         console.log(err)
