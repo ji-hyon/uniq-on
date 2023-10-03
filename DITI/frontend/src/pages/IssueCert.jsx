@@ -72,7 +72,9 @@ export function IssueCert() {
       console.log(response)        
         
       if (response.status === 200) {
-        console.log("작업이 성공했습니다");
+        console.log("VC발급 성공");
+        alert("DITI 인증서 발급에 성공했습니다!")
+        navigate("/diti/check");
       } else {
         console.log('response : ', response);
       }
