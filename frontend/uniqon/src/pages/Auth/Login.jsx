@@ -11,7 +11,7 @@ export function Login() {
     try {
       const response = await axios.get("/api/myPage/info/"+walletAddress,{
         headers:{
-          Authorization: "Bearer "+accessToken
+          Authorization: "Bearer " + accessToken
         }
       });
       console.log('성공', response);
