@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import ssafy.uniqon.dto.NftListResponseDto;
 import ssafy.uniqon.dto.NftListSearchResponseDto;
 import ssafy.uniqon.model.NFTs;
+import ssafy.uniqon.model.QMembers;
 
 import java.util.List;
 
@@ -119,7 +120,8 @@ public class NFTQueryRepository {
 
     public Page<NftListResponseDto> getMyNftList(String userId, Pageable pageable){
         log.debug("# DB에서 nft 리스트 조회 ..");
-
+        QMembers members1=new QMembers("m1");
+        QMembers members2=new QMembers("m2");
         List<NftListResponseDto> list = jpaQueryFactory
                 .select(Projections.constructor(NftListResponseDto.class,
                         nFTs.id,
@@ -128,18 +130,19 @@ public class NFTQueryRepository {
                         nFTs.name,
                         nFTs.age,
                         nFTs.feature,
-                        members.nickname,
-                        members.profileImage,
+                        members1.nickname,
+                        members1.profileImage,
                         middleClassifications.id,
                         middleClassifications.species,
                         nFTs.nftURL,
                         nFTs.contractAddress,
                         nFTs.tokenId,
                         nFTs.liked_cnt,
-                        members.walletAddress
+                        members2.walletAddress
                 ))
                 .from(nFTs)
-                .leftJoin(members).on(members.walletAddress.eq(userId))
+                .leftJoin(members2).on(members2.walletAddress.eq(nFTs.creater.walletAddress))
+                .leftJoin(members1).on(members1.walletAddress.eq(userId))
                 .leftJoin(middleClassifications).on(middleClassifications.id.eq(nFTs.middle.id))
                 .where(
                         nFTs.owner.walletAddress.eq(userId)
