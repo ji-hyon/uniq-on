@@ -54,7 +54,9 @@ public class PostsController {
             String species,
             String nickname,
             String image,
-            Boolean wishCheck
+            Boolean wishCheck,
+            String walletAddress,
+            Integer tokenId
     )
     {}
 
@@ -72,7 +74,9 @@ public class PostsController {
             Timestamp createDatetime,
             String title,
             Boolean wishCheck,
-            Integer nftId
+            Integer nftId,
+            String walletAddress,
+            Integer tokenId
     ){}
 private final PostReadService postReadService;
 private final PostCreateService postCreateService;
@@ -126,10 +130,10 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/search")
-    public Response<?> searchPost(@RequestParam String word,@PageableDefault(size=9) Pageable pageable) {
+    public Response<?> searchPost(@RequestParam String word,@PageableDefault(size=9) Pageable pageable,@AuthenticationPrincipal UserDetails user) {
         log.debug("# 검색어 word : {}", word);
 //        log.debug("# 사용자 walletAddress : {}", walletAddress);
-        List<postListsWebResponse> postlist = postReadService.getSearchPostList(word, pageable);
+        List<postListsWebResponse> postlist = postReadService.getSearchPostList(word, pageable,user.getUsername());
         return OK(postlist);
     }
 
@@ -140,11 +144,11 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/detail/{postId}")
-    public Response<?> getDetailPost(@PathVariable Integer postId){
+    public Response<?> getDetailPost(@PathVariable Integer postId,@AuthenticationPrincipal UserDetails user){
         log.debug("# 판매글 식별자 id : {}", postId);
 //        log.debug("# 사용자 walletAddress : {}", walletAddress);
 
-        postDetailWebResponse post = postReadService.getPostDetail(postId);
+        postDetailWebResponse post = postReadService.getPostDetail(postId, user.getUsername());
 
         JSONObject obj = new JSONObject();
         JSONObject data1=new JSONObject();
@@ -153,6 +157,7 @@ private final PostDeleteService postDeleteService;
 
         data1.put("profileImage",post.profileImage);
         data1.put("nickname",post.nickname);
+        data1.put("walletAddress",post.walletAddress);
         obj.put("SellerInfo",data1);
 
         data2.put("nftId",post.nftId);
@@ -161,6 +166,7 @@ private final PostDeleteService postDeleteService;
         data2.put("feature",post.feature);
         data2.put("age",post.age);
         data2.put("image",post.image);
+        data2.put("tokenId",post.tokenId);
         obj.put("nftInfo",data2);
 
         data3.put("postId",post.postId);
@@ -181,9 +187,9 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @GetMapping("/post")
-    public Response<?> getAllPostList(@PageableDefault(size=9) Pageable pageable){
+    public Response<?> getAllPostList(@PageableDefault(size=9) Pageable pageable,@AuthenticationPrincipal UserDetails user){
         log.debug("# 판매글 리스트 표시");
-        List<postListsWebResponse> postlist = postReadService.getPostAll(pageable);
+        List<postListsWebResponse> postlist = postReadService.getPostAll(pageable,user.getUsername());
         return OK(postlist);
     }
 }

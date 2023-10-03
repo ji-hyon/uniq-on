@@ -54,7 +54,7 @@ public class NFTs {
     @Column(length = 200)
     private String contractAddress;
 
-    private int tokenId;
+    private Integer tokenId;
 
     @Setter
     @ColumnDefault("0")
