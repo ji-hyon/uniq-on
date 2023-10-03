@@ -117,16 +117,18 @@ export function NFT() {
   };
 
   const [imgBase64, setImgBase64] = useState("");
-  // const [aiImgUrl, setAiImgUrl] = useState("");
-  const aiImgUrl =
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Indianfox.jpg/300px-Indianfox.jpg";
-  const [ipfsUrl, setIpfsUrl] = useState({ imageIpfsHash: "", nftMetadataHash: "" });
+  const [aiImgUrl, setAiImgUrl] = useState("");
+  const [species, setSpecies] = useState("fox");
+  const [blob, setBlob] = useState(null);
+  const [ipfsUrl, setIpfsUrl] = useState({
+    imageIpfsHash: "",
+    nftMetadataHash: ""
+  });
   const [status, setStatus] = useState(0);
   const [hash, setHash] = useState("");
   const [tokenId, setTokenId] = useState(0);
   const contractAddress = "0x303a548f56ff203d435190ea3a082b59d726ce36";
   const [address, setAddress] = useState("");
-
 
   // 대분류 값 변경
   const mainChange = (selectedMain) => {
@@ -142,12 +144,12 @@ export function NFT() {
     console.log("중분류 변경 후", selectedMiddle);
   };
 
-  useEffect(() => {
-    console.log(ipfsUrl)
-  }, [ipfsUrl]);
+  // useEffect(() => {
+  //   document.getElementById("aiImg").src = aiImgUrl;
+  // }, [aiImgUrl]);
 
   useEffect(() => {
-    console.log(status)
+    console.log(status);
   }, [status]);
 
   // useEffect(() => {
@@ -159,42 +161,53 @@ export function NFT() {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      setImgBase64(reader.result);
+      setImgBase64(reader.result.split(",")[1]);
     };
 
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = async () => {
+    if (!imgBase64) {
+      alert("이미지를 업로드 하세요");
+      return;
+    }
+    const data = {
+      init_images: [imgBase64],
+      species: species
+    };
     try {
-      const dataToSend = JSON.stringify({
-        init_images: [imgBase64],
-        species: "spider"
-      });
-      console.log("이미지 base64", imgBase64);
-
-      const respone1 = await axios.post("/api/img2img", dataToSend, {
-        headers: {
-          "Content-Type": "application/json"
+      const respone1 = await axios.post(
+        "https://6f03-61-80-142-239.ngrok-free.app/api/img2img",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          responseType: "arraybuffer"
         }
-      });
-      console.log("이미지 생성 성공", respone1);
+      );
 
-      const blob = await respone1.data.blob();
-
-      const imageUrl = URL.createObjectURL(blob);
-      // setAiImgUrl(imageUrl);
+      if (respone1.status === 200) {
+        console.log("요청 성공");
+        console.log(respone1);
+        const blob = new Blob([respone1.data], { type: "image/png" });
+        const imageUrl = URL.createObjectURL(blob);
+        setBlob(blob);
+        setAiImgUrl(imageUrl);
+        console.log("AI 이미지", imageUrl);
+      } else {
+        console.error("요청 실패");
+      }
     } catch (error) {
-      console.error("이미지 생성 실패", error);
+      console.error("서버에 생성 실패", error);
     }
   };
 
   async function CreateNft() {
     // 위에 aiimg에 요청해서 받은 이미지 url 담아서 요청
     var formData = new FormData();
-    formData.append("file", nftImg.current.files[0]);
+    formData.append("file", blob);
     const json = JSON.stringify({
       name: name,
       middleClassificationName: selectedMiddle,
@@ -202,7 +215,7 @@ export function NFT() {
       age: age
     });
     formData.append("data", new Blob([json], { type: "application/json" }));
-    let ipfsResponse={}
+    let ipfsResponse = {};
     try {
       console.log("실행1");
       const response2 = await axios.post("/api/nfts/ipfs", formData, {
@@ -213,7 +226,7 @@ export function NFT() {
       });
       console.log("IPFS 저장 성공", response2);
       setIpfsUrl(response2.data.response);
-      ipfsResponse=response2.data.response
+      ipfsResponse = response2.data.response;
       console.log("ipfsurl", ipfsUrl);
     } catch (error) {
       console.log("IPFS 저장 실패", error);
@@ -249,7 +262,7 @@ export function NFT() {
     const receipt = await contractInstance
       .connect(signer)
       .mintNFT(signer.address, ipfsJsonUrl, options);
-    const rr = await receipt.wait()
+    const rr = await receipt.wait();
     const txReceipt = await net.getTransactionReceipt(receipt.hash);
 
     setStatus(txReceipt.status);
@@ -270,26 +283,29 @@ export function NFT() {
     if (txReceipt.status === 1) {
       console.log("3번째");
       try {
-        const registerData={
+        const registerData = {
           walletAddress: signer.address,
           middleClassificationName: selectedMiddle,
           txHash: receipt.hash,
           name: name,
           feature: feature,
           age: age,
-          image:ipfsResponse.imageIpfsHash,
+          image: ipfsResponse.imageIpfsHash,
           nftMetadata: ipfsResponse.nftMetadataHash,
           tokenId: parseInt(txReceipt.logs[1].data, 16),
           contractAddress: contractAddress
-        }
-        const registerFormdata=new FormData()
-        registerFormdata.append("data", new Blob([JSON.stringify(registerData)], { type: "application/json" }));
+        };
+        const registerFormdata = new FormData();
+        registerFormdata.append(
+          "data",
+          new Blob([JSON.stringify(registerData)], { type: "application/json" })
+        );
         const response4 = await axios.post(
           "/api/nfts/register",
           registerFormdata,
           {
             headers: {
-              Authorization: "Bearer " + accessToken,
+              Authorization: "Bearer " + accessToken
             }
           }
         );
@@ -390,7 +406,22 @@ export function NFT() {
                         onChange={handleImgChange}
                         ref={nftImg}
                       />
-                      <Button onClick={handleSubmit}>AI이미지</Button>
+                      <input
+                        type="text"
+                        placeholder="종 입력 (예: fox)"
+                        style={{
+                          border: "1px solid black",
+                          borderRadius: "5px"
+                        }}
+                        value={species}
+                        onChange={(e) => setSpecies(e.target.value)}
+                      ></input>
+                      <Button onClick={handleSubmit}>AI 이미지 생성</Button>
+                      <div>
+                        {aiImgUrl && (
+                          <img id="aiImg" src={aiImgUrl} alt="AI 이미지"></img>
+                        )}
+                      </div>
                       <Button
                         className="m-5 text-3xl w-70 h-30"
                         onClick={CreateNft}
@@ -401,7 +432,7 @@ export function NFT() {
                           src="https://cdn.lordicon.com/ejxwvtlg.json"
                           trigger="hover"
                           colors="outline:#121331,primary:#08a88a,secondary:#ebe6ef"
-                          style={{ width: "250px", height: "250px" }}
+                          style={{ width: "150px", height: "150px" }}
                         ></lord-icon>
                       </Button>
                     </span>
@@ -453,9 +484,11 @@ export function NFT() {
               </div>
             </div>
 
-            <input type="file" onChange={handleImgChange} />
-            <button onClick={handleSubmit}>AI이미지</button>
-            {aiImgUrl && <img src={aiImgUrl} alt="Proceessed"></img>}
+            <div>
+              {aiImgUrl && (
+                <img id="aiImg" src={aiImgUrl} alt="AI 이미지"></img>
+              )}
+            </div>
 
             {/* NFT 조회 버튼 */}
             {/* <Button
