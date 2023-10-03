@@ -12,7 +12,7 @@ export function SignUpButton() {
   const setUserInfo = useUserInfoStore((state) => state.setUserInfo);
   const navigate = useNavigate();
 
-  const profileRef = useRef(null);
+  // const profileRef = useRef(null);
   // const nicknameRef = useRef(null);
   const [nickname, setNickname] = useState('');
 
@@ -63,6 +63,15 @@ export function SignUpButton() {
   }
 
   async function signUp() {
+    // 닉네임 1자 이상 입력, 공백 미포함
+    if (nickname.length < 1) {
+      alert("닉네임을 입력해주세요!")
+      return
+    } else if (nickname.includes(' ')) {
+      alert("닉네임에 공백을 포함할 수 없습니다.");
+      return
+    }
+
     // 메타마스크 확장 프로그램이 없으면 에러 발생
     if (!detectMetaMask()) {
       console.error("MetaMask is not installed");
@@ -109,7 +118,10 @@ export function SignUpButton() {
     }
 
     const formData = new FormData();
-    formData.append("profileImg", profileRef.current.files[0]);
+    // formData.append("profileImg", profileRef.current.files[0]);
+    // 프로필 사진 기능 빼기로 해서 빈 값으로 대체 
+    formData.append("profileImg", new Blob([], { type: "file" }));
+
     // formData.append("nickname", nicknameRef.current.value)
     formData.append("nickname", nickname)
     console.log("nickname", nickname);
@@ -125,7 +137,8 @@ export function SignUpButton() {
       });
       if (response.status === 200) {
         alert("회원가입에 성공하였습니다.");
-        navigate("/login");
+        // 회원가입 후 메인페이지로 이동
+        navigate("/");
       } 
       console.log("signup success");
 
@@ -160,10 +173,10 @@ export function SignUpButton() {
       </div>
 
       {/* 프로필 사진 업로드칸 */}
-      <div className="border-2 border-gray-400 m-10 max-w-3xl mx-auto">
+      {/* <div className="border-2 border-gray-400 m-10 max-w-3xl mx-auto">
         <p className="m-5 text-lg font-bold">프로필 사진 업로드</p>
         <input type="file" ref={profileRef} className="m-5"></input>
-      </div>
+      </div> */}
 
       {/* 회원가입 버튼 */}
         <Button onClick={signUp} className="text-3xl w-70 h-30 m-5" color="blue">
