@@ -37,17 +37,6 @@ export function Landing() {
         <Button
           className="text-4xl w-96 h-28"
           onClick={() => {
-            navigate("/login");
-
-          }}
-          color="green"
-        >
-          로그인
-        </Button>
-
-        <Button
-          className="text-4xl w-96 h-28"
-          onClick={() => {
             navigate("/signup");
 
           }}
