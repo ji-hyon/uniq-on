@@ -1,34 +1,85 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Menu, MenuHandler, MenuList, MenuItem, Button } from '@material-tailwind/react';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { TiMediaRecord } from "react-icons/ti";
+import {
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Button,
+  Badge
+} from "@material-tailwind/react";
 
 export function TopNavBar() {
   const navigate = useNavigate();
+  // const [notifications, setNotifications] = useState([]);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const notifications = [
+    { id: 1, content: "멍뭉이 NFT의 거래가 완료 되었습니다." },
+    { id: 2, content: "거래완료2" },
+    { id: 3, content: "거래완료3" }
+  ];
 
   const goToLanding = () => {
-    navigate('/');
+    navigate("/");
   };
 
   const goToWishlist = () => {
-    navigate('/wishlist');
+    navigate("/wishlist");
   };
   // 마켓플레이스(거래 목록 페이지)로 이동
   const goToTransaction = () => {
-    navigate('/transaction');
+    navigate("/transaction");
   };
 
   // 도감 페이지로 이동
   const goToCollection = () => {
-    navigate('/collections');
+    navigate("/collections");
   };
 
   const createNFT = () => {
-    navigate('/nft');
+    navigate("/nft");
   };
 
   const goToMypage = () => {
-    navigate('/mypage');
+    navigate("/mypage");
   };
+
+  useEffect(() => {
+    const getNotifications = async () => {
+      try {
+        const response = await axios.get("/api/notifications", {
+          params: {
+            page: 0,
+            size : 10
+          }
+        });
+        console.log("알림 가져오기 성공", response);
+        // setNotifications(response.data.response.content);
+      } catch (error) {
+        console.log("알림 가져오기 실패", error);
+      }
+    };
+    getNotifications();
+  }, []);
+
+  const handleShowNotifications = () => {
+    setShowNotifications(!showNotifications);
+  };
+
+  // const deleteNotification = async (notification) => {
+  //   const notificationId = notification.id;
+  //   try {
+  //     const response = await axios.delete(
+  //       `/api/notifications/${notificationId}`
+  //     );
+  //     console.log("알림 삭제 완료", response);
+  //   } catch (error) {
+  //     console.log("알림 삭제 실패", error);
+  //   }
+  // };
+
   return (
     <>
       <div className="flex max-w-[1600px] w-[1440px] min-h-[80px] items-center justify-between pl-[24px] pr-[24.01px] py-[16px] absolute top-[2px] left-0">
@@ -69,6 +120,61 @@ export function TopNavBar() {
             </div>
           </div>
         </div>
+        <div className="relative">
+          <Badge content={notifications.length}>
+            <Button onClick={handleShowNotifications}>
+              <svg
+                className="w-6 h-6 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 14 20"
+              >
+                <path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z" />
+              </svg>
+            </Button>
+          </Badge>
+          {showNotifications && (
+            <div
+              className="absolute top-[48px] left-[2px] bg-white p-4 rounded-lg shadow-md z-10"
+              style={{
+                width: "600px",
+                maxWidth: "600px"
+              }}
+            >
+              <ul style={{ color: "black" }}>
+                {notifications.map((notification, index) => (
+                  <li key={index} style={{ fontSize: "25px" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginLeft: "5px"
+                      }}
+                    >
+                      <TiMediaRecord
+                        style={{ marginRight: "0.5rem", fontSize: "20px" }}
+                      ></TiMediaRecord>
+                      {notification.content}
+                    </div>
+
+                    {/* <Button
+                      onClick={deleteNotification(notification)}
+                      variant="outlined"
+                      color="red"
+                      // className="mt-4 text-blue-500 hover:underline"
+                    >
+                      삭제
+                    </Button> */}
+                    {index !== notifications.length - 1 && (
+                      <hr className="border-t border-gray-300 my-2"></hr>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
         <div className="w-[50px] h-[48px] relative flex-1 grow">
           <div className="flex">
             <button
@@ -79,7 +185,11 @@ export function TopNavBar() {
                 <div className="absolute h-[19px] top-[31px] left-[84px] [font-family:'Pretendard-SemiBold',_Helvetica] font-semibold text-black text-[16px] text-center tracking-[0] leading-[normal] whitespace-nowrap">
                   NFT 생성
                 </div>
-                <img src="/nftlogo.png" className="absolute w-[34px] h-[32px] top-7 left-10" alt="Video player" />
+                <img
+                  src="/nftlogo.png"
+                  className="absolute w-[34px] h-[32px] top-7 left-10"
+                  alt="Video player"
+                />
                 {/* <img className="absolute w-[112px] h-[94px] top-0 left-0" alt="Video player" /> */}
               </div>
             </button>

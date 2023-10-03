@@ -16,6 +16,8 @@ import ssafy.uniqon.model.NFTs;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
+import static ssafy.uniqon.model.QMembers.members;
+import static ssafy.uniqon.model.QMiddleClassifications.middleClassifications;
 import static ssafy.uniqon.model.QNFTs.nFTs;
 
 @Repository
@@ -126,16 +128,19 @@ public class NFTQueryRepository {
                         nFTs.name,
                         nFTs.age,
                         nFTs.feature,
-                        nFTs.owner.nickname,
-                        nFTs.owner.profileImage,
-                        nFTs.middle.id,
-                        nFTs.middle.species,
+                        members.nickname,
+                        members.profileImage,
+                        middleClassifications.id,
+                        middleClassifications.species,
                         nFTs.nftURL,
                         nFTs.contractAddress,
                         nFTs.tokenId,
-                        nFTs.liked_cnt
+                        nFTs.liked_cnt,
+                        members.walletAddress
                 ))
                 .from(nFTs)
+                .leftJoin(members).on(members.walletAddress.eq(userId))
+                .leftJoin(middleClassifications).on(middleClassifications.id.eq(nFTs.middle.id))
                 .where(
                         nFTs.owner.walletAddress.eq(userId)
                 )

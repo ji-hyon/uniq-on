@@ -16,6 +16,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(indexes = {
+        @Index(name = "idx_nickname", columnList = "nickname")
+})
 public class Members{
     @Id
     @Column(name = "wallet_Address")

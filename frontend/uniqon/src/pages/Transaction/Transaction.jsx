@@ -86,20 +86,34 @@ export function Transaction() {
         }
       }
 
+  async function getNFTList(){
+    const myNFTList=await axios.get("/api/myPage/mynfts",{
+      params:{
+        page:0,
+        size: 10,
+      }
+    })
+    console.log("myNFTs",myNFTList.data.response)
+  }
+
   async function registerSales(title, content, price, tokenId) {
 
       try {
+        
+
         const data = {
           price: price,
           content: content,
           title: title,
           tokenId: tokenId,
         };
+        const registerForm=new FormData()
+        registerForm.append("data",new Blob([JSON.stringify(data)],{type:'application/json'}))
 
-
-        const res = await axios.post("/api/sales/register", data, {
+        const res = await axios.post("/api/sales/register", registerForm, {
           headers: {
             Authorization: "Bearer " + accessToken,
+            "Content-Type": "multipart/form-data"
             },
         });
         console.log(res.data)
@@ -130,7 +144,7 @@ export function Transaction() {
           <br></br>
           <TransactionBanner />
           <div className="flex justify-end mt-3 mb-1">
-          <Button onClick={handleOpen} variant="gradient" className="flex items-center self-end">
+          <Button onClick={()=>{handleOpen();getNFTList();}} variant="gradient" className="flex items-center self-end">
             <MdOutlinePostAdd className="w-6 h-6 mr-1"/>
         판매글 등록
       </Button>

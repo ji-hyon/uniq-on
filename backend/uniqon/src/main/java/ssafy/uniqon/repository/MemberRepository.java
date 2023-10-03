@@ -7,5 +7,7 @@ import ssafy.uniqon.model.NFTs;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Members, String> {
-    public NFTs findByNickname(String nickname);
+//    public NFTs findByNickname(String nickname);
+
+    Members findByNickname(String nickname);
 }

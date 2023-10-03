@@ -89,7 +89,7 @@ private final PostDeleteService postDeleteService;
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @PostMapping("/register")
-    public Response<?> registerPost(@RequestBody RegisterPostWebRequest req,
+    public Response<?> registerPost(@RequestPart(value = "data") RegisterPostWebRequest req,
                                     @AuthenticationPrincipal UserDetails user) {
         log.debug("# 판매글 등록시 데이터 : {}", req);
         postCreateService.createPost(req,user);
