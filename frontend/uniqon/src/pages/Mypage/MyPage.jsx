@@ -20,6 +20,7 @@ import { Purchase } from "./Purchase";
 import { Sales } from "./Sales";
 import { LikeNft } from "./LikeNft";
 import { TopNavBar } from "../../components/Common/TopNavBar";
+import { wishList } from "./wishList"
 
 export function MyPage() {
   const navigate = useNavigate();
@@ -41,6 +42,10 @@ export function MyPage() {
     {
       value: "LikeNft",
       label: "내가 좋아요 한 NFT",
+    },
+    {
+      value: "wishList",
+      label: "위시리스트",
     },
   ];
 
@@ -162,6 +167,9 @@ export function MyPage() {
                 </TabPanel>
                 <TabPanel value="LikeNft">
                   <LikeNft></LikeNft>
+                </TabPanel>
+                <TabPanel value="wishList">
+                  <wishList></wishList>
                 </TabPanel>
               </TabsBody>
             </Tabs>
