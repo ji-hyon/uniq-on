@@ -169,9 +169,9 @@ export function ItemDetailCard({ item }) {
     const receipt = await contractInstance
       .connect(signer)
       .saleNFT(
-        "0xd83e613d8B4a2Cb4fAFA04F1ee87C8e6900b81A4",
+        "0xfBd361508736503f5dBd6DA6a485cA2F04B13115",
         ethers.parseEther("0.0001"),
-        47,
+        52,
         options
       );
     const rr = await receipt.wait();
@@ -187,9 +187,10 @@ export function ItemDetailCard({ item }) {
     //판매자 주소
     //구매자 주소
     const saveTxHisData = {
-      tokenId: 47,
+      tokenId: 52,
       txHash: receipt.hash,
-      postId: postId,
+      // postId: postId,
+      postId:2,
     };
     const saveTxHisForm = new FormData();
     saveTxHisForm.append("data",new Blob([JSON.stringify(saveTxHisData)],{type:'application/json'}));
