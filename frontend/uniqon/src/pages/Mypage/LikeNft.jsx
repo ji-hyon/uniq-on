@@ -22,10 +22,9 @@ export function LikeNft() {
             size: 10
           }
         });
-        console.log("에러" + response);
         if (response.status === 200) {
           setLikeNftList(response.data.response.content)
-          console.log("성공", response);
+          console.log("내가 좋아요 한 NFT 리스트 : ", response.data.response.content);
         }
       } catch (error) {
         console.log("실패", error);
