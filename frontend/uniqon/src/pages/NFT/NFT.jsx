@@ -406,22 +406,44 @@ export function NFT() {
                         onChange={handleImgChange}
                         ref={nftImg}
                       />
-                      <input
-                        type="text"
-                        placeholder="종 입력 (예: fox)"
+                      <div
                         style={{
-                          border: "1px solid black",
-                          borderRadius: "5px"
+                          position: "relative",
+                          display: "inline-block"
                         }}
-                        value={species}
-                        onChange={(e) => setSpecies(e.target.value)}
-                      ></input>
-                      <Button onClick={handleSubmit}>AI 이미지 생성</Button>
-                      <div>
-                        {aiImgUrl && (
-                          <img id="aiImg" src={aiImgUrl} alt="AI 이미지"></img>
-                        )}
+                      >
+                        <input
+                          type="text"
+                          placeholder="종 입력 (예: fox)"
+                          style={{
+                            border: "1px solid black",
+                            borderRadius: "5px",
+                            paddingRight: "30px" // 오른쪽에 버튼의 너비만큼 여백을 추가,
+                          }}
+                          value={species}
+                          onChange={(e) => setSpecies(e.target.value)}
+                        />
+                        <Button
+                          style={{
+                            position: "absolute",
+                            top: "0",
+                            right: "0",
+                            backgroundColor: "lightgray",
+                            color: "black",
+                            border: "1px solid black",
+                            borderRadius: "0 5px 5px 0", // 버튼 모서리 둥글게 설정
+                            padding: "5px 5px", // 버튼 패딩 설정
+                            cursor: "pointer",
+                            height: "39px",
+                            lineHeight: "20px",
+                            fontSize: "20px"
+                          }}
+                          onClick={handleSubmit}
+                        >
+                          AI 변환
+                        </Button>
                       </div>
+
                       <Button
                         className="m-5 text-3xl w-70 h-30"
                         onClick={CreateNft}
