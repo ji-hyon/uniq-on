@@ -29,14 +29,27 @@ export function MainCollections() {
 
   const [mainCardsData, setMainCardsData] = useState([]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(8); // 한 페이지에 보여줄 아이템 개수
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [pageSize] = useState(8); // 한 페이지에 보여줄 아이템 개수
+  // const handlePageChange = (page) => {
+  //   setCurrentPage(page);
+  // };
+
+  // 알림
+  const [notifications, setNotifications] = useState([]);
+
+  const getNotifications = async () => {
+    try {
+      const response = await axios.get("/api/notifications");
+      console.log("알림 가져오기 성공", response);
+      setNotifications(response.data.response.content);
+    } catch (error) {
+      console.log("알림 가져오기 실패", error);
+    }
   };
 
-  console.log("현재 페이지", currentPage);
-  console.log("카드 데이터", mainCardsData);
+  // console.log("현재 페이지", currentPage);
+  // console.log("카드 데이터", mainCardsData);
 
   useEffect(() => {
     async function mainList() {
@@ -55,11 +68,11 @@ export function MainCollections() {
       }
     }
     mainList();
-  }, [currentPage]);
+  }, []);
 
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const currentPageData = mainCardsData.slice(startIndex, endIndex);
+  // const startIndex = (currentPage - 1) * pageSize;
+  // const endIndex = startIndex + pageSize;
+  // const currentPageData = mainCardsData.slice(startIndex, endIndex);
 
   const goToMiddle = () => {
     navigate("/midcollections");
@@ -73,7 +86,7 @@ export function MainCollections() {
             <p>여기는 대분류 페이지 입니다.</p>
             <br></br>
             <Badge content="5">
-              <Button>
+              <Button onClick={getNotifications}>
                 <svg
                   class="w-6 h-6 text-gray-800 dark:text-white"
                   aria-hidden="true"
@@ -90,7 +103,7 @@ export function MainCollections() {
             {/* /// */}
             {/* <div className="flex mt-64 -mx-4 flex-wrap"> */}
             <div className="flex mt-60 -mx-4 flex-wrap h-[52px]">
-              {currentPageData.map((card, index) => (
+              {mainCardsData.map((card, index) => (
                 <div key={index} className="w-1/4 mb-[430px] px-4 relative">
                   <div className="absolute left-1/2 top-1/2 h-96 w-80 -translate-x-1/2 -translate-y-1/2  rounded-2xl bg-teal-100"></div>
 
