@@ -23,7 +23,7 @@ export function MyNft() {
         const response = await axios.get(`/api/myPage/mynfts`, {
           params: {
             page: page,
-            size: 3, // 추후에 이 부분은 원하는 갯수로 변경
+            size: 4, // 추후에 이 부분은 원하는 갯수로 변경
           },
         });
         console.log(response)
@@ -59,7 +59,7 @@ export function MyNft() {
               <Card key={index} className="w-full max-w-[20rem] shadow-lg">
                 <CardHeader floated={false} color="blue-gray">
                   <img src={nft.image} alt="ui/ux review check" />
-                  <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
+                  <div className="absolute inset-0 w-full h-full to-bg-black-10 bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
                 </CardHeader>
                 <CardFooter className="pt-3 pb-3">
                   <Button className="text-sm" size="sm" fullWidth={true}>
