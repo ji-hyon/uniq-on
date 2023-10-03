@@ -98,9 +98,15 @@ public class MemberService {
         Members members = memberRepository.findById(walletAddress).orElseThrow(() -> new NotFoundException(Members.class, walletAddress));
         if (members != null) {
             log.debug("# 회원정보 수정중..");
-            members.setNickname(req.nickname());
-            members.setProfileImage(multipartFile.getBytes());
-            members.setPassword(passwordEncoder.encode(req.password()));
+            if (req.nickname() != null ) {
+                members.setNickname(req.nickname());
+            }
+            if (multipartFile != null) {
+                members.setProfileImage(multipartFile.getBytes());
+            }
+            if (req.password() != null) {
+                members.setPassword(passwordEncoder.encode(req.password()));
+            }
             memberRepository.save(members);
             return 1;
         }
