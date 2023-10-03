@@ -15,6 +15,7 @@ app.use(cors()); // cors 설정
 app.use(bodyParser.json()); // json 응답 설정
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 // 프로바이더 설정
 const providerConfig = {
   // 사용한 블록체인 네트워크
@@ -25,21 +26,23 @@ const providerConfig = {
   name: process.env.BC_NETWORK_NAME,
 };
 
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 // 기본 포트 설정
 app.listen(process.env.PORT, () => {
   console.log(`Server Start on port [${process.env.PORT}] !!`);
 });
 
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 // VP 검증 함수
 async function verifyVP(vpJwt) {
   try {
     // Resolver : did documnet 가져오는 역할
     // const resolver = new Resolver(getResolver(providerConfig));
-    // 캐시 옵션 추가
+    // 캐시 옵션 추가 -> 요청 시마다 매번 같은 did document를 불러오기 때문에 한번 불러온 뒤 저장
     const resolver = new Resolver(getResolver(providerConfig), { cache: true });
     // vp 검증
     const result = await verifyPresentation(vpJwt, resolver);
-    // 결과가 있고, 유효하면
+    // 결과가 있고, vp가 유효하면
     if (result && result.verified) {
       // vp배열 안 vc들 하나씩 검증
       console.log("result:", result.payload);
@@ -59,7 +62,9 @@ async function verifyVP(vpJwt) {
           }
         })
       );
+      // 유효한 vcs 반환 ★★★
       return vcs;
+    // 결과가 없거나, vp가 유효하지 않은 경우
     } else {
       throw new Error("verify VP failed");
     }
@@ -68,6 +73,7 @@ async function verifyVP(vpJwt) {
   }
 }
 
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 // VP 검증 URI
 app.post("/api/verifyVP", async (req, res) => {
   console.log("# VP 검증 요청 ..");
@@ -94,10 +100,12 @@ app.post("/api/verifyVP", async (req, res) => {
   }
 });
 
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 process.on("uncaughtException", (error) => {
   console.error("Uncaught Exception 발생:", error);
 });
 
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 // 회원가입 요청 api
 const upload = multer();
 app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
@@ -151,7 +159,7 @@ app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
     // file이 null값일 때 에러나는지 체크할 용도
     formData.append("file", new Blob([], { type: "file" }));
 
-    // 스프링 서버에 회원가입 요청
+    // 유니콘 스프링 서버에 회원가입 요청
     try {
       const springResponse = await axios.post(
         process.env.SPRING_SERVER_URI + "/api/users/signup",
@@ -162,10 +170,9 @@ app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
           },
         }
       );
-
       if (springResponse.status == 200) {
-        //console.log(springResponse);
-        res.status(200).send("success");
+        // 회원가입 성공 시 200 상태코드와 회원정보 전송
+        res.status(200).send(data)
       } else {
         res.status(springResponse.status).send(springResponse.data);
       }
@@ -199,6 +206,7 @@ app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
   }
 });
 
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 // 로그인 요청 api
 app.get("/api/users/login", async (req, res) => {
   console.log("login request form", req.headers.walletaddress);
@@ -220,7 +228,9 @@ app.get("/api/users/login", async (req, res) => {
         },
       }
     );
-    vpJwt = ditiResponse.data;
+    vpJwt = ditiResponse.data; // VP 응답 
+
+    // vp 요청 실패한 경우 
   } catch (e) {
     console.log(
       "GET /diti/did/vp/" + req.headers.walletaddress + "/idCard failed"
@@ -260,8 +270,10 @@ app.get("/api/users/login", async (req, res) => {
   // VP 검증
   try {
     console.log("vpJwt:", vpJwt);
-    // 유효한 vp인지 검증
+    // 유효한 vp인지 검증 -> 유효하면 통과 
     const vcs = await verifyVP(vpJwt);
+
+    // 유효하지 않은 vp인 경우 return
     if (vcs.length == 0) {
       res.status(404).send("zero VC");
       return;
@@ -289,6 +301,9 @@ app.get("/api/users/login", async (req, res) => {
         },
       }
     );
+    ////////////////////////////////////////////////////////////////////////////
+    ///// 유니콘에 회원가입이 되지 않은 상태인 경우 로그인 시도 시 에러 처리 추가////
+    ////////////////////////////////////////////////////////////////////////////
     if (springResponse.data.success) {
       res.status(springResponse.status).send(springResponse.data);
       return;
@@ -309,6 +324,7 @@ app.get("/api/users/login", async (req, res) => {
   }
 });
 
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 // 스프링 서버 세팅
 const springProxy = createProxyMiddleware({
   host: "0.0.0.0",

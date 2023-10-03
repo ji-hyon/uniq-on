@@ -127,6 +127,7 @@ export function LoginButton() {
         } 
 
     } catch (e) {
+      // DITI 인증서 등록돼있지 않은 경우 
       if (e.response && e.response.status === 404) {
         console.log("login failed", e.response);
         console.log('e.response.data', e.response.data);
@@ -134,7 +135,6 @@ export function LoginButton() {
           "DITI 인증서 등록이 되어있지 않습니다."
         );
         window.location.href = e.response.data.ditiAddress;
-
       } else if(e.response && e.response.status === 500) {
         console.log("login failed", e.response);
         alert(
@@ -148,7 +148,7 @@ export function LoginButton() {
   return (
     <Button
       className="text-3xl w-70 h-30 m-5"
-      color="yellow"
+      color="green"
       onClick={connectMetaMask}
     >
       DITI 인증서 로그인
