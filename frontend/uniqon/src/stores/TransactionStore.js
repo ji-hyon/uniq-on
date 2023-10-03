@@ -9,6 +9,14 @@ let transactionStore = (set) => ({
   selectedNftId: "",
   selectedPostId: "",
 
+  sellerAddress: "",
+  tokenId: "",
+  price: "",
+
+  setSellerAddress: (payload) => set({ sellerAddress: payload }),
+  setTokenId: (payload) => set({ tokenId: payload }),
+  setPrice: (payload) => set({ price: payload }),
+
   setSalesItemsList: (payload) => set({ salesItemsList: payload }),
   setForDetailItem: (payload) => set({ forDetailItem: payload }),
   setIsWishList: (payload) => set({ isWishList: payload }),
