@@ -13,13 +13,13 @@ import {
 
 export function TopNavBar() {
   const navigate = useNavigate();
-  // const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
-  const notifications = [
-    { id: 1, content: "멍뭉이 NFT의 거래가 완료 되었습니다." },
-    { id: 2, content: "거래완료2" },
-    { id: 3, content: "거래완료3" }
-  ];
+  // const notifications = [
+  //   { id: 1, content: "멍뭉이 NFT의 거래가 완료 되었습니다." },
+  //   { id: 2, content: "거래완료2" },
+  //   { id: 3, content: "거래완료3" }
+  // ];
 
   const goToLanding = () => {
     navigate("/");
@@ -46,27 +46,29 @@ export function TopNavBar() {
     navigate("/mypage");
   };
 
+  const getNotifications = async () => {
+    try {
+      const response = await axios.get("/api/notifications", {
+        params: {
+          page: 0,
+          size: 10
+        }
+      });
+      console.log("알림 가져오기 성공", response);
+      setNotifications(response.data.response.content);
+    } catch (error) {
+      console.log("알림 가져오기 실패", error);
+    }
+    setShowNotifications(!showNotifications);
+  };
+
   useEffect(() => {
-    const getNotifications = async () => {
-      try {
-        const response = await axios.get("/api/notifications", {
-          params: {
-            page: 0,
-            size : 10
-          }
-        });
-        console.log("알림 가져오기 성공", response);
-        // setNotifications(response.data.response.content);
-      } catch (error) {
-        console.log("알림 가져오기 실패", error);
-      }
-    };
     getNotifications();
   }, []);
 
-  const handleShowNotifications = () => {
-    setShowNotifications(!showNotifications);
-  };
+  // const handleShowNotifications = () => {
+  //   setShowNotifications(!showNotifications);
+  // };
 
   // const deleteNotification = async (notification) => {
   //   const notificationId = notification.id;
@@ -122,7 +124,7 @@ export function TopNavBar() {
         </div>
         <div className="relative">
           <Badge content={notifications.length}>
-            <Button onClick={handleShowNotifications}>
+            <Button onClick={getNotifications}>
               <svg
                 className="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -138,13 +140,13 @@ export function TopNavBar() {
             <div
               className="absolute top-[48px] left-[2px] bg-white p-4 rounded-lg shadow-md z-10"
               style={{
-                width: "600px",
-                maxWidth: "600px"
+                width: "500px",
+                maxWidth: "500px"
               }}
             >
               <ul style={{ color: "black" }}>
                 {notifications.map((notification, index) => (
-                  <li key={index} style={{ fontSize: "25px" }}>
+                  <li key={index} style={{ fontSize: "15px" }}>
                     <div
                       style={{
                         display: "flex",
@@ -153,9 +155,11 @@ export function TopNavBar() {
                       }}
                     >
                       <TiMediaRecord
-                        style={{ marginRight: "0.5rem", fontSize: "20px" }}
+                        style={{ marginRight: "0.5rem", fontSize: "15px" }}
                       ></TiMediaRecord>
-                      {notification.content}
+                      등록하신 "{notification.postTitle}" 판매 글의 NFT가 판매
+                      되었습니다.
+                      {/* {notification.content} */}
                     </div>
 
                     {/* <Button
