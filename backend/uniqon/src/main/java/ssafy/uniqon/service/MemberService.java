@@ -112,4 +112,13 @@ public class MemberService {
         }
         return 0;
     }
+
+    public int duplicationTestNickname (String nickname) {
+        Members members = memberRepository.findByNickname(nickname);
+        if (members == null) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }
