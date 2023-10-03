@@ -59,16 +59,15 @@ export function TopNavBar() {
     } catch (error) {
       console.log("알림 가져오기 실패", error);
     }
-    setShowNotifications(!showNotifications);
   };
 
   useEffect(() => {
     getNotifications();
   }, []);
 
-  // const handleShowNotifications = () => {
-  //   setShowNotifications(!showNotifications);
-  // };
+  const handleShowNotifications = () => {
+    setShowNotifications(!showNotifications);
+  };
 
   // const deleteNotification = async (notification) => {
   //   const notificationId = notification.id;
@@ -124,7 +123,12 @@ export function TopNavBar() {
         </div>
         <div className="relative">
           <Badge content={notifications.length}>
-            <Button onClick={getNotifications}>
+            <Button
+              onClick={() => {
+                getNotifications();
+                handleShowNotifications();
+              }}
+            >
               <svg
                 className="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
