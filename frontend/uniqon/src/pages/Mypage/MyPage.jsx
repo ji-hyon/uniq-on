@@ -20,7 +20,7 @@ import { Purchase } from "./Purchase";
 import { Sales } from "./Sales";
 import { LikeNft } from "./LikeNft";
 import { TopNavBar } from "../../components/Common/TopNavBar";
-import { wishList } from "./wishList"
+import { MyWishList } from "./MyWishList";
 
 export function MyPage() {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export function MyPage() {
       label: "내가 좋아요 한 NFT",
     },
     {
-      value: "wishList",
+      value: "MyWishList",
       label: "위시리스트",
     },
   ];
@@ -84,7 +84,7 @@ export function MyPage() {
   return (
     <div className="App">
       {/* <header className="App-header"> */}
-      <div className="bg-white flex flex-row justify-center w-full">
+      <div className="flex flex-row justify-center w-full bg-white">
         <div className="bg-white w-[1440px] h-[1024px] relative">
           {/* <div className="flex flex-col w-[1382px] h-[800px] items-start p-[24px] absolute top-[165px] left-[29px] rounded-[16px] overflow-hidden bg-cover bg-[50%_50%]">
               <div className="w-[1382px] h-[800px] left-0 bg-[#0000008a] absolute top-0" />
@@ -168,8 +168,8 @@ export function MyPage() {
                 <TabPanel value="LikeNft">
                   <LikeNft></LikeNft>
                 </TabPanel>
-                <TabPanel value="wishList">
-                  <wishList></wishList>
+                <TabPanel value="MyWishList">
+                  <MyWishList></MyWishList>
                 </TabPanel>
               </TabsBody>
             </Tabs>

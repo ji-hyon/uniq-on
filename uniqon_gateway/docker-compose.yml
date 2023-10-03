@@ -1,53 +1,51 @@
 version: '3'
 
 volumes:
-  uniqon_main_data:
+  diti_main_data:
     external:
-      name: uniqon_main_data
+      name: diti_main_data
 
 networks:
-  uniqon_network:
+  diti_network:
     driver: bridge
 
 services:
-  uniqon_mysql:
+  diti_mysql:
     restart: on-failure
     image: 'mysql:latest'
-    container_name: 'uniqon_mysql'
+    container_name: 'diti_mysql'
     environment:
-      MYSQL_DATABASE: uniqon
-      MYSQL_ROOT_PASSWORD: ssafyuniqon
+      MYSQL_DATABASE: diti
+      MYSQL_ROOT_PASSWORD: 1234
       TZ: Asia/Seoul
     networks:
-      - uniqon_network
+      - diti_network
     volumes:
-      - uniqon_main_data:/var/lib/mysql
+      - diti_main_data:/var/lib/mysql
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
     
-  uniqonSpringServer:
+  ditiSpringServer:
     restart: on-failure
     depends_on:
-      - uniqon_mysql
-    image: 'kmr5326/c201-backend:latest'
-    container_name: uniqonSpringServer
+      - diti_mysql
+    image: 'jihyon/diti-spring:latest'
+    container_name: ditiSpringServer
     environment:
-      SPRING_DATASOURCE_URL: 'jdbc:mysql://uniqon_mysql:3306/uniqon'
+      SPRING_DATASOURCE_URL: 'jdbc:mysql://diti_mysql:3306/diti'
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: ssafyuniqon
+      SPRING_DATASOURCE_PASSWORD: 1234
     networks:
-      - uniqon_network
+      - diti_network
   
-  uniqonNodejsServer:
+  ditiNodejsServer:
     restart: on-failure
     depends_on:
-      - uniqonSpringServer
-    image: 'jihyon/uniqon-nodejs:latest'
-    container_name: uniqonNodejsServer
-    environment:
-      SPRING_SERVER_URI: http://uniqonSpringServer:8080
+      - ditiSpringServer
+    image: 'jihyon/diti-nodejs:latest'
+    container_name: ditiNodejsServer
     ports:
-      - '5000:4000'
+      - '7000:7000'
     networks:
-      - uniqon_network
+      - diti_network

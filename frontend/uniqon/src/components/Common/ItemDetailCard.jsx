@@ -66,13 +66,14 @@ export function ItemDetailCard({ item }) {
   );
 
   const [postId, setPostId] = React.useState("");
-  const [wishId, setWishId] = React.useState("1");
 
   useEffect(() => {
+    setItemwishcheck(item.wishCheck);
     console.log(forDetailItem);
     console.log(item);
     setDetailPrice(forDetailItem.PostInfo.price);
     setPostId(forDetailItem.PostInfo.postId);
+    console.log(postId)
     setPrice(forDetailItem.PostInfo.price);
     setSellerAddress(forDetailItem.SellerInfo.walletAddress);
     setTokenId(forDetailItem.nftInfo.tokenId);
@@ -95,6 +96,7 @@ export function ItemDetailCard({ item }) {
     // setItemwishcheck((cur) => !cur); // 이전 상태를 반전시켜 새로운 상태 설정
     console.log(forDetailItem.PostInfo.wishCheck);
     console.log(itemwishcheck);
+    setItemwishcheck(item.wishCheck);
 
     if (itemwishcheck === true) {
       deleteWishlist();
@@ -128,7 +130,7 @@ export function ItemDetailCard({ item }) {
 
   async function deleteWishlist() {
     try {
-      const res = await axios.delete(`/api/wishlist/${wishId}`, {
+      const res = await axios.delete(`/api/wishlist/${postId}`, {
         headers: {
           Authorization: "Bearer " + accessToken,
         },
@@ -169,9 +171,9 @@ export function ItemDetailCard({ item }) {
     const receipt = await contractInstance
       .connect(signer)
       .saleNFT(
-        "0xfBd361508736503f5dBd6DA6a485cA2F04B13115",
+        "0xd83e613d8B4a2Cb4fAFA04F1ee87C8e6900b81A4",
         ethers.parseEther("0.0001"),
-        52,
+        47,
         options
       );
     const rr = await receipt.wait();
@@ -187,10 +189,9 @@ export function ItemDetailCard({ item }) {
     //판매자 주소
     //구매자 주소
     const saveTxHisData = {
-      tokenId: 52,
+      tokenId: 47,
       txHash: receipt.hash,
-      // postId: postId,
-      postId:2,
+      postId: postId,
     };
     const saveTxHisForm = new FormData();
     saveTxHisForm.append("data",new Blob([JSON.stringify(saveTxHisData)],{type:'application/json'}));
