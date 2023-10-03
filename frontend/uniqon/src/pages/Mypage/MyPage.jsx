@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import { MyNft } from "./MyNft";
 import { Purchase } from "./Purchase";
 import { Sales } from "./Sales";
-import { WishList } from "./WishList";
+import { LikeNft } from "./LikeNft";
 import { TopNavBar } from "../../components/Common/TopNavBar";
 
 export function MyPage() {
@@ -39,8 +39,8 @@ export function MyPage() {
       label: "판매 내역",
     },
     {
-      value: "wishList",
-      label: "내가 좋아요 한 도감",
+      value: "LikeNft",
+      label: "내가 좋아요 한 NFT",
     },
   ];
 
@@ -160,8 +160,8 @@ export function MyPage() {
                 <TabPanel value="salesList">
                   <Sales></Sales>
                 </TabPanel>
-                <TabPanel value="wishList">
-                  <WishList></WishList>
+                <TabPanel value="LikeNft">
+                  <LikeNft></LikeNft>
                 </TabPanel>
               </TabsBody>
             </Tabs>
