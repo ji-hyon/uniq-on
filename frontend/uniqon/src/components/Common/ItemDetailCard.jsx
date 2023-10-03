@@ -30,10 +30,11 @@ export function ItemDetailCard( { item } ) {
 
   const [title, setTitle] = useState("test");
   const [content, setContent] = useState("test");
-  const [price, setPrice] = useState("1000");
+  const [detailPrice, setDetailPrice] = useState("");
   const [species, setSpecies] = useState("1");
   const [image, setImage] = useState("1");
   const [nickname, setNickname] = useState("1");
+
 
   const [ 구매모달open, set구매모달Open ] = React.useState(false);
 
@@ -45,7 +46,9 @@ export function ItemDetailCard( { item } ) {
   // 아직 상세아이템 조회 api가 없어서 하드코딩하려고 거래 store에서 salesItemList 사용
   const { salesItemsList, setSalesItemsList } = useTransactionStore();
 
-  const { forDetailItem, setForDetailItem } = useTransactionStore();
+  const { forDetailItem, setForDetailItem,
+  sellerAddress, tokenId, setSellerAddress, setTokenId,
+price, setPrice } = useTransactionStore();
 
   const [ 진행중open, set진행중Open ] = React.useState(false);
 
@@ -59,7 +62,16 @@ export function ItemDetailCard( { item } ) {
   useEffect(() => {
     console.log(forDetailItem);
     console.log(item);
+    setDetailPrice(forDetailItem.PostInfo.price);
     setPostId(forDetailItem.PostInfo.postId);
+    setPrice(forDetailItem.PostInfo.price);
+    setSellerAddress(forDetailItem.SellerInfo.walletAddress);
+    setTokenId(forDetailItem.nftInfo.tokenId);
+    console.log(sellerAddress);
+    console.log(price)
+    console.log(tokenId);
+    console.log(detailPrice);
+
     console.log(postId);
     // console.log(salesItemsList);
     // setTitle(item.PostInfo.title);
@@ -123,7 +135,8 @@ export function ItemDetailCard( { item } ) {
         }
       } 
 
-    async function transact(price,sellerAddress,tokenId){
+    async function transact(price, sellerAddress, tokenId){
+
       //price는 판매자가 등록한 가격 단위는 이더
       //sellerAddress 판매자 지갑 주소
       //tokenId 거래 될 NFT tokenId
@@ -138,38 +151,31 @@ export function ItemDetailCard( { item } ) {
       const gasProvider=await provider.getFeeData()
       const contractInstance = new ethers.Contract(contractAddress, contractAbi, signer,gasProvider);
   
-      const fee=ethers.parseEther(price)
+      // const fee=ethers.parseEther(price)
+      const fee=ethers.parseEther("0.0001")
       const options = {value: fee}
   
-      const receipt=await contractInstance.connect(signer).saleNFT(sellerAddress,price,tokenId,fee,options)
-      const rr=await receipt.wait()
+      // const receipt=await contractInstance.connect(signer).saleNFT(sellerAddress,price,tokenId,fee,options)
+      const receipt=await contractInstance.connect(signer).saleNFT("0x34cC35A31Db3a0D4B9d6414b38FDB297f306BF9F",ethers.parseEther("0.0001"),40,options)
+      const rr = await receipt.wait()
       const txReceipt = await net.getTransactionReceipt(receipt.hash)
-  
+      // console.log(txReceipt)
       // status 1이면 성공 아니면 실패
       // 에러 처리 해서 실패했을 경우엔 백에 다음 요청 보내지 않기
       console.log(txReceipt.status)
   
       //다음 요청에 보내야 하는 값들
       console.log(receipt.hash)  //tx hash
-      console.log(parseInt(txReceipt.logs[1].data,16)) //tokenId
+      // console.log(parseInt(txReceipt.logs[1].data,16)) //tokenId
       //판매자 주소
       //구매자 주소
 
-      if(txReceipt.status===1){
-        try{
-          const data={
-            tokenId:parseInt(txReceipt.logs[1].data,16),
-            txHash:receipt.hash,
-            postId: postId
-          }
-          const response=await axios.post("/api/nfts/buy",data)
-          console.log("거래 성공")
-        }
-        catch(e){
-          console.log(e)
-          console.log("거래 실패")
-        }
-      }
+      const saveTxHistory = await axios.post("api/nfts/buy", {
+        tokenId: 40,
+        txHash: receipt.hash,
+        postId: postId,
+      })
+      console.log(saveTxHistory)
     }
 
   return (
@@ -257,7 +263,7 @@ export function ItemDetailCard( { item } ) {
         <span className="flex items-center justify-center text-lg"><FaEthereum /> <span className="font-bold">{forDetailItem.PostInfo.price} ETH</span></span>
         </CardBody>
         <CardFooter className="flex justify-end pt-0">
-        <Button variant="gradient" color="green" onClick={()=>{handleOpen();transact();}}>
+        <Button variant="gradient" color="green" onClick={()=>{handleOpen(); transact(price, sellerAddress, tokenId);}}>
             <span>결제하기</span>
           </Button>
           <Button
