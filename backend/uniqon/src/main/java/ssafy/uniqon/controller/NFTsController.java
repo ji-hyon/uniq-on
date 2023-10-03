@@ -183,7 +183,7 @@ public class NFTsController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     @PostMapping("/buy")
-    public Response<?> transactNFT(@RequestBody TransactNFTWebRequest req,
+    public Response<?> transactNFT(@RequestPart(value = "data") TransactNFTWebRequest req,
                                    @AuthenticationPrincipal UserDetails buyer) throws Exception {
         log.debug("# 거래할 NFT 식별자 : {}", req.tokenId());
         log.debug("# 구매자 지갑 주소 : {}", buyer.getUsername());

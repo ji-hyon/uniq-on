@@ -13,17 +13,15 @@ import {
 
 import { FaEthereum } from "react-icons/fa6";
 
-import { ethers } from "ethers"
+import { ethers } from "ethers";
 import useUserInfoStore from "../../stores/UserInfoStore";
 
-import contractAbi from '../contractAbi.json';
+import contractAbi from "../contractAbi.json";
 
 import { useEffect, useState } from "react";
 import { useTransactionStore } from "../../stores/TransactionStore";
 
-export function ItemDetailCard( { item } ) {
-
-
+export function ItemDetailCard({ item }) {
   const { selectedPostId, selectedNftId } = useTransactionStore();
 
   const { accessToken, walletAddress } = useUserInfoStore();
@@ -35,29 +33,40 @@ export function ItemDetailCard( { item } ) {
   const [image, setImage] = useState("1");
   const [nickname, setNickname] = useState("1");
 
+  const [구매모달open, set구매모달Open] = React.useState(false);
 
-  const [ 구매모달open, set구매모달Open ] = React.useState(false);
-
-  const handleOpen = () => { set구매모달Open(!구매모달open); };
+  const handleOpen = () => {
+    set구매모달Open(!구매모달open);
+  };
 
   // const { accessToken, walletAddress } = useUserInfoStore();
-
 
   // 아직 상세아이템 조회 api가 없어서 하드코딩하려고 거래 store에서 salesItemList 사용
   const { salesItemsList, setSalesItemsList } = useTransactionStore();
 
-  const { forDetailItem, setForDetailItem,
-  sellerAddress, tokenId, setSellerAddress, setTokenId,
-price, setPrice } = useTransactionStore();
+  const {
+    forDetailItem,
+    setForDetailItem,
+    sellerAddress,
+    tokenId,
+    setSellerAddress,
+    setTokenId,
+    price,
+    setPrice,
+  } = useTransactionStore();
 
-  const [ 진행중open, set진행중Open ] = React.useState(false);
+  const [진행중open, set진행중Open] = React.useState(false);
 
-  const 진행중handleOpen = () => { set진행중Open(!진행중open); };
+  const 진행중handleOpen = () => {
+    set진행중Open(!진행중open);
+  };
 
-  const [itemwishcheck, setItemwishcheck] = React.useState(forDetailItem.PostInfo.wishCheck);
+  const [itemwishcheck, setItemwishcheck] = React.useState(
+    forDetailItem.PostInfo.wishCheck
+  );
 
-  const [postId, setPostId] = React.useState('');
-  const [wishId, setWishId] = React.useState('1');
+  const [postId, setPostId] = React.useState("");
+  const [wishId, setWishId] = React.useState("1");
 
   useEffect(() => {
     console.log(forDetailItem);
@@ -68,7 +77,7 @@ price, setPrice } = useTransactionStore();
     setSellerAddress(forDetailItem.SellerInfo.walletAddress);
     setTokenId(forDetailItem.nftInfo.tokenId);
     console.log(sellerAddress);
-    console.log(price)
+    console.log(price);
     console.log(tokenId);
     console.log(detailPrice);
 
@@ -80,13 +89,12 @@ price, setPrice } = useTransactionStore();
     // setSpecies(item.nftInfo.species);
     // setImage(item.nftInfo.image);
     // setNickname(item.SellerInfo.nickname);
-    
   }, []);
 
   const toggleWishlist = () => {
     // setItemwishcheck((cur) => !cur); // 이전 상태를 반전시켜 새로운 상태 설정
-    console.log(forDetailItem.PostInfo.wishCheck)
-    console.log(itemwishcheck)
+    console.log(forDetailItem.PostInfo.wishCheck);
+    console.log(itemwishcheck);
 
     if (itemwishcheck === true) {
       deleteWishlist();
@@ -103,80 +111,95 @@ price, setPrice } = useTransactionStore();
   }
 
   async function addWishlist() {
+    console.log(postId);
 
-    console.log(postId)
-      
     try {
-        const res = await axios.post(`/api/wishlist/add/${postId}`, {
-          headers: {
-            Authorization: "Bearer " + accessToken,
-            },
-        });
-        console.log(postId)
-          console.log(res.data)
+      const res = await axios.post(`/api/wishlist/add/${postId}`, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+      console.log(postId);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-      } catch(err) {
-        console.log(err)
+  async function deleteWishlist() {
+    try {
+      const res = await axios.delete(`/api/wishlist/${wishId}`, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function transact(price, sellerAddress, tokenId) {
+    //price는 판매자가 등록한 가격 단위는 이더
+    //sellerAddress 판매자 지갑 주소
+    //tokenId 거래 될 NFT tokenId
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    // 싸피 네트워크로 바꾸기
+    const net = new ethers.JsonRpcProvider(
+      "https://gethrpc.ssafy-blockchain.com"
+    );
+
+    const signer = await provider.getSigner();
+
+    //나중에 싸피 네트워크 컨트랙트 주소로 변경 필요
+    const contractAddress = "0x303a548f56ff203d435190ea3a082b59d726ce36";
+    const gasProvider = await provider.getFeeData();
+    const contractInstance = new ethers.Contract(
+      contractAddress,
+      contractAbi,
+      signer,
+      gasProvider
+    );
+
+    // const fee=ethers.parseEther(price)
+    const fee = ethers.parseEther("0.0001");
+    const options = { value: fee };
+
+    // const receipt=await contractInstance.connect(signer).saleNFT(sellerAddress,price,tokenId,fee,options)
+    const receipt = await contractInstance
+      .connect(signer)
+      .saleNFT(
+        "0xd83e613d8B4a2Cb4fAFA04F1ee87C8e6900b81A4",
+        ethers.parseEther("0.0001"),
+        47,
+        options
+      );
+    const rr = await receipt.wait();
+    const txReceipt = await net.getTransactionReceipt(receipt.hash);
+    // console.log(txReceipt)
+    // status 1이면 성공 아니면 실패
+    // 에러 처리 해서 실패했을 경우엔 백에 다음 요청 보내지 않기
+    console.log(txReceipt.status);
+
+    //다음 요청에 보내야 하는 값들
+    console.log(receipt.hash); //tx hash
+    // console.log(parseInt(txReceipt.logs[1].data,16)) //tokenId
+    //판매자 주소
+    //구매자 주소
+    const saveTxHisData = {
+      tokenId: 47,
+      txHash: receipt.hash,
+      postId: postId,
+    };
+    const saveTxHisForm = new FormData();
+    saveTxHisForm.append("data",new Blob([JSON.stringify(saveTxHisData)],{type:'application/json'}));
+    const saveTxHistory = await axios.post("/api/nfts/buy",saveTxHisForm,{
+      headers:{
+        "Content-Type":'multipart/form-data'
       }
-    }
-
-    async function deleteWishlist() {
-      
-      try {
-          const res = await axios.delete(`/api/wishlist/${wishId}`, {
-            headers: {
-              Authorization: "Bearer " + accessToken,
-              },
-          });
-            console.log(res.data)
-  
-        } catch(err) {
-          console.log(err)
-        }
-      } 
-
-    async function transact(price, sellerAddress, tokenId){
-
-      //price는 판매자가 등록한 가격 단위는 이더
-      //sellerAddress 판매자 지갑 주소
-      //tokenId 거래 될 NFT tokenId
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      // 싸피 네트워크로 바꾸기
-      const net=new ethers.JsonRpcProvider("https://gethrpc.ssafy-blockchain.com")
-  
-      const signer = await provider.getSigner();
-  
-      //나중에 싸피 네트워크 컨트랙트 주소로 변경 필요
-      const contractAddress="0x303a548f56ff203d435190ea3a082b59d726ce36"
-      const gasProvider=await provider.getFeeData()
-      const contractInstance = new ethers.Contract(contractAddress, contractAbi, signer,gasProvider);
-  
-      // const fee=ethers.parseEther(price)
-      const fee=ethers.parseEther("0.0001")
-      const options = {value: fee}
-  
-      // const receipt=await contractInstance.connect(signer).saleNFT(sellerAddress,price,tokenId,fee,options)
-      const receipt=await contractInstance.connect(signer).saleNFT("0x34cC35A31Db3a0D4B9d6414b38FDB297f306BF9F",ethers.parseEther("0.0001"),40,options)
-      const rr = await receipt.wait()
-      const txReceipt = await net.getTransactionReceipt(receipt.hash)
-      // console.log(txReceipt)
-      // status 1이면 성공 아니면 실패
-      // 에러 처리 해서 실패했을 경우엔 백에 다음 요청 보내지 않기
-      console.log(txReceipt.status)
-  
-      //다음 요청에 보내야 하는 값들
-      console.log(receipt.hash)  //tx hash
-      // console.log(parseInt(txReceipt.logs[1].data,16)) //tokenId
-      //판매자 주소
-      //구매자 주소
-
-      const saveTxHistory = await axios.post("api/nfts/buy", {
-        tokenId: 40,
-        txHash: receipt.hash,
-        postId: postId,
-      })
-      console.log(saveTxHistory)
-    }
+    });
+    console.log(saveTxHistory);
+  }
 
   return (
     <Card className="w-full h-[24rem] max-w-[60rem] flex-row">
@@ -195,8 +218,9 @@ price, setPrice } = useTransactionStore();
           color={itemwishcheck === 1 ? "red" : "gray"}
           variant="text"
           className="!absolute top-4 right-4 rounded-full"
-          onClick={()=>{toggleWishlist();}}
-
+          onClick={() => {
+            toggleWishlist();
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -212,14 +236,18 @@ price, setPrice } = useTransactionStore();
         </IconButton>
       </CardHeader>
       <CardBody className="flex flex-col items-center justify-center w-[600px]">
-      <Typography variant="h4" color="blue-gray" className="mb-4">
+        <Typography variant="h4" color="blue-gray" className="mb-4">
           {forDetailItem.PostInfo.title}
         </Typography>
         <Typography variant="h6" color="gray" className="mb-4 uppercase">
           {forDetailItem.nftInfo.species}
         </Typography>
-        <Typography variant="h6" color="gray" className="flex items-center mb-4 uppercase">
-        <FaEthereum /> {forDetailItem.PostInfo.price} ETH
+        <Typography
+          variant="h6"
+          color="gray"
+          className="flex items-center mb-4 uppercase"
+        >
+          <FaEthereum /> {forDetailItem.PostInfo.price} ETH
         </Typography>
         <Typography variant="h6" color="gray" className="mb-4 font-normal">
           by {forDetailItem.SellerInfo.nickname}
@@ -228,7 +256,12 @@ price, setPrice } = useTransactionStore();
           {forDetailItem.PostInfo.content}
         </Typography>
         <a href="#" className="inline-block">
-        <Button onClick={handleOpen} variant="gradient" className="flex text-lg" color="red">
+          <Button
+            onClick={handleOpen}
+            variant="gradient"
+            className="flex text-lg"
+            color="red"
+          >
             구매하기
             <img className="w-8 h-8 ml-1" src="/coin.gif" alt="" />
           </Button>
@@ -245,7 +278,7 @@ price, setPrice } = useTransactionStore();
         }}
       >
         <Card className="mx-auto w-full max-w-[24rem]">
-        <CardHeader
+          <CardHeader
             variant="gradient"
             color="blue"
             className="grid mb-4 h-28 place-items-center"
@@ -255,27 +288,42 @@ price, setPrice } = useTransactionStore();
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-          <img src="/basket.gif" alt="my-gif" />
-        <div className="flex justify-center">
-        <span className="text-lg"><span className="font-bold">{forDetailItem.PostInfo.title}
-        </span>를 구매하시겠습니까?</span>
-        </div>
-        <span className="flex items-center justify-center text-lg"><FaEthereum /> <span className="font-bold">{forDetailItem.PostInfo.price} ETH</span></span>
-        </CardBody>
-        <CardFooter className="flex justify-end pt-0">
-        <Button variant="gradient" color="green" onClick={()=>{handleOpen(); transact(price, sellerAddress, tokenId);}}>
-            <span>결제하기</span>
-          </Button>
-          <Button
-            variant="text"
-            color="red"
-            onClick={handleOpen}
-            className="mr-1"
-          >
-            <span>취소</span>
-          </Button>
-          
-        </CardFooter>
+            <img src="/basket.gif" alt="my-gif" />
+            <div className="flex justify-center">
+              <span className="text-lg">
+                <span className="font-bold">
+                  {forDetailItem.PostInfo.title}
+                </span>
+                를 구매하시겠습니까?
+              </span>
+            </div>
+            <span className="flex items-center justify-center text-lg">
+              <FaEthereum />{" "}
+              <span className="font-bold">
+                {forDetailItem.PostInfo.price} ETH
+              </span>
+            </span>
+          </CardBody>
+          <CardFooter className="flex justify-end pt-0">
+            <Button
+              variant="gradient"
+              color="green"
+              onClick={() => {
+                handleOpen();
+                transact(price, sellerAddress, tokenId);
+              }}
+            >
+              <span>결제하기</span>
+            </Button>
+            <Button
+              variant="text"
+              color="red"
+              onClick={handleOpen}
+              className="mr-1"
+            >
+              <span>취소</span>
+            </Button>
+          </CardFooter>
         </Card>
       </Dialog>
 
@@ -318,8 +366,6 @@ price, setPrice } = useTransactionStore();
         </CardFooter>
         </Card>
       </Dialog> */}
-      
     </Card>
   );
 }
-      
