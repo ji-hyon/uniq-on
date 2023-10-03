@@ -295,12 +295,20 @@ app.get("/api/users/login", async (req, res) => {
     } else {
       console.log("스프링 응답 에러 발생!!");
       console.log(springResponse.data);
-      res.status(500).send("스프링 응답 에러 발생!!");
+      console.log(springResponse.data.split(",")[1]);
+      if (springResponse.data.status === 404) {
+        res.status(404).send(springResponse.data.message);
+      } else {
+        res.status(400).send("스프링 응답 에러 발생!!");
+      }
       return;
     }
   } catch (e) {
     console.log("로그인 오류 발생!!");
     console.log(e);
+    if (e.response.status === 404) {
+      res.status(404).send("");
+    }
     console.log(e.status);
     res
       .status(500)

@@ -117,6 +117,7 @@ export function LoginButton() {
           walletAddress: address,
         },
       });
+      console.log(response);
 
         if (response.status === 200) {
           console.log("로그인 성공 !! : ", response.data.response);
@@ -127,13 +128,19 @@ export function LoginButton() {
         } 
 
     } catch (e) {
+      console.log("로그인 에러 발생 " + e);
       if (e.response && e.response.status === 404) {
         console.log("login failed", e.response);
         console.log('e.response.data', e.response.data);
-        alert(
-          "DITI 인증서 등록이 되어있지 않습니다."
-        );
-        window.location.href = e.response.data.ditiAddress;
+        if (e.response.data) {
+          alert("DITI 인증서 등록이 되어있지 않습니다.");
+          window.location.href = e.response.data.ditiAddress;
+        } else {
+          alert("등록된 회원이 아닙니다!");
+          navigate("/signup");
+        }
+        // alert("DITI 인증서 등록이 되어있지 않습니다.");
+        // window.location.href = e.response.data.ditiAddress;
 
       } else if(e.response && e.response.status === 500) {
         console.log("login failed", e.response);
