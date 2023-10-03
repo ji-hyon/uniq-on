@@ -16,7 +16,7 @@ import { FaEthereum } from "react-icons/fa6";
 import { ethers } from "ethers"
 import useUserInfoStore from "../../stores/UserInfoStore";
 
-// import contractAbi from './contractAbi.json';
+import contractAbi from '../contractAbi.json';
 
 import { useEffect, useState } from "react";
 import { useTransactionStore } from "../../stores/TransactionStore";
@@ -123,37 +123,54 @@ export function ItemDetailCard( { item } ) {
         }
       } 
 
-    // async function transact(price,sellerAddress,tokenId){
-    //   //price는 판매자가 등록한 가격 단위는 이더
-    //   //sellerAddress 판매자 지갑 주소
-    //   //tokenId 거래 될 NFT tokenId
-    //   const provider = new ethers.BrowserProvider(window.ethereum);
-    //   // 싸피 네트워크로 바꾸기
-    //   const net=new ethers.JsonRpcProvider("http://127.0.0.1:7545")
+    async function transact(price,sellerAddress,tokenId){
+      //price는 판매자가 등록한 가격 단위는 이더
+      //sellerAddress 판매자 지갑 주소
+      //tokenId 거래 될 NFT tokenId
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      // 싸피 네트워크로 바꾸기
+      const net=new ethers.JsonRpcProvider("https://gethrpc.ssafy-blockchain.com")
   
-    //   const signer = await provider.getSigner();
+      const signer = await provider.getSigner();
   
-    //   //나중에 싸피 네트워크 컨트랙트 주소로 변경 필요
-    //   const contractAddress="0x6fc6B313E41117C2Bf293C9E7a12cc8248d95245"
-    //   const gasProvider=await provider.getFeeData()
-    //   const contractInstance = new ethers.Contract(contractAddress, contractAbi, signer,gasProvider);
+      //나중에 싸피 네트워크 컨트랙트 주소로 변경 필요
+      const contractAddress="0x303a548f56ff203d435190ea3a082b59d726ce36"
+      const gasProvider=await provider.getFeeData()
+      const contractInstance = new ethers.Contract(contractAddress, contractAbi, signer,gasProvider);
   
-    //   const fee=ethers.parseEther(price)
-    //   const options = {value: fee}
+      const fee=ethers.parseEther(price)
+      const options = {value: fee}
   
-    //   const receipt=await contractInstance.connect(signer).saleNFT(sellerAddress,price,tokenId,fee,options)
-    //   const txReceipt = await net.getTransactionReceipt(receipt.hash)
+      const receipt=await contractInstance.connect(signer).saleNFT(sellerAddress,price,tokenId,fee,options)
+      const rr=await receipt.wait()
+      const txReceipt = await net.getTransactionReceipt(receipt.hash)
   
-    //   // status 1이면 성공 아니면 실패
-    //   // 에러 처리 해서 실패했을 경우엔 백에 다음 요청 보내지 않기
-    //   console.log(txReceipt.status)
+      // status 1이면 성공 아니면 실패
+      // 에러 처리 해서 실패했을 경우엔 백에 다음 요청 보내지 않기
+      console.log(txReceipt.status)
   
-    //   //다음 요청에 보내야 하는 값들
-    //   console.log(receipt.hash)  //tx hash
-    //   console.log(parseInt(txReceipt.logs[1].data,16)) //tokenId
-    //   //판매자 주소
-    //   //구매자 주소
-    // }
+      //다음 요청에 보내야 하는 값들
+      console.log(receipt.hash)  //tx hash
+      console.log(parseInt(txReceipt.logs[1].data,16)) //tokenId
+      //판매자 주소
+      //구매자 주소
+
+      if(txReceipt.status===1){
+        try{
+          const data={
+            tokenId:parseInt(txReceipt.logs[1].data,16),
+            txHash:receipt.hash,
+            postId: postId
+          }
+          const response=await axios.post("/api/nfts/buy",data)
+          console.log("거래 성공")
+        }
+        catch(e){
+          console.log(e)
+          console.log("거래 실패")
+        }
+      }
+    }
 
   return (
     <Card className="w-full h-[24rem] max-w-[60rem] flex-row">
@@ -240,7 +257,7 @@ export function ItemDetailCard( { item } ) {
         <span className="flex items-center justify-center text-lg"><FaEthereum /> <span className="font-bold">{forDetailItem.PostInfo.price} ETH</span></span>
         </CardBody>
         <CardFooter className="flex justify-end pt-0">
-        <Button variant="gradient" color="green" onClick={handleOpen}>
+        <Button variant="gradient" color="green" onClick={()=>{handleOpen();transact();}}>
             <span>결제하기</span>
           </Button>
           <Button
