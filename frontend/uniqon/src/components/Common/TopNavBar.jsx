@@ -49,7 +49,12 @@ export function TopNavBar() {
   useEffect(() => {
     const getNotifications = async () => {
       try {
-        const response = await axios.get("/api/notifications");
+        const response = await axios.get("/api/notifications", {
+          params: {
+            page: 0,
+            size : 10
+          }
+        });
         console.log("알림 가져오기 성공", response);
         // setNotifications(response.data.response.content);
       } catch (error) {

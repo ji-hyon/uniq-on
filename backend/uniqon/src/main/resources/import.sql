@@ -67,3 +67,7 @@ INSERT INTO uniqon.posts (nft_id, post_id, price, state, create_datetime, sale_c
 INSERT INTO uniqon.wish_list (post_id, wishlist_id, member_id) VALUES (1, 1, '0x00000000000000');
 INSERT INTO uniqon.wish_list (post_id, wishlist_id, member_id) VALUES (2, 2, '0x00000000000000');
 INSERT INTO uniqon.wish_list (post_id, wishlist_id, member_id) VALUES (3, 3, '0x00000000000000');
+
+INSERT INTO uniqon.notifications (checked, notification_id, post_id, create_datetime, title, content, member_id) VALUES (0, 1, 1, '2023-10-03 20:45:29.000000', '판매 완료 알림', '등록하신 \\귀여운 여우\\ 판매 글의 NFT가 판매 되었습니다.', '0xcf764542E31D9A0DCae80751A472701aA8172E84');
+INSERT INTO uniqon.notifications (checked, notification_id, post_id, create_datetime, title, content, member_id) VALUES (0, 2, 2, '2023-10-03 20:45:30.000000', '판매 완료 알림', '등록하신 \\귀여운 게코~\\ 판매 글의 NFT가 판매 되었습니다.', '0xcf764542E31D9A0DCae80751A472701aA8172E84');
+INSERT INTO uniqon.notifications (checked, notification_id, post_id, create_datetime, title, content, member_id) VALUES (0, 3, 3, '2023-10-03 20:45:31.000000', '판매 완료 알림', '등록하신 \\귀여운 거북~\\ 판매 글의 NFT가 판매 되었습니다.', '0xcf764542E31D9A0DCae80751A472701aA8172E84');
