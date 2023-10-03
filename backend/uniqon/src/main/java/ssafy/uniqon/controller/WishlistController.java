@@ -41,7 +41,7 @@ public class WishlistController {
 
     public record deleteWishlistWebRequest(
             String walletAddress,
-            int wishlistId
+            int postId
     ){}
 
     private final WishlistService wishlistService;
@@ -100,10 +100,10 @@ public class WishlistController {
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    @DeleteMapping("/{wishlistId}")
-    public Response<?> deleteWishlist(@PathVariable Integer wishlistId, @AuthenticationPrincipal UserDetails userDetails){
+    @DeleteMapping("/{postId}")
+    public Response<?> deleteWishlist(@PathVariable Integer postId, @AuthenticationPrincipal UserDetails userDetails){
         log.info("# 위시리스트 삭제 요청 : {}", userDetails.getUsername());
-        int result = wishlistService.deleteWishlist(new deleteWishlistWebRequest(userDetails.getUsername(), wishlistId));
+        int result = wishlistService.deleteWishlist(new deleteWishlistWebRequest(userDetails.getUsername(), postId));
         if (result == 1) {
             log.debug("# 위시리스트 삭제 성공");
             return OK(null);
