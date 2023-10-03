@@ -35,19 +35,6 @@ export function MainCollections() {
   //   setCurrentPage(page);
   // };
 
-  // 알림
-  const [notifications, setNotifications] = useState([]);
-
-  const getNotifications = async () => {
-    try {
-      const response = await axios.get("/api/notifications");
-      console.log("알림 가져오기 성공", response);
-      setNotifications(response.data.response.content);
-    } catch (error) {
-      console.log("알림 가져오기 실패", error);
-    }
-  };
-
   // console.log("현재 페이지", currentPage);
   // console.log("카드 데이터", mainCardsData);
 
@@ -83,21 +70,6 @@ export function MainCollections() {
         <div className="flex flex-row justify-center w-full bg-white">
           <div className="bg-white w-[1440px] h-[1024px] relative">
             <TopNavBar></TopNavBar>
-            <p>여기는 대분류 페이지 입니다.</p>
-            <br></br>
-            <Badge content="5">
-              <Button onClick={getNotifications}>
-                <svg
-                  class="w-6 h-6 text-gray-800 dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 14 20"
-                >
-                  <path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z" />
-                </svg>
-              </Button>
-            </Badge>
 
             <br></br>
             {/* /// */}
