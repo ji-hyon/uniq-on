@@ -10,4 +10,6 @@ public interface WishlistRepository extends JpaRepository<WishList, String> {
     WishList findByIdAndMember_WalletAddress (Integer id, String memberWalletAddress);
 
     WishList findByPost_IdAndMember_WalletAddress (Integer postId, String memberWalletAddress);
+
+    Boolean existsByPost_IdAndMember_WalletAddress (Integer postId, String walletAddress);
 }
