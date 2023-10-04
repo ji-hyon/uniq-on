@@ -5,7 +5,6 @@ import { useTransactionStore } from "../../stores/TransactionStore";
 import { TopNavBar } from "../../components/Common/TopNavBar";
 import { SalesCard } from "../../components/Common/SalesCard";
 import { TransactionBanner } from "../../components/Transaction/TransactionBanner";
-import { RegisterSalesItem } from "./RegisterSalesItem";
 import useUserInfoStore from "../../stores/UserInfoStore";
 
 import { MdOutlinePostAdd } from "react-icons/md";
@@ -216,7 +215,6 @@ export function Transaction() {
 
         <Button color="teal" onClick={getSales}>판매글 조회</Button>
         <br></br>
-        {/* <RegisterSalesItem /> */}
         </div>
         </div>
       </header>
