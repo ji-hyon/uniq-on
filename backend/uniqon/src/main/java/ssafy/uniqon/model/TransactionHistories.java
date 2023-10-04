@@ -19,12 +19,12 @@ public class TransactionHistories {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="seller",insertable=false, updatable=false)
+    @JoinColumn(name="seller")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Members seller;
 
     @ManyToOne
-    @JoinColumn(name="buyer",insertable=false, updatable=false)
+    @JoinColumn(name="buyer")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Members buyer;
 
@@ -32,4 +32,9 @@ public class TransactionHistories {
 
     @CreationTimestamp
     private Timestamp transactedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "nft_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private NFTs nftTxHis;
 }

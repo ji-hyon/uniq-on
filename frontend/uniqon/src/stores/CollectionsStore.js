@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 let collectionsStore = (set) => ({
   mainCollecId: [],
@@ -18,9 +18,12 @@ let collectionsStore = (set) => ({
   setMidCollecType: (payload) => set({ midCollecType: payload }),
 
   midCollecImg: [],
-  setMidCollecImg: (payload) => set({ midCollecImg: payload })
+  setMidCollecImg: (payload) => set({ midCollecImg: payload }),
+
+  liked: false,
+  setLiked: (payload) => set({ liked: payload })
 });
 
-collectionsStore = persist(collectionsStore, { name: 'collections' });
+collectionsStore = persist(collectionsStore, { name: "collections" });
 
 export const useCollectionsStore = create(collectionsStore);

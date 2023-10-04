@@ -4,8 +4,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ItemDetailCard } from "../../components/Common/ItemDetailCard";
 import { TopNavBar } from "../../components/Common/TopNavBar";
 import { useState } from "react";
-import { Button } from "@material-tailwind/react";
+import { Button, Dialog, 
+  Card, CardBody, Input, CardFooter, CardHeader, Typography, Textarea } from "@material-tailwind/react";
 import { useTransactionStore } from "../../stores/TransactionStore";
+import useUserInfoStore from "../../stores/UserInfoStore";
+
+import { LuFileEdit } from "react-icons/lu";
+import { MdDeleteOutline } from "react-icons/md";
+
 
 
 export function TranItemDetail () {
@@ -14,13 +20,18 @@ export function TranItemDetail () {
 
   const { id } = useParams();
   const [ item, setItem ] = useState({});
+  const [title, setTitle] = useState("test");
+  const [content, setContent] = useState("test");
+  const [price, setPrice] = useState("1000");
   const { forDetailItem, setForDetailItem } = useTransactionStore();
   // const URL = "http://localhost:5000"
-  const walletAddress = "0x1234567890123456789012345678901234567890";
+  const { selectedNftId, setSelectedNftId, selectedPostId, setSelectedPostId } = useTransactionStore();
 
-  // const [수정open, set수정Open] = React.useState(false);
-  // const 수정handleOpen = () => { set수정Open(!수정open); };
-  // const [수정할NFTid, set수정할NFTid] = useState("");
+  const { accessToken, walletAddress } = useUserInfoStore();
+
+  const [수정open, set수정Open] = React.useState(false);
+  const 수정handleOpen = () => { set수정Open(!수정open); };
+  const [수정할NFTid, set수정할NFTid] = useState("");
 
   function goToTransaction() {
     navigate("/transaction");
@@ -29,8 +40,11 @@ export function TranItemDetail () {
 
   useEffect(() => {
 
-    // console.log(id)
-
+    console.log(id)
+    setSelectedPostId(id)
+    // setSelectedNftId(forDetailItem.nftId)
+    
+    console.log(forDetailItem)
     getSalesDetail();
   }, []);
 
@@ -41,12 +55,17 @@ export function TranItemDetail () {
       };
   
       try {
-        const res = await axios.get(`/api/sales/detail/${id}`, {
+        const res = await axios.get(`/api/sales/detail/${id}`,{
+          headers: {
+            Authorization: "Bearer " + accessToken,
+            },
+        }, {
           params: params,
         });
           // console.log(id)
           // console.log(res.data.response)
           setItem(res.data.response)
+          setForDetailItem(res.data.response)
   
       } catch(err) {
         console.log(err)
@@ -55,20 +74,21 @@ export function TranItemDetail () {
 
   
 
-  async function updateSales() {
+  async function updateSales(price, title, content) {
 
     try {
       const data = {
-        price: "1000",
-        content: "test",
-        title: "test1",
+        price: price,
+        title: title,
+        content: content,
         walletAddress: walletAddress,
       };
 
-
+      console.log(id)
 
       const res = await axios.put(`/api/sales/update/${id}`, data, {
-        headers: { 
+        headers: {
+          Authorization: "Bearer " + accessToken,
           },
       });
         console.log(res.data)
@@ -85,7 +105,11 @@ export function TranItemDetail () {
     };
 
     try {
-      const res = await axios.delete(`/api/sales/delete/${id}`, {
+      const res = await axios.delete(`/api/sales/delete/${id}`,{
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          },
+      }, {
         params: params,
       });
         console.log(id)
@@ -107,22 +131,29 @@ export function TranItemDetail () {
     <div className="flex flex-row justify-center w-full bg-white">
       <div className="bg-white w-[1440px] h-[1024px] relative">
           <TopNavBar />
-          <div className="relative top-28">
+          <div className="relative flex items-center justify-center top-28">
           {item ? (
                 <ItemDetailCard item={item} />
                 
               ) : (
                 <p>Loading...</p>
               )}
-              <Button color="blue" onClick={updateSales}>판매 수정</Button>
-        <br></br>
-        <Button color="cyan" onClick={deleteSales}>판매 삭제</Button>
-        <br></br>
-        <Button color="gray" onClick={getSalesDetail}>판매 상세 조회</Button>
-          </div>
-          {/* <Button onClick={수정handleOpen} variant="gradient" className="self-end">
+              {/* <Button color="blue" onClick={updateSales}>판매 수정</Button>
+        <br></br> */}
+        </div>
+        <div className="relative flex justify-end right-[240px] top-[140px]">
+        <Button onClick={수정handleOpen} variant="gradient" className="flex items-center self-end">
+          <LuFileEdit className="w-5 h-5 mr-1"/>
         판매글 수정
       </Button>
+        <Button variant="gradient" onClick={deleteSales} className="flex items-center self-end">
+        <MdDeleteOutline className="w-5 h-5 mr-1"/>
+        판매글 삭제
+        </Button>
+        
+        {/* <Button color="gray" onClick={getSalesDetail}>판매 상세 조회</Button> */}
+          
+        
       <Dialog
         size="xs"
         open={수정open}
@@ -139,19 +170,23 @@ export function TranItemDetail () {
               판매글 수정
             </Typography>
           </CardHeader>
+          {item ? (
           <CardBody className="flex flex-col gap-4">
-            <Input label="판매 NFT 선택" value={수정할NFTit} size="lg" onChange={(e) => set수정할NFTid(e.target.value)}/>
-            <Input label="판매글 제목" value={title} size="lg" onChange={(e) => setTitle(e.target.value)} />
-            <Input label="판매글 내용" value={content} size="lg" onChange={(e) => setContent(e.target.value)}/>
-            <Input label="판매 가격" value={price} size="lg" onChange={(e) => setPrice(e.target.value)}/>
+            <Input color="blue" label="판매글 제목" value={item.title} size="lg" onChange={(e) => setTitle(e.target.value)} />
+            <Input color="blue" label="판매 가격" value={item.price} size="lg" onChange={(e) => setPrice(e.target.value)}/>
+            <Textarea color="blue" label="판매글 내용" value={item.content} size="lg" onChange={(e) => setContent(e.target.value)}/>
           </CardBody>
+          ) : (
+            <p>Loading...</p>
+          )}
           <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={() => {수정handleOpen(); updateSales(title, content, price)}} fullWidth>
-              등록
+            <Button variant="gradient" onClick={() => {수정handleOpen(); updateSales( price, title, content)}} fullWidth>
+              수정
             </Button>
           </CardFooter>
         </Card>
-      </Dialog> */}
+      </Dialog>
+      </div>
       
         
         </div>

@@ -28,16 +28,20 @@ public class NotificationQueryRepository {
             Timestamp createDatetime,
             int postId,
             String postTitle,
-            String postPrice
+            String postPrice,
+            String title,
+            String content
 
     ){
-        public getNotificationListDBResponse(int notificationId, boolean checked, Timestamp createDatetime, int postId, String postTitle, String postPrice) {
+        public getNotificationListDBResponse(int notificationId, boolean checked, Timestamp createDatetime, int postId, String postTitle, String postPrice, String title, String content) {
             this.notificationId = notificationId;
             this.checked = checked;
             this.createDatetime = createDatetime;
             this.postId = postId;
             this.postTitle = postTitle;
             this.postPrice = postPrice;
+            this.title=title;
+            this.content=content;
         }
     }
 
@@ -50,7 +54,9 @@ public class NotificationQueryRepository {
                         notifications.createDatetime,
                         notifications.post.id,
                         notifications.post.title,
-                        notifications.post.price))
+                        notifications.post.price,
+                        notifications.title,
+                        notifications.content))
                 .from(notifications)
                 .where(notifications.member.walletAddress.eq(walletAddress))
                 .offset(pageable.getOffset())

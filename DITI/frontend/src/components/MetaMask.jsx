@@ -32,15 +32,19 @@ export function MetaMask() {
     const isMetaMask = injectedProvider ? window.ethereum.isMetaMask : false
     return isMetaMask
   }
+  
   async function addStgGeth() {
     const response = await window.ethereum.request({
       "method": "wallet_addEthereumChain",
       "params": [
         {
-          "chainId": "0x79F5",
-          "chainName": "SSAFY",
+          // "chainId": "0x79F5",
+          "chainId": "0x562",
+          // "chainName": "SSAFY",
+          "chainName": "STG-GETH",
           "rpcUrls": [
-            "https://rpc.ssafy-blockchain.com"
+            // "https://rpc.ssafy-blockchain.com"
+            "https://gethrpc.ssafy-blockchain.com"
           ],
           "iconUrls": [
             "https://xdaichain.com/fake/example/url/xdai.svg",
@@ -80,7 +84,8 @@ export function MetaMask() {
     // add와 switch가 있는데, add는 없으면 추가한 다음 switch를 하고, switch는 없으면 에러 발생 -> add 사용
     // switch : https://docs.metamask.io/wallet/reference/wallet_switchethereumchain/
     // add : https://docs.metamask.io/wallet/reference/wallet_addethereumchain/
-    if (currentChainId !== "0x79F5") {
+    // if (currentChainId !== "0x79F5") {
+    if (currentChainId !== "0x562") {
       await addStgGeth()
     }
 
@@ -116,7 +121,7 @@ export function MetaMask() {
       <header className="App-header">
         <div>
           <div className='border-while border-solid border-4 m-3'>
-            <Button className="text-4xl w-96 h-28 m-5" color="orange" onClick={connectMetaMask}>로그인</Button>
+            <Button className="text-2xl w-70 h-20 m-5" color="orange" onClick={connectMetaMask}>로그인</Button>
             {/* <ul style={{ borderStyle: "solid", borderWidth:"5px", borderColor : "white" }}> */}
             {/* <div className="text-2xl border-while p-5 m-7 border-solid border-4"> */}
             <div className="text-2xl container m-5">

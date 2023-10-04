@@ -9,6 +9,7 @@ import ssafy.uniqon.controller.PostsController;
 import ssafy.uniqon.model.Posts;
 import ssafy.uniqon.model.WishList;
 import ssafy.uniqon.repository.PostRepository;
+import ssafy.uniqon.repository.WishlistRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +18,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostReadService {
     private final PostRepository postRepository;
-
-    public List<PostsController.postListsWebResponse> getPostAll(String walletAddress, Pageable pageable){
+    private final WishlistRepository wishlistRepository;
+    public List<PostsController.postListsWebResponse> getPostAll(Pageable pageable, String walletAddress){
         List<PostsController.postListsWebResponse> list = new ArrayList<>();
         for(Posts post: postRepository.getPostAll(pageable)){
+            Boolean wishcheck = wishlistRepository.existsByPost_IdAndMember_WalletAddress(post.getId(),walletAddress);
             list.add(new PostsController.postListsWebResponse(
                     post.getId(),
                     post.getPrice(),
@@ -28,7 +30,9 @@ public class PostReadService {
                     post.getNft().getMiddle().getSpecies(),
                     post.getSeller().getNickname(),
                     post.getNft().getImage(),
-                    null
+                    wishcheck,
+                    post.getSeller().getWalletAddress(),
+                    post.getNft().getTokenId()
             ));
         }
         if(list.isEmpty()){
@@ -42,6 +46,7 @@ public class PostReadService {
         if(post==null) {
             throw new IllegalArgumentException("No Post found with postId " + postId);
         }
+        Boolean wishcheck = wishlistRepository.existsByPost_IdAndMember_WalletAddress(postId,walletAddress);
 
         return new PostsController.postDetailWebResponse(
                 post.getId(),
@@ -56,12 +61,18 @@ public class PostReadService {
                 post.getContent(),
                 post.getCreate_datetime(),
                 post.getTitle(),
-                true
+                wishcheck,
+                post.getNft().getId(),
+                post.getSeller().getWalletAddress(),
+                post.getNft().getTokenId()
         );
     }
-    public List<PostsController.postListsWebResponse> getSearchPostList(String word, String walletAddress, Pageable pageable){
+
+    public List<PostsController.postListsWebResponse> getSearchPostList(String word, Pageable pageable, String walletAddress) {
         List<PostsController.postListsWebResponse> list = new ArrayList<>();
-        for(Posts post: postRepository.getSearchPost(word, pageable)){
+        for (Posts post : postRepository.getSearchPost(word, pageable)) {
+
+            Boolean wishcheck = wishlistRepository.existsByPost_IdAndMember_WalletAddress(post.getId(),walletAddress);
             list.add(new PostsController.postListsWebResponse(
                     post.getId(),
                     post.getPrice(),
@@ -69,10 +80,12 @@ public class PostReadService {
                     post.getNft().getMiddle().getSpecies(),
                     post.getSeller().getNickname(),
                     post.getNft().getImage(),
-                    null
+                    wishcheck,
+                    post.getSeller().getWalletAddress(),
+                    post.getNft().getTokenId()
             ));
         }
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             throw new IllegalArgumentException("No Post found with word " + word);
         }
         return list;

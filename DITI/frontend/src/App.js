@@ -9,10 +9,10 @@ import { MetaMask } from './components/MetaMask';
 function App() {
   return (
     <div className="App">
-      <MetaMask />
       <BrowserRouter basename={process.env.DITI_BASENAME || ""}>
         <Routes>
           <Route index path="/diti/" element={<Landing />} />
+          <Route index path="/diti/login" element={<MetaMask />} />
           <Route path="/diti/issue" element={<IssueCert />} />
           <Route path="/diti/check" element={<CheckCert />} />
         </Routes>

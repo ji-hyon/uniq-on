@@ -12,3 +12,7 @@ spring:
     include:
       - db
       - log
+      - jwt
+
+server:
+  port: 5001

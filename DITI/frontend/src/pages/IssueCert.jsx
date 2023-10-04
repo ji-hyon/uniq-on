@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from "@material-tailwind/react";
 import axios from "axios"
 import { ethers } from "ethers"
 import useUserInfoStore from '../stores/UserInfoStore';
+import { useNavigate } from 'react-router-dom'
 
 // 요청
 export function IssueCert() {
@@ -15,10 +16,31 @@ export function IssueCert() {
   })
   const inputFileRef = useRef(null)
   const userInfo = useUserInfoStore()
+  const navigate = useNavigate()
+
   // const walletAddress = useUserInforStore((state)=>state.walletAddress)
   // const {walletAddress, originalMessage, signedMessage } = useUserInfoStore()
-
+  
+  // const requestVC=useCallback(async ()=>{
   async function requestVC() {
+        // 메타마스크 설치 확인
+        if (typeof window.ethereum === 'undefined') {
+          alert("MetaMask를 설치해주세요");
+          // 메타마스크 홈페이지로 이동 
+          window.location.href = 'https://metamask.io/';
+          return;
+      }
+  
+      // 메타마스크 로그인 확인
+      // if (!window.ethereum.selectedAddress) {
+      console.log(userInfo.walletAddress)
+      if (!userInfo.walletAddress||!userInfo.token||userInfo.token === "") {
+          alert("MetaMask에 먼저 로그인 해주세요");
+          // 로그인 페이지로 이동
+          // window.location.href = '/diti/login';
+          navigate("/diti/login");
+          return;
+      }
     // 백엔드 서버에 이 주소로 로그인하겠다는 것을 알려야 함. 신원 증명 필요. 
     // private key를 가지고 있고 서명을 만들 수 있다는 것을 증명
     // 임의의 메세지에 사인하는 것
@@ -47,11 +69,28 @@ export function IssueCert() {
           'walletAddress': userInfo.walletAddress,
         },
       });
-      console.log(response)
-    } catch (e) {
-      console.error(e)
-    }
+      console.log(response)        
+        
+      if (response.status === 200) {
+        console.log("VC발급 성공");
+        alert("DITI 인증서 발급에 성공했습니다!")
+        navigate("/diti/check");
+      } else {
+        console.log('response : ', response);
+      }
+
+
+      } catch (e) {
+        console.error(e)
+        console.log(e.response.data);
+        // console.log(e.response.status);
+        if(e.response.status === 400) {
+          alert(e.response.data)
+          return
+        }
+      }
   }
+  // },[userInfo.walletAddress])
   
   async function test() {
     // try {
@@ -86,6 +125,10 @@ export function IssueCert() {
       console.log(response.data)
     } catch (e) {
       console.error(e)
+      if (e.response.status === 404) {
+        alert(e.response.data)
+        return
+      }
     }
   }
 
@@ -100,7 +143,7 @@ export function IssueCert() {
           <Button className="text-4xl w-96 h-28 mt-1" color="yellow" onClick={requestVC}>전자신분증 발급</Button>
         </div>
 
-        <Button className="text-base w-50 h-20 m-20" color="blue" onClick={test}>Test button</Button>
+        <Button className="text-base w-50 h-20 m-20" color="blue" onClick={test}>VP검증 테스트 버튼</Button>
       </header>
 
     </div>

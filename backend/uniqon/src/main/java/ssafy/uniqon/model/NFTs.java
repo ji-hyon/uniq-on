@@ -37,6 +37,7 @@ public class NFTs {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wallet_address")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Setter
     private Members owner;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -53,9 +54,17 @@ public class NFTs {
     @Column(length = 200)
     private String contractAddress;
 
-    private int tokenId;
+    private Integer tokenId;
 
     @Setter
     @ColumnDefault("0")
     private Integer liked_cnt;
+
+    @OneToMany(mappedBy = "nftTxHis")
+    List<TransactionHistories> txHistories=new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creater")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Members creater;
 }

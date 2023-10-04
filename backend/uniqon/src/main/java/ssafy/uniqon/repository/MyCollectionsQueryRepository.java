@@ -34,7 +34,9 @@ public class MyCollectionsQueryRepository {
                         nFTs.nftURL,
                         nFTs.contractAddress,
                         nFTs.tokenId,
-                        nFTs.liked_cnt))
+                        nFTs.liked_cnt,
+                        nFTs.creater.walletAddress
+                ))
                 .from(myCollections)
                 .innerJoin(nFTs)
                 .on(myCollections.nfts.id.eq(nFTs.id))

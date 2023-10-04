@@ -16,7 +16,7 @@ export function Section1() {
         <div className="h-[525px] w-[1024px] relative">
           <div className="relative w-[1262px] h-[805px] top-[-25px]">
             <div className="absolute w-[1262px] h-[805px] top-0 left-0">
-              <div className="flex flex-col w-[1024px] items-start pl-0 pr-[596px] pt-[200px] pb-0 absolute top-[25px] left-0">
+              <div className="flex flex-col w-[1100px] items-start pl-0 pr-[596px] pt-[200px] pb-0 absolute top-[25px] left-[-16px]">
                 <div className="relative w-fit mt-[-1.00px] mr-[-153.00px] [text-shadow:0px_4px_4px_#00000040] [font-family:'Segoe_UI-Bold',Helvetica] font-bold text-[#212529] text-[54px] tracking-[0] leading-[73px]">
                   비밀의 동물원,
                   <br />
@@ -45,12 +45,12 @@ export function Section1() {
                 />
               </div>
             </div>
-            <p className="h-[60px] top-[401px] left-0 [font-family:'Segoe_UI-Regular',Helvetica] font-normal text-[#7c7c7c] text-[20px] leading-[30px] absolute tracking-[0]">
+            <p className="h-[60px] top-[401px] left-0 [font-family:'Segoe_UI-Regular',Helvetica] font-semibold text-[#7c7c7c] text-[20px] leading-[30px] absolute tracking-[0]">
               희동이는 희귀동물의 애칭이에요
               <br />
               유니콘에서 희동이를 만나고 소유해보세요
             </p>
-            <img src="/snake.gif" alt="" />
+            <img src="snake.gif" alt="" />
           </div>
         </div>
       </div>

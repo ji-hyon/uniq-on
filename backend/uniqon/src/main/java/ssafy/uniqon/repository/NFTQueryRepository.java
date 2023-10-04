@@ -11,10 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import ssafy.uniqon.dto.NftListResponseDto;
 import ssafy.uniqon.dto.NftListSearchResponseDto;
+import ssafy.uniqon.model.NFTs;
+import ssafy.uniqon.model.QMembers;
 
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
+import static ssafy.uniqon.model.QMembers.members;
+import static ssafy.uniqon.model.QMiddleClassifications.middleClassifications;
 import static ssafy.uniqon.model.QNFTs.nFTs;
 
 @Repository
@@ -116,7 +120,8 @@ public class NFTQueryRepository {
 
     public Page<NftListResponseDto> getMyNftList(String userId, Pageable pageable){
         log.debug("# DB에서 nft 리스트 조회 ..");
-
+        QMembers members1=new QMembers("m1");
+        QMembers members2=new QMembers("m2");
         List<NftListResponseDto> list = jpaQueryFactory
                 .select(Projections.constructor(NftListResponseDto.class,
                         nFTs.id,
@@ -125,16 +130,20 @@ public class NFTQueryRepository {
                         nFTs.name,
                         nFTs.age,
                         nFTs.feature,
-                        nFTs.owner.nickname,
-                        nFTs.owner.profileImage,
-                        nFTs.middle.id,
-                        nFTs.middle.species,
+                        members1.nickname,
+                        members1.profileImage,
+                        middleClassifications.id,
+                        middleClassifications.species,
                         nFTs.nftURL,
                         nFTs.contractAddress,
                         nFTs.tokenId,
-                        nFTs.liked_cnt
+                        nFTs.liked_cnt,
+                        members2.walletAddress
                 ))
                 .from(nFTs)
+                .leftJoin(members2).on(members2.walletAddress.eq(nFTs.creater.walletAddress))
+                .leftJoin(members1).on(members1.walletAddress.eq(userId))
+                .leftJoin(middleClassifications).on(middleClassifications.id.eq(nFTs.middle.id))
                 .where(
                         nFTs.owner.walletAddress.eq(userId)
                 )
@@ -153,6 +162,10 @@ public class NFTQueryRepository {
 
 
         return new PageImpl<>(list, pageable, count);
+    }
+
+    public NFTs findByCreaterAndName(String userId,String name){
+        return jpaQueryFactory.selectFrom(nFTs).where(nFTs.creater.walletAddress.eq(userId).and(nFTs.name.eq(name))).fetchOne();
     }
 
 }

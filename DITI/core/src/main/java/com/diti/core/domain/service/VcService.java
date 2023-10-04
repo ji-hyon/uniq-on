@@ -18,5 +18,5 @@ public interface VcService {
 
     getVcWebResponse getVc(VcController.getVcWebRequest req);
 
-    void registerVc(VcController.registerVcWebRequest req);
+    int registerVc(VcController.registerVcWebRequest req);
 }

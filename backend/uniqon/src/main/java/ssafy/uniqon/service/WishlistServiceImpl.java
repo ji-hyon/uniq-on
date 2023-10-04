@@ -46,7 +46,7 @@ public class WishlistServiceImpl implements WishlistService{
 
     @Override
     public int deleteWishlist(WishlistController.deleteWishlistWebRequest req) {
-        WishList wishList = wishlistRepository.findByIdAndMember_WalletAddress(req.wishlistId(), req.walletAddress());
+        WishList wishList = wishlistRepository.findByPost_IdAndMember_WalletAddress(req.postId(), req.walletAddress());
         if (wishList != null) {
             log.debug("# 위시리스트 삭제중..");
             wishlistRepository.delete(wishList);

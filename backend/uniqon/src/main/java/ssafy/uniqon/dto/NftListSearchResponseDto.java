@@ -14,12 +14,13 @@ public class NftListSearchResponseDto {
     private Integer age;
     private String feature;
     private String ownerNickname;
-    private String ownerProfileImage;
+    private byte[] ownerProfileImage;
     private String mainType;
     private Integer middleClassificationId;
     private String middleSpecies;
     private String nftURL;
     private String contractAddress;
     private Integer tokenId;
+    private Integer likedCnt;
 
 }

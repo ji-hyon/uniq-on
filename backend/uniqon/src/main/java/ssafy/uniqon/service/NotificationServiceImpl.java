@@ -1,6 +1,7 @@
 package ssafy.uniqon.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +20,7 @@ import ssafy.uniqon.repository.PostsRepository;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class NotificationServiceImpl implements NotificationService{
+public class NotificationServiceImpl implements NotificationService {
 
     private final MemberRepository memberRepository;
     private final PostsRepository postsRepository;
@@ -27,31 +28,20 @@ public class NotificationServiceImpl implements NotificationService{
     private final NotificationQueryRepository notificationQueryRepository;
 
     @Override
-    public int registerNotification(NotificationController.registerNotificationWebRequest req) {
-        Members members = memberRepository.findById(req.walletAddress()).orElseThrow(
-                () -> new NotFoundException(Members.class, req.walletAddress()));
-        Posts posts = postsRepository.findById(req.postId());
-        Notifications notifications = notificationRepository.findByPost_IdAndMember_WalletAddress(req.postId(), req.walletAddress());
-        if (members != null && posts != null && notifications == null) {
-            log.debug("{}", members);
-            log.debug("{}", posts);
-            log.debug("# 알림 추가중 ...");
-            notificationRepository.save(Notifications.builder()
-                    .member(members)
-                    .post(posts)
-                    .checked(false)
-                    .build());
-            return 1;
-        } else {
-            log.debug(" 알림 추가 실패!");
-            return 0;
-        }
+    public void createNotification(Members user, Posts post) {
+        notificationRepository.save(Notifications.builder()
+                .member(user)
+                .post(post)
+                .checked(false)
+                .title("판매 완료 알림")
+                .content("등록하신 "+"\""+post.getTitle()+"\" "+"판매 글의 NFT가 판매 되었습니다.")
+                .build());
     }
 
     @Override
     public Page<NotificationQueryRepository.getNotificationListDBResponse> getNotificationList(Pageable pageable, String walletAddress) {
         Members members = memberRepository.findById(walletAddress).orElseThrow(
-                ()-> new NotFoundException(Members.class, walletAddress));
+                () -> new NotFoundException(Members.class, walletAddress));
         Page<NotificationQueryRepository.getNotificationListDBResponse> list = notificationQueryRepository.getNotificationList(pageable, walletAddress);
         log.debug("# 알림 리스트 조회 결과 : {}", list);
         return list;
@@ -69,5 +59,23 @@ public class NotificationServiceImpl implements NotificationService{
             return 0;
         }
 
+    }
+
+    @Override
+    public NotificationController.NotificationWebResponse readNotification(String userId, Integer notiId) {
+        Notifications noti = notificationRepository.findByIdAndMember_WalletAddress(notiId, userId);
+        if (noti == null) {
+            throw new NotFoundException(Notifications.class, "없는 알림");
+        }
+        noti.setChecked(true);
+
+        return new NotificationController.NotificationWebResponse(
+                noti.getId(),
+                noti.getChecked(),
+                noti.getCreateDatetime(),
+                noti.getPost().getId(),
+                noti.getTitle(),
+                noti.getContent()
+        );
     }
 }
