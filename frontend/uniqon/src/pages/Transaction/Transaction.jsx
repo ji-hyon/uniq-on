@@ -24,6 +24,7 @@ export function Transaction() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [price, setPrice] = useState("");
+  const [ 새로운등록발견, set새로운등록발견 ] = useState(false);
 
   const { salesItemsList, setSalesItemsList  
     } = useTransactionStore();
@@ -32,7 +33,7 @@ export function Transaction() {
   useEffect(() => {
     // console.log(accessToken)
     getSales();
-  }, []);
+  }, [새로운등록발견]);
   
 
   // 판매글 등록시에 내가 가지고 있는 NFT 조회
@@ -116,6 +117,7 @@ export function Transaction() {
             },
         });
         console.log(res.data)
+        set새로운등록발견(!새로운등록발견)
         
       } catch (err) {
         console.log(err);
