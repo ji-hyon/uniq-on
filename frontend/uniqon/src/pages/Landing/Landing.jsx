@@ -34,7 +34,7 @@ export function Landing() {
 
         <LoginButton />
 
-        {/* <Button
+         <Button
           className="text-4xl w-96 h-28"
           onClick={() => {
             navigate("/signup");
