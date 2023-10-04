@@ -3,10 +3,12 @@ import { Button } from "@material-tailwind/react";
 import axios from "axios"
 import { ethers } from "ethers"
 import useUserInfoStore from '../stores/UserInfoStore';
-import { useNavigate } from 'react-router-dom'
+import { useConfigStore } from '../stores/ConfigStore';
+// import { useNavigate } from 'react-router-dom'
 
 // 요청
 export function IssueCert() {
+  const setPage = useConfigStore(s=>s.setPage)
   const [signer, setSigner] = useState(null)
   const [provider, setProvider] = useState(null)
   const [wallet, setWallet] = useState({
@@ -16,7 +18,7 @@ export function IssueCert() {
   })
   const inputFileRef = useRef(null)
   const userInfo = useUserInfoStore()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   // const walletAddress = useUserInforStore((state)=>state.walletAddress)
   // const {walletAddress, originalMessage, signedMessage } = useUserInfoStore()
@@ -44,7 +46,8 @@ export function IssueCert() {
           alert("MetaMask에 먼저 로그인 해주세요");
           // 로그인 페이지로 이동
           // window.location.href = '/diti/login';
-          navigate("/diti/login");
+          // navigate("/diti/login");
+          setPage("landing")
           return;
       }
     // 백엔드 서버에 이 주소로 로그인하겠다는 것을 알려야 함. 신원 증명 필요. 
@@ -80,7 +83,8 @@ export function IssueCert() {
       if (response.status === 200) {
         console.log("VC발급 성공");
         alert("DITI 인증서 발급에 성공했습니다!")
-        navigate("/diti/check");
+        // navigate("/diti/check");
+        setPage("check")
       } else {
         console.log('response : ', response);
       }
