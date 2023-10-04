@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ssafy.uniqon.global.config.auth.*;
+import ssafy.uniqon.service.CustomUserDetailsService;
 
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -31,6 +33,8 @@ public class SecurityConfig {
         private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
         private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
         private final TokenProvider tokenProvider;
+        private final CustomUserDetailsService customUserDetailsService;
+
 
         // 웹 전체 Security 비활성화
         // @Bean
@@ -86,4 +90,14 @@ public class SecurityConfig {
                                 .build();
 
     }
+
+        @Bean
+        public DaoAuthenticationProvider daoAuthenticationProvider() {
+                DaoAuthenticationProvider bean = new DaoAuthenticationProvider();
+                bean.setHideUserNotFoundExceptions(false);
+                bean.setUserDetailsService(customUserDetailsService);
+                bean.setPasswordEncoder(passwordEncoder());
+
+                return bean;
+        }
 }

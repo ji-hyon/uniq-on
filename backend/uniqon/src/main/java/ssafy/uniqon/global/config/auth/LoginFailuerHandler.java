@@ -21,17 +21,27 @@ public class LoginFailuerHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         log.warn("자격 증명 실패!!!!!");
-        exception.printStackTrace();
-        Map<String, Object> responseMap = new HashMap<>();
+        log.warn("로그인 실패 에러 : {}", exception.toString());
+//        Map<String, Object> responseMap = new HashMap<>();
         String message = getExceptionMessage(exception);
         log.warn("자격 증명 실패 메시지 : {}", message);
-        responseMap.put("status", 401);
-        responseMap.put("message", message);
+        if (message.equals("비밀번호불일치")) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400 Bad Request
+            response.getWriter().write("비밀번호가 일치하지 않습니다.");
+        } else if (message.equals("계정없음")) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND); // 404 Not Found
+            response.getWriter().write("계정이 존재하지 않습니다.");
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Unauthorized
+            response.getWriter().write("인증 실패");
+        }
+//        response.setStatus();
+//        responseMap.put("message", message);
 
         // ResponseEntity를 사용하여 JSON 응답을 생성하고 반환
-        ResponseEntity<Map<String, Object>> jsonResponse = new ResponseEntity<>(responseMap, HttpStatus.UNAUTHORIZED);
-        response.setContentType("application/json");
-        response.getWriter().write(jsonResponse.getBody().toString());
+//        ResponseEntity<Map<String, Object>> jsonResponse = new ResponseEntity<>(responseMap, HttpStatus.UNAUTHORIZED);
+//        response.setContentType("application/json");
+//        response.getWriter().write(jsonResponse.getBody().toString());
 
     }
 

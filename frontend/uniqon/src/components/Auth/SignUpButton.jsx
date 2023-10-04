@@ -63,6 +63,7 @@ export function SignUpButton() {
   }
 
   async function signUp() {
+    // 닉네임 유효성 검사
     // 닉네임 1자 이상 입력, 공백 미포함
     if (nickname.length < 1) {
       alert("닉네임을 입력해주세요!")
@@ -71,6 +72,23 @@ export function SignUpButton() {
       alert("닉네임에 공백을 포함할 수 없습니다.");
       return
     }
+    // 닉네임 중복 검사
+    try {
+      const response = await axios.get(`/api/users/duplicate/${nickname}`)
+      // console.log('response.data', response.data);
+      console.log('response.data', response.data.success);
+      console.log('response.status', response.status);
+
+      if (!response.data.success) {
+          alert(response.data.error.message)
+        return
+      }
+    } catch(e) {
+      console.log(e);
+      alert("회원가입에 실패했습니다.")
+      return
+    }
+
 
     // 메타마스크 확장 프로그램이 없으면 에러 발생
     if (!detectMetaMask()) {
@@ -137,6 +155,12 @@ export function SignUpButton() {
       });
       if (response.status === 200) {
         alert("회원가입에 성공하였습니다.");
+        console.log(response.data);
+
+        ///////////////////////////////////////////////////////////
+        ///////// 넘겨받은 회원정보 처리하는 로직 추가하기  //////////
+        ///////////////////////////////////////////////////////////
+
         // 회원가입 후 메인페이지로 이동
         navigate("/");
       } 
