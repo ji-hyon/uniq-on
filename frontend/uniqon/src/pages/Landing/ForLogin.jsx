@@ -6,8 +6,8 @@ export function ForLogin() {
   return (
     <>
     <div className="w-screen h-screen p-0 m-0 overflow-hidden bg-black -webkit-touch-callout-none">
-    <CheckoutForm />
     <Scene />
+    {/* <CheckoutForm /> */}
     
     </div>
     </>

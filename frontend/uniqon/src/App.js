@@ -22,9 +22,9 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/" element={<Landing />} />
-        {/* <Route path="/forlogin" element={<ForLogin />} /> */}
+        <Route path="/forlogin" element={<ForLogin />} />
 
-        {/* <Route path="/transaction" element={<Transaction />} /> */}
+        <Route path="/transaction" element={<Transaction />} />
         <Route path="/transaction/tranItemDetail/:id" element={<TranItemDetail />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/wishlist" element={<Wishlist />} />
