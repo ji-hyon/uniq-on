@@ -12,7 +12,7 @@ import { NFTList } from './pages/Collections/NFTList';
 import { Login } from './pages/Auth/Login';
 import { SignUp } from './pages/Auth/SignUp';
 
-// import { ForLogin } from './pages/Landing/ForLogin';
+import { ForLogin } from './pages/Landing/ForLogin';
 
 import { Suspense } from 'react';
 
@@ -24,7 +24,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         {/* <Route path="/forlogin" element={<ForLogin />} /> */}
 
-        <Route path="/transaction" element={<Transaction />} />
+        {/* <Route path="/transaction" element={<Transaction />} /> */}
         <Route path="/transaction/tranItemDetail/:id" element={<TranItemDetail />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/wishlist" element={<Wishlist />} />
