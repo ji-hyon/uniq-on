@@ -1,6 +1,5 @@
 import './App.css';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { Collections } from './pages/Collections/Collections';
 import { Transaction } from './pages/Transaction/Transaction';
 import { TranItemDetail } from './pages/Transaction/TranItemDetail';
 import { MyPage } from './pages/Mypage/MyPage';
@@ -9,7 +8,6 @@ import { Landing } from './pages/Landing/Landing';
 import { NFT } from './pages/NFT/NFT';
 import { MainCollections } from './pages/Collections/MainCollections';
 import { MidCollections } from './pages/Collections/MidCollec';
-import { MidCollecDetail } from './pages/Collections/MidCollecDetail';
 import { NFTList } from './pages/Collections/NFTList';
 import { Login } from './pages/Auth/Login';
 import { SignUp } from './pages/Auth/SignUp';
@@ -26,7 +24,6 @@ function App() {
         <Route path="/" element={<Landing />} />
         {/* <Route path="/forlogin" element={<ForLogin />} /> */}
 
-        {/* <Route path="/collections" element={<Collections />} /> */}
         <Route path="/transaction" element={<Transaction />} />
         <Route path="/transaction/tranItemDetail/:id" element={<TranItemDetail />} />
         <Route path="/mypage" element={<MyPage />} />
@@ -35,7 +32,6 @@ function App() {
 
         <Route path="/collections" element={<MainCollections />} />
         <Route path="/midcollections" element={<MidCollections />} />
-        <Route path="/midcollecdetail" element={<MidCollecDetail />} />
         <Route path="/nftlist" element={<NFTList />} />
 
         <Route path="/login" element={<Login />} />
