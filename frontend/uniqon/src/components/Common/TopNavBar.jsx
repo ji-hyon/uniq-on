@@ -45,6 +45,10 @@ export function TopNavBar() {
   const goToMypage = () => {
     navigate("/mypage");
   };
+  
+  const goMyInfo = () => {
+    navigate("/myinfo");
+  };
 
   const goLogout = () => {
     window.location.href = "http://127.0.0.1:5000/api/users/logout";
@@ -159,6 +163,7 @@ export function TopNavBar() {
                 </Button>
               </MenuHandler>
               <MenuList className="absolute top-0 left-0">
+                <MenuItem onClick={goMyInfo}>내 정보</MenuItem>
                 <MenuItem onClick={goToMypage}>마이페이지</MenuItem>
                 <MenuItem onClick={goToWishlist}>위시리스트</MenuItem>
                 <MenuItem onClick={goLogout}>로그아웃</MenuItem>

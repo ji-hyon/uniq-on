@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import {MdArrowBack,MdArrowForward} from "react-icons/md";
 
 import {
   Button,
@@ -47,9 +48,9 @@ export function MyNft() {
 
   return (
     <div className="App">
-      {page > 0 && <Button onClick={handlePreviousPage}>이전 페이지</Button>}
+      {page > 0 && <Button onClick={handlePreviousPage}><MdArrowBack className="w-6 h-6"></MdArrowBack></Button>}
       {nftList.length > 0 && (
-        <Button onClick={handleNextPage}>다음 페이지</Button>
+        <Button onClick={handleNextPage}><MdArrowForward className="w-6 h-6"></MdArrowForward></Button>
       )}
       <div className="flex w-[1200px] items-start gap-[32px] relative flex-wrap">
         {nftList.map((nft, index) => (

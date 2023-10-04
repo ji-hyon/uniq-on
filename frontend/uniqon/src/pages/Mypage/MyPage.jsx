@@ -55,7 +55,7 @@ export function MyPage() {
       try {
         const response = await axios.get(`/api/myPage/info`);
         if (response.status === 200) {
-          setUserInfo(response.data.response);
+          // setUserInfo(response.data.response);
         } else {
           console.log(response);
         }
