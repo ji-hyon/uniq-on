@@ -35,19 +35,7 @@ export function Header() {
                     // + (walletAddress ? " flex-grow " : " flex-grow-0 ")
                 }
                 >
-                    <div className="flex">
-                        <Typography
-                            // variant="large"
-                            as="button"
-                            className={
-                                "py-1 px-3 font-semibold text-lg hover:scale-125 rounded whitespace-nowrap transition "
-                                + (page === "check" ? " underline " : "")
-                            }
-                            onClick={() => { setPage("check") }}
-
-                        >
-                            조회
-                        </Typography>
+                    <div className="flex mx-3 mt-3">
                         <Typography
                             // variant="large"
                             as="button"
@@ -59,6 +47,18 @@ export function Header() {
 
                         >
                             발급
+                        </Typography>
+                        <Typography
+                            // variant="large"
+                            as="button"
+                            className={
+                                "py-1 px-3 font-semibold text-lg hover:scale-125 rounded whitespace-nowrap transition "
+                                + (page === "check" ? " underline " : "")
+                            }
+                            onClick={() => { setPage("check") }}
+
+                        >
+                            조회
                         </Typography>
                     </div>
                     <div className="flex flex-grow justify-end">
