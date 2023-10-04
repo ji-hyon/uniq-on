@@ -14,8 +14,7 @@ import { Select, Option, Input, Textarea } from "@material-tailwind/react";
 import { ethers } from "ethers";
 import contractAbi from "../../components/NFT/contractAbi.json";
 import useUserInfoStore from "../../stores/UserInfoStore";
-import { CreateNft } from "./NftRegister";
-import { useNftStore } from "../../stores/NFTStore";
+import { useCollectionsStore } from "../../stores/CollectionsStore";
 
 export function NFT() {
   const nftImg = useRef();
@@ -28,92 +27,108 @@ export function NFT() {
 
   const { accessToken } = useUserInfoStore();
 
-  const mainOptions = [
-    "여우",
-    "도마뱀",
-    "거북이",
-    "앵무새",
-    "물고기",
-    "뱀",
-    "카멜레온",
-    "기타"
-  ];
+  const { mainType } = useCollectionsStore();
+
   const middleOptions = {
     여우: [
-      "뱅골여우",
-      "아프간여우",
-      "케이프여우",
-      "코사크여우",
-      "티베트모래여우",
-      "키트여우",
-      "스위프트여우",
-      "그 외"
+      {
+        id: 0,
+        species: "벵골 여우"
+      },
+      {
+        id: 1,
+        species: "아프간 여우"
+      },
+      {
+        id: 2,
+        species: "케이프 여우"
+      }
     ],
     도마뱀: [
-      "비어디드래곤 도마뱀",
-      "레오파드게코 도마뱀",
-      "턱수염도마뱀",
-      "표범도마뱀붙이",
-      "토카이게코 도마뱀",
-      "액키즈드워프 도마뱀",
-      "러프납테일게코 도마뱀",
-      "그 외"
+      {
+        id: 0,
+        species: "크레스티드 게코 도마뱀"
+      },
+      {
+        id: 1,
+        species: "레오파드게코 도마뱀"
+      },
+      {
+        id: 2,
+        species: "턱수염 도마뱀"
+      }
     ],
     거북이: [
-      "쟁기거북",
-      "붉은귀거북",
-      "아프리카 사이드넥 거북",
-      "동부상자거북",
-      "서양거북",
-      "미시시피지도거북",
-      "커먼 머스크 터틀",
-      "점박이 거북",
-      "노란배 슬러이더",
-      "그 외"
+      {
+        id: 0,
+        species: "쟁기 거북"
+      },
+      {
+        id: 1,
+        species: "붉은귀 거북"
+      },
+      {
+        id: 2,
+        species: "커먼 머스크 터틀"
+      }
     ],
     앵무새: [
-      "금강앵무",
-      "썬코뉴어",
-      "왕관앵무",
-      "모란앵무",
-      "검은머리카이큐",
-      "오색앵무",
-      "유황앵무",
-      "청금강",
-      "사랑앵무",
-      "코뉴어",
-      "그 외"
+      {
+        id: 0,
+        species: "금강 앵무"
+      },
+      {
+        id: 1,
+        species: "모란 앵무"
+      },
+      {
+        id: 2,
+        species: "오색 앵무"
+      }
     ],
     물고기: [
-      "구피",
-      "네온테트라",
-      "제브라다니오",
-      "베타",
-      "플라워혼",
-      "알지이터",
-      "라미레지",
-      "브리카르디",
-      "플래티",
-      "그 외"
+      {
+        id: 0,
+        species: "구피"
+      },
+      {
+        id: 1,
+        species: "플라워혼"
+      },
+      {
+        id: 2,
+        species: "플래티"
+      }
     ],
     뱀: [
-      "킹코브라",
-      "콘 스네이크(옥수수뱀)",
-      "밀크스네이크",
-      "킹 스네이크",
-      "볼파이톤",
-      "그 외"
+      {
+        id: 0,
+        species: "킹코브라"
+      },
+      {
+        id: 1,
+        species: "밀크스네이크"
+      },
+      {
+        id: 2,
+        species: "볼파이톤"
+      }
     ],
     카멜레온: [
-      "베일드 카멜레온",
-      "피그미 카멜레온",
-      "팬서 카멜레온",
-      "파슨 카멜레온",
-      "세네갈 카멜레온",
-      "잭슨 카멜레온 표범 카멜레온",
-      "그 외"
+      {
+        id: 0,
+        species: "베일드 카멜레온"
+      },
+      {
+        id: 1,
+        species: "피그미 카멜레온"
+      },
+      {
+        id: 2,
+        species: "파슨 카멜레온"
+      }
     ],
-    기타: ["그 외"]
+    기타: [{ id: 0, species: "그 외" }]
   };
 
   const [imgBase64, setImgBase64] = useState("");
@@ -550,7 +565,7 @@ export function NFT() {
                     label="대분류"
                     onChange={mainChange}
                   >
-                    {mainOptions.map((option) => (
+                    {mainType.map((option) => (
                       <Option key={option} value={option}>
                         {option}
                       </Option>
@@ -563,11 +578,19 @@ export function NFT() {
                     onChange={middleChange}
                   >
                     {selectedMain &&
-                      middleOptions[selectedMain].map((option) => (
-                        <Option key={option} value={option}>
-                          {option}
+                      (selectedMain === "그 외"
+                        ? [{ id: 0, species: "그 외" }]
+                        : middleOptions[selectedMain]
+                      ).map((option) => (
+                        <Option key={option.id} value={option.species}>
+                          {option.species}
                         </Option>
                       ))}
+                    {/* middleOptions[selectedMain].map((option) => (
+                        <Option key={option.id} value={option.species}>
+                          {option.species}
+                        </Option>
+                      ))} */}
                   </Select>
 
                   {/* )} */}
