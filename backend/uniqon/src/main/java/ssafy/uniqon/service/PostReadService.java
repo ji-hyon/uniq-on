@@ -22,7 +22,11 @@ public class PostReadService {
     public List<PostsController.postListsWebResponse> getPostAll(Pageable pageable, String walletAddress){
         List<PostsController.postListsWebResponse> list = new ArrayList<>();
         for(Posts post: postRepository.getPostAll(pageable)){
-            Boolean wishcheck = wishlistRepository.existsByPost_IdAndMember_WalletAddress(post.getId(),walletAddress);
+            Boolean wishcheck;
+            if(walletAddress.equals("")){
+                wishcheck=false;
+            }
+            else wishcheck = wishlistRepository.existsByPost_IdAndMember_WalletAddress(post.getId(),walletAddress);
             list.add(new PostsController.postListsWebResponse(
                     post.getId(),
                     post.getPrice(),

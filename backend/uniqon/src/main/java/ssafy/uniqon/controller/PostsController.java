@@ -189,7 +189,14 @@ private final PostDeleteService postDeleteService;
     @GetMapping("/post")
     public Response<?> getAllPostList(@PageableDefault(size=9) Pageable pageable,@AuthenticationPrincipal UserDetails user){
         log.debug("# 판매글 리스트 표시");
-        List<postListsWebResponse> postlist = postReadService.getPostAll(pageable,user.getUsername());
+        List<postListsWebResponse> postlist;
+        if(user!=null) {
+             postlist= postReadService.getPostAll(pageable, user.getUsername());
+
+        }
+        else{
+            postlist = postReadService.getPostAll(pageable, "");
+        }
         return OK(postlist);
     }
 }
