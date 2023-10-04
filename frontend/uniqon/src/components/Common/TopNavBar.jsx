@@ -216,7 +216,6 @@ export function TopNavBar() {
               </MenuHandler>
               <MenuList className="absolute top-0 left-0">
                 <MenuItem onClick={goToMypage}>마이페이지</MenuItem>
-                <MenuItem>Connect Wallet</MenuItem>
                 <MenuItem onClick={goToWishlist}>위시리스트</MenuItem>
                 <MenuItem>로그아웃</MenuItem>
               </MenuList>

@@ -18,7 +18,7 @@ import { CreateNft } from "./NftRegister";
 import { useNftStore } from "../../stores/NFTStore";
 
 export function NFT() {
-  const nftImg = useRef(null);
+  const nftImg = useRef();
   const [name, setName] = useState("");
   const [age, setAge] = useState(0);
   const [feature, setFeature] = useState("");
@@ -134,6 +134,7 @@ export function NFT() {
   const mainChange = (selectedMain) => {
     console.log("대분류 변경전", selectedMain);
     setSelectedMain(selectedMain);
+    setSpecies(selectedMain);
     console.log("대분류 변경 후", selectedMain);
   };
 
@@ -201,6 +202,14 @@ export function NFT() {
       }
     } catch (error) {
       console.error("서버에 생성 실패", error);
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (nftImg.current) {
+      nftImg.current.click();
+    } else {
+      console.log("nftImg ref is null");
     }
   };
 
@@ -381,38 +390,75 @@ export function NFT() {
             <TopNavBar />
 
             <div className="flex flex-col items-center justify-center w-full h-full">
-              <div className="flex flex-row items-center space-y-6 md:space-y-0 md:space-x-20">
-                <Card className="w-96">
+              <div className="flex flex-row items-center space-y-6 md:space-y-0 md:space-x-32">
+                <Card className="w-[500px]">
                   <CardHeader floated={false} className="">
                     <span className="flex justify-center">
-                      <lord-icon
-                        src="https://cdn.lordicon.com/qfbuijil.json"
-                        trigger="hover"
-                        colors="outline:#121331,primary:#f24c00,secondary:#2ca58d,tertiary:#ebe6ef"
-                        style={{ width: "150px", height: "150px" }}
-                      />
-                      <lord-icon
+                      <div
+                      // onClick={() => nftImg.current.click()}
+                      // style={{
+                      //   cursor: "pointer",
+                      //   display: "flex",
+                      //   justifyContent: "center",
+                      //   alignItems: "center"
+                      // }}
+                      // onClick={handleButtonClick}
+                      >
+                        <input
+                          name="file"
+                          type="file"
+                          onChange={handleImgChange}
+                          ref={nftImg}
+                          accept="image/*"
+                          style={{ display: "none" }}
+                        />
+                        <lord-icon
+                          src="https://cdn.lordicon.com/qfbuijil.json"
+                          onClick={handleButtonClick}
+                          trigger="hover"
+                          colors="outline:#121331,primary:#f24c00,secondary:#2ca58d,tertiary:#ebe6ef"
+                          style={{ width: "180px", height: "180px" }}
+                        />
+                      </div>
+                      <button
+                        className="text-2xl w-60 "
+                        onClick={handleSubmit}
+                        style={{ fontWeight: "bold", color: "black" }}
+                      >
+                        AI 이미지
+                        <lord-icon
+                          src="https://cdn.lordicon.com/ejxwvtlg.json"
+                          onClick={handleSubmit}
+                          trigger="hover"
+                          colors="outline:#121331,primary:#08a88a,secondary:#ebe6ef"
+                          style={{ width: "150px", height: "150px" }}
+                        ></lord-icon>
+                      </button>
+                      {/* <lord-icon
                         src="https://cdn.lordicon.com/emzrtjck.json"
+                        onClick={handleSubmit}
                         trigger="hover"
                         colors="outline:#121331,primary:#08a88a"
                         style={{ width: "150px", height: "150px" }}
-                      />
+                      /> */}
                     </span>
                   </CardHeader>
                   <CardBody className="text-center">
                     <span>
-                      <input
+                      {/* <input
                         type="file"
                         onChange={handleImgChange}
                         ref={nftImg}
-                      />
+                        accept="image/*"
+                        style={{ display: "none" }}
+                      /> */}
                       <div
                         style={{
                           position: "relative",
                           display: "inline-block"
                         }}
                       >
-                        <input
+                        {/* <input
                           type="text"
                           placeholder="종 입력 (예: fox)"
                           style={{
@@ -422,8 +468,8 @@ export function NFT() {
                           }}
                           value={species}
                           onChange={(e) => setSpecies(e.target.value)}
-                        />
-                        <Button
+                        /> */}
+                        {/* <Button
                           style={{
                             position: "absolute",
                             top: "0",
@@ -441,22 +487,59 @@ export function NFT() {
                           onClick={handleSubmit}
                         >
                           AI 변환
-                        </Button>
+                        </Button> */}
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center"
+                        }}
+                      >
+                        {aiImgUrl ? (
+                          <img
+                            id="aiImg"
+                            src={aiImgUrl}
+                            alt="AI 이미지"
+                            style={{ width: "250px", height: "250px" }}
+                          ></img>
+                        ) : (
+                          <div
+                            style={{
+                              border: "1px solid black",
+                              width: "250px",
+                              height: "250px",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center"
+                            }}
+                          >
+                            AI 이미지가 없습니다.
+                          </div>
+                        )}
                       </div>
 
-                      <Button
-                        className="m-5 text-3xl w-70 h-30"
-                        onClick={CreateNft}
-                        color="blue"
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center"
+                        }}
                       >
-                        NFT 발급
-                        <lord-icon
-                          src="https://cdn.lordicon.com/ejxwvtlg.json"
-                          trigger="hover"
-                          colors="outline:#121331,primary:#08a88a,secondary:#ebe6ef"
-                          style={{ width: "150px", height: "150px" }}
-                        ></lord-icon>
-                      </Button>
+                        <Button
+                          className="m-5 text-3xl w-70 h-30 flex items-center justify-center"
+                          onClick={CreateNft}
+                          color="blue"
+                        >
+                          NFT 발급
+                          <lord-icon
+                            src="https://cdn.lordicon.com/ejxwvtlg.json"
+                            trigger="hover"
+                            colors="outline:#121331,primary:#08a88a,secondary:#ebe6ef"
+                            style={{ width: "180px", height: "200px" }}
+                          ></lord-icon>
+                        </Button>
+                      </div>
                     </span>
                   </CardBody>
                 </Card>
@@ -504,12 +587,6 @@ export function NFT() {
                   />
                 </div>
               </div>
-            </div>
-
-            <div>
-              {aiImgUrl && (
-                <img id="aiImg" src={aiImgUrl} alt="AI 이미지"></img>
-              )}
             </div>
 
             {/* NFT 조회 버튼 */}
