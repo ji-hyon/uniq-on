@@ -1,6 +1,7 @@
 import { Card, CardHeader, CardBody, Typography, CardFooter, Button } from "@material-tailwind/react";
 import axios from "axios"
 import { useState, useEffect } from "react";
+import jwtDecode from "jwt-decode"
    
   export function UserIdCard({onConfirm}) {
     const [userInfo, setUserInfo] = useState({});
@@ -12,7 +13,18 @@ import { useState, useEffect } from "react";
             const response = await axios.get(`/api/myPage/info`);
             if (response.status === 200) {
             console.log(response.data.response);
-              setUserInfo(response.data.response);
+              // setUserInfo(response.data.response);
+              const vpPayload=jwtDecode(response.data.response.vpToken)
+              const vcPayload=jwtDecode(vpPayload.vp.verifiableCredential[0])
+              const userData={
+                ...vcPayload.vc.credentialSubject.data,
+                nbf:vcPayload.nbf,
+                exp:vcPayload.exp,
+                walletAddress:vcPayload.sub.split(":").pop(),
+                nickname:response.data.response.nickname,
+              }
+              console.log(userData)
+              setUserInfo(userData)
             } else {
               console.log(response);
             }
@@ -50,9 +62,8 @@ import { useState, useEffect } from "react";
             <div>{userInfo.gender}</div>
             <div>{userInfo.birth}</div>
             <div>{userInfo.walletAddress}</div>
-            {/* <div>{발급일자 추가예정}</div> */}
-            {/* <div>{만료일자 추가예정}</div> */}
-
+            <div>{userInfo.nbf}</div> 
+            <div>{userInfo.exp}</div> 
         </div>
 
         <CardFooter className="pt-3">
