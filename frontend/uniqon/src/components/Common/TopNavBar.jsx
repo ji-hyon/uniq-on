@@ -8,13 +8,18 @@ import {
   MenuList,
   MenuItem,
   Button,
-  Badge
+  Badge,
+  List,
+Dialog, Typography, Card, CardBody, CardFooter, CardHeader
 } from "@material-tailwind/react";
 
 export function TopNavBar() {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [userInfo, setUserInfo] = useState();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => { setOpen(!open); };
   // const notifications = [
   //   { id: 1, content: "멍뭉이 NFT의 거래가 완료 되었습니다." },
   //   { id: 2, content: "거래완료2" },
@@ -69,6 +74,19 @@ export function TopNavBar() {
       console.log("알림 가져오기 실패", error);
     }
   };
+
+  const getMyInfo = async () => {
+    try {
+      const response = await axios.get(`/api/myPage/info`);
+        if (response.status === 200) {
+          setUserInfo(response.data.response);
+        } else {
+          console.log(response);
+        }
+      } catch (error) {
+        console.log("실패", error);
+      }
+  }
 
   useEffect(() => {
     getNotifications();
@@ -163,7 +181,7 @@ export function TopNavBar() {
                 </Button>
               </MenuHandler>
               <MenuList className="absolute top-0 left-0">
-                <MenuItem onClick={goMyInfo}>내 정보</MenuItem>
+                <MenuItem onClick={() => { handleOpen(); getMyInfo();}}>내 정보</MenuItem>
                 <MenuItem onClick={goToMypage}>마이페이지</MenuItem>
                 <MenuItem onClick={goToWishlist}>위시리스트</MenuItem>
                 <MenuItem onClick={goLogout}>로그아웃</MenuItem>
@@ -171,6 +189,43 @@ export function TopNavBar() {
             </Menu>
           </div>
         </div>
+
+        <Dialog
+          size="sm"
+          open={open}
+          handler={handleOpen}
+          className="bg-transparent shadow-none"
+          >
+            <Card className="mx-auto w-full max-w-[48rem]">
+              <CardHeader
+                variant="gradient"
+                color="green"
+                className="grid mb-4 h-28 place-items-center"
+              >
+                <Typography variant="h3" color="white">
+                  내 정보
+                </Typography>
+              </CardHeader>
+
+                <CardBody className="grid grid-cols-3 gap-4">  
+                  {userInfo && (
+                    <div>
+                      <List><strong>지갑 주소 : </strong>{userInfo.walletAddress}</List>
+                      <List><strong>이름 : </strong>{userInfo.name}</List>
+                      <List><strong>닉네임 : </strong>{userInfo.nickname}</List>
+                      <List><strong>성별 : </strong>{userInfo.gender}</List>
+                      <List><strong>생년월일 : </strong>{userInfo.birth}</List>
+                      <List><strong>프로필 이미지 : </strong>{userInfo.profileImage}</List>
+                    </div>
+                  )}
+
+                </CardBody>
+              
+              <CardFooter className="pt-0">
+                <Button variant="gradient" onClick={() => {handleOpen();}} fullWidth>닫기</Button>
+              </CardFooter>
+            </Card>
+          </Dialog>
 
         <div id="알림버튼" className="relative top-[2px] ml-[70px] left-[30px]">
           <Badge content={notifications.length}>
