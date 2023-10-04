@@ -104,7 +104,7 @@ private final PostDeleteService postDeleteService;
     })
     @PutMapping("/update/{postId}")
     public Response<?> updatePost(@PathVariable Integer postId,
-                                  @RequestBody UpdatePostWebRequest req,
+                                  @RequestPart(value="data") UpdatePostWebRequest req,
                                   @AuthenticationPrincipal UserDetails user){
         log.debug("# 판매글 수정 데이터 : {}",req);
         postUpdateService.updatePost(postId,req,user);
