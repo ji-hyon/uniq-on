@@ -2,6 +2,7 @@ package ssafy.uniqon.global.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,6 +38,9 @@ public class SecurityConfig {
     private final TokenProvider tokenProvider;
     private final CustomUserDetailsService customUserDetailsService;
 
+    @Value("${redirect-url}")
+    private String redirectUrl;
+
 
     // 웹 전체 Security 비활성화
     // @Bean
@@ -61,19 +65,15 @@ public class SecurityConfig {
                         .accessDeniedHandler(jwtAccessDeniedHandler))
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // .authorizeRequests((authorizeRequests) -> authorizeRequests
-                // .requestMatchers("/api/users/login",
-                // "/api/users/signup","/transaction").permitAll()
-                // .anyRequest().authenticated())
                 .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
-                                                .requestMatchers("/**").permitAll()
-                                                //                        .requestMatchers("/api/myPage/**").hasRole("USER")
-//                        .requestMatchers(HttpMethod.GET,"/api/nfts/**").permitAll()
-//                        .requestMatchers("/api/nfts/**").authenticated()
-//                        .requestMatchers("/api/notifications/**").authenticated()
-//                        .requestMatchers(HttpMethod.GET,"/api/sales/**").permitAll()
-//                        .requestMatchers("/api/sales/**").authenticated()
-//                        .requestMatchers("/api/wishlist/**").authenticated()
+//                                                .requestMatchers("/**").permitAll()
+                        .requestMatchers("/api/myPage/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/nfts/**").permitAll()
+                        .requestMatchers("/api/nfts/**").authenticated()
+                        .requestMatchers("/api/notifications/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/sales/**").permitAll()
+                        .requestMatchers("/api/sales/**").authenticated()
+                        .requestMatchers("/api/wishlist/**").authenticated()
                                                 .anyRequest().permitAll())
                                 // .formLogin(formlogin->formlogin.disable())
                                 .formLogin(formLogin -> formLogin
@@ -89,7 +89,7 @@ public class SecurityConfig {
                                                 .deleteCookies("JSESSIONID")
                                                 .clearAuthentication(true)
                                                 .logoutSuccessHandler(((request, response, authentication) -> response
-                                                                .sendRedirect("http://127.0.0.1:3000"))))
+                                                                .sendRedirect(redirectUrl))))
                                 .addFilterBefore(new JwtFilter(tokenProvider),
                                                 UsernamePasswordAuthenticationFilter.class)
                                 .build();

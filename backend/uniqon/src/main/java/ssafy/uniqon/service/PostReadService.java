@@ -39,9 +39,9 @@ public class PostReadService {
                     post.getNft().getTokenId()
             ));
         }
-        if(list.isEmpty()){
-            throw new IllegalArgumentException("Post Not Found ");
-        }
+//        if(list.isEmpty()){
+//            throw new IllegalArgumentException("Post Not Found ");
+//        }
         return list;
     }
 
