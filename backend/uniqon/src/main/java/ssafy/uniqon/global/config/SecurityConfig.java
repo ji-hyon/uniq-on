@@ -67,32 +67,32 @@ public class SecurityConfig {
                 // .anyRequest().authenticated())
                 .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
                                                 .requestMatchers("/**").permitAll()
-//                        .requestMatchers("/api/myPage/**").hasRole("USER")
+                                                //                        .requestMatchers("/api/myPage/**").hasRole("USER")
 //                        .requestMatchers(HttpMethod.GET,"/api/nfts/**").permitAll()
 //                        .requestMatchers("/api/nfts/**").authenticated()
 //                        .requestMatchers("/api/notifications/**").authenticated()
 //                        .requestMatchers(HttpMethod.GET,"/api/sales/**").permitAll()
 //                        .requestMatchers("/api/sales/**").authenticated()
 //                        .requestMatchers("/api/wishlist/**").authenticated()
-                        .anyRequest().permitAll())
-                // .formLogin(formlogin->formlogin.disable())
-                .formLogin(formLogin -> formLogin
-                        // .loginPage("/api/users/login")
-                        // Content-Type을 application/x-www-form-urlencoded
-                        .usernameParameter("walletAddress")
-                        .passwordParameter("password")
-                        .loginProcessingUrl("/api/auth/login")
-                        .successHandler(new LoginSuccessHandler(tokenProvider))
-                        .failureHandler(new LoginFailuerHandler()))
-                .logout(logout -> logout
-                        .logoutUrl("/api/users/logout")
-                        .deleteCookies("JSESSIONID")
-                        .clearAuthentication(true)
-                        .logoutSuccessHandler(((request, response, authentication) -> response
-                                .sendRedirect("/"))))
-                .addFilterBefore(new JwtFilter(tokenProvider),
-                        UsernamePasswordAuthenticationFilter.class)
-                .build();
+                                                .anyRequest().permitAll())
+                                // .formLogin(formlogin->formlogin.disable())
+                                .formLogin(formLogin -> formLogin
+                                                // .loginPage("/api/users/login")
+                                                // Content-Type을 application/x-www-form-urlencoded
+                                                .usernameParameter("walletAddress")
+                                                .passwordParameter("password")
+                                                .loginProcessingUrl("/api/auth/login")
+                                                .successHandler(new LoginSuccessHandler(tokenProvider))
+                                                .failureHandler(new LoginFailuerHandler()))
+                                .logout(logout -> logout
+                                                .logoutUrl("/api/users/logout")
+                                                .deleteCookies("JSESSIONID")
+                                                .clearAuthentication(true)
+                                                .logoutSuccessHandler(((request, response, authentication) -> response
+                                                                .sendRedirect("http://127.0.0.1:3000"))))
+                                .addFilterBefore(new JwtFilter(tokenProvider),
+                                                UsernamePasswordAuthenticationFilter.class)
+                                .build();
 
     }
 

@@ -46,6 +46,11 @@ export function TopNavBar() {
     navigate("/mypage");
   };
 
+  const goLogout = () => {
+    window.location.href = "http://127.0.0.1:5000/api/users/logout";
+    alert("로그아웃 되었습니다!");
+  };
+
   const getNotifications = async () => {
     try {
       const response = await axios.get("/api/notifications", {
@@ -218,7 +223,7 @@ export function TopNavBar() {
                 <MenuItem onClick={goToMypage}>마이페이지</MenuItem>
                 <MenuItem>Connect Wallet</MenuItem>
                 <MenuItem onClick={goToWishlist}>위시리스트</MenuItem>
-                <MenuItem>로그아웃</MenuItem>
+                <MenuItem onClick={goLogout}>로그아웃</MenuItem>
               </MenuList>
             </Menu>
           </div>
