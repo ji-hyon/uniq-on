@@ -24,7 +24,11 @@ export function MainCollections() {
     mainCollecType,
     setMainCollecType,
     mainCollecImg,
-    setMainCollecImg
+    setMainCollecImg,
+    mainType,
+    setMainType,
+    middleType,
+    setMiddleType
   } = useCollectionsStore();
 
   const [mainCardsData, setMainCardsData] = useState([]);
@@ -50,6 +54,8 @@ export function MainCollections() {
         console.log("success", response);
 
         setMainCardsData(response.data.response.content);
+        setMainType(response.data.response.content.map((item) => item.type));
+        console.log("mainType", mainType);
       } catch (e) {
         console.log("failed", e);
       }
