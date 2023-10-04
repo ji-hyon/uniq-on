@@ -215,7 +215,7 @@ export function Transaction() {
             </div>
           
 
-        <Button color="teal" onClick={getSales}>판매글 조회</Button>
+        
         <br></br>
         </div>
         </div>
