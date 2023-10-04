@@ -126,7 +126,48 @@ export function TopNavBar() {
             </div>
           </div>
         </div>
-        <div className="relative">
+        
+        <div className="w-[50px] h-[48px] relative flex-1 grow">
+          <div className="flex">
+            <button
+              onClick={createNFT}
+              className="absolute w-[154px] h-[48px] top-0 left-[131px] bg-[#f8f0f0] rounded-full shadow-[0px_4px_4px_#00000040] all-[unset] box-border"
+            >
+              <div className="relative w-[146px] h-[94px] top-[-18px] left-[-24px]">
+                <div className="absolute h-[19px] top-[31px] left-[84px] [font-family:'Pretendard-SemiBold',_Helvetica] font-semibold text-black text-[16px] text-center tracking-[0] leading-[normal] whitespace-nowrap">
+                  NFT 생성
+                </div>
+                <img
+                  src="/nftlogo.png"
+                  className="absolute w-[34px] h-[32px] top-7 left-10"
+                  alt="Video player"
+                />
+                {/* <img className="absolute w-[112px] h-[94px] top-0 left-0" alt="Video player" /> */}
+              </div>
+            </button>
+            <Menu>
+              <MenuHandler>
+                <Button className="absolute w-[154px] h-[48px] top-0 left-[310px] bg-black rounded-full shadow-[0px_4px_4px_#00000040] all-[unset] box-border">
+                  <div className="absolute h-[19px] top-[13px] left-[56px] text-white [font-family:'Pretendard-SemiBold',_Helvetica] font-semibold text-[16px] text-center tracking-[0] leading-[normal] whitespace-nowrap">
+                    마이페이지
+                  </div>
+                  <img
+                    src="/avatar.png"
+                    className="absolute w-[33px] h-[33px] top-[7px] left-[10px] object-cover"
+                    alt="Avatars avatar"
+                  />
+                </Button>
+              </MenuHandler>
+              <MenuList className="absolute top-0 left-0">
+                <MenuItem onClick={goToMypage}>마이페이지</MenuItem>
+                <MenuItem onClick={goToWishlist}>위시리스트</MenuItem>
+                <MenuItem onClick={goLogout}>로그아웃</MenuItem>
+              </MenuList>
+            </Menu>
+          </div>
+        </div>
+
+        <div id="알림버튼" className="relative top-[2px] ml-[70px] left-[30px]">
           <Badge content={notifications.length}>
             <Button
               onClick={() => {
@@ -147,10 +188,10 @@ export function TopNavBar() {
           </Badge>
           {showNotifications && (
             <div
-              className="absolute top-[48px] left-[2px] bg-white p-4 rounded-lg shadow-md z-10"
+              className="absolute top-[48px] left-[-430px] bg-white p-4 rounded-lg shadow-md z-10"
               style={{
                 width: "500px",
-                maxWidth: "500px"
+                maxWidth: "500px",
               }}
             >
               <ul style={{ color: "black" }}>
@@ -191,45 +232,6 @@ export function TopNavBar() {
               </ul>
             </div>
           )}
-        </div>
-        <div className="w-[50px] h-[48px] relative flex-1 grow">
-          <div className="flex">
-            <button
-              onClick={createNFT}
-              className="absolute w-[154px] h-[48px] top-0 left-[131px] bg-[#f8f0f0] rounded-full shadow-[0px_4px_4px_#00000040] all-[unset] box-border"
-            >
-              <div className="relative w-[146px] h-[94px] top-[-18px] left-[-24px]">
-                <div className="absolute h-[19px] top-[31px] left-[84px] [font-family:'Pretendard-SemiBold',_Helvetica] font-semibold text-black text-[16px] text-center tracking-[0] leading-[normal] whitespace-nowrap">
-                  NFT 생성
-                </div>
-                <img
-                  src="/nftlogo.png"
-                  className="absolute w-[34px] h-[32px] top-7 left-10"
-                  alt="Video player"
-                />
-                {/* <img className="absolute w-[112px] h-[94px] top-0 left-0" alt="Video player" /> */}
-              </div>
-            </button>
-            <Menu>
-              <MenuHandler>
-                <Button className="absolute w-[154px] h-[48px] top-0 left-[310px] bg-black rounded-full shadow-[0px_4px_4px_#00000040] all-[unset] box-border">
-                  <div className="absolute h-[19px] top-[13px] left-[56px] text-white [font-family:'Pretendard-SemiBold',_Helvetica] font-semibold text-[16px] text-center tracking-[0] leading-[normal] whitespace-nowrap">
-                    마이페이지
-                  </div>
-                  <img
-                    src="/avatar.png"
-                    className="absolute w-[33px] h-[33px] top-[7px] left-[10px] object-cover"
-                    alt="Avatars avatar"
-                  />
-                </Button>
-              </MenuHandler>
-              <MenuList className="absolute top-0 left-0">
-                <MenuItem onClick={goToMypage}>마이페이지</MenuItem>
-                <MenuItem onClick={goToWishlist}>위시리스트</MenuItem>
-                <MenuItem onClick={goLogout}>로그아웃</MenuItem>
-              </MenuList>
-            </Menu>
-          </div>
         </div>
       </div>
     </>
