@@ -14,33 +14,52 @@ export function CheckCert() {
   // 일회성
   useEffect(() => {
     // Jwt decode (payload 내용을 보여줘야 함)
-    function parseJwt(vcJwt) {
-      return JSON.parse(
-        Buffer.from(vcJwt.split('.')[1], 'base64').toString()
-      );
+    certList()
+  }, [])
+  
+  function parseJwt(vcJwt) {
+    return JSON.parse(
+      Buffer.from(vcJwt.split('.')[1], 'base64').toString()
+    );
+  }
+  async function certList() {
+    try {
+      const response = await axios.get(`/diti/vc/list/vc/${walletAddress}`, {
+      headers: {
+          'Authorization': userInfo.token,
+          'walletAddress': userInfo.walletAddress,
+        },
+      })
+      console.log(response)
+      console.log("test:", response.data.response.content);
+      setVcList(response.data.response.content)
+
+      const decodedJwts = response.data.response.content.map(vc => parseJwt(vc.vcJwt));
+      setDecodedJwts(decodedJwts);
+
+    } catch (e) {
+      console.error(e)
     }
-    async function certList() {
-      try {
-        const response = await axios.get(`/diti/vc/list/vc/${walletAddress}`, {
-        headers: {
+  }
+  
+  async function renewVC(type) {
+    try {
+      const response = await axios.put("/diti/did/vc",
+        {
+          type: type
+        },
+        {
+          headers: {
             'Authorization': userInfo.token,
             'walletAddress': userInfo.walletAddress,
           },
         })
-        console.log(response)
-        console.log("test:", response.data.response.content);
-        setVcList(response.data.response.content)
-
-        const decodedJwts = response.data.response.content.map(vc => parseJwt(vc.vcJwt));
-        setDecodedJwts(decodedJwts);
-
-      } catch (e) {
-        console.error(e)
-      }
+      console.log(response)
+      certList()
+    } catch (e) {
+      console.error(e.response.data)
     }
-    certList()
-  }, [])
-
+  }
 
 
   return (
@@ -63,20 +82,20 @@ export function CheckCert() {
                   <div className="text-xs">{JSON.stringify(decodedJwts[index])}</div>
                   <p>walletAddress</p>
                   <div className="text-xs">{vc.walletAddress}</div>
+                  {/* 신분증 갱신 버튼 */}
+                  <Button
+                    className="text-2xl w-50 h-28 m-7"
+                    color="green"
+                    onClick={() => renewVC(vc.type)}
+                  >
+                    전자 신분증 갱신
+                  </Button>
                 </div>
               ))
             ) : (
               <div>Loading...</div>
             )}
           </div>
-
-          {/* 신분증 갱신 버튼 */}
-          <Button
-            className="text-2xl w-50 h-28 m-7"
-            color="green"
-          >
-            전자 신분증 갱신
-          </Button>
         </div>
 
       </div>
