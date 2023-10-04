@@ -23,6 +23,7 @@ export function TopNavBar() {
   const handleOpen = () => { setOpen(!open); };
   const [isEditingNickname, setIsEditingNickname] = useState(false);
   const [newNickname, setNewNickname] = useState("");
+  const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
   // const notifications = [
   //   { id: 1, content: "멍뭉이 NFT의 거래가 완료 되었습니다." },
   //   { id: 2, content: "거래완료2" },
@@ -72,16 +73,40 @@ export function TopNavBar() {
     setIsEditingNickname(false);
   }
 
-  const handleNicknameChange = (e) => {
-    console.log(newNickname);
+  const handleNicknameChange = async (e) => {
+    // console.log(newNickname);
+    // if (e.target.value.length < 3) {
+    //   alert("3글자 이상 입력해주세요");
+    //   return;
+    // }
     setNewNickname(e.target.value);
-    
+    if (newNickname !== e.target.value) {
+      try {
+        const response = await axios.get(`/api/users/duplicate/${e.target.value}`)
+        if (response.status === 200 && response.data.success) {
+          setIsNicknameAvailable(true);
+        } else {
+          setIsNicknameAvailable(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   const handleNicknameSave = async () => {
     try {
-      const respone = await axios.put(`/api/myPage/${newNickname}`);
-      console.log(respone);
+      const response1 = await axios.get(`/api/users/duplicate/${newNickname}`)
+      console.log(response1);
+      if (response1.status === 200 && response1.data.success) {
+        const response2 = await axios.put(`/api/myPage/info/${newNickname}`);
+        console.log(response2);
+        if (response2.status === 200) {
+          alert("닉네임 변경이 완료되었습니다!");
+        }
+      } else {
+        return;
+      }
       
     } catch (error) {
       console.log(error);
@@ -111,6 +136,7 @@ export function TopNavBar() {
       const response = await axios.get(`/api/myPage/info`);
         if (response.status === 200) {
           setUserInfo(response.data.response);
+          setNewNickname(response.data.response.nickname);
         } else {
           console.log(response);
         }
@@ -244,7 +270,7 @@ export function TopNavBar() {
                       <List><strong>지갑 주소 : </strong>{userInfo.walletAddress}</List>
                       <List><strong>이름 : </strong>{userInfo.name}</List>
                       <List><strong>닉네임 : </strong>{isEditingNickname ? (
-        
+                    <div>
                     <Input
                       type="text"
                       // value={userInfo.nickname}
@@ -252,6 +278,12 @@ export function TopNavBar() {
                       onChange={handleNicknameChange}
                       // placeholder={userInfo.niname}
                     />
+                    {isNicknameAvailable ? (
+                      <strong className="text-green-500">사용 가능한 닉네임입니다.</strong>
+                    ) : (
+                      <strong className="text-red-500">이미 사용 중인 닉네임입니다.</strong>
+                    )}
+                    </div>
                   ) : (
                     userInfo.nickname
                   )}
