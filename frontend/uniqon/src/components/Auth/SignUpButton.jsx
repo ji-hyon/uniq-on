@@ -7,9 +7,16 @@ import Web3Token from "web3-token";
 import { useNavigate } from "react-router";
 import { Input } from "@material-tailwind/react";
 import { UserIdCard } from "./UserIdCard";
+import { Typography } from "@material-tailwind/react";
 
 
-export function SignUpButton() {
+export function SignUpButton(props) {
+
+  const sendDataToParent = () => {
+    const data = "card";
+    props.onDataFromChild(data);
+};
+
   const setUserInfo = useUserInfoStore((state) => state.setUserInfo);
   const navigate = useNavigate();
 
@@ -158,7 +165,8 @@ export function SignUpButton() {
         alert("회원가입에 성공하였습니다.");
         console.log(response.data);
         // 로그인 페이지로 이동
-        navigate("/login")
+        sendDataToParent();
+        navigate("/login");
       } 
       console.log("signup success");
 
@@ -187,10 +195,16 @@ export function SignUpButton() {
     <div>
         <div>
           {/* 닉네임 입력칸 */}
-          <div className="border-2 border-gray-400 m-10 p-5 max-w-3xl mx-auto">
-            <p className="m-5 text-lg font-bold">닉네입 입력</p>
+          <div className="mb-5">
+          <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="mb-4 font-medium"
+                  >
+                    닉네임 정하기
+                  </Typography>
             {/* <Input label="닉네임을 입력해주세요" type="text" ref={nicknameRef} value="" /> */}
-            <Input label="닉네임을 입력해주세요" type="text" value={nickname} onChange={handleNicknameChange} />
+            <Input label="Nickname" type="text" value={nickname} onChange={handleNicknameChange} />
           </div>
 
           {/* 프로필 사진 업로드칸 */}
@@ -200,7 +214,7 @@ export function SignUpButton() {
         </div> */}
 
           {/* 회원가입 버튼 */}
-          <Button onClick={signUp} className="text-3xl w-70 h-30 m-5" color="blue">
+          <Button onClick={signUp} className="text-3xl w-72 h-30 m-4" color="amber">
             회원가입
           </Button>
         </div>

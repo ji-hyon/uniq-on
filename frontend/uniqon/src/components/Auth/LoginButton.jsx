@@ -7,7 +7,13 @@ import { useNavigate } from "react-router";
 import { UserIdCard } from "./UserIdCard";
 import { useState } from "react";
 
-export function LoginButton() {
+export function LoginButton(props) {
+
+    const sendDataToParent = () => {
+        const data = "paypal";
+        props.onDataFromChild(data);
+    };
+
     // 메타마스크가 있으면 window에 ethereum이 정의가 돼있어야 함 (확장프로그램에 의해 생성)
     // window에 ethereum이 정의돼있는 것을 injectedProvider라고 함
     // 메타마스크 외에 다른 지갑들도 injectedProvider를 제공하기 때문에, 메타마스크인지 확인하는 절차 필요
@@ -143,6 +149,7 @@ export function LoginButton() {
                     window.location.href = e.response.data.ditiAddress;
                 } else {
                     alert("UNIQON에 등록된 회원이 아닙니다! 회원가입을 해주세요");
+                    sendDataToParent();
                     navigate("/signup");
                 }
 
@@ -171,7 +178,7 @@ export function LoginButton() {
             color="green"
             onClick={connectMetaMask}
           >
-            DITI 인증서 로그인
+            DITI 인증 로그인
           </Button>
 
             {showUserIdCard && (
