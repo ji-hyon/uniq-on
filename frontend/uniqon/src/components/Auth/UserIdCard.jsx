@@ -62,8 +62,10 @@ import jwtDecode from "jwt-decode"
             <div>{userInfo.gender}</div>
             <div>{userInfo.birth}</div>
             <div>{userInfo.walletAddress}</div>
-            <div>{userInfo.nbf}</div> 
-            <div>{userInfo.exp}</div> 
+            {/* <div>{userInfo.nbf}</div>  */}
+            <div>{new Date(userInfo.nbf*1000).toLocaleString()}</div>
+            {/* <div>{userInfo.exp}</div>  */}
+            <div>{new Date(userInfo.exp*1000).toLocaleString()}</div>
         </div>
 
         <CardFooter className="pt-3">

@@ -96,7 +96,13 @@ export function SignUpButton() {
       console.error("MetaMask is not installed");
       // 메타마스크 설치 메세지 및 홈페이지 이동
       alert("MetaMask를 설치해주세요");
-      window.location.href = "https://metamask.io/";
+      // window.location.href = "https://metamask.io/";
+      const newTab = window.open('https://metamask.io/', '_blank');
+      if (newTab) {
+        newTab.focus();
+      } else {
+        alert('팝업 차단이 활성화되어 새 탭을 열 수 없습니다.');
+      }
       return;
     }
     console.log("MetaMask exists");
@@ -169,7 +175,13 @@ export function SignUpButton() {
         if (e.response.status === 401) {
           window.alert("DITI 인증서가 유효하지 않습니다! DITI 인증서를 새로 발급해주세요.");
           console.log(e.response);
-          window.location.href = e.response.data.ditiAddress
+          // window.location.href = e.response.data.ditiAddress
+          const newTab = window.open(e.response.data.ditiAddress, '_blank');
+          if (newTab) {
+            newTab.focus();
+          } else {
+            alert('팝업 차단이 활성화되어 새 탭을 열 수 없습니다.');
+          }
           return
           // 이미 가입된 회원인 경우
         } else if (e.response.status === 405) {

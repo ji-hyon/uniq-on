@@ -27,7 +27,13 @@ export function IssueCert() {
         if (typeof window.ethereum === 'undefined') {
           alert("MetaMask를 설치해주세요");
           // 메타마스크 홈페이지로 이동 
-          window.location.href = 'https://metamask.io/';
+          // window.location.href = 'https://metamask.io/';
+          const newTab = window.open('https://metamask.io/', '_blank');
+          if (newTab) {
+            newTab.focus();
+          } else {
+            alert('팝업 차단이 활성화되어 새 탭을 열 수 없습니다.');
+          }
           return;
       }
   
