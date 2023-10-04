@@ -81,16 +81,21 @@ export function TranItemDetail () {
         price: price,
         title: title,
         content: content,
-        walletAddress: walletAddress,
       };
 
-      console.log(id)
+      console.log(data)
 
-      const res = await axios.put(`/api/sales/update/${id}`, data, {
+      const updateForm=new FormData()
+        updateForm.append("data",new Blob([JSON.stringify(data)],{type:'application/json'}))
+
+      const res = await axios.put(`/api/sales/update/${id}`, updateForm, {
         headers: {
           Authorization: "Bearer " + accessToken,
+          "Content-Type": "multipart/form-data"
           },
-      });
+        }
+
+      );
         console.log(res.data)
 
     } catch(err) {
