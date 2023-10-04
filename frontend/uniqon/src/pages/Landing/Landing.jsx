@@ -34,7 +34,7 @@ export function Landing() {
 
         <LoginButton />
 
-        <Button
+        {/* <Button
           className="text-4xl w-96 h-28"
           onClick={() => {
             navigate("/signup");
@@ -43,7 +43,7 @@ export function Landing() {
           color="orange"
         >
           회원가입
-        </Button>
+        </Button> */}
 
         <Button
           className="text-4xl w-96 h-28"
