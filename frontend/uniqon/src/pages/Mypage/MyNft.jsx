@@ -23,7 +23,7 @@ export function MyNft() {
         const response = await axios.get(`/api/myPage/mynfts`, {
           params: {
             page: page,
-            size: 4, // 추후에 이 부분은 원하는 갯수로 변경
+            size: 1, // 추후에 이 부분은 원하는 갯수로 변경
           },
         });
         console.log(response)
@@ -54,8 +54,6 @@ export function MyNft() {
       <div className="flex w-[1200px] items-start gap-[32px] relative flex-wrap">
         {nftList.map((nft, index) => (
           <div className="inline-flex flex-col min-w-[320px] items-start relative flex-[0_0_auto] bg-white rounded-[8px] overflow-hidden shadow-[0px_8px_40px_#0000000a,0px_2px_5px_#0000000d,0px_0px_2px_#00000026]">
-            <div>
-              {/* 카드 넣기 */}
               <Card key={index} className="w-full max-w-[20rem] shadow-lg">
                 <CardHeader floated={false} color="blue-gray">
                   <img src={nft.image} alt="ui/ux review check" />
@@ -68,7 +66,6 @@ export function MyNft() {
                 </CardFooter>
               </Card>
             </div>
-          </div>
         ))}
       </div>
     </div>

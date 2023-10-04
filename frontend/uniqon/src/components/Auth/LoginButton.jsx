@@ -16,9 +16,10 @@ export function LoginButton() {
     function setAuthorizationToken(token) {
         if (token) {
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        } else {
-            delete axios.defaults.headers.common["Authorization"];
         }
+        // else {
+        //     delete axios.defaults.headers.common["Authorization"];
+        // }
     }
 
     function detectMetaMask() {

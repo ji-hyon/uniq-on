@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -64,7 +65,14 @@ public class SecurityConfig {
                                 // "/api/users/signup","/transaction").permitAll()
                                 // .anyRequest().authenticated())
                                 .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
-                                                .requestMatchers("/**").permitAll()
+//                                                .requestMatchers("/**").permitAll()
+                         .requestMatchers("/api/myPage/**").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/nfts/**").permitAll()
+                        .requestMatchers("/api/nfts/**").authenticated()
+                        .requestMatchers("/api/notifications/**").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/sales/**").permitAll()
+                        .requestMatchers("/api/sales/**").authenticated()
+                        .requestMatchers("/api/wishlist/**").authenticated()
                                                 // .requestMatchers("/api/sales/post**","/api/nfts/detail/**","/api/users/**").permitAll()
                                                 // .requestMatchers("/api/sales/**", "/api/wallet/**",
                                                 // "/api/myPage/**","api/wishlist/**").authenticated()
