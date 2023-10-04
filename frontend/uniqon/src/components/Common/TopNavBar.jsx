@@ -154,24 +154,27 @@ export function TopNavBar() {
               }}
             >
               <ul style={{ color: "black" }}>
-                {notifications.map((notification, index) => (
-                  <li key={index} style={{ fontSize: "15px" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginLeft: "5px"
-                      }}
-                    >
-                      <TiMediaRecord
-                        style={{ marginRight: "0.5rem", fontSize: "15px" }}
-                      ></TiMediaRecord>
-                      등록하신 "{notification.postTitle}" 판매 글의 NFT가 판매
-                      되었습니다.
-                      {/* {notification.content} */}
-                    </div>
+                {notifications.length === 0 ? (
+                  <li style={{ fontSize: "15px" }}>알림이 없어용~</li>
+                ) : (
+                  notifications.map((notification, index) => (
+                    <li key={index} style={{ fontSize: "15px" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          marginLeft: "5px"
+                        }}
+                      >
+                        <TiMediaRecord
+                          style={{ marginRight: "0.5rem", fontSize: "15px" }}
+                        ></TiMediaRecord>
+                        등록하신 "{notification.postTitle}" 판매 글의 NFT가 판매
+                        되었습니다.
+                        {/* {notification.content} */}
+                      </div>
 
-                    {/* <Button
+                      {/* <Button
                       onClick={deleteNotification(notification)}
                       variant="outlined"
                       color="red"
@@ -179,11 +182,12 @@ export function TopNavBar() {
                     >
                       삭제
                     </Button> */}
-                    {index !== notifications.length - 1 && (
-                      <hr className="border-t border-gray-300 my-2"></hr>
-                    )}
-                  </li>
-                ))}
+                      {index !== notifications.length - 1 && (
+                        <hr className="border-t border-gray-300 my-2"></hr>
+                      )}
+                    </li>
+                  ))
+                )}
               </ul>
             </div>
           )}
@@ -221,7 +225,6 @@ export function TopNavBar() {
               </MenuHandler>
               <MenuList className="absolute top-0 left-0">
                 <MenuItem onClick={goToMypage}>마이페이지</MenuItem>
-                <MenuItem>Connect Wallet</MenuItem>
                 <MenuItem onClick={goToWishlist}>위시리스트</MenuItem>
                 <MenuItem onClick={goLogout}>로그아웃</MenuItem>
               </MenuList>
