@@ -67,7 +67,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
                         .requestMatchers("/api/users/**", "/api/auth/**").permitAll()
-                        .requestMatchers("/**").authenticated()
+                        .requestMatchers("/api/**").authenticated()
 //                        .requestMatchers("/api/myPage/**").authenticated()
 //                        .requestMatchers(HttpMethod.GET, "/api/nfts/**").permitAll()
 //                        .requestMatchers("/api/nfts/**").authenticated()
@@ -75,7 +75,7 @@ public class SecurityConfig {
 //                        .requestMatchers(HttpMethod.GET, "/api/sales/**").permitAll()
 //                        .requestMatchers("/api/sales/**").authenticated()
 //                        .requestMatchers("/api/wishlist/**").authenticated()
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 // .formLogin(formlogin->formlogin.disable())
                 .formLogin(formLogin -> formLogin
                         // .loginPage("/api/users/login")
