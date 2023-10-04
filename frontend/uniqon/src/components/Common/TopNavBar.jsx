@@ -10,6 +10,7 @@ import {
   Button,
   Badge,
   List,
+  Input,
 Dialog, Typography, Card, CardBody, CardFooter, CardHeader
 } from "@material-tailwind/react";
 
@@ -20,6 +21,8 @@ export function TopNavBar() {
   const [userInfo, setUserInfo] = useState();
   const [open, setOpen] = useState(false);
   const handleOpen = () => { setOpen(!open); };
+  const [isEditingNickname, setIsEditingNickname] = useState(false);
+  const [newNickname, setNewNickname] = useState("");
   // const notifications = [
   //   { id: 1, content: "멍뭉이 NFT의 거래가 완료 되었습니다." },
   //   { id: 2, content: "거래완료2" },
@@ -58,6 +61,34 @@ export function TopNavBar() {
   const goLogout = () => {
     window.location.href = "http://127.0.0.1:5000/api/users/logout";
     alert("로그아웃 되었습니다!");
+  };
+
+  const handleNicknameEdit = () => {
+    setIsEditingNickname(true);
+  };
+
+  const handleNicknameCancel = () => {
+    setNewNickname(userInfo.nickname);
+    setIsEditingNickname(false);
+  }
+
+  const handleNicknameChange = (e) => {
+    console.log(newNickname);
+    setNewNickname(e.target.value);
+    
+  };
+
+  const handleNicknameSave = async () => {
+    try {
+      const respone = await axios.put(`/api/myPage/${newNickname}`);
+      console.log(respone);
+      
+    } catch (error) {
+      console.log(error);
+    }
+    
+    setUserInfo({ ...userInfo, nickname: newNickname });
+    setIsEditingNickname(false);
   };
 
   const getNotifications = async () => {
@@ -199,10 +230,10 @@ export function TopNavBar() {
             <Card className="mx-auto w-full max-w-[48rem]">
               <CardHeader
                 variant="gradient"
-                color="green"
+                color="yellow"
                 className="grid mb-4 h-28 place-items-center"
               >
-                <Typography variant="h3" color="white">
+                <Typography variant="h3" color="black">
                   내 정보
                 </Typography>
               </CardHeader>
@@ -212,10 +243,29 @@ export function TopNavBar() {
                     <div>
                       <List><strong>지갑 주소 : </strong>{userInfo.walletAddress}</List>
                       <List><strong>이름 : </strong>{userInfo.name}</List>
-                      <List><strong>닉네임 : </strong>{userInfo.nickname}</List>
+                      <List><strong>닉네임 : </strong>{isEditingNickname ? (
+        
+                    <Input
+                      type="text"
+                      // value={userInfo.nickname}
+                      value={newNickname}
+                      onChange={handleNicknameChange}
+                      // placeholder={userInfo.niname}
+                    />
+                  ) : (
+                    userInfo.nickname
+                  )}
+                    {isEditingNickname ? (
+                      <div>
+                        <Button onClick={handleNicknameSave}>변경 완료</Button>
+                        <Button onClick={handleNicknameCancel}>취소</Button>
+                      </div>
+                    ) : (
+                      <Button onClick={handleNicknameEdit}>닉네임 변경하기</Button>
+                    )}</List>
                       <List><strong>성별 : </strong>{userInfo.gender}</List>
                       <List><strong>생년월일 : </strong>{userInfo.birth}</List>
-                      <List><strong>프로필 이미지 : </strong>{userInfo.profileImage}</List>
+                      {/* <List><strong>프로필 이미지 : </strong>{userInfo.profileImage}</List> */}
                     </div>
                   )}
 
