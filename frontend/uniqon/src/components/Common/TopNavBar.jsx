@@ -56,7 +56,7 @@ export function TopNavBar() {
   };
 
   const goLogout = () => {
-    window.location.href = "http://127.0.0.1:5000/api/users/logout";
+    window.location.href = "https://j9c201.p.ssafy.io/api/users/logout";
     alert("로그아웃 되었습니다!");
   };
 
