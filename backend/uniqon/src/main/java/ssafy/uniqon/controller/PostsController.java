@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
 
+import static ssafy.uniqon.global.response.Response.ERROR;
 import static ssafy.uniqon.global.response.Response.OK;
 
 @Slf4j
@@ -93,7 +95,6 @@ private final PostDeleteService postDeleteService;
                                     @AuthenticationPrincipal UserDetails user) {
         log.debug("# 판매글 등록시 데이터 : {}", req);
         postCreateService.createPost(req,user);
-        return OK("success");
     }
 
     @Operation(summary="판매글 수정", description = "판매글을 수정합니다.")
