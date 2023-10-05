@@ -133,7 +133,7 @@ export function NFT() {
         species: "파슨 카멜레온"
       }
     ],
-    기타: [{ id: 0, species: "그 외" }]
+    '🌟': [{ id: 0, species: "그 외" }]
   };
 
   const [imgBase64, setImgBase64] = useState("");
