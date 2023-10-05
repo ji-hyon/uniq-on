@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import {MdArrowBack,MdArrowForward} from "react-icons/md";
+import { MdArrowBack, MdArrowForward } from "react-icons/md";
+import { NftModal } from "../../components/Collections/NftModal";
 
 import {
   Button,
@@ -16,7 +17,28 @@ import {
 export function MyNft() {
   const [nftList, setNftList] = useState([]);
   const [page, setPage] = useState(0);
-  // const [totalPage, setTotalPage] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedNft, setSelectedNft] = useState({
+    id: "",
+    image: "",
+    name: "",
+    age: "",
+    nickname: "",
+    feature: ""
+  });
+
+  const clickNft = (nft) => {
+    console.log("selectednft", nft);
+    setSelectedNft({
+      id: nft.id,
+      name: nft.name,
+      image: nft.image,
+      age: nft.age,
+      nickname: nft.ownerNickname,
+      feature: nft.feature
+    });
+    setIsModalOpen(true);
+  };
   // 나의 NFT 조회
   useEffect(() => {
     async function getMyNft() {
@@ -61,7 +83,7 @@ export function MyNft() {
                   <div className="absolute inset-0 w-full h-full to-bg-black-10 bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
                 </CardHeader>
                 <CardFooter className="pt-3 pb-3">
-                  <Button className="text-sm" size="sm" fullWidth={true}>
+                <Button className="text-sm" size="sm" fullWidth={true} onClick={() => { clickNft(nft); }}>
                     {nft.name}
                   </Button>
                 </CardFooter>
@@ -69,6 +91,10 @@ export function MyNft() {
             </div>
         ))}
       </div>
+      {selectedNft && (
+        <NftModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} selectedNft={selectedNft}></NftModal>
+      )}
+      
     </div>
   );
 }
