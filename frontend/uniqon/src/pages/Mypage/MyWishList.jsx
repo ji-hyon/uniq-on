@@ -35,7 +35,7 @@ export function MyWishList() {
         console.log("위시리스트",res.data.response.content);
         setMyWishList(res.data.response.content);
       } else if (res.data.error.status === 404) {
-        // alert("위시리스트가 존재하지 않습니다");
+        setMyWishList([]);
         console.log(res);
       } else {
         console.log(res);

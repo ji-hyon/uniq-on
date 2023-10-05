@@ -48,7 +48,6 @@ export function MyNft() {
             size: 4, // 추후에 이 부분은 원하는 갯수로 변경
           },
         });
-        console.log(response)
         if (response.status === 200) {
           setNftList(response.data.response.content);
         }
