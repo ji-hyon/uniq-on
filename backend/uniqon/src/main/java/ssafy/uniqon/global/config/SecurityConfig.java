@@ -38,7 +38,7 @@ public class SecurityConfig {
     private final TokenProvider tokenProvider;
     private final CustomUserDetailsService customUserDetailsService;
 
-    @Value("${redirect-url}")
+    @Value("${redirect.url}")
     private String redirectUrl;
 
 

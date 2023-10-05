@@ -14,7 +14,7 @@ import static ssafy.uniqon.global.response.Response.ERROR;
 public class CustomErrorController implements ErrorController {
     // error path를 꼭 "/error" 로 하자!
     private final String ERROR_PATH = "/error";
-    @Value("${redirect-url}")
+    @Value("${redirect.url}")
     private String redirectUrl;
     @GetMapping(ERROR_PATH)
     public String redirectRoot(){
