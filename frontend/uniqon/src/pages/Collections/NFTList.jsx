@@ -50,7 +50,7 @@ export function NFTList() {
     setCurrentPage(page);
   };
 
-  const [liked, setLiked] = useState(false);
+  const [likedCards, setLikedCards] = useState({});
   const { accessToken, walletAddress } = useUserInfoStore();
 
   useEffect(() => {
@@ -91,25 +91,26 @@ export function NFTList() {
 
   useEffect(() => {
     const nftIds = nftData.map((card) => card.id);
+    const newLikeCards = {};
     nftIds.forEach((nftId) => {
       const likeStatus = localStorage.getItem(`liked_${nftId}`);
       if (likeStatus === "liked") {
-        setLiked(true);
+        newLikeCards[nftId] = true;
+      } else {
+        newLikeCards[nftId] = false;
       }
     });
+    setLikedCards(newLikeCards);
   }, [nftData]);
 
   // 좋아요 버튼 클릭 시 처리할 함수
-  console.log("좋아요 ", liked);
   const toggleLike = (card) => {
-    setLiked(!liked);
-
     const nftId = card.id;
     const userId = walletAddress;
 
     console.log("지갑주소", walletAddress);
 
-    if (!liked) {
+    if (!likedCards[nftId]) {
       localStorage.setItem(`liked_${nftId}`, "liked");
 
       axios
@@ -121,6 +122,7 @@ export function NFTList() {
         .then((response) => {
           console.log("좋아요 성공", response.data);
           console.log("nftId", nftId);
+          setLikedCards({ ...likedCards, [nftId]: true });
         })
         .catch((error) => {
           console.log("좋아요 실패", error);
@@ -136,6 +138,7 @@ export function NFTList() {
         })
         .then((response) => {
           console.log("좋아요 취소 성공", response.data);
+          setLikedCards({ ...likedCards, [nftId]: false });
         })
         .catch((error) => {
           console.log("좋아요 취소 요청 실패", error);
@@ -278,7 +281,7 @@ export function NFTList() {
                       <div className="flex space-x-1 items-center">
                         <IconButton
                           size="sm"
-                          color={liked ? "red" : "gray"}
+                          color={likedCards[card.id] ? "red" : "gray"}
                           variant="text"
                           className=" rounded-full"
                           onClick={() => toggleLike(card)}
