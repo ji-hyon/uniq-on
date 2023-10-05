@@ -83,7 +83,7 @@ export function NFTList() {
       nickname: card.ownerNickname,
       feature: card.feature
     });
-    setIsModalOpen(true);
+    setIsModalOpen(!isModalOpen);
 
     // setMidCollecType(card.species);
     // setMidCollecImg(card.image);
@@ -344,7 +344,7 @@ export function NFTList() {
             <div>
               <NftModal
                 isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
+                onClose={() => setIsModalOpen(!isModalOpen)}
                 selectedNft={selectedNft}
               ></NftModal>
             </div>
