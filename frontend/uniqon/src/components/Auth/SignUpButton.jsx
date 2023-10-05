@@ -211,7 +211,7 @@ export function SignUpButton(props) {
           <Typography
                     variant="small"
                     color="blue-gray"
-                    className="mb-4 font-medium"
+                    className="mb-4 font-semibold"
                   >
                     닉네임 정하기
                   </Typography>
@@ -226,7 +226,7 @@ export function SignUpButton(props) {
         </div> */}
 
           {/* 회원가입 버튼 */}
-          <Button onClick={signUp} className="text-3xl w-72 h-30 m-4" color="amber">
+          <Button onClick={signUp} className="text-sm w-32 h-30 mx-5 mt-3 bg-gradient-to-l from-green-300 to-[#438fff]">
             회원가입
           </Button>
         </div>

@@ -181,8 +181,8 @@ export function LoginButton(props) {
     return (
         <div>
           <Button
-            className="text-3xl w-70 h-30 m-5"
-            color="green"
+            className="text-sm w-70 h-30 mx-5 mt-3 bg-gradient-to-r from-green-300 to-[#438fff]"
+            // color="green"
             onClick={connectMetaMask}
           >
             DITI 인증 로그인
