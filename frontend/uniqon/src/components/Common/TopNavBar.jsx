@@ -26,11 +26,7 @@ export function TopNavBar() {
   const [newNickname, setNewNickname] = useState("");
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
   const { accessToken, walletAddress } = useUserInfoStore();
-  // const notifications = [
-  //   { id: 1, content: "멍뭉이 NFT의 거래가 완료 되었습니다." },
-  //   { id: 2, content: "거래완료2" },
-  //   { id: 3, content: "거래완료3" }
-  // ];
+  
 
   const goToLanding = () => {
     if (accessToken) {
@@ -131,6 +127,7 @@ export function TopNavBar() {
       });
       console.log("알림 가져오기 성공", response);
       setNotifications(response.data.response.content);
+      
     } catch (error) {
       console.log("알림 가져오기 실패", error);
     }
@@ -139,16 +136,32 @@ export function TopNavBar() {
   const getMyInfo = async () => {
     try {
       const response = await axios.get(`/api/myPage/info`);
-        if (response.status === 200) {
-          setUserInfo(response.data.response);
-          setNewNickname(response.data.response.nickname);
-        } else {
-          console.log(response);
-        }
-      } catch (error) {
-        console.log("실패", error);
+      if (response.status === 200) {
+        setUserInfo(response.data.response);
+        setNewNickname(response.data.response.nickname);
+      } else {
+        console.log(response);
       }
-  }
+    } catch (error) {
+      console.log("실패", error);
+    }
+  };
+
+    const deleteNotification =  async(notification) => {
+    const notificationId = notification.notificationId;
+    try {
+      const response = await axios.delete(`/api/notifications/${notificationId}`);
+      if (response.status === 200 && response.data.success) {
+        console.log("알림 삭제 완료", response);
+      } else {
+        console.log("알림 삭제 실패!", response);
+      }
+      } catch (error) {
+      console.log("알림 삭제 실패", error);
+      };
+      getNotifications();
+      
+  };
 
   useEffect(() => {
     getNotifications();
@@ -157,18 +170,6 @@ export function TopNavBar() {
   const handleShowNotifications = () => {
     setShowNotifications(!showNotifications);
   };
-
-  // const deleteNotification = async (notification) => {
-  //   const notificationId = notification.id;
-  //   try {
-  //     const response = await axios.delete(
-  //       `/api/notifications/${notificationId}`
-  //     );
-  //     console.log("알림 삭제 완료", response);
-  //   } catch (error) {
-  //     console.log("알림 삭제 실패", error);
-  //   }
-  // };
 
   return (
     <>
@@ -359,16 +360,16 @@ export function TopNavBar() {
                         등록하신 "{notification.postTitle}" 판매 글의 NFT가 판매
                         되었습니다.
                         {/* {notification.content} */}
+                      <p
+                        onClick={() => { deleteNotification(notification); } }
+                        variant="outlined"
+                        color="red"
+                        className="ml-4 text-red-500 hover:underline cursor-pointer"
+                      >
+                        삭제
+                      </p>
                       </div>
 
-                      {/* <Button
-                      onClick={deleteNotification(notification)}
-                      variant="outlined"
-                      color="red"
-                      // className="mt-4 text-blue-500 hover:underline"
-                    >
-                      삭제
-                    </Button> */}
                       {index !== notifications.length - 1 && (
                         <hr className="border-t border-gray-300 my-2"></hr>
                       )}
