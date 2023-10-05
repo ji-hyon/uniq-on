@@ -28,7 +28,6 @@ export function MyNft() {
   });
 
   const clickNft = (nft) => {
-    console.log("selectednft", nft);
     setSelectedNft({
       id: nft.id,
       name: nft.name,
@@ -83,7 +82,7 @@ export function MyNft() {
                   <div className="absolute inset-0 w-full h-full to-bg-black-10 bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
                 </CardHeader>
                 <CardFooter className="pt-3 pb-3">
-                <Button className="text-sm" size="sm" fullWidth={true} onClick={() => { clickNft(nft); }}>
+                  <Button className="text-sm" size="sm" fullWidth={true} onClick={() => { clickNft(nft); }}>
                     {nft.name}
                   </Button>
                 </CardFooter>

@@ -74,9 +74,21 @@ public class NFTsController {
             @Schema(description = "좋아요 수")
             Integer likedCnt,
             @Schema(description = "creater")
-            String creater
+            String creater,
+            String ownerNickname
     ){
-        public NFTWebResponse(Integer nftId, String owner, String image, String name, Integer age, String feature, String nftURL, String contractAddress, Integer tokenId, Integer likedCnt, String creater) {
+        public NFTWebResponse(@Schema(description = "NFT ID")
+                              Integer nftId, @Schema(description = "소유자 주소")
+                              String owner, @Schema(description = "이미지 URL")
+                              String image, @Schema(description = "이름")
+                              String name, @Schema(description = "나이")
+                              Integer age, @Schema(description = "특징")
+                              String feature, @Schema(description = "NFT Metadata URL")
+                              String nftURL, @Schema(description = "컨트랙트 주소")
+                              String contractAddress, @Schema(description = "Token ID")
+                              Integer tokenId, @Schema(description = "좋아요 수")
+                              Integer likedCnt, @Schema(description = "creater")
+                              String creater, String ownerNickname) {
             this.nftId = nftId;
             this.owner = owner;
             this.image = image;
@@ -87,7 +99,8 @@ public class NFTsController {
             this.contractAddress = contractAddress;
             this.tokenId = tokenId;
             this.likedCnt = likedCnt;
-            this.creater= creater;
+            this.creater = creater;
+            this.ownerNickname = ownerNickname;
         }
     }
 

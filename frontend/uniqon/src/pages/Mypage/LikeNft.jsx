@@ -11,8 +11,31 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
+import { NftModal } from "../../components/Collections/NftModal";
+
 export function LikeNft() {
   const [likeNftList, setLikeNftList] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedNft, setSelectedNft] = useState({
+    id: "",
+    image: "",
+    name: "",
+    age: "",
+    nickname: "",
+    feature: ""
+  });
+
+  const clickNft = (nft) => {
+    setSelectedNft({
+      id: nft.nftId,
+      name: nft.name,
+      image: nft.image,
+      age: nft.age,
+      nickname: nft.ownerNickname,
+      feature: nft.feature
+    });
+    setIsModalOpen(true);
+  };
   useEffect(() => {
     async function likeCollecList() {
       try {
@@ -36,28 +59,23 @@ export function LikeNft() {
   return (
     <div className="App">
       <div className="flex w-[1200px] items-start gap-[32px] relative flex-wrap">
-        {likeNftList.map((index, list) => (
-          <div
-            key={index}
-            className="flip inline-flex flex-col min-w-[320px] items-start relative flex-[0_0_auto] bg-white rounded-[8px] overflow-hidden shadow-[0px_8px_40px_#0000000a,0px_2px_5px_#0000000d,0px_0px_2px_#00000026]"
-          >
-            {/* 카드 넣기 */}
-            <Card className="card w-full max-w-[20rem] shadow-lg">
-              <div className="front">
+        {likeNftList.map((nft, index) => (
+          <div className="inline-flex flex-col min-w-[320px] items-start relative flex-[0_0_auto] bg-white rounded-[8px] overflow-hidden shadow-[0px_8px_40px_#0000000a,0px_2px_5px_#0000000d,0px_0px_2px_#00000026]">
+              <Card key={index} className="w-full max-w-[20rem] shadow-lg">
                 <CardHeader floated={false} color="blue-gray">
-                  <img src={list.image} alt="ui/ux review check" />
-                  <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
+                  <img src={nft.image} alt="ui/ux review check" />
+                  <div className="absolute inset-0 w-full h-full to-bg-black-10 bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
                 </CardHeader>
                 <CardFooter className="pt-3 pb-3">
-                  <Button className="text-sm" size="sm" fullWidth={true}>
-                    {list.name}
+                <Button className="text-sm" size="sm" fullWidth={true} onClick={() => { clickNft(nft); }}>
+                    {nft.name}
                   </Button>
                 </CardFooter>
-              </div>
-            </Card>
+              </Card>
           </div>
         ))}
       </div>
+      <NftModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} selectedNft={selectedNft}></NftModal>
     </div>
   );
 }

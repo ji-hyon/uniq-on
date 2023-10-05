@@ -114,15 +114,20 @@ public class NFTServiceImpl implements NFTService {
     public void likeNFT(Integer nftId, String userId) {
         Members member=memberRepository.findById(userId).get();
         NFTs nft=nftRepository.findById(nftId).get();
-        myCollectionsRepository.save(new MyCollections(null,member,nft));
-        nft.setLiked_cnt(nft.getLiked_cnt()+1);
+        MyCollections myCollections = myCollectionsRepository.findByNfts_Id(nft.getId());
+        if (myCollections == null) {
+            myCollectionsRepository.save(new MyCollections(null,member,nft));
+            nft.setLiked_cnt(nft.getLiked_cnt()+1);
+        }
+
     }
 
     @Override
     public void undoLikeNFT(Integer nftId, String userId) {
         Members member=memberRepository.findById(userId).get();
         NFTs nft=nftRepository.findById(nftId).get();
-        myCollectionsRepository.delete(new MyCollections(null,member,nft));
+        MyCollections myCollections = myCollectionsRepository.findByNfts_Id(nftId);
+        myCollectionsRepository.delete(myCollections);
         nft.setLiked_cnt(nft.getLiked_cnt()-1);
     }
 
@@ -139,7 +144,9 @@ public class NFTServiceImpl implements NFTService {
                 nft.getContractAddress(),
                 nft.getTokenId(),
                 nft.getLiked_cnt(),
-                nft.getCreater().getWalletAddress());
+                nft.getCreater().getWalletAddress(),
+                nft.getOwner().getNickname()
+                );
     }
 
     @Override
