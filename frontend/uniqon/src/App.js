@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom';
 import { Transaction } from './pages/Transaction/Transaction';
 import { TranItemDetail } from './pages/Transaction/TranItemDetail';
 import { MyPage } from './pages/Mypage/MyPage';
@@ -15,7 +15,20 @@ import { SignUp } from './pages/Auth/SignUp';
 import { ForLogin } from './pages/Landing/ForLogin';
 
 import { Suspense } from 'react';
-
+import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    // 여기서 401 오류를 처리할 수 있습니다.
+    if (error.response.status === 401) {
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
 function App() {
   return (
     <div className="App">

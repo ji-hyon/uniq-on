@@ -28,6 +28,7 @@ export function NFT() {
   const { accessToken } = useUserInfoStore();
 
   const { mainType } = useCollectionsStore();
+  const [ isExistImg, setIsExisImg ] = useState(false);
 
   const middleOptions = {
     여우: [
@@ -179,7 +180,10 @@ export function NFT() {
     reader.onloadend = () => {
       setImgBase64(reader.result.split(",")[1]);
     };
-
+    if (file) {
+      setIsExisImg(true);
+    }
+    // console.log(isExistImg);
     reader.readAsDataURL(file);
   };
 
@@ -434,6 +438,7 @@ export function NFT() {
                           colors="outline:#121331,primary:#f24c00,secondary:#2ca58d,tertiary:#ebe6ef"
                           style={{ width: "180px", height: "180px" }}
                         />
+                        {isExistImg && <p>이미지 업로드 완료!</p> }
                       </div>
                       <button
                         className="text-2xl w-60 "
