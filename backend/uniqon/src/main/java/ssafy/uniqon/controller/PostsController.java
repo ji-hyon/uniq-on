@@ -94,14 +94,7 @@ private final PostDeleteService postDeleteService;
     public Response<?> registerPost(@RequestPart(value = "data") RegisterPostWebRequest req,
                                     @AuthenticationPrincipal UserDetails user) {
         log.debug("# 판매글 등록시 데이터 : {}", req);
-        int result = postCreateService.createPost(req,user);
-        if (result == 1) {
-            log.debug("# 판매글 추가 성공");
-            return OK(null);
-        } else {
-            log.debug("# 판매글 추가 실패");
-            return ERROR("판매글 추가 실패", HttpStatus.BAD_REQUEST);
-        }
+        postCreateService.createPost(req,user);
     }
 
     @Operation(summary="판매글 수정", description = "판매글을 수정합니다.")

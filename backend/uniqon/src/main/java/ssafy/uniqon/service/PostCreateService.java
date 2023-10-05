@@ -20,9 +20,6 @@ public class PostCreateService {
     private final NFTRepository nftRepository;
     private final PostsRepository postsRepository;
     public int createPost(PostsController.RegisterPostWebRequest req, UserDetails user) {
-        if(postsRepository.existsByToken_Id(req.tokenId())){
-            return 0;
-        }
         Members member=memberRepository.findById(user.getUsername()).orElseThrow(()->new NotFoundException(Members.class,user.getUsername()));
         NFTs nft=nftRepository.findByTokenId(req.tokenId()).orElseThrow(()->new NotFoundException(NFTs.class,req.tokenId()));
         postRepository.createPost(req,member,nft);
