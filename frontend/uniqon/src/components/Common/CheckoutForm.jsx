@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   CardHeader,
@@ -17,7 +17,14 @@ import {
 import { LoginButton } from "../Auth/LoginButton"
 import { SignUpButton } from "../Auth/SignUpButton";
 
+
 export function CheckoutForm() {
+
+
+  useEffect(() => {
+    handleDataFromChild();
+  }, []);
+
   const [type, setType] = React.useState("card");
 
   const handleDataFromChild = (data) => {

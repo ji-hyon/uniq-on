@@ -157,7 +157,7 @@ export function LoginButton(props) {
                 } else {
                     alert("UNIQON에 등록된 회원이 아닙니다! 회원가입을 해주세요");
                     sendDataToParent();
-                    navigate("/signup");
+                    // navigate("/signup");
                 }
 
             } else if(e.response && e.response.status === 500) {
