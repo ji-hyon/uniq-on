@@ -251,6 +251,21 @@ export function NFT() {
     ) {
       alert("빈칸이 있습니다. 다시 확인해 주세요.");
     } else {
+      // 위에 IPFS에 요청해서 받은 ipfsJsonUrl 담아서 요청
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      // 싸피 네트워크 주소로 변경
+      const net = new ethers.JsonRpcProvider(
+        "https://gethrpc.ssafy-blockchain.com"
+      );
+      // console.log(net)
+      const signer = await provider.getSigner();
+
+      const balance=await provider.getBalance(signer.getAddress())
+
+      if(balance<ethers.parseEther("0.0006")){
+        alert("잔액이 부족합니다.")
+        return;
+      }
       var formData = new FormData();
       formData.append("file", blob);
       const json = JSON.stringify({
@@ -259,69 +274,8 @@ export function NFT() {
         feature: feature,
         age: age
       });
-<<<<<<< HEAD
-      console.log("IPFS 저장 성공", response2);
-      setIpfsUrl(response2.data.response);
-      ipfsResponse = response2.data.response;
-      console.log("ipfsurl", ipfsUrl);
-    } catch (error) {
-      console.log("IPFS 저장 실패", error);
-      console.log(typeof selectedMiddle);
-      console.log(typeof name);
-      console.log(typeof feature);
-      console.log(typeof age);
-    }
-
-    // 위에 IPFS에 요청해서 받은 ipfsJsonUrl 담아서 요청
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    // 싸피 네트워크 주소로 변경
-    const net = new ethers.JsonRpcProvider(
-      "https://gethrpc.ssafy-blockchain.com"
-    );
-    console.log(net)
-    const signer = await provider.getSigner();
-    //나중에 싸피 네트워크 컨트랙트 주소로 변경 필요
-    // const contractAddress="0x6fc6B313E41117C2Bf293C9E7a12cc8248d95245"
-    const contractAddress = "0x303a548f56ff203d435190ea3a082b59d726ce36";
-    const gasProvider = await provider.getFeeData();
-    const contractInstance = new ethers.Contract(
-      contractAddress,
-      contractAbi,
-      signer,
-      gasProvider
-    );
-
-    const fee = ethers.parseEther("0.0005");
-    const options = { value: fee };
-    //백에서 받은 ipfsJsonUrl 넣어주기
-    const ipfsJsonUrl = ipfsResponse.nftMetadataHash;
-    const receipt = await contractInstance
-      .connect(signer)
-      .mintNFT(signer.address, ipfsJsonUrl, options);
-    const rr = await receipt.wait();
-    const txReceipt = await net.getTransactionReceipt(receipt.hash);
-    console.log(txReceipt);
-    setStatus(txReceipt.status);
-    setHash(receipt.hash);
-    setTokenId(parseInt(txReceipt.logs[1].data, 16));
-    setAddress(signer.address);
-    console.log("2번째 실행");
-    // status 1이면 성공 아니면 실패
-    // 에러 처리 해서 실패했을 경우엔 백에 다음 요청 보내지 않기
-    console.log(txReceipt.status);
-
-    //다음 요청에 보내야 하는 값들
-    console.log(receipt.hash); //tx hash
-    console.log(parseInt(txReceipt.logs[1].data, 16)); //tokenId
-    console.log(contractAddress); //컨트랙트 주소
-    console.log(signer.address);
-
-    if (txReceipt.status === 1) {
-      console.log("3번째");
-=======
       formData.append("data", new Blob([json], { type: "application/json" }));
       let ipfsResponse = {};
->>>>>>> week6
       try {
         console.log("실행1");
         const response2 = await axios.post("/api/nfts/ipfs", formData, {
@@ -342,21 +296,7 @@ export function NFT() {
         console.log(typeof age);
       }
 
-      // 위에 IPFS에 요청해서 받은 ipfsJsonUrl 담아서 요청
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      // 싸피 네트워크 주소로 변경
-      const net = new ethers.JsonRpcProvider(
-        "https://gethrpc.ssafy-blockchain.com"
-      );
-      // console.log(net)
-      const signer = await provider.getSigner();
 
-      const balance=await provider.getBalance(signer.getAddress())
-
-      if(balance<ethers.parseEther("0.0006")){
-        alert("잔액이 부족합니다.")
-        return;
-      }
       //나중에 싸피 네트워크 컨트랙트 주소로 변경 필요
       // const contractAddress="0x6fc6B313E41117C2Bf293C9E7a12cc8248d95245"
       const contractAddress = "0x303a548f56ff203d435190ea3a082b59d726ce36";
@@ -694,6 +634,11 @@ export function NFT() {
                             style={{ width: "180px", height: "200px" }}
                           ></lord-icon>
                         </Button>
+                      </div>
+                      {/* <span>발급비용 : 0.005 ETH </span> */}
+                      <div>
+                        {/* <FaEthereum /> */}
+                      발급비용 : 0.005 ETH
                       </div>
                     </span>
                   </CardBody>
