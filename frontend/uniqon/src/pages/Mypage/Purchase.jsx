@@ -79,7 +79,7 @@ export function Purchase() {
         <Button onClick={handleNextPage}><MdArrowForward className="w-6 h-6"></MdArrowForward></Button>
         )}
         </div>
-      <div className="flex w-[1200px] items-start gap-[32px] relative flex-wrap">
+      <div className="flex w-[1400px] items-start gap-[40px] relative flex-wrap m-auto">
         {purchaseList.map((purchase, index) => (
           <div
             key={index}

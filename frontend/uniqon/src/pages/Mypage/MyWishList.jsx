@@ -67,7 +67,7 @@ export function MyWishList() {
         <Button onClick={handleNextPage}><MdArrowForward className="w-6 h-6"></MdArrowForward></Button>
         )}
         </div>
-      <div className="flex w-[1200px] items-start gap-[32px] relative flex-wrap">
+      <div className="flex w-[1400px] items-start gap-[40px] relative flex-wrap m-auto">
         {myWishList.map((wish, index) => (
           // <SalesCard key={index} item={wish} id={wish.postId}></SalesCard>
           <div className="inline-flex flex-col min-w-[320px] items-start relative flex-[0_0_auto] bg-white rounded-[8px] overflow-hidden shadow-[0px_8px_40px_#0000000a,0px_2px_5px_#0000000d,0px_0px_2px_#00000026]">
