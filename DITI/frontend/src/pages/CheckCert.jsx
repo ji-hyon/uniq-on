@@ -78,7 +78,7 @@ export function CheckCert() {
 
             <div className='border-while border-solid border-4 m-3 max-w-xl mx-auto'>
                 <div className='m-10'>
-                    {VcList ? (
+                    {VcList && VcList.length > 0 ? (
                         VcList.map((vc, index) => (
                             <div key={index}>
                                 <div> 신분증 : {decodedJwts[index].idName}</div>
@@ -98,7 +98,10 @@ export function CheckCert() {
                             </div>
                         ))
                     ) : (
-                        <div>Loading...</div>
+                        <div>
+                            <div>발급받은 인증서가 없습니다</div>
+                            <img src={process.env.PUBLIC_URL + "/noData.jpg"} alt="DITI" />
+                        </div>
                     )}
                 </div>
             </div>
