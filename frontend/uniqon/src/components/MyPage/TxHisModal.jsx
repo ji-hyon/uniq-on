@@ -41,7 +41,9 @@ export function TxHisModal({ isOpen, onClose, selectedTxHis }) {
               display: "flex",
               flexDirection: "column",
               fontSize: "20px",
-              marginRight: "200px"
+              // marginLeft: "200px",
+              // maxHeight: "300px",
+              overflowY: "auto"
             }}
           >
             <div
@@ -52,8 +54,7 @@ export function TxHisModal({ isOpen, onClose, selectedTxHis }) {
                 alignItems: "center"
               }}
             >
-              <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
-              <p>구매자: {selectedTxHis.seller}</p>
+              <p>- 구매자: {selectedTxHis.seller}</p>
             </div>
             <div
               style={{
@@ -63,8 +64,7 @@ export function TxHisModal({ isOpen, onClose, selectedTxHis }) {
                 alignItems: "center"
               }}
             >
-              <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
-              <p>판매자: {selectedTxHis.seller}</p>
+              <p>- 판매자: {selectedTxHis.seller}</p>
             </div>
             <div
               style={{
@@ -74,8 +74,7 @@ export function TxHisModal({ isOpen, onClose, selectedTxHis }) {
                 alignItems: "center"
               }}
             >
-              <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
-              <p>트랜잭션 해시: {selectedTxHis.txHash}</p>
+              <p>- 트랜잭션 해시: {selectedTxHis.txHash}</p>
             </div>
             <div
               style={{
@@ -85,8 +84,7 @@ export function TxHisModal({ isOpen, onClose, selectedTxHis }) {
                 alignItems: "center"
               }}
             >
-              <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
-              <p>거래시간: {selectedTxHis.transactedAt}</p>
+              <p>- 거래시간: {selectedTxHis.transactedAt}</p>
             </div>
             <div
               style={{
@@ -96,8 +94,7 @@ export function TxHisModal({ isOpen, onClose, selectedTxHis }) {
                 alignItems: "center"
               }}
             >
-              <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
-              <p>NFT 이름: {selectedTxHis.nftName}</p>
+              <p>- NFT 이름: {selectedTxHis.nftName}</p>
             </div>
           </div>
           <hr className="border-t border-gray-300 my-4"></hr>
