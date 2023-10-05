@@ -37,7 +37,7 @@ import jwtDecode from "jwt-decode"
 
     return (
       <>
-    {/* <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    {/* <div className="fixed transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
       <Card
         shadow={false}
         className="relative grid h-[40rem] w-full max-w-[28rem] items-end justify-center overflow-hidden text-center"
@@ -48,15 +48,15 @@ import jwtDecode from "jwt-decode"
           shadow={false}
           color="transparent"
         >
-          <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/50" />
+          <div className="absolute inset-0 w-full h-full to-bg-black-10 bg-gradient-to-t from-black/80 via-black/50" />
         </CardHeader>
 
-        <CardBody className="relative py-14 px-6 md:px-12">
+        <CardBody className="relative px-6 py-14 md:px-12">
         
         <Typography variant="h5" className="mb-4 text-blue-400">
         {userInfo.nickname}
         </Typography>
-        <img src="/userIcon.png"  className="mx-auto w-1/5" alt="User Icon" /> 
+        <img src="/userIcon.png"  className="w-1/5 mx-auto" alt="User Icon" /> 
 
         <div>
             <div>{userInfo.name}</div>
@@ -81,10 +81,10 @@ import jwtDecode from "jwt-decode"
     </div> */}
     <div className="fixed top-1/2 left-[700px] transform -translate-x-1/2 -translate-y-1/2">
     <Card className="w-100">
-      <Typography className="font-semibold mt-3">
+      <Typography className="mt-3 font-semibold">
       DITI 인증서
       </Typography>
-      <CardHeader floated={false} className="h-50 flex" style={{ backgroundColor: '#333' }}s>
+      <CardHeader floated={false} className="flex h-50" style={{ backgroundColor: '#333' }}s>
       <lord-icon
         src="https://cdn.lordicon.com/cqgtrhpg.json"
         trigger="hover"
