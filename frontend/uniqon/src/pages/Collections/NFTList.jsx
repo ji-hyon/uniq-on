@@ -1,17 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NftModal } from "../../components/Collections/NftModal";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
-  Button,
-  Tooltip,
-  IconButton,
-  Input
-} from "@material-tailwind/react";
+import { Button, IconButton, Input } from "@material-tailwind/react";
 import { useCollectionsStore } from "../../stores/CollectionsStore";
 import { useEffect, useState } from "react";
 import { Pagination } from "./Pagination";
@@ -20,16 +10,7 @@ import { TiArrowLeftThick } from "react-icons/ti";
 import useUserInfoStore from "../../stores/UserInfoStore";
 
 export function NFTList() {
-  const {
-    mainCollecId,
-    setMainCollecId,
-    midCollecId,
-    setMidCollecId,
-    midCollecType,
-    setMidCollecType,
-    midCollecImg,
-    setMidCollecImg
-  } = useCollectionsStore();
+  const { midCollecId, midCollecType, midCollecImg } = useCollectionsStore();
 
   const navigate = useNavigate();
   const [nftData, setNftData] = useState([]);
@@ -84,9 +65,6 @@ export function NFTList() {
       feature: card.feature
     });
     setIsModalOpen(!isModalOpen);
-
-    // setMidCollecType(card.species);
-    // setMidCollecImg(card.image);
   };
 
   useEffect(() => {
@@ -106,7 +84,6 @@ export function NFTList() {
   // 좋아요 버튼 클릭 시 처리할 함수
   const toggleLike = (card) => {
     const nftId = card.id;
-    const userId = walletAddress;
 
     console.log("지갑주소", walletAddress);
 
@@ -182,7 +159,6 @@ export function NFTList() {
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
                 onKeyDown={handleKeyDown}
-                // style={{ color: 'black ', borderColor: 'black' }}
                 containerProps={{ className: "flex-grow" }}
               ></Input>
               <Button
@@ -216,9 +192,6 @@ export function NFTList() {
                   <footer className="flex justify-center">
                     <Button
                       variant="filled"
-                      // color="teal"
-                      // className="w-28 bg-[#80B6AB] -mt-4 justify-center flex items-baseline gap-2 rounded-lg px-4 py-2.5 text-xl font-bold text-white hover:bg-[#FF7308]"
-                      // className="w-28 bg-[#7FD1AE] -mt-4 justify-center flex items-baseline gap-2 rounded-lg px-4 py-2.5 text-xl font-bold text-white hover:bg-[#FF7308]"
                       className="w-48 bg-[#00A990] -mt-2 justify-center flex items-baseline gap-2 rounded-lg px-4 py-2.5 text-xl font-bold text-white hover:bg-[#80B6AB]"
                     >
                       {midCollecType}
@@ -227,20 +200,6 @@ export function NFTList() {
                 </div>
               </div>
             </div>
-            {/* <div className="flex flex-col items-center">
-              <Card className="w-full max-w-[20rem] shadow-lg ">
-                <CardHeader floated={false} color="blue-gray">
-                  <img src={midCollecImg} alt="ui/ux review check" />
-                  <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
-                </CardHeader>
-                <CardFooter className="pt-5">
-                  <Button className="text-lg" size="lg" fullWidth={true}>
-                    {midCollecType}
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div> */}
-            <br></br>
 
             {/* NFT 카드 리스트를 보여줌 */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -249,14 +208,7 @@ export function NFTList() {
                   key={index}
                   className="w-64 mt-1 m-20 container bg-white rounded-xl shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-2xl"
                 >
-                  <div>
-                    {/* <h1 className="text-xl mt-1 mb-1 font-bold text-gray-800 cursor-pointer hover:text-gray-900 transition duration-100">
-                    {card.name}
-                  </h1> */}
-                    {/* <p className="ml-4 mt-1 mb-2 text-gray-700 hover:underline cursor-pointer">
-                  #by Saca Tuerca
-                </p> */}
-                  </div>
+                  <div></div>
                   <img
                     className="w-full cursor-pointer"
                     src={card.image}
@@ -268,11 +220,6 @@ export function NFTList() {
 
                   <div className="flex p-4 justify-between">
                     <div className="flex items-center space-x-2">
-                      {/* <img
-                        class="w-10 rounded-full"
-                        src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg"
-                        alt="sara"
-                      /> */}
                       <h2 className="text-gray-800 text-2xl font-bold cursor-pointer">
                         {card.ownerNickname}
                       </h2>
@@ -301,49 +248,7 @@ export function NFTList() {
                 </div>
               ))}
             </div>
-            {/* <div className="flex space-x-4">
-              {currentPageData.map((card, index) => (
-                <Card
-                  // onClick={() => clickNft(card)}
-                  key={index}
-                  className="w-full max-w-[20rem] shadow-lg"
-                >
-                  <CardHeader floated={false} color="blue-gray">
-                    <img src={card.image} alt="ui/ux review check" />
-                    <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
-                    <IconButton
-                      size="sm"
-                      color={liked ? "red" : "white"}
-                      variant="text"
-                      className="!absolute top-4 right-4 rounded-full"
-                      onClick={() => toggleLike(card)}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="h-6 w-6"
-                      >
-                        <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                      </svg>
-                    </IconButton>
-                  </CardHeader>
-                  <CardFooter className="pt-5">
-                    <Button
-                      onClick={() => {
-                        clickNft(card);
-                      }}
-                      className="text-lg"
-                      size="lg"
-                      fullWidth={true}
-                    >
-                      {card.ownerNickname}
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div> */}
-            <br></br>
+
             <div>
               <NftModal
                 isOpen={isModalOpen}
