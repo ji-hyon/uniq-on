@@ -265,11 +265,11 @@ export function NFTList() {
 
                   <div className="flex p-4 justify-between">
                     <div className="flex items-center space-x-2">
-                      <img
+                      {/* <img
                         class="w-10 rounded-full"
                         src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg"
                         alt="sara"
-                      />
+                      /> */}
                       <h2 className="text-gray-800 text-2xl font-bold cursor-pointer">
                         {card.ownerNickname}
                       </h2>
