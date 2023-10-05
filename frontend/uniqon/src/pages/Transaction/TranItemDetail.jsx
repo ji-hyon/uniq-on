@@ -25,7 +25,7 @@ export function TranItemDetail () {
   const [price, setPrice] = useState("1000");
   const { forDetailItem, setForDetailItem } = useTransactionStore();
   // const URL = "http://localhost:5000"
-  const { selectedNftId, setSelectedNftId, selectedPostId, setSelectedPostId } = useTransactionStore();
+  const { sellerAddress, setSellerAddress, selectedNftId, setSelectedNftId, selectedPostId, setSelectedPostId } = useTransactionStore();
 
   const { accessToken, walletAddress } = useUserInfoStore();
 
@@ -66,6 +66,8 @@ export function TranItemDetail () {
           // console.log(res.data.response)
           setItem(res.data.response)
           setForDetailItem(res.data.response)
+          
+          setSellerAddress(res.data.response.SellerInfo.walletAddress)
   
       } catch(err) {
         console.log(err)
@@ -147,6 +149,9 @@ export function TranItemDetail () {
         <br></br> */}
         </div>
         <div className="relative flex justify-end right-[240px] top-[140px]">
+          {
+            sellerAddress === walletAddress ? (
+              <>
         <Button onClick={수정handleOpen} variant="gradient" className="flex items-center self-end">
           <LuFileEdit className="w-5 h-5 mr-1"/>
         판매글 수정
@@ -155,6 +160,11 @@ export function TranItemDetail () {
         <MdDeleteOutline className="w-5 h-5 mr-1"/>
         판매글 삭제
         </Button>
+        </> 
+            ) : (
+              <></>
+            )
+        }
         
         {/* <Button color="gray" onClick={getSalesDetail}>판매 상세 조회</Button> */}
           
