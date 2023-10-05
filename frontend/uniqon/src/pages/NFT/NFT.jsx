@@ -526,7 +526,10 @@ export function NFT() {
                               height: "250px",
                               display: "flex",
                               justifyContent: "center",
-                              alignItems: "center"
+                              alignItems: "center",
+                              borderRadius: "15px",
+                              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
+                              fontSize: "20px"
                             }}
                           >
                             AI 이미지가 없습니다.
