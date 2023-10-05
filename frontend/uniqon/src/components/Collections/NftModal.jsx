@@ -33,7 +33,7 @@ export function NftModal({ isOpen, onClose, selectedNft }) {
           }}
         >
           <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
-          <h3>소유주: {selectedNft.ownerNickname}</h3>
+          <h3>소유주: {selectedNft.nickname}</h3>
         </div>
         <div
           style={{

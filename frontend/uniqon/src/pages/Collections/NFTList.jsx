@@ -80,7 +80,7 @@ export function NFTList() {
       name: card.name,
       image: card.image,
       age: card.age,
-      nickname: card.nickname,
+      nickname: card.ownerNickname,
       feature: card.feature
     });
     setIsModalOpen(true);
