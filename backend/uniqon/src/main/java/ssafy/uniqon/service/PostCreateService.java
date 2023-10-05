@@ -22,6 +22,10 @@ public class PostCreateService {
     public int createPost(PostsController.RegisterPostWebRequest req, UserDetails user) {
         Members member=memberRepository.findById(user.getUsername()).orElseThrow(()->new NotFoundException(Members.class,user.getUsername()));
         NFTs nft=nftRepository.findByTokenId(req.tokenId()).orElseThrow(()->new NotFoundException(NFTs.class,req.tokenId()));
+        if(postsRepository.existsByNft_Id(nft.getId())){
+            return 0;
+        }
+
         postRepository.createPost(req,member,nft);
         return 1;
     }
