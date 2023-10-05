@@ -33,10 +33,6 @@ export function TopNavBar() {
   const goToLanding = () => {
     navigate("/");
   };
-
-  const goToWishlist = () => {
-    navigate("/wishlist");
-  };
   // 마켓플레이스(거래 목록 페이지)로 이동
   const goToTransaction = () => {
     navigate("/transaction");
@@ -240,7 +236,6 @@ export function TopNavBar() {
               <MenuList className="absolute top-0 left-0">
                 <MenuItem onClick={() => { handleOpen(); getMyInfo();}}>내 정보</MenuItem>
                 <MenuItem onClick={goToMypage}>마이페이지</MenuItem>
-                <MenuItem onClick={goToWishlist}>위시리스트</MenuItem>
                 <MenuItem onClick={goLogout}>로그아웃</MenuItem>
               </MenuList>
             </Menu>
