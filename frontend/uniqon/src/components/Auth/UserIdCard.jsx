@@ -92,9 +92,9 @@ import jwtDecode from "jwt-decode"
         style={{ width: "180px", height: "180px", left:"12px" }}>
       </lord-icon>
       <lord-icon
-        src="https://cdn.lordicon.com/dykrlspk.json"
+        src="https://cdn.lordicon.com/ccwgfhfg.json"
         trigger="hover"
-        colors="outline:#121331,primary:#4bb3fd,secondary:#ebe6ef"
+        colors="outline:#121331,primary:#92140c,secondary:#4bb3fd,tertiary:#ebe6ef"
         style={{ width: "160px", height: "160px", top: "10px", right:"-15px" }}>
       </lord-icon>
       </CardHeader>
@@ -119,8 +119,15 @@ import jwtDecode from "jwt-decode"
         </Typography>
       </CardBody>
       <CardFooter className="pt-3">
-            <Button size="lg" className="bg-gradient-to-r to-green-300 from-[#438fff]" fullWidth={true} onClick={onConfirm}>
-                서비스 시작하기
+            <Button size="lg" className="flex flex-col items-center justify-center text-center bg-gradient-to-r to-green-300 from-[#438fff]" fullWidth={true} onClick={onConfirm}>
+
+                <p className="text-lg">서비스 시작하기</p>
+                <lord-icon
+        src="https://cdn.lordicon.com/dykrlspk.json"
+        trigger="hover"
+        colors="outline:#121331,primary:#4bb3fd,secondary:#ebe6ef"
+        style={{ width: "80px", height: "80px"}}>
+      </lord-icon>
             </Button>
          </CardFooter>
     </Card>
