@@ -17,6 +17,7 @@ import useUserInfoStore from "../../stores/UserInfoStore";
 import { useCollectionsStore } from "../../stores/CollectionsStore";
 import RingLoader from "react-spinners/RingLoader";
 import { useNavigate } from "react-router-dom";
+import { FaEthereum } from "react-icons/fa6";
 
 export function NFT() {
   const nftImg = useRef();
@@ -137,7 +138,7 @@ export function NFT() {
 
   const [imgBase64, setImgBase64] = useState("");
   const [aiImgUrl, setAiImgUrl] = useState("");
-  const [species, setSpecies] = useState("fox");
+  const [species, setSpecies] = useState("");
   const [blob, setBlob] = useState(null);
   const [ipfsUrl, setIpfsUrl] = useState({
     imageIpfsHash: "",
@@ -194,6 +195,10 @@ export function NFT() {
   const handleSubmit = async () => {
     if (!imgBase64) {
       alert("이미지를 업로드 하세요");
+      return;
+    }
+    if (!species) {
+      alert("대분류를 선택해주세요!");
       return;
     }
     const data = {
@@ -638,8 +643,9 @@ export function NFT() {
                       </div>
                       {/* <span>발급비용 : 0.005 ETH </span> */}
                       <div>
-                        {/* <FaEthereum /> */}
-                      발급비용 : 0.005 ETH
+                        <div className="inline-flex">
+                          발급비용 : 0.005 ETH <FaEthereum className="" />
+                        </div>
                       </div>
                     </span>
                   </CardBody>
