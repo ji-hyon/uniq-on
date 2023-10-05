@@ -12,12 +12,14 @@ import { TiArrowLeftThick } from "react-icons/ti";
 
 import { LuFileEdit } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
+// import { useLocation } from 'react-router-dom';
 
 
 
 export function TranItemDetail () {
 
   const navigate = useNavigate();
+  // const location = useLocation();
 
   const { id } = useParams();
   const [ item, setItem ] = useState({});
@@ -33,6 +35,7 @@ export function TranItemDetail () {
   const [수정open, set수정Open] = React.useState(false);
   const 수정handleOpen = () => { set수정Open(!수정open); };
   const [수정할NFTid, set수정할NFTid] = useState("");
+  // const { wishCheck } = location.state;
 
   function goToTransaction() {
     navigate("/transaction");
