@@ -143,9 +143,6 @@ app.post("/api/users/signup", upload.single("profileImg"), async (req, res) => {
       birth: vcs[0].data.birth,
       gender: vcs[0].data.gender,
       vpToken: vpJwt,
-      //////////////////////////////////////////////////////////////////
-      /////////발급일자, 만료일자 추가///////////////////////////////////
-      /////////////////////////////////////////////////////////////////
 
       // password는 지갑주소 마지막 20자리로 설정함
       password: req.headers.walletaddress.slice(-20),

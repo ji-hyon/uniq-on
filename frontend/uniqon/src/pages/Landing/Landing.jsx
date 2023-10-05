@@ -23,16 +23,16 @@ export function Landing() {
       <Section3 />
       {/* <Section4 /> */}
       </div>
-      <Button
+      {/* <Button
         variant='gradient'
           className="text-4xl w-96 h-28 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"
           onClick={() => {
             navigate("/forlogin");
 
           }}
-        >로그인 페이지 제작중 뚝딱뚝딱</Button>
+        >로그인 페이지 제작중 뚝딱뚝딱</Button> */}
 
-        <LoginButton />
+        {/* <LoginButton />
 
          <Button
           className="text-4xl w-96 h-28"
@@ -43,7 +43,7 @@ export function Landing() {
           color="orange"
         >
           회원가입
-        </Button>
+        </Button> */}
        
 
       </header>

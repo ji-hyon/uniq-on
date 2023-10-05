@@ -24,7 +24,7 @@ axios.interceptors.response.use(
   (error) => {
     // 여기서 401 오류를 처리할 수 있습니다.
     if (error.response.status === 401) {
-      window.location.href = "/login";
+      window.location.href = "/forlogin";
     }
     return Promise.reject(error);
   }
