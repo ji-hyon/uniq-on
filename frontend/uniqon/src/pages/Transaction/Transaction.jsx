@@ -7,6 +7,10 @@ import { SalesCard } from "../../components/Common/SalesCard";
 import { TransactionBanner } from "../../components/Transaction/TransactionBanner";
 import useUserInfoStore from "../../stores/UserInfoStore";
 
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+
+import 'swiper/css';
+
 import { MdOutlinePostAdd } from "react-icons/md";
 
 import { useNavigate } from "react-router-dom";
@@ -42,6 +46,9 @@ export function Transaction() {
   
   const [page, setPage] = useState(0);
   const [result, setResult] = useState([]);
+
+  const swiper = useSwiper();
+
   // const [totalPage, setTotalPage] = useState(0);
   // 나의 NFT 조회
   // useEffect(() => {
@@ -191,8 +198,9 @@ export function Transaction() {
 
             
           {/* 내가 가진 nft 목록 중에서 선택하기 */}
+          
 
-          {nftList.length > 0 &&
+          {/* {nftList.length > 0 &&
     nftList.map((nft, index) => (
       <div key={index} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
         <div className="inline-flex flex-col min-w-[320px] items-start relative flex-[0_0_auto] bg-white rounded-[8px] overflow-hidden shadow-[0px_8px_40px_#0000000a,0px_2px_5px_#0000000d,0px_0px_2px_#00000026]">
@@ -216,7 +224,33 @@ export function Transaction() {
           </div>
         </div>
       </div>
-    ))}
+    ))} */}
+
+    <Swiper
+    slidesPerView={2}
+    spaceBetween={20}
+    pagination={true} className="mySwiper" style={{ width: "100%", height: "100%" }}>
+      {nftList.map((nft, index) => (
+        <SwiperSlide key={index}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+            <img src={nft.image} alt={`포스트 이미지 ${index}`} />
+            
+          </div>
+          <Button variant="gradient"
+                  className="text-sm mt-2"
+                  size="sm"
+                  fullWidth={true}
+                  onClick={() => setTokenId(nft.tokenId)}
+                >
+                  {nft.name}
+          </Button>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+    {/* { nftList.length > 0 && 
+      <Button className="flex justify-end items-end place-items-end flex-end" onClick={() => swiper.slideNext()}>Next</Button> } */}
+
+
         
 
             {/* <Input color="blue" label="판매 NFT선택" value={tokenId} size="lg" onChange={(e) => setTokenId(e.target.value)}/> */}
