@@ -13,6 +13,7 @@ import {
   Input,
 Dialog, Typography, Card, CardBody, CardFooter, CardHeader
 } from "@material-tailwind/react";
+import useUserInfoStore from "../../stores/UserInfoStore";
 
 export function TopNavBar() {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ export function TopNavBar() {
   const [isEditingNickname, setIsEditingNickname] = useState(false);
   const [newNickname, setNewNickname] = useState("");
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
+  const { accessToken, walletAddress } = useUserInfoStore();
   // const notifications = [
   //   { id: 1, content: "멍뭉이 NFT의 거래가 완료 되었습니다." },
   //   { id: 2, content: "거래완료2" },
@@ -31,7 +33,11 @@ export function TopNavBar() {
   // ];
 
   const goToLanding = () => {
-    navigate("/");
+    if (accessToken) {
+      navigate("/transaction");
+    } else {
+      navigate("/");
+    }
   };
   // 마켓플레이스(거래 목록 페이지)로 이동
   const goToTransaction = () => {
@@ -50,13 +56,16 @@ export function TopNavBar() {
   const goToMypage = () => {
     navigate("/mypage");
   };
-  
-  const goMyInfo = () => {
-    navigate("/myinfo");
-  };
 
   const goLogout = () => {
-    window.location.href = "https://j9c201.p.ssafy.io/api/users/logout";
+    const url = window.location.href;
+    const nowUrl = url.split(":")[1];
+    useUserInfoStore.getState().clearUserInfo();
+    if (nowUrl === "//localhost") {
+      window.location.href = "http://localhost:5001/api/users/logout";
+    } else {
+      window.location.href = "https://j9c201.p.ssafy.io/api/users/logout";
+    }
     alert("로그아웃 되었습니다!");
   };
 
