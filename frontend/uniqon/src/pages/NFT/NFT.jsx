@@ -350,6 +350,13 @@ export function NFT() {
       );
       // console.log(net)
       const signer = await provider.getSigner();
+
+      const balance=await provider.getBalance(signer.getAddress())
+
+      if(balance<ethers.parseEther("0.0006")){
+        alert("잔액이 부족합니다.")
+        return;
+      }
       //나중에 싸피 네트워크 컨트랙트 주소로 변경 필요
       // const contractAddress="0x6fc6B313E41117C2Bf293C9E7a12cc8248d95245"
       const contractAddress = "0x303a548f56ff203d435190ea3a082b59d726ce36";
