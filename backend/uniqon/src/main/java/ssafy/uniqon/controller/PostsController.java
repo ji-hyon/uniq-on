@@ -95,6 +95,7 @@ private final PostDeleteService postDeleteService;
                                     @AuthenticationPrincipal UserDetails user) {
         log.debug("# 판매글 등록시 데이터 : {}", req);
         postCreateService.createPost(req,user);
+        return OK("success");
     }
 
     @Operation(summary="판매글 수정", description = "판매글을 수정합니다.")
