@@ -273,6 +273,10 @@ export function NFT() {
         alert("잔액이 부족합니다.")
         return;
       }
+      if (isNaN(age)) {
+        alert("나이는 숫자를 입력해주세요!");
+        return;
+      }
       var formData = new FormData();
       formData.append("file", blob);
       const json = JSON.stringify({
@@ -291,11 +295,14 @@ export function NFT() {
             "Content-Type": "multipart/form-data"
           }
         });
-        if (response2.status === 200) {
+        if (response2.status === 200 && response2.data.success) {
           console.log("IPFS 저장 성공", response2);
           setIpfsUrl(response2.data.response);
           ipfsResponse = response2.data.response;
           console.log("ipfsurl", ipfsUrl);
+        } else {
+          alert("중복 닉네임입니다! 다른 닉네임을 선택해주세요!");
+          return;
         }
       } catch (error) {
         console.log("IPFS 저장 실패", error);

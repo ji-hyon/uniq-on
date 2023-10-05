@@ -171,8 +171,10 @@ public class NFTServiceImpl implements NFTService {
     public NFTsController.IPFSWebResponse pinToIpfs(NFTsController.PinIpfsWebRequest req, MultipartFile multipartFile, UserDetails user) throws PinataException, IOException {
         NFTs nft=nftQueryRepository.findByCreaterAndName(user.getUsername(),req.name());
         if(nft!=null){
-            throw new RuntimeException("이미 NFT로 발급한 동물입니다.");
+//            throw new RuntimeException("이미 NFT로 발급한 동물입니다.");
+            return null;
         }
+
         File image = File.createTempFile("123", "");
         multipartFile.transferTo(image);
 

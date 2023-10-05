@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import ssafy.uniqon.service.NFTService;
 
 import java.io.IOException;
 
+import static ssafy.uniqon.global.response.Response.ERROR;
 import static ssafy.uniqon.global.response.Response.OK;
 
 @Slf4j
@@ -153,7 +155,13 @@ public class NFTsController {
     public Response<?> pinToIpfs(@RequestPart(value = "file") MultipartFile multipartFile,
                                  @RequestPart(value = "data") PinIpfsWebRequest req,
                                  @AuthenticationPrincipal UserDetails user) throws PinataException, IOException {
-        return OK(nftService.pinToIpfs(req,multipartFile,user));
+        NFTsController.IPFSWebResponse res = nftService.pinToIpfs(req,multipartFile,user);
+        if (res == null) {
+            return ERROR("중복된 이름입니다.", HttpStatus.BAD_REQUEST);
+        } else {
+            return OK(res);
+        }
+
     }
 
     @Operation(summary = "NFT 조회", description = "지갑 주소를 통해 위시리스트 조회합니다.")
