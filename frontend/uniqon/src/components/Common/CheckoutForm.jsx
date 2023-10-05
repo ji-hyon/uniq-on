@@ -71,12 +71,12 @@ export function CheckoutForm() {
             }}
           >
             <TabPanel value="card" className="p-0">
-              <form className="mt-10 flex flex-col gap-4">
+              <form className="mt-8 flex flex-col gap-4">
                 <div>
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="mb-2 font-medium"
+                    className=" font-medium"
                   >
                     UNIQON에서는 METAMASK로 로그인합니다.
                     
@@ -84,11 +84,11 @@ export function CheckoutForm() {
                   
                 </div>
 
-                <div className="my-3">
+                <div className="mt-2">
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="mb-2 font-semibold"
+                    className=" font-semibold"
                   >
                     
                     그전에 먼저 DITI로 신원인증을 해야 합니다.
@@ -108,7 +108,7 @@ export function CheckoutForm() {
               </form>
             </TabPanel>
             <TabPanel value="paypal" className="p-0">
-              <form className="mt-10 flex flex-col gap-4">
+              <form className="mt-8 flex flex-col gap-4">
                 <SignUpButton onDataFromChild={handleDataFromChild}/>
                 <Typography
                   variant="small"

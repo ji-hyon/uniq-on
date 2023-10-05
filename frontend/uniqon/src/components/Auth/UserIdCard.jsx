@@ -36,7 +36,8 @@ import jwtDecode from "jwt-decode"
       }, []);
 
     return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <>
+    {/* <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <Card
         shadow={false}
         className="relative grid h-[40rem] w-full max-w-[28rem] items-end justify-center overflow-hidden text-center"
@@ -62,9 +63,9 @@ import jwtDecode from "jwt-decode"
             <div>{userInfo.gender}</div>
             <div>{userInfo.birth}</div>
             <div>{userInfo.walletAddress}</div>
-            {/* <div>{userInfo.nbf}</div>  */}
+            
             <div>{new Date(userInfo.nbf*1000).toLocaleString()}</div>
-            {/* <div>{userInfo.exp}</div>  */}
+            
             <div>{new Date(userInfo.exp*1000).toLocaleString()}</div>
         </div>
 
@@ -77,6 +78,53 @@ import jwtDecode from "jwt-decode"
         </CardBody>
 
       </Card>
+    </div> */}
+    <div className="fixed top-1/2 left-[700px] transform -translate-x-1/2 -translate-y-1/2">
+    <Card className="w-100">
+      <Typography className="font-semibold mt-3">
+      DITI 인증서
+      </Typography>
+      <CardHeader floated={false} className="h-50 flex" style={{ backgroundColor: '#333' }}s>
+      <lord-icon
+        src="https://cdn.lordicon.com/cqgtrhpg.json"
+        trigger="hover"
+        colors="outline:#131432,primary:#606874,secondary:#4bb3fd,tertiary:#ebe6ef"
+        style={{ width: "180px", height: "180px", left:"12px" }}>
+      </lord-icon>
+      <lord-icon
+        src="https://cdn.lordicon.com/dykrlspk.json"
+        trigger="hover"
+        colors="outline:#121331,primary:#4bb3fd,secondary:#ebe6ef"
+        style={{ width: "160px", height: "160px", top: "10px", right:"-15px" }}>
+      </lord-icon>
+      </CardHeader>
+      <CardBody className="text-center">
+        <Typography variant="h4" color="blue-gray" className="mb-2">
+        {userInfo.name}
+        </Typography>
+        <Typography color="blue-gray" className="font-medium" textGradient>
+        {userInfo.gender}
+        </Typography>
+        <Typography color="blue-gray" className="font-medium" textGradient>
+        {userInfo.birth}
+        </Typography>
+        <Typography color="blue-gray" className="font-medium" textGradient>
+        {userInfo.walletAddress}
+        </Typography>
+        <Typography color="blue-gray" className="font-medium" textGradient>
+        발급시간 | {new Date(userInfo.nbf*1000).toLocaleString()}
+        </Typography>
+        <Typography color="blue-gray" className="font-medium" textGradient>
+        유효기한 | {new Date(userInfo.exp*1000).toLocaleString()}
+        </Typography>
+      </CardBody>
+      <CardFooter className="pt-3">
+            <Button size="lg" className="bg-gradient-to-r to-green-300 from-[#438fff]" fullWidth={true} onClick={onConfirm}>
+                서비스 시작하기
+            </Button>
+         </CardFooter>
+    </Card>
     </div>
+    </>
     );
   }
