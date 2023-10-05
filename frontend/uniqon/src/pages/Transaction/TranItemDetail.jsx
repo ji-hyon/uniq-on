@@ -8,6 +8,7 @@ import { Button, Dialog,
   Card, CardBody, Input, CardFooter, CardHeader, Typography, Textarea } from "@material-tailwind/react";
 import { useTransactionStore } from "../../stores/TransactionStore";
 import useUserInfoStore from "../../stores/UserInfoStore";
+import { TiArrowLeftThick } from "react-icons/ti";
 
 import { LuFileEdit } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
@@ -203,9 +204,18 @@ export function TranItemDetail () {
       </Dialog>
       </div>
       
+      <div className="flex flex-row">
+              <div style={{ marginLeft: '240px', marginTop: '300px'  }}>
+                <Button onClick={() => navigate(-1)}>
+                  <TiArrowLeftThick
+                    style={{ fontSize: "20px" }}
+                  ></TiArrowLeftThick>
+                </Button>
+              </div>
+            </div>
         
         </div>
-          
+        
       </div>
       
         </header>
