@@ -48,7 +48,8 @@ export function NftModal({ isOpen, onClose, selectedNft }) {
               style={{
                 color: "black",
                 display: "flex",
-                marginLeft: "20px"
+                marginLeft: "20px",
+                alignItems: "center"
               }}
             >
               <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
@@ -58,7 +59,8 @@ export function NftModal({ isOpen, onClose, selectedNft }) {
               style={{
                 color: "black",
                 display: "flex",
-                marginLeft: "20px"
+                marginLeft: "20px",
+                alignItems: "center"
               }}
             >
               <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
@@ -68,7 +70,8 @@ export function NftModal({ isOpen, onClose, selectedNft }) {
               style={{
                 color: "black",
                 display: "flex",
-                marginLeft: "20px"
+                marginLeft: "20px",
+                alignItems: "center"
               }}
             >
               <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
@@ -78,7 +81,8 @@ export function NftModal({ isOpen, onClose, selectedNft }) {
               style={{
                 color: "black",
                 display: "flex",
-                marginLeft: "20px"
+                marginLeft: "20px",
+                alignItems: "center"
               }}
             >
               <TiMediaRecord style={{ marginRight: "0.5rem" }}></TiMediaRecord>
