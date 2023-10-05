@@ -73,7 +73,7 @@ export function MidCollections() {
           <div className="bg-white w-[1440px] h-[1024px] relative">
             <TopNavBar></TopNavBar>
 
-            <div className="flex mt-60 -mx-4 flex-wrap h-[52px]">
+            <div className="flex mt-80 -mx-4 flex-wrap h-[52px]">
               {currentPageData.map((card, index) => (
                 <div key={index} className="w-1/4 mb-[430px] px-4 relative">
                   <div
@@ -154,24 +154,15 @@ export function MidCollections() {
               ))}
             </div>
 
-            <div
-              className="flex flex-row justify-between"
-              style={{
-                position: "fixed",
-                bottom: "20px",
-                left: "30px",
-                right: "670px",
-                padding: "0 20px"
-              }}
-            >
-              <div>
+            <div className="flex flex-row " style={{ marginTop: "550px" }}>
+              <div style={{ marginRight: "600px" }}>
                 <Button onClick={() => navigate(-1)}>
                   <TiArrowLeftThick
                     style={{ fontSize: "20px" }}
                   ></TiArrowLeftThick>
                 </Button>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center ">
                 <Pagination
                   totalPages={Math.ceil(midCardsData.length / pageSize)}
                   currentPage={currentPage}
