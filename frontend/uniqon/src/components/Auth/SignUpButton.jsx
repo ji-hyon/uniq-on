@@ -172,7 +172,7 @@ export function SignUpButton(props) {
         console.log(response.data);
         // 로그인 페이지로 이동
         sendDataToParent();
-        navigate("/login");
+        // navigate("/login");
       } 
       console.log("signup success");
 

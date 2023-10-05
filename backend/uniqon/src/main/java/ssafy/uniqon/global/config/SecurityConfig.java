@@ -38,7 +38,7 @@ public class SecurityConfig {
     private final TokenProvider tokenProvider;
     private final CustomUserDetailsService customUserDetailsService;
 
-    @Value("${redirect-url}")
+    @Value("${redirect.url}")
     private String redirectUrl;
 
 
@@ -90,7 +90,7 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .clearAuthentication(true)
                         .logoutSuccessHandler(((request, response, authentication) -> response
-                                .sendRedirect(redirectUrl))))
+                                .sendRedirect("index.html"))))
                 .addFilterBefore(new JwtFilter(tokenProvider),
                         UsernamePasswordAuthenticationFilter.class)
                 .build();
