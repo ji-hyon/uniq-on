@@ -266,15 +266,17 @@ export function ItemDetailCard({ item }) {
           {forDetailItem.PostInfo.content}
         </Typography>
         <a href="#" className="inline-block">
-          <Button
-            onClick={handleOpen}
-            variant="gradient"
-            className="flex text-lg"
-            color="red"
-          >
-            구매하기
-            <img className="w-8 h-8 ml-1" src="/coin.gif" alt="" />
-          </Button>
+          {walletAddress !== sellerAddress && (
+            <Button
+              onClick={handleOpen}
+              variant="gradient"
+              className="flex text-lg"
+              color="red"
+            >
+              구매하기
+              <img className="w-8 h-8 ml-1" src="/coin.gif" alt="" />
+            </Button>
+          )}
         </a>
       </CardBody>
       {/* 모달 */}
