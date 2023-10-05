@@ -137,9 +137,9 @@ export function MyPage() {
             </div> */}
 
           <div className="mt-36">
-            <div className="text-right mb-3">
+            {/* <div className="text-right mb-3">
               <Button onClick={handleOpen}>내 정보</Button>
-            </div>
+            </div> */}
 
           <Dialog
           size="sm"

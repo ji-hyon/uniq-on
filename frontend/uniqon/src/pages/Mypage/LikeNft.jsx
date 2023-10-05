@@ -12,10 +12,12 @@ import {
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { NftModal } from "../../components/Collections/NftModal";
+import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
 export function LikeNft() {
   const [likeNftList, setLikeNftList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [page, setPage] = useState(0);
   const [selectedNft, setSelectedNft] = useState({
     id: "",
     image: "",
@@ -41,23 +43,35 @@ export function LikeNft() {
       try {
         const response = await axios.get(`/api/myPage/like-nft-list`, {
           params: {
-            page: 0,
-            size: 10
+            page: page,
+            size: 4
           }
         });
         if (response.status === 200) {
-          setLikeNftList(response.data.response.content)
-          console.log("내가 좋아요 한 NFT 리스트 : ", response.data.response.content);
-        }
+            setLikeNftList(response.data.response.content);
+            console.log("내가 좋아요 한 NFT 리스트 : ", response.data.response.content);
+        } 
       } catch (error) {
         console.log("실패", error);
       }
     }
     likeCollecList();
-  }, []);
+  }, [page]);
+
+  const handlePreviousPage = () => {
+    setPage(page - 1);
+  };
+
+  const handleNextPage = () => {
+    setPage(page + 1);
+  };
 
   return (
     <div className="App">
+      {page > 0 && <Button onClick={handlePreviousPage}><MdArrowBack className="w-6 h-6"></MdArrowBack></Button>}
+      {likeNftList.length > 0 &&(
+        <Button onClick={handleNextPage}><MdArrowForward className="w-6 h-6"></MdArrowForward></Button>
+      )}
       <div className="flex w-[1200px] items-start gap-[32px] relative flex-wrap">
         {likeNftList.map((nft, index) => (
           <div className="inline-flex flex-col min-w-[320px] items-start relative flex-[0_0_auto] bg-white rounded-[8px] overflow-hidden shadow-[0px_8px_40px_#0000000a,0px_2px_5px_#0000000d,0px_0px_2px_#00000026]">
@@ -67,7 +81,7 @@ export function LikeNft() {
                   <div className="absolute inset-0 w-full h-full to-bg-black-10 bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
                 </CardHeader>
                 <CardFooter className="pt-3 pb-3">
-                <Button className="text-sm" size="sm" fullWidth={true} onClick={() => { clickNft(nft); }}>
+                  <Button className="text-sm" size="sm" fullWidth={true} onClick={() => { clickNft(nft); }}>
                     {nft.name}
                   </Button>
                 </CardFooter>

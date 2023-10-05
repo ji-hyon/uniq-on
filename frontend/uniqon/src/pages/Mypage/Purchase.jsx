@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { MdArrowBack, MdArrowForward } from "react-icons/md";
 import {
   Button,
   Card,
@@ -21,7 +22,7 @@ export function Purchase() {
         const response = await axios.get(`/api/myPage/boughtList`, {
           params: {
             page: page,
-            size: 10,
+            size: 4,
           },
         });
         if (response.status === 200) {
@@ -35,8 +36,20 @@ export function Purchase() {
     purchaseList();
   }, [page]);
 
+  const handlePreviousPage = () => {
+    setPage(page - 1);
+  };
+
+  const handleNextPage = () => {
+    setPage(page + 1);
+  };
+
   return (
     <div className="App">
+      {page > 0 && <Button onClick={handlePreviousPage}><MdArrowBack className="w-6 h-6"></MdArrowBack></Button>}
+      {purchaseList.length > 0 && (
+        <Button onClick={handleNextPage}><MdArrowForward className="w-6 h-6"></MdArrowForward></Button>
+      )}
       <div className="flex w-[1200px] items-start gap-[32px] relative flex-wrap">
         {purchaseList.map((purchase, index) => (
           <div
