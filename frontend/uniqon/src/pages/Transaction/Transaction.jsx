@@ -233,22 +233,35 @@ export function Transaction() {
       {nftList.map((nft, index) => (
         <SwiperSlide key={index}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
-            <img src={nft.image} alt={`포스트 이미지 ${index}`} />
+            <img src={nft.image} alt={`포스트 이미지 ${index}`} onClick={() => setTokenId(nft.tokenId)} />
             
           </div>
+          {
+          nft.tokenId === tokenId ? (
           <Button variant="gradient"
-                  className="text-sm mt-2"
-                  size="sm"
-                  fullWidth={true}
-                  onClick={() => setTokenId(nft.tokenId)}
-                >
-                  {nft.name}
-          </Button>
+          className="mt-2 text-sm"
+          size="sm"
+          fullWidth={true}
+          color="amber"
+        >
+          선택됨
+  </Button>
+    ) : (
+    <Button variant="gradient"
+    className="mt-2 text-sm"
+    size="sm"
+    fullWidth={true}
+    onClick={() => setTokenId(nft.tokenId)}
+  >
+    {nft.name}
+</Button>
+      )}
+          
         </SwiperSlide>
       ))}
     </Swiper>
     {/* { nftList.length > 0 && 
-      <Button className="flex justify-end items-end place-items-end flex-end" onClick={() => swiper.slideNext()}>Next</Button> } */}
+      <Button className="flex items-end justify-end place-items-end flex-end" onClick={() => swiper.slideNext()}>Next</Button> } */}
 
 
         
