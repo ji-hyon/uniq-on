@@ -259,6 +259,9 @@ export function ItemDetailCard({ item }) {
         >
           <FaEthereum /> {forDetailItem.PostInfo.price} ETH
         </Typography>
+        <Typography variant="h6" color="gray" className="mb-4 uppercase">
+          {forDetailItem.nftInfo.name}
+        </Typography>
         <Typography variant="h6" color="gray" className="mb-4 font-normal">
           by {forDetailItem.SellerInfo.nickname}
         </Typography>
