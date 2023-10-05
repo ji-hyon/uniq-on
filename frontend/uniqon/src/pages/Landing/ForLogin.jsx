@@ -9,7 +9,7 @@ export function ForLogin() {
       
     <Scene />
     </div>
-    <div className="absolute top-[200px] right-[340px]">
+    <div className="absolute top-[75px] right-[230px]">
     <CheckoutForm />
     </div>
     </>
