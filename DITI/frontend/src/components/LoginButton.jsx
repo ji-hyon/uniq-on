@@ -1,25 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Button } from "@material-tailwind/react";
-import axios from "axios"
 import { ethers } from "ethers"
 import useUserInfoStore from '../stores/UserInfoStore.js'
 import Web3Token from 'web3-token';
-
+import { Typography } from "@material-tailwind/react";
+import { useConfigStore } from '../stores/ConfigStore.js';
 // 저장
-export function MetaMask() {
-  const [signer, setSigner] = useState(null)
-  const [provider, setProvider] = useState(null) 
-  const [wallet, setWallet] = useState({
-    address: "", 
-    balance: "", 
-    chainId: "",
-  })
-  const inputFileRef = useRef(null)
-  const setUserInfo = useUserInfoStore((state)=>state.setUserInfo)
-
-  useEffect(()=>{
-    //connectMetaMask()
-  },[])
+export function LoginButton({ className }) {
+  const setUserInfo = useUserInfoStore((state) => state.setUserInfo)
+  const setPage = useConfigStore((state) => state.setPage)
 
   function detectMetaMask() {
     let injectedProvider = false
@@ -32,7 +21,7 @@ export function MetaMask() {
     const isMetaMask = injectedProvider ? window.ethereum.isMetaMask : false
     return isMetaMask
   }
-  
+
   async function addStgGeth() {
     const response = await window.ethereum.request({
       "method": "wallet_addEthereumChain",
@@ -97,49 +86,33 @@ export function MetaMask() {
 
     // injectedProvider에 대한 객체 생성(?)
     const provider = new ethers.BrowserProvider(window.ethereum);
-    setProvider(provider)
     // It will prompt user for account connections if it isnt connected
     // signer -> 현재 account 정보를 담고 있음
-    try{
+    try {
       const signer = await provider.getSigner();
-      setSigner(signer)
       const address = await signer.getAddress()
-      const balance = await provider.getBalance(address)
-      const chainId = (await provider.getNetwork()).chainId
-      setWallet({
-        address: address, 
-        balance: String(balance), 
-        chainId: String(chainId),
-      })
-      console.log(address,balance,chainId)
       // const message = "Please issue a certificate"
       // const signedMessage = await signer.signMessage(message)
       // setUserInfo(address, message, signedMessage)
       const token = await Web3Token.sign(async msg => await signer.signMessage(msg), '1d');
-      setUserInfo(address,token)
-    }catch(e){
-      console.log("code:",e.code,"message:",e.message)
+      setUserInfo(address, token)
+    } catch (e) {
+      console.log("code:", e.code, "message:", e.message)
     }
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <div>
-          <div className='border-while border-solid border-4 m-3'>
-            <Button className="text-2xl w-70 h-20 m-5" color="orange" onClick={connectMetaMask}>로그인</Button>
-            {/* <ul style={{ borderStyle: "solid", borderWidth:"5px", borderColor : "white" }}> */}
-            {/* <div className="text-2xl border-while p-5 m-7 border-solid border-4"> */}
-            <div className="text-2xl container m-5">
-              <div>VC Payload</div>
-              <div>Address:{wallet.address}</div>
-              <div>Balance:{wallet.balance}</div>
-              <div>ChainID:{wallet.chainId}</div>
-            </div>
-          </div>
-        </div>
-      </header>
+    <Typography
+      as="button"
+      className={
+        "mx-2 px-4 py-2 font-normal text-lg border-2 border-gray-500 rounded-full hover:bg-blue-400 hover:text-white hover:border-blue-500"
+        + className
+        // + (walletAddress ? " hidden " : " ")
+      }
+      onClick={connectMetaMask}
+    >
+      로그인
+    </Typography>
 
-    </div>
   );
 }

@@ -39,7 +39,7 @@ export function MidCollections() {
     image: "",
     feature: ""
   });
-  const splitFeature = selectedCard.feature.split(".");
+  const splitFeature = selectedCard.feature.split("/");
   // const [isModalOpen, setIsModalOpen] = useState(false);
   // const [isHovered, setIsHovered] = useState(true);
   const [hoveredCards, setHoveredCards] = useState({});
@@ -219,10 +219,11 @@ export function MidCollections() {
                               goToNFTList();
                             }}
                             variant="filled"
+                            style={{ fontSize: "15px" }}
                             // color="teal"
                             // className="w-28 bg-[#80B6AB] -mt-4 justify-center flex items-baseline gap-2 rounded-lg px-4 py-2.5 text-xl font-bold text-white hover:bg-[#FF7308]"
                             // className="w-28 bg-[#7FD1AE] -mt-4 justify-center flex items-baseline gap-2 rounded-lg px-4 py-2.5 text-xl font-bold text-white hover:bg-[#FF7308]"
-                            className="w-48 bg-[#00A990] -mt-2 justify-center flex items-baseline gap-2 rounded-lg px-4 py-2.5 text-xl font-bold text-white hover:bg-[#80B6AB]"
+                            className="w-52 bg-[#00A990] -mt-2 justify-center flex items-baseline gap-2 rounded-lg px-4 py-2.5 text-xl font-bold text-white hover:bg-[#80B6AB]"
                           >
                             {card.species}
                           </Button>

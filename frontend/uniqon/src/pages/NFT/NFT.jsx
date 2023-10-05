@@ -15,6 +15,7 @@ import { ethers } from "ethers";
 import contractAbi from "../../components/NFT/contractAbi.json";
 import useUserInfoStore from "../../stores/UserInfoStore";
 import { useCollectionsStore } from "../../stores/CollectionsStore";
+import RingLoader from "react-spinners/RingLoader"
 
 export function NFT() {
   const nftImg = useRef();
@@ -145,6 +146,7 @@ export function NFT() {
   const [tokenId, setTokenId] = useState(0);
   const contractAddress = "0x303a548f56ff203d435190ea3a082b59d726ce36";
   const [address, setAddress] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   // 대분류 값 변경
   const mainChange = (selectedMain) => {
@@ -197,6 +199,9 @@ export function NFT() {
       species: species
     };
     try {
+      setIsLoading(true);
+      console.log("버튼 클릭");
+      setAiImgUrl("");
       const respone1 = await axios.post(
         "https://6f03-61-80-142-239.ngrok-free.app/api/img2img",
         data,
@@ -207,8 +212,8 @@ export function NFT() {
           responseType: "arraybuffer"
         }
       );
-
       if (respone1.status === 200) {
+        setIsLoading(false);
         console.log("요청 성공");
         console.log(respone1);
         const blob = new Blob([respone1.data], { type: "image/png" });
@@ -442,7 +447,7 @@ export function NFT() {
                       </div>
                       <button
                         className="text-2xl w-60 "
-                        onClick={handleSubmit}
+                        // onClick={handleSubmit}
                         style={{ fontWeight: "bold", color: "black" }}
                       >
                         AI 이미지
@@ -537,7 +542,7 @@ export function NFT() {
                               fontSize: "20px"
                             }}
                           >
-                            AI 이미지가 없습니다.
+                            {isLoading ? <RingLoader color="#36d7b7" /> : <span>AI 이미지가 없습니다.</span>}
                           </div>
                         )}
                       </div>
