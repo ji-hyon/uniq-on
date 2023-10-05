@@ -55,10 +55,9 @@ export function TopNavBar() {
     navigate("/myinfo");
   };
 
-  const goLogout = async() => {
-    const response=await axios.get("/api/users/logout");
+  const goLogout = () => {
+    window.location.href = "http://127.0.0.1:5000/api/users/logout";
     alert("로그아웃 되었습니다!");
-    
   };
 
   const handleNicknameEdit = () => {

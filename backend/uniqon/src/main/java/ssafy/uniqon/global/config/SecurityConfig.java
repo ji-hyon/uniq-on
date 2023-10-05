@@ -90,7 +90,7 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .clearAuthentication(true)
                         .logoutSuccessHandler(((request, response, authentication) -> response
-                                .sendRedirect("index.html"))))
+                                .sendRedirect(redirectUrl))))
                 .addFilterBefore(new JwtFilter(tokenProvider),
                         UsernamePasswordAuthenticationFilter.class)
                 .build();
