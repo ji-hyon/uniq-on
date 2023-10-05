@@ -202,7 +202,6 @@ export function NFT() {
     };
     try {
       setIsLoading(true);
-      console.log("버튼 클릭");
       setAiImgUrl("");
       const respone1 = await axios.post(
         "https://420b-121-178-98-18.ngrok-free.app/api/img2img",
@@ -284,10 +283,12 @@ export function NFT() {
             "Content-Type": "multipart/form-data"
           }
         });
-        console.log("IPFS 저장 성공", response2);
-        setIpfsUrl(response2.data.response);
-        ipfsResponse = response2.data.response;
-        console.log("ipfsurl", ipfsUrl);
+        if (response2.status === 200) {
+          console.log("IPFS 저장 성공", response2);
+          setIpfsUrl(response2.data.response);
+          ipfsResponse = response2.data.response;
+          console.log("ipfsurl", ipfsUrl);
+        }
       } catch (error) {
         console.log("IPFS 저장 실패", error);
         console.log(typeof selectedMiddle);
