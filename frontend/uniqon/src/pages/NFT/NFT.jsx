@@ -58,7 +58,7 @@ export function NFT() {
         species: "턱수염 도마뱀"
       }
     ],
-    거북이: [
+    거북: [
       {
         id: 0,
         species: "쟁기 거북"
