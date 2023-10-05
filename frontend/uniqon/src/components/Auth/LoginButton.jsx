@@ -78,7 +78,8 @@ export function LoginButton(props) {
             console.error("MetaMask is not installed");
             // 메타마스크 설치 메세지 및 홈페이지 이동
             alert("MetaMask를 설치해주세요");
-            window.location.href = "https://metamask.io/";
+            // window.location.href = "https://metamask.io/";
+            window.open("https://metamask.io/", '_blank').focus()
             return;
         }
         console.log("MetaMask exists");
@@ -146,7 +147,13 @@ export function LoginButton(props) {
                 console.log('e.response.data', e.response.data);
                 if (e.response.data) {
                     alert("DITI 인증서 등록이 되어있지 않습니다.");
-                    window.location.href = e.response.data.ditiAddress;
+                    // window.location.href = e.response.data.ditiAddress;
+                    const newTab = window.open(e.response.data.ditiAddress, '_blank');
+                    if (newTab) {
+                      newTab.focus();
+                    } else {
+                      alert('팝업 차단이 활성화되어 새 탭을 열 수 없습니다.');
+                    }
                 } else {
                     alert("UNIQON에 등록된 회원이 아닙니다! 회원가입을 해주세요");
                     sendDataToParent();
