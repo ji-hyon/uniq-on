@@ -15,7 +15,7 @@ import { ethers } from "ethers";
 import contractAbi from "../../components/NFT/contractAbi.json";
 import useUserInfoStore from "../../stores/UserInfoStore";
 import { useCollectionsStore } from "../../stores/CollectionsStore";
-import RingLoader from "react-spinners/RingLoader"
+import RingLoader from "react-spinners/RingLoader";
 
 export function NFT() {
   const nftImg = useRef();
@@ -29,7 +29,7 @@ export function NFT() {
   const { accessToken } = useUserInfoStore();
 
   const { mainType } = useCollectionsStore();
-  const [ isExistImg, setIsExisImg ] = useState(false);
+  const [isExistImg, setIsExisImg] = useState("");
 
   const middleOptions = {
     여우: [
@@ -183,7 +183,7 @@ export function NFT() {
       setImgBase64(reader.result.split(",")[1]);
     };
     if (file) {
-      setIsExisImg(true);
+      setIsExisImg(URL.createObjectURL(file));
     }
     // console.log(isExistImg);
     reader.readAsDataURL(file);
@@ -342,6 +342,7 @@ export function NFT() {
             }
           }
         );
+        alert("NFT 발급이 완료 되었습니다.");
         console.log("NFT 발급 성공", response4);
       } catch (error) {
         console.log("NFT 발급 실패", error);
@@ -415,10 +416,11 @@ export function NFT() {
 
             <div className="flex flex-col items-center justify-center w-full h-full">
               <div className="flex flex-row items-center space-y-6 md:space-y-0 md:space-x-32">
-                <Card className="w-[500px]">
+                <Card className="w-[600px]">
                   <CardHeader floated={false} className="">
                     <span className="flex justify-center">
                       <div
+
                       // onClick={() => nftImg.current.click()}
                       // style={{
                       //   cursor: "pointer",
@@ -428,6 +430,14 @@ export function NFT() {
                       // }}
                       // onClick={handleButtonClick}
                       >
+                        <p
+                          style={{
+                            color: "black",
+                            fontWeight: "bold"
+                          }}
+                        >
+                          이미지 업로드
+                        </p>
                         <input
                           name="file"
                           type="file"
@@ -443,22 +453,30 @@ export function NFT() {
                           colors="outline:#121331,primary:#f24c00,secondary:#2ca58d,tertiary:#ebe6ef"
                           style={{ width: "180px", height: "180px" }}
                         />
-                        {isExistImg && <p>이미지 업로드 완료!</p> }
+                        {isExistImg && <p>이미지 업로드 완료!</p>}
                       </div>
-                      <button
-                        className="text-2xl w-60 "
-                        // onClick={handleSubmit}
-                        style={{ fontWeight: "bold", color: "black" }}
-                      >
-                        AI 이미지
-                        <lord-icon
-                          src="https://cdn.lordicon.com/ejxwvtlg.json"
-                          onClick={handleSubmit}
-                          trigger="hover"
-                          colors="outline:#121331,primary:#08a88a,secondary:#ebe6ef"
-                          style={{ width: "150px", height: "150px" }}
-                        ></lord-icon>
-                      </button>
+                      <div>
+                        <p style={{ color: "black", fontWeight: "bold" }}>
+                          AI 이미지 생성
+                        </p>
+                        <button
+                          className="text-2xl w-60 "
+                          // onClick={handleSubmit}
+                          style={{
+                            fontWeight: "bold",
+                            color: "black",
+                            marginTop: "12px"
+                          }}
+                        >
+                          <lord-icon
+                            src="https://cdn.lordicon.com/ejxwvtlg.json"
+                            onClick={handleSubmit}
+                            trigger="hover"
+                            colors="outline:#121331,primary:#08a88a,secondary:#ebe6ef"
+                            style={{ width: "150px", height: "150px" }}
+                          ></lord-icon>
+                        </button>
+                      </div>
                       {/* <lord-icon
                         src="https://cdn.lordicon.com/emzrtjck.json"
                         onClick={handleSubmit}
@@ -521,6 +539,26 @@ export function NFT() {
                           alignItems: "center"
                         }}
                       >
+                        <div
+                          style={{
+                            border: "1px solid black",
+                            width: "250px",
+                            height: "250px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderRadius: "15px",
+                            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
+                            fontSize: "20px"
+                          }}
+                        >
+                          {isExistImg ? (
+                            <img src={isExistImg} alt="Upload Image"></img>
+                          ) : (
+                            <span>선택한 이미지가 없습니다.</span>
+                          )}
+                        </div>
+                        <div style={{ margin: "20px" }}></div>
                         {aiImgUrl ? (
                           <img
                             id="aiImg"
@@ -542,7 +580,11 @@ export function NFT() {
                               fontSize: "20px"
                             }}
                           >
-                            {isLoading ? <RingLoader color="#36d7b7" /> : <span>AI 이미지가 없습니다.</span>}
+                            {isLoading ? (
+                              <RingLoader color="#36d7b7" />
+                            ) : (
+                              <span>AI 이미지가 없습니다.</span>
+                            )}
                           </div>
                         )}
                       </div>
