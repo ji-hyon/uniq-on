@@ -16,9 +16,11 @@ import contractAbi from "../../components/NFT/contractAbi.json";
 import useUserInfoStore from "../../stores/UserInfoStore";
 import { useCollectionsStore } from "../../stores/CollectionsStore";
 import RingLoader from "react-spinners/RingLoader";
+import { useNavigate } from "react-router-dom";
 
 export function NFT() {
   const nftImg = useRef();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [age, setAge] = useState(0);
   const [feature, setFeature] = useState("");
@@ -203,7 +205,7 @@ export function NFT() {
       console.log("버튼 클릭");
       setAiImgUrl("");
       const respone1 = await axios.post(
-        "https://6f03-61-80-142-239.ngrok-free.app/api/img2img",
+        "https://6f2a-121-178-98-18.ngrok-free.app/api/img2img",
         data,
         {
           headers: {
@@ -343,6 +345,7 @@ export function NFT() {
           }
         );
         alert("NFT 발급이 완료 되었습니다.");
+        navigate("/mypage");
         console.log("NFT 발급 성공", response4);
       } catch (error) {
         console.log("NFT 발급 실패", error);
