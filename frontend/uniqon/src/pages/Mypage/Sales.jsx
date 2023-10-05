@@ -11,11 +11,38 @@ import {
   Tooltip,
   IconButton,
 } from "@material-tailwind/react";
+import { TxHisModal } from "../../components/MyPage/TxHisModal";
 
 export function Sales() {
   // 판매 내역
   const [salesList, setSalesList] = useState([]);
   const [page, setPage] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTxHis, setSelectedTxHis] = useState({
+    seller:"",
+            buyer:"",
+            txHash:"",
+            transactedAt:"",
+            nftId:"",
+            nftName:"",
+            nftImage:""
+  });
+
+  const clickTxHis = (sales) => {
+    setSelectedTxHis({
+      seller:sales.seller,
+            buyer:sales.buyer,
+            txHash:sales.txHash,
+            transactedAt:sales.transactedAt,
+            nftId:sales.nftId,
+            nftName:sales.nftName,
+            nftImage:sales.nftImage
+    });
+    setIsModalOpen(true);
+  };
+
+
+
   useEffect(() => {
     async function salesList() {
       try {
@@ -63,7 +90,7 @@ export function Sales() {
               </CardHeader>
               <CardFooter className="pt-3 pb-3">
                 <h3>구매자 : {sales.buyer}</h3>
-                <Button className="text-sm" size="sm" fullWidth={true}>
+                <Button className="text-sm" size="sm" fullWidth={true} onClick={() => { clickTxHis(sales); }}>
                   {sales.nftName}
                 </Button>
               </CardFooter>
@@ -71,6 +98,9 @@ export function Sales() {
           </div>
         ))}
       </div>
+      {selectedTxHis && (
+        <TxHisModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} selectedTxHis={selectedTxHis}></TxHisModal>
+      )}
     </div>
   );
 }
