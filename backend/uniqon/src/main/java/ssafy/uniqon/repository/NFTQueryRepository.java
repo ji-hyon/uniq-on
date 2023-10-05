@@ -47,7 +47,7 @@ public class NFTQueryRepository {
                         nFTs.contractAddress,
                         nFTs.tokenId,
                         nFTs.liked_cnt,
-                        nFTs.creater
+                        nFTs.creater.walletAddress
                         ))
                 .from(nFTs)
                 .where(
