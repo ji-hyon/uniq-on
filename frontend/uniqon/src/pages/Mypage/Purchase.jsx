@@ -11,11 +11,38 @@ import {
   Tooltip,
   IconButton,
 } from "@material-tailwind/react";
+import { TxHisModal } from "../../components/MyPage/TxHisModal";
 
 export function Purchase() {
   // 구매 내역
   const [purchaseList, setpurchaseList] = useState([]);
   const [page, setPage] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTxHis, setSelectedTxHis] = useState({
+    seller:"",
+            buyer:"",
+            txHash:"",
+            transactedAt:"",
+            nftId:"",
+            nftName:"",
+            nftImage:""
+  });
+
+  const clickTxHis = (purchase) => {
+    setSelectedTxHis({
+      seller:purchase.seller,
+            buyer:purchase.buyer,
+            txHash:purchase.txHash,
+            transactedAt:purchase.transactedAt,
+            nftId:purchase.nftId,
+            nftName:purchase.nftName,
+            nftImage:purchase.nftImage
+    });
+    setIsModalOpen(true);
+  };
+
+
+
   useEffect(() => {
     async function purchaseList() {
       try {
@@ -63,7 +90,7 @@ export function Purchase() {
               </CardHeader>
               <CardFooter className="pt-3 pb-3">
                 <h3>판매자 : {purchase.seller}</h3>
-                <Button className="text-sm" size="sm" fullWidth={true}>
+                <Button className="text-sm" size="sm" fullWidth={true} onClick={() => { clickTxHis(purchase); }}>
                   {purchase.nftName}
                 </Button>
               </CardFooter>
@@ -71,6 +98,9 @@ export function Purchase() {
           </div>
         ))}
       </div>
+      {selectedTxHis && (
+        <TxHisModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} selectedTxHis={selectedTxHis}></TxHisModal>
+      )}
     </div>
   );
 }
