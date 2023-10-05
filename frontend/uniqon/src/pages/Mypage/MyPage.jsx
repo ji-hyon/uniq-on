@@ -159,16 +159,6 @@ export function MyPage() {
               </CardHeader>
 
                 <CardBody className="grid grid-cols-3 gap-4">  
-                  {userInfo && (
-                    <div>
-                      <List><strong>지갑 주소 : </strong>{userInfo.walletAddress}</List>
-                      <List><strong>이름 : </strong>{userInfo.name}</List>
-                      <List><strong>닉네임 : </strong>{userInfo.nickname}</List>
-                      <List><strong>성별 : </strong>{userInfo.gender}</List>
-                      <List><strong>생년월일 : </strong>{userInfo.birth}</List>
-                      <List><strong>프로필 이미지 : </strong>{userInfo.profileImage}</List>
-                    </div>
-                  )}
 
                 </CardBody>
               

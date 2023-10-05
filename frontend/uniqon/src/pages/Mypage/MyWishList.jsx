@@ -61,10 +61,12 @@ export function MyWishList() {
 
   return (
     <div className="App">
+      <div className="mb-4">
       {page > 0 && <Button onClick={handlePreviousPage}><MdArrowBack className="w-6 h-6"></MdArrowBack></Button>}
       {myWishList.length > 0 && (
         <Button onClick={handleNextPage}><MdArrowForward className="w-6 h-6"></MdArrowForward></Button>
-      )}
+        )}
+        </div>
       <div className="flex w-[1200px] items-start gap-[32px] relative flex-wrap">
         {myWishList.map((wish, index) => (
           // <SalesCard key={index} item={wish} id={wish.postId}></SalesCard>
