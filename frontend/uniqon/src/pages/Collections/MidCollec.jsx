@@ -39,7 +39,7 @@ export function MidCollections() {
     image: "",
     feature: ""
   });
-  const splitFeature = selectedCard.feature.split(".");
+  const splitFeature = selectedCard.feature.split("/");
   // const [isModalOpen, setIsModalOpen] = useState(false);
   // const [isHovered, setIsHovered] = useState(true);
   const [hoveredCards, setHoveredCards] = useState({});
