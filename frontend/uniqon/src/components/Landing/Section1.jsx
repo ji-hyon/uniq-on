@@ -1,12 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import useUserInfoStore from "../../stores/UserInfoStore";
 
 
 export function Section1() {
   const navigate = useNavigate();
+  const { accessToken } = useUserInfoStore();
 
   function goToForLogin() {
-    navigate("/forlogin");
+    if (accessToken) {
+      navigate("/transaction");
+    } else {
+      navigate("/forlogin");
+    }
   }
 
   return (
