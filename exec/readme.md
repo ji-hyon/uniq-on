@@ -1,49 +1,58 @@
-1.  프로젝트 사용 도구
-    이슈 관리 : JIRA
-    형상 관리 : Gitlab
-    커뮤니케이션 : Notion, Mattermost
-    디자인 : Figma
-    CI/CD : Jenkins
+# 프로젝트 사용 도구
 
-2.  개발 환경
-    gradle version : 7.6.2
-    jdk : 17
-    JPA : 3.1.4
-    Fastapi : 0.90.1
-    Python : 3.10.5
-    Nodejs : 18.17.1
-    mysql : 8.0.33
-    Spring : 3.1.3
-    vscode : 1.79.2
-    Intellij IDEA : 2023.2.1 (Ultimate Edition)
-    DB : mysql (azure)
-    SERVER : AWS EC2 Ubuntu 20.04.3 LTS
-    NGINX : 1.18.0
-    Docker : 24.0.6
+1. 이슈 관리 : JIRA
+2. 형상 관리 : Gitlab
+3. 커뮤니케이션 : Notion, Mattermost
+4. 디자인 : Figma
+5. CI/CD : Jenkins
 
-3.  외부 서비스
-    피나타(finata):
-    nft Service(API키 필요)
-    클로바OCR:
-    사진의 text를 불러옴(API키 필요)
-    ngrok:
-    AI fastapi public url 생성(계정 연결 시 세션시간 연장)
+# 개발 환경
 
-4.  빌드하기
-    front-react:
-    npm i
-    npm start
-    back-spring:
-    gradle 실행
-    Bootjar 실행
-    back-fastapi:
-    pip install -r requirements.txt
-    python launch.py
-    back-node:
-    npm i
-    npm start
+1. gradle version : 7.6.2
+2. jdk : 17
+3. JPA : 3.1.4
+4. Fastapi : 0.90.1
+5. Python : 3.10.5
+6. Nodejs : 18.17.1
+7. mysql : 8.0.33
+8. Spring : 3.1.3
+9. vscode : 1.79.2
+10. Intellij IDEA : 2023.2.1 (Ultimate Edition)
+11. DB : mysql (azure)
+12. SERVER : AWS EC2 Ubuntu 20.04.3 LTS
+13. NGINX : 1.18.0
+14. Docker : 24.0.6
 
-5.  환경 변수
+# 외부 서비스
+
+1. 피나타(finata): nft Service(API키 필요)
+2. 클로바OCR: 사진의 text를 불러옴(API키 필요)
+3. ngrok: AI fastapi public url 생성(계정 연결 시 세션시간 연장)
+
+# 빌드하기
+
+1. front-react:
+
+   npm i
+   npm start
+
+2. back-spring:
+
+   gradle 실행
+   Bootjar 실행
+
+3. back-fastapi:
+
+   pip install -r requirements.txt
+   python launch.py
+
+4. back-node:
+
+   npm i
+   npm start
+
+# 환경 변수
+
     MYSQL_DATABASE: diti
     MYSQL_ROOT_PASSWORD: 1234
     TZ: Asia/Seoul
