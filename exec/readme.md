@@ -59,3 +59,7 @@
     back-fastapi:
     pip install -r requirements.txt
     python launch.py
+
+    back-node:
+    npm i
+    npm start
