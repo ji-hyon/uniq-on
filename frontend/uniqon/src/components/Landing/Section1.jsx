@@ -8,11 +8,7 @@ export function Section1() {
   const { accessToken } = useUserInfoStore();
 
   function goToForLogin() {
-    if (accessToken) {
-      navigate("/transaction");
-    } else {
       navigate("/forlogin");
-    }
   }
 
   return (
