@@ -112,7 +112,7 @@ export function Transaction() {
     axios.get("/api/myPage/mynfts", {
       params: {
         page: 0,
-        size: 9,
+        size: 50,
       }
     })
     .then((response) => {
