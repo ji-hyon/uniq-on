@@ -3,7 +3,6 @@
     형상 관리 : Gitlab
     커뮤니케이션 : Notion, Mattermost
     디자인 : Figma
-    UCC :
     CI/CD : Jenkins
 
 2.  개발 환경
@@ -23,8 +22,28 @@
     Docker : 24.0.6
 
 3.  외부 서비스
+    피나타(finata):
+    nft Service(API키 필요)
+    클로바OCR:
+    사진의 text를 불러옴(API키 필요)
+    ngrok:
+    AI fastapi public url 생성(계정 연결 시 세션시간 연장)
 
-4.  환경 변수
+4.  빌드하기
+    front-react:
+    npm i
+    npm start
+    back-spring:
+    gradle 실행
+    Bootjar 실행
+    back-fastapi:
+    pip install -r requirements.txt
+    python launch.py
+    back-node:
+    npm i
+    npm start
+
+5.  환경 변수
     MYSQL_DATABASE: diti
     MYSQL_ROOT_PASSWORD: 1234
     TZ: Asia/Seoul
@@ -46,20 +65,3 @@
     BC_NETWORK: 'https://gethrpc.ssafy-blockchain.com'
     BC_NETWORK_NAME: 'sepolia'
     BC_SMART_CONTRACT_ADDRESS: '0xc9C8Db9F05bF5A0ab10511Bc6Df56c300fbcf3B3'
-
-5.  빌드하기
-    front-react:
-    npm i
-    npm start
-
-    back-spring:
-    gradle 실행
-    Bootjar 실행
-
-    back-fastapi:
-    pip install -r requirements.txt
-    python launch.py
-
-    back-node:
-    npm i
-    npm start
