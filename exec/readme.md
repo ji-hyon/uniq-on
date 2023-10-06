@@ -34,8 +34,11 @@
 1. front-react:
 
 ```
-   npm i
-   npm start
+npm i
+```
+
+```
+npm start
 ```
 
 2. back-spring:
@@ -46,15 +49,21 @@
 3. back-fastapi:
 
 ```
-   pip install -r requirements.txt
-   python launch.py
+pip install -r requirements.txt
+```
+
+```
+python launch.py
 ```
 
 4. back-node:
 
 ```
-   npm i
-   npm start
+npm i
+```
+
+```
+npm start
 ```
 
 # 환경 변수
