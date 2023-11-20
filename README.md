@@ -79,7 +79,7 @@
         </td>
         <td style="min-width: 150px;">
             <a href="https://github.com/cjjss11">
-              <img src="https://avatars.githubusercontent.com/u/120673992?v=4" width="200">
+              <img src="https://avatars.githubusercontent.com/u/122518199?v=4" width="200">
               <br />
               <b>최지수</b>
             </a> 
