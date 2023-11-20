@@ -2,8 +2,54 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d18942db-4dd0-43d9-8818-3b1c09a8829e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/backend/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/DitiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/DitiApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/controller/VcController.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/controller/VcController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/dto/response/VcListDBResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/dto/response/VcListDBResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/entity/Auth.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/entity/Auth.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/entity/Vc.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/entity/Vc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/repository/AuthRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/repository/AuthRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/repository/VcQueryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/repository/VcQueryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/repository/VcRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/repository/VcRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/service/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/service/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/service/VcQueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/service/VcQueryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/service/VcQueryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/service/VcQueryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/service/VcService.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/service/VcService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/domain/service/VcServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/domain/service/VcServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/global/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/global/.gitkeep" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/global/config/QuerydslConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/global/config/QuerydslConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/global/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/global/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/global/config/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/global/config/SwaggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/global/exception/AlreadyExistException.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/global/exception/AlreadyExistException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/global/exception/DeletedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/global/exception/DeletedException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/global/exception/InvalidException.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/global/exception/InvalidException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/global/exception/JwtTokenException.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/global/exception/JwtTokenException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/global/exception/NotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/global/exception/NotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/global/exception/ServiceRuntimeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/global/exception/ServiceRuntimeException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/global/response/ErrorResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/global/response/ErrorResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/java/com/diti/core/global/response/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/java/com/diti/core/global/response/Response.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/resources/application-db.yml" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/resources/application-db.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/resources/application-log.yml" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/resources/application-log.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/resources/application-swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/resources/application-swagger.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/test/java/com/diti/core/CoreApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/test/java/com/diti/core/CoreApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DITI/core/src/test/java/com/diti/core/DitiApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/DITI/backend/src/test/java/com/diti/core/DitiApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uniqon_gateway/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/nodeJs/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uniqon_gateway/.env" beforeDir="false" afterPath="$PROJECT_DIR$/nodeJs/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uniqon_gateway/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/nodeJs/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uniqon_gateway/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/nodeJs/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uniqon_gateway/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodeJs/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uniqon_gateway/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/nodeJs/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uniqon_gateway/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodeJs/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uniqon_gateway/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodeJs/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,9 +62,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2VbZHPCsUxTQ6rzSJaq1o6nEZLM" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -29,7 +75,11 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Sales/Read",
+    "git-widget-placeholder": "develop",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -42,6 +92,7 @@
       <option name="presentableId" value="Default" />
       <updated>1695106653274</updated>
       <workItem from="1695106654862" duration="10000" />
+      <workItem from="1700457088632" duration="311000" />
     </task>
     <servers />
   </component>
