@@ -1,3 +1,2 @@
 *.idea.DS_Store
 backend/.idea
-backend/uniqon/src/main/resources/**
