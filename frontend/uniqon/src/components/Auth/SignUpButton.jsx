@@ -48,11 +48,9 @@ export function SignUpButton(props) {
         {
           // "chainId": "0x79F5",
           chainId: "0x562",
-          // "chainName": "SSAFY",
           chainName: "STG-GETH",
           rpcUrls: [
-            // "https://rpc.ssafy-blockchain.com"
-            "https://gethrpc.ssafy-blockchain.com",
+            env.process.SSAFY_RPC_URL,
           ],
           iconUrls: [
             "https://xdaichain.com/fake/example/url/xdai.svg",
@@ -63,7 +61,7 @@ export function SignUpButton(props) {
             symbol: "ETH",
             decimals: 18,
           },
-          blockExplorerUrls: ["https://blockscout-geth.ssafy-blockchain.com/"],
+          blockExplorerUrls: [process.env.SSAFY_BLOCK_EXPLORER],
         },
       ],
     });

@@ -3,9 +3,7 @@ import { Resolver } from "did-resolver"
 import { getResolver } from "ethr-did-resolver"
 import { createVerifiableCredentialJwt, createVerifiablePresentationJwt, verifyCredential, verifyPresentation } from "did-jwt-vc"
 
-// ssafy 네트워크로 수정하기
-// const rpcUrl = 'https://rpc.sepolia.org/'
-const rpcUrl = 'https://gethrpc.ssafy-blockchain.com/'
+const rpcUrl = process.env.SSAFY_RPC_URL
 
 // issuer
 // DITI(발급자)의 private key사용. 내 지갑 주소와 private key로 사용함
@@ -23,8 +21,6 @@ const issuer = new EthrDID({
 // const providerConfig = {
 //     rpcUrl: rpcUrl,
 //     // 배포한 스마트 컨트랙트 주소 
-//     // registry: '0xb4884e21e276a2d42b2969ae9ca220639d2abe73',
-//     // ssafy 네트워크에 배포한 contract address로 수정함 
 //     registry: '0xc9C8Db9F05bF5A0ab10511Bc6Df56c300fbcf3B3',
 //     name: 'sepolia'
 // }

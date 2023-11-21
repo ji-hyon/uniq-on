@@ -65,7 +65,7 @@ export function TopNavBar() {
     if (nowUrl === "//localhost") {
       window.location.href = "http://localhost:5001/api/users/logout";
     } else {
-      window.location.href = "https://j9c201.p.ssafy.io/api/users/logout";
+      window.location.href = process.env.SSAFY_URL + "/api/users/logout";
     }
     alert("로그아웃 되었습니다!");
   };

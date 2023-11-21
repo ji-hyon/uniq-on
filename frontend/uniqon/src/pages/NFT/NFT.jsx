@@ -231,7 +231,7 @@ export function NFT() {
       alert("빈칸이 있습니다. 다시 확인해 주세요.");
     } else {
       const provider = new ethers.BrowserProvider(window.ethereum);
-      const net = new ethers.JsonRpcProvider("https://gethrpc.ssafy-blockchain.com");
+      const net = new ethers.JsonRpcProvider(env.process.SSAFY_RPC_URL);
       const signer = await provider.getSigner();
       const balance = await provider.getBalance(signer.getAddress());
       if (balance < ethers.parseEther("0.0006")) {

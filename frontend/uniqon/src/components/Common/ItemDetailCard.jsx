@@ -89,7 +89,7 @@ export function ItemDetailCard({ item }) {
   async function transact(price, sellerAddress, tokenId) {
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
-      const net = new ethers.JsonRpcProvider("https://gethrpc.ssafy-blockchain.com");
+      const net = new ethers.JsonRpcProvider(process.env.SSAFY_RPC_URL);
 
       const signer = await provider.getSigner();
       const contractAddress = "0x303a548f56ff203d435190ea3a082b59d726ce36";
