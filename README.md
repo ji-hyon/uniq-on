@@ -15,6 +15,9 @@
 # Uniqon 회원가입 흐름도
 <img src="img/join-flow.png"/>
 
+# Uniqon 로그인 흐름도
+<img src="img/login-flow.png"/>
+
 # 🗓 개발 기간
 
 - 2023.08.23 ~ 10.06 (6주)
