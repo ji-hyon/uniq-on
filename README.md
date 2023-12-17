@@ -10,32 +10,49 @@
 
 - 웹 3.0은 사용자 중심의 인터넷 환경으로, 개인화된 서비스와 데이터의 소유권이 강조됩니다. 이러한 환경에서 **NFT (Non-Fungible Token)** 는 디지털 자산의 고유성과 소유권을 증명할 수 있는 기술로 주목받고 있습니다.
 - 이러한 배경에서 시작한 저희의 **희귀동물 NFT 거래 플랫폼**은 본인이 소유한 희귀동물을 NFT로 발행하여 거래함으로써, 디지털 컨텐츠의 가치를 높일 수 있으며,희귀동물의 보호와 관리에 대한 관심을 높이고, 생태계를 활성화할 수 있습니다. 또한, 블록체인 기술을 활용하여 신뢰성을 높일 수 있습니다.
+<br>
 
 # 🗓 개발 기간
 
 - 2023.08.23 ~ 10.06 (6주)
+<br>
 
-# 💻 사용 서버
-
-## 웹 서버
-
-- AWS Lightsail ($80)
-
-## Front-End
-
-- React
-
-## Gateway
-
-- Nodejs
-
-## Back-End
-
-- Spring Boot
-
-## AI
-
-- FastAPI
+## 팀 구성 👨‍👨‍👦
+<table align="center">
+    <tr align="center">
+        <td><a href="[https://github.com/wnsdlf925](https://github.com/JeBread)">
+            <img src="https://avatars.githubusercontent.com/u/62425882?v=4" width="100px" height="100px" alt="wnsdlf925"/><br />
+            <sub><b>방상제</b></sub></a>
+            <br/> Backend / Infra 
+        </td>
+        <td><a href="https://github.com/ji-hyon">
+            <img src="https://avatars.githubusercontent.com/u/120673992?v=4" width="100px" height="100px" alt="ji-hyon"/><br />
+            <sub><b>서지현</b></sub></a>  
+            <br /> Backend / Infra 
+        </td>
+        <td><a href="https://github.com/cjjss11">
+            <img src="https://avatars.githubusercontent.com/u/122588619?v=4" width="100px" height="100px"alt="jhy1812"/><br />
+            <sub><b>최지수</b></sub></a>
+            <br /> Backend / Data  
+        </td>
+        <td><a href="https://github.com/kmr5326">
+            <img src="https://avatars.githubusercontent.com/u/108921478?v=4" width="100px" height="100px" alt="JeBread"/><br />
+            <sub><b>김한결</b></sub></a>
+            <br /> Frontend 
+        </td>
+        <td><a href="https://github.com/asdqwe45">
+            <img src="https://avatars.githubusercontent.com/u/122518199?v=4" width="100px" height="100px" alt="cjjss11"/><br />
+            <sub><b>이재명</b></sub></a>
+            <br /> Frontend 
+        </td>
+        <td><a href="https://github.com/cutepassion">
+            <img src="https://avatars.githubusercontent.com/u/122588654?v=4" width="100px" height="100px" alt="ChoiCharles"/><br />
+            <sub><b>진병욱</b></sub></a>
+            <br /> Frontend 
+        </td>
+    </tr>
+</table>
+<br>
 
 # 🛠 사용 기술 및 라이브러리
 
@@ -57,85 +74,7 @@
 <img src="https://img.shields.io/badge/mysql [8.0.33]-4479A1?style=flat&logo=mysql&logoColor=white" />
 <img src="https://img.shields.io/badge/swagger [2.2.0]-85EA2D?style=flat&logo=swagger&logoColor=white" />
 
-# 🙎🏻‍♂️🙎🏻‍♀️ 팀원 소개
 
-## Front-End
-
-<table align="center">
-    <tr align="center">
-        <td style="min-width: 150px;">
-            <a href="https://github.com/JeBread">
-              <img src="https://avatars.githubusercontent.com/u/108921478?v=4" width="200">
-              <br />
-              <b>방상제</b>
-            </a>
-        </td>
-        <td style="min-width: 150px;">
-            <a href="https://github.com/ji-hyon">
-              <img src="https://avatars.githubusercontent.com/u/120673992?v=4" width="200">
-              <br />
-              <b>서지현</b>
-            </a> 
-        </td>
-        <td style="min-width: 150px;">
-            <a href="https://github.com/cjjss11">
-              <img src="https://avatars.githubusercontent.com/u/122518199?v=4" width="200">
-              <br />
-              <b>최지수</b>
-            </a> 
-        </td>
-    </tr>
-    <tr align="center">
-        <td>
-            방상제
-        </td>
-        <td>
-            서지현
-        </td>
-        <td>
-            최지수
-        </td>
-    </tr>
-</table>
-
-## Back-End
-
-<table align="center">
-    <tr align="center">
-        <td style="min-width: 150px;">
-            <a href="https://github.com/kmr5326">
-              <img src="https://avatars.githubusercontent.com/u/50177492?v=4" width="200">
-              <br />
-              <b>김한결</b>
-            </a>
-        </td>
-        <td style="min-width: 150px;">
-            <a href="https://github.com/asdqwe45">
-              <img src="https://avatars.githubusercontent.com/u/118823358?v=4" width="200">
-              <br />
-              <b>이재명</b>
-            </a> 
-        </td>
-        <td style="min-width: 150px;">
-            <a href="https://github.com/cutepassion">
-              <img src="https://avatars.githubusercontent.com/u/105566077?v=4" width="200">
-              <br />
-              <b>진병욱</b>
-            </a> 
-        </td>
-    </tr>
-    <tr align="center">
-        <td>
-            김한결
-        </td>
-        <td>
-            이재명
-        </td>
-        <td>
-            진병욱
-        </td>
-    </tr>
-</table>
 
 # ⚙ 기능소개
 
