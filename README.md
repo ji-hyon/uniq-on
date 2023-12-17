@@ -18,6 +18,12 @@
 # Uniqon 로그인 흐름도
 <img src="img/login-flow.png"/>
 
+# DITI 로그인/회원가입 흐름도
+<img src="img/diti-account.png"/>
+
+# DITI 인증서 조회 흐름도
+<img src="img/diti-searchID.png"/>
+
 # 🗓 개발 기간
 
 - 2023.08.23 ~ 10.06 (6주)
