@@ -2,7 +2,7 @@
 
 # Uniqon
 <img src="img/uniqon/main.png" width="70%" />
-</div>
+</div><br>
 
 ## 📚 서비스 소개
 - AI를 기반으로 자신이 소유한 희귀동물의 이미지를 생성할 수 있고, 이를 NFT(Non-Fungible Token)로 발행하여 거래할 수 있습니다.
@@ -69,7 +69,7 @@
 
 |1. 로그인|2. 회원가입|
 |:---:|:---:|
-|![proc1-3](img/uniqon/login-fill.png)|![proc1-3](img/uniqon/signup-fill.png)|
+|![proc1-3](img/uniqon/login-fill2.png)|![proc1-3](img/uniqon/signup-fill2.png)|
 
 |4. nft 발급|5. nft 거래 목록|
 |:---:|:---:|
