@@ -71,13 +71,13 @@
 |:---:|:---:|
 |![proc1-3](img/uniqon/login-fill.png)|![proc1-3](img/uniqon/signup-fill.png)|
 
-|4. nft발급|5. 거래|
+|4. nft 발급|5. nft 거래 목록|
 |:---:|:---:|
-|![proc1-2](img/uniqon/nft.png)|![proc1-3](img/uniqon/transaction.png)|
+|![proc1-2](img/uniqon/nft.png)|![proc1-3](img/uniqon/post_list.png)|
 
-|6. 도감|7. 내 정보|
+|6. nft 거래|7. 도감|
 |:---:|:---:|
-|![proc1-2](img/uniqon/collection.png)|![proc1-3](img/uniqon/info.png)|
+|![proc1-2](img/uniqon/transaction.png)|![proc1-3](img/uniqon/collection.png)|
 <br>
 
 ## 🎫 DID 인증서 기반 로그인 흐름도
