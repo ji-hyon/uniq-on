@@ -1,20 +1,17 @@
 <div align="center">
 
 # Uniqon
-
 <img src="img/캐릭터.png" width="200" height="200"/>
-
 </div>
 
 ## 📚 서비스 소개
-
-- 웹 3.0은 사용자 중심의 인터넷 환경으로, 개인화된 서비스와 데이터의 소유권이 강조됩니다. 이러한 환경에서 **NFT (Non-Fungible Token)** 는 디지털 자산의 고유성과 소유권을 증명할 수 있는 기술로 주목받고 있습니다.
-- 이러한 배경에서 시작한 저희의 **희귀동물 NFT 거래 플랫폼**은 본인이 소유한 희귀동물을 NFT로 발행하여 거래함으로써, 디지털 컨텐츠의 가치를 높일 수 있으며,희귀동물의 보호와 관리에 대한 관심을 높이고, 생태계를 활성화할 수 있습니다. 또한, 블록체인 기술을 활용하여 신뢰성을 높일 수 있습니다.
+- AI를 기반으로 자신이 소유한 희귀동물의 이미지를 생성할 수 있고, 이를 NFT(Non-Fungible Token)로 발행하여 거래할 수 있습니다.
+- 도감을 통해 각 희귀동물에 대한 상세한 정보를 얻을 수 있습니다. 
+- 인증기관(DITI)에서 DID(탈중앙화 신원증명)를 기반으로 발행한 인증서를 기반으로 간편 로그인이 가능합니다. 
 <br>
 
 ## 🗓 개발 기간
-
-- 2023.08.23 ~ 10.06 (6주)
+- 2023.08.23 ~ 2023.10.06 (6주)
 <br>
 
 ## 👨‍👨‍👦 팀 구성 
@@ -54,7 +51,7 @@
 </table>
 <br>
 
-## ⚙ 기능소개
+## 🔎 기능소개
 
 ### (1) DITI (Decentralized Identity Trust Infrastructure)
 
@@ -99,22 +96,33 @@
 </div>
 
 
+## ⚙ 시스템 아키텍처 
+<div align="center">
+    <img src="img/architecture.png" width="70%"/>
+</div>
+<br>
+
+
 ## 🛠 사용 기술 및 라이브러리
 
 ### Front-End
-
-<img src="https://img.shields.io/badge/react [18.2.0]-61DAFB?style=flat&logo=react&logoColor=black" />
-<img src="https://img.shields.io/badge/zustand [4.4.1]-61DAFB?style=flat&logo=zustand&logoColor=black" />
-<img src="https://img.shields.io/badge/ethers [6.7.1]-3C3C3D?style=flat&logo=ethereum&logoColor=white" />
-<img src="https://img.shields.io/badge/tailwindcss [3.3.3]-06B6D4?style=flat&logo=tailwindcss&logoColor=white" />
-<img src="https://img.shields.io/badge/web3_token [1.0.6]-F16822?style=flat&logo=web3-token&logoColor=white" />
-<img src="https://img.shields.io/badge/three.js [0.154.0]-000000?style=flat&logo=threedotjs&logoColor=white" />
-
+```
+react [18.2.0]
+zustand [4.4.1]
+tailwindcss [3.3.3]
+three.js [0.154.0]
+```
+### block-Chain
+```
+ethers [6.7.1]
+web3_token [1.0.6]
+```
 ### Back-End
-
-<img src="https://img.shields.io/badge/Java [17]-007396?style=flat&logo=Java&logoColor=white" />
-<img src="https://img.shields.io/badge/springboot [3.1.3]-6DB33F?style=flat&logo=springboot&logoColor=white" />
-<img src="https://img.shields.io/badge/springsecurity [3.1.3]-6DB33F?style=flat&logo=springsecurity&logoColor=white" />
-<img src="https://img.shields.io/badge/JPA [3.1.4]-6DB33F?style=flat&logo=jpa&logoColor=white" />
-<img src="https://img.shields.io/badge/mysql [8.0.33]-4479A1?style=flat&logo=mysql&logoColor=white" />
-<img src="https://img.shields.io/badge/swagger [2.2.0]-85EA2D?style=flat&logo=swagger&logoColor=white" />
+```
+Java [17]
+springboot [3.1.3]
+springsecurity [3.1.3]
+JPA [3.1.4]
+mysql [8.0.33]
+swagger [2.2.0]
+```
