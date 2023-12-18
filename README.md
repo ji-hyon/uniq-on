@@ -21,31 +21,37 @@
             <img src="https://avatars.githubusercontent.com/u/108921478?v=4" width="100px" height="100px" alt="wnsdlf925"/><br />
             <sub><b>방상제</b></sub></a>
             <br/> Frontend 
+            <br/> <br/>
         </td>
         <td><a href="https://github.com/cjjss11">
             <img src="https://avatars.githubusercontent.com/u/122518199?v=4" width="100px" height="100px"alt="jhy1812"/><br />
             <sub><b>최지수</b></sub></a>
             <br /> Frontend  
+            <br/> <br/>
         </td>
         <td><a href="https://github.com/ji-hyon">
             <img src="https://avatars.githubusercontent.com/u/120673992?v=4" width="100px" height="100px" alt="ji-hyon"/><br />
             <sub><b>서지현</b></sub></a>  
-            <br /> BlockChain / DevOps
+            <br /> BlockChain
+            <br/> DevOps
         </td>
         <td><a href="https://github.com/kmr5326">
             <img src="https://avatars.githubusercontent.com/u/50177492?v=4" width="100px" height="100px" alt="JeBread"/><br />
             <sub><b>김한결</b></sub></a>
-            <br /> BlockChain / DevOps  
+            <br /> BlockChain
+            <br/> DevOps  
         </td>
         <td><a href="https://github.com/asdqwe45">
             <img src="https://avatars.githubusercontent.com/u/118823358?v=4" width="100px" height="100px" alt="cjjss11"/><br />
             <sub><b>이재명</b></sub></a>
-            <br /> Backend / AI
+            <br /> Backend
+            <br/> AI
         </td>
         <td><a href="https://github.com/cutepassion">
             <img src="https://avatars.githubusercontent.com/u/105566077?v=4" width="100px" height="100px" alt="ChoiCharles"/><br />
             <sub><b>진병욱</b></sub></a>
             <br /> Backend 
+            <br/> <br/>
         </td>
     </tr>
 </table>
