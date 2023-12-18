@@ -78,22 +78,22 @@
 <br>
 
 ## 🎫 DID 인증서 기반 로그인 흐름도
-### Uniqon 회원가입
+### (1) Uniqon 회원가입
 <div align="center">
     <img src="img/join-flow.png" width="70%"/>
 </div>
 
-### Uniqon 로그인 
+### (2) Uniqon 로그인 
 <div align="center">
     <img src="img/login-flow.png" width="70%"/>
 </div>
 
-### DITI 로그인/회원가입 
+### (3) DITI 로그인/회원가입 
 <div align="center">
     <img src="img/diti-account.png" width="70%"/>
 </div>
 
-### DITI 인증서 조회 
+### (4) DITI 인증서 조회 
 <div align="center">
     <img src="img/diti-searchID.png" width="70%"/>
 </div>
