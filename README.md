@@ -6,18 +6,18 @@
 
 </div>
 
-# 📚 서비스 소개
+## 📚 서비스 소개
 
 - 웹 3.0은 사용자 중심의 인터넷 환경으로, 개인화된 서비스와 데이터의 소유권이 강조됩니다. 이러한 환경에서 **NFT (Non-Fungible Token)** 는 디지털 자산의 고유성과 소유권을 증명할 수 있는 기술로 주목받고 있습니다.
 - 이러한 배경에서 시작한 저희의 **희귀동물 NFT 거래 플랫폼**은 본인이 소유한 희귀동물을 NFT로 발행하여 거래함으로써, 디지털 컨텐츠의 가치를 높일 수 있으며,희귀동물의 보호와 관리에 대한 관심을 높이고, 생태계를 활성화할 수 있습니다. 또한, 블록체인 기술을 활용하여 신뢰성을 높일 수 있습니다.
 <br>
 
-# 🗓 개발 기간
+## 🗓 개발 기간
 
 - 2023.08.23 ~ 10.06 (6주)
 <br>
 
-## 팀 구성 👨‍👨‍👦
+## 👨‍👨‍👦 팀 구성 
 <table align="center">
     <tr align="center">
         <td><a href="https://github.com/JeBread">
@@ -54,17 +54,44 @@
 </table>
 <br>
 
+## ⚙ 기능소개
+
+### (1) DITI (Decentralized Identity Trust Infrastructure)
+
+|1. 메인화면 + 로그인 |2. VC 발급|3. VC 조회|
+|:---:|:---:|:---:|
+|![proc1-2](img/diti/main.png)|![proc1-3](img/diti/vc.png)|![proc1-3](img/diti/getvc.png)|
+
+### (2) UNIQON (UNIQUE + ON)
+
+|1. 메인화면 |2. 로그인|3. 회원가입|
+|:---:|:---:|:---:|
+|![proc1-2](img/uniqon/main.png)|![proc1-3](img/uniqon/login.png)|![proc1-3](img/uniqon/signup.png)|
+
+|4. nft발급|5. 거래|
+|:---:|:---:|
+|![proc1-2](img/uniqon/nft.png)|![proc1-3](img/uniqon/transaction.png)|
+
+|6. 도감|7. 내 정보|
+|:---:|:---:|
+|![proc1-2](img/uniqon/collection.png)|![proc1-3](img/uniqon/info.png)|
+<br>
+
+<div align="center">
+    
 # Uniqon 회원가입 흐름도
-<img src="img/join-flow.png"/>
+<img src="img/join-flow.png" width="70%"/>
 
 # Uniqon 로그인 흐름도
-<img src="img/login-flow.png"/>
+<img src="img/login-flow.png" width="70%"/>
 
 # DITI 로그인/회원가입 흐름도
-<img src="img/diti-account.png"/>
+<img src="img/diti-account.png" width="70%"/>
 
 # DITI 인증서 조회 흐름도
-<img src="img/diti-searchID.png"/>
+<img src="img/diti-searchID.png" width="70%"/>
+
+</div>
 
 # 🛠 사용 기술 및 라이브러리
 
@@ -85,61 +112,3 @@
 <img src="https://img.shields.io/badge/JPA [3.1.4]-6DB33F?style=flat&logo=jpa&logoColor=white" />
 <img src="https://img.shields.io/badge/mysql [8.0.33]-4479A1?style=flat&logo=mysql&logoColor=white" />
 <img src="https://img.shields.io/badge/swagger [2.2.0]-85EA2D?style=flat&logo=swagger&logoColor=white" />
-
-
-# ⚙ 기능소개
-
-## DITI (Decentralized Identity Trust Infrastructure)
-
-<div align="center">
-<img src="img/diti2.png" width="200"/>
-
-|                    메인화면 + 로그인                    |
-| :-----------------------------------------------------: |
-| <img src="img/diti/main.png" alt="포스트" width="300"/> |
-
-|                        VC 발급                        |
-| :---------------------------------------------------: |
-| <img src="img/diti/vc.png" alt="포스트" width="300"/> |
-
-|                         VC 조회                          |
-| :------------------------------------------------------: |
-| <img src="img/diti/getvc.png" alt="포스트" width="300"/> |
-
-</div>
-
-## UNIQON (UNIQUE + ON)
-
-<img src="img/logo_latest.png"/>
-
-<div align="center">
-
-|                         메인화면                          |
-| :-------------------------------------------------------: |
-| <img src="img/uniqon/main.png" alt="포스트" width="300"/> |
-
-|                           로그인                           |
-| :--------------------------------------------------------: |
-| <img src="img/uniqon/login.png" alt="포스트" width="300"/> |
-
-|                          회원가입                           |
-| :---------------------------------------------------------: |
-| <img src="img/uniqon/signup.png" alt="포스트" width="300"/> |
-
-|                         nft발급                          |
-| :------------------------------------------------------: |
-| <img src="img/uniqon/nft.png" alt="포스트" width="300"/> |
-
-|                              도감                               |
-| :-------------------------------------------------------------: |
-| <img src="img/uniqon/collection.png" alt="포스트" width="300"/> |
-
-|                               거래                               |
-| :--------------------------------------------------------------: |
-| <img src="img/uniqon/transaction.png" alt="포스트" width="300"/> |
-
-|                          내 정보                          |
-| :-------------------------------------------------------: |
-| <img src="img/uniqon/info.png" alt="포스트" width="300"/> |
-
-</div>
