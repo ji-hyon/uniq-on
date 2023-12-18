@@ -94,7 +94,7 @@
 <div align="center">
     <img src="img/diti-searchID.png" width="70%"/>
 </div>
-
+<br>
 
 ## ⚙ 시스템 아키텍처 
 <div align="center">
