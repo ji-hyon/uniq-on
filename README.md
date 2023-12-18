@@ -1,7 +1,7 @@
 <div align="center">
 
 # Uniqon
-<img src="img/캐릭터.png" width="200" height="200"/>
+<img src="img/uniqon/main.png" width="70%" />
 </div>
 
 ## 📚 서비스 소개
@@ -67,9 +67,9 @@
 
 ### (2) UNIQON (UNIQUE + ON)
 
-|1. 메인화면 |2. 로그인|3. 회원가입|
-|:---:|:---:|:---:|
-|![proc1-2](img/uniqon/main.png)|![proc1-3](img/uniqon/login.png)|![proc1-3](img/uniqon/signup.png)|
+|1. 로그인|2. 회원가입|
+|:---:|:---:|
+|![proc1-3](img/uniqon/login.png)|![proc1-3](img/uniqon/signup.png)|
 
 |4. nft발급|5. 거래|
 |:---:|:---:|
