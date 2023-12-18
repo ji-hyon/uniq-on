@@ -18,13 +18,13 @@
 <table align="center">
     <tr align="center">
         <td><a href="https://github.com/JeBread">
-            <img src="https://avatars.githubusercontent.com/u/108921478?v=4" width="100px" height="100px" alt="wnsdlf925"/><br />
+            <img src="https://avatars.githubusercontent.com/u/108921478?v=4" width="100px" height="100px" alt="JeBread"/><br />
             <sub><b>방상제</b></sub></a>
             <br/> Frontend 
             <br/> <br/>
         </td>
         <td><a href="https://github.com/cjjss11">
-            <img src="https://avatars.githubusercontent.com/u/122518199?v=4" width="100px" height="100px"alt="jhy1812"/><br />
+            <img src="https://avatars.githubusercontent.com/u/122518199?v=4" width="100px" height="100px"alt="cjjss11"/><br />
             <sub><b>최지수</b></sub></a>
             <br /> Frontend  
             <br/> <br/>
@@ -36,19 +36,19 @@
             <br/> DevOps
         </td>
         <td><a href="https://github.com/kmr5326">
-            <img src="https://avatars.githubusercontent.com/u/50177492?v=4" width="100px" height="100px" alt="JeBread"/><br />
+            <img src="https://avatars.githubusercontent.com/u/50177492?v=4" width="100px" height="100px" alt="kmr5326"/><br />
             <sub><b>김한결</b></sub></a>
             <br /> BlockChain
             <br/> DevOps  
         </td>
         <td><a href="https://github.com/asdqwe45">
-            <img src="https://avatars.githubusercontent.com/u/118823358?v=4" width="100px" height="100px" alt="cjjss11"/><br />
+            <img src="https://avatars.githubusercontent.com/u/118823358?v=4" width="100px" height="100px" alt="asdqwe45"/><br />
             <sub><b>이재명</b></sub></a>
             <br /> Backend
             <br/> AI
         </td>
         <td><a href="https://github.com/cutepassion">
-            <img src="https://avatars.githubusercontent.com/u/105566077?v=4" width="100px" height="100px" alt="ChoiCharles"/><br />
+            <img src="https://avatars.githubusercontent.com/u/105566077?v=4" width="100px" height="100px" alt="cutepassion"/><br />
             <sub><b>진병욱</b></sub></a>
             <br /> Backend 
             <br/> <br/>
@@ -63,7 +63,7 @@
 
 |1. 메인화면 + 로그인 |2. VC 발급|3. VC 조회|
 |:---:|:---:|:---:|
-|![proc1-2](img/diti/main.png)|![proc1-3](img/diti/vc.png)|![proc1-3](img/diti/getvc.png)|
+|![proc1-2](img/diti/main_fill.png)|![proc1-3](img/diti/vc_fill.png)|![proc1-3](img/diti/get_vc_fill.png)|
 
 ### (2) UNIQON (UNIQUE + ON)
 
@@ -73,11 +73,11 @@
 
 |4. nft 발급|5. nft 거래 목록|
 |:---:|:---:|
-|![proc1-2](img/uniqon/nft.png)|![proc1-3](img/uniqon/post_list.png)|
+|![proc1-2](img/uniqon/nft-fill.png)|![proc1-3](img/uniqon/post_list_fill.png)|
 
 |6. nft 거래|7. 도감|
 |:---:|:---:|
-|![proc1-2](img/uniqon/transaction.png)|![proc1-3](img/uniqon/collection.png)|
+|![proc1-2](img/uniqon/transaction_fill.png)|![proc1-3](img/uniqon/collection_fill.png)|
 <br>
 
 ## 🎫 DID 인증서 기반 로그인 흐름도
