@@ -69,7 +69,7 @@
 
 |1. 로그인|2. 회원가입|
 |:---:|:---:|
-|![proc1-3](img/uniqon/login-fill.png)|![proc1-3](img/uniqon/signup.png)|
+|![proc1-3](img/uniqon/login-fill.png)|![proc1-3](img/uniqon/signup-fill.png)|
 
 |4. nft발급|5. 거래|
 |:---:|:---:|
