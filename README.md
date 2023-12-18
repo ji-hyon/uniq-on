@@ -77,25 +77,31 @@
 |![proc1-2](img/uniqon/collection.png)|![proc1-3](img/uniqon/info.png)|
 <br>
 
+## 🎫 DID 인증서 기반 로그인 흐름도
+### Uniqon 회원가입 흐름도
 <div align="center">
-    
-# Uniqon 회원가입 흐름도
-<img src="img/join-flow.png" width="70%"/>
-
-# Uniqon 로그인 흐름도
-<img src="img/login-flow.png" width="70%"/>
-
-# DITI 로그인/회원가입 흐름도
-<img src="img/diti-account.png" width="70%"/>
-
-# DITI 인증서 조회 흐름도
-<img src="img/diti-searchID.png" width="70%"/>
-
+    <img src="img/join-flow.png" width="70%"/>
 </div>
 
-# 🛠 사용 기술 및 라이브러리
+### Uniqon 로그인 흐름도
+<div align="center">
+    <img src="img/login-flow.png" width="70%"/>
+</div>
 
-## Front-End
+### DITI 로그인/회원가입 흐름도
+<div align="center">
+    <img src="img/diti-account.png" width="70%"/>
+</div>
+
+### DITI 인증서 조회 흐름도
+<div align="center">
+    <img src="img/diti-searchID.png" width="70%"/>
+</div>
+
+
+## 🛠 사용 기술 및 라이브러리
+
+### Front-End
 
 <img src="https://img.shields.io/badge/react [18.2.0]-61DAFB?style=flat&logo=react&logoColor=black" />
 <img src="https://img.shields.io/badge/zustand [4.4.1]-61DAFB?style=flat&logo=zustand&logoColor=black" />
@@ -104,7 +110,7 @@
 <img src="https://img.shields.io/badge/web3_token [1.0.6]-F16822?style=flat&logo=web3-token&logoColor=white" />
 <img src="https://img.shields.io/badge/three.js [0.154.0]-000000?style=flat&logo=threedotjs&logoColor=white" />
 
-## Back-End
+### Back-End
 
 <img src="https://img.shields.io/badge/Java [17]-007396?style=flat&logo=Java&logoColor=white" />
 <img src="https://img.shields.io/badge/springboot [3.1.3]-6DB33F?style=flat&logo=springboot&logoColor=white" />
