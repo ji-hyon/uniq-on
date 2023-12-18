@@ -12,18 +12,6 @@
 - 이러한 배경에서 시작한 저희의 **희귀동물 NFT 거래 플랫폼**은 본인이 소유한 희귀동물을 NFT로 발행하여 거래함으로써, 디지털 컨텐츠의 가치를 높일 수 있으며,희귀동물의 보호와 관리에 대한 관심을 높이고, 생태계를 활성화할 수 있습니다. 또한, 블록체인 기술을 활용하여 신뢰성을 높일 수 있습니다.
 <br>
 
-# Uniqon 회원가입 흐름도
-<img src="img/join-flow.png"/>
-
-# Uniqon 로그인 흐름도
-<img src="img/login-flow.png"/>
-
-# DITI 로그인/회원가입 흐름도
-<img src="img/diti-account.png"/>
-
-# DITI 인증서 조회 흐름도
-<img src="img/diti-searchID.png"/>
-
 # 🗓 개발 기간
 
 - 2023.08.23 ~ 10.06 (6주)
@@ -37,25 +25,25 @@
             <sub><b>방상제</b></sub></a>
             <br/> Frontend 
         </td>
-        <td><a href="https://github.com/ji-hyon">
-            <img src="https://avatars.githubusercontent.com/u/120673992?v=4" width="100px" height="100px" alt="ji-hyon"/><br />
-            <sub><b>서지현</b></sub></a>  
-            <br /> BlockChain / DevOps
-        </td>
         <td><a href="https://github.com/cjjss11">
             <img src="https://avatars.githubusercontent.com/u/122518199?v=4" width="100px" height="100px"alt="jhy1812"/><br />
             <sub><b>최지수</b></sub></a>
             <br /> Frontend  
         </td>
+        <td><a href="https://github.com/ji-hyon">
+            <img src="https://avatars.githubusercontent.com/u/120673992?v=4" width="100px" height="100px" alt="ji-hyon"/><br />
+            <sub><b>서지현</b></sub></a>  
+            <br /> BlockChain / DevOps
+        </td>
         <td><a href="https://github.com/kmr5326">
             <img src="https://avatars.githubusercontent.com/u/50177492?v=4" width="100px" height="100px" alt="JeBread"/><br />
             <sub><b>김한결</b></sub></a>
-            <br /> Backend / Infra  
+            <br /> BlockChain / DevOps  
         </td>
         <td><a href="https://github.com/asdqwe45">
             <img src="https://avatars.githubusercontent.com/u/118823358?v=4" width="100px" height="100px" alt="cjjss11"/><br />
             <sub><b>이재명</b></sub></a>
-            <br /> AI
+            <br /> Backend / AI
         </td>
         <td><a href="https://github.com/cutepassion">
             <img src="https://avatars.githubusercontent.com/u/105566077?v=4" width="100px" height="100px" alt="ChoiCharles"/><br />
@@ -65,6 +53,18 @@
     </tr>
 </table>
 <br>
+
+# Uniqon 회원가입 흐름도
+<img src="img/join-flow.png"/>
+
+# Uniqon 로그인 흐름도
+<img src="img/login-flow.png"/>
+
+# DITI 로그인/회원가입 흐름도
+<img src="img/diti-account.png"/>
+
+# DITI 인증서 조회 흐름도
+<img src="img/diti-searchID.png"/>
 
 # 🛠 사용 기술 및 라이브러리
 
@@ -85,7 +85,6 @@
 <img src="https://img.shields.io/badge/JPA [3.1.4]-6DB33F?style=flat&logo=jpa&logoColor=white" />
 <img src="https://img.shields.io/badge/mysql [8.0.33]-4479A1?style=flat&logo=mysql&logoColor=white" />
 <img src="https://img.shields.io/badge/swagger [2.2.0]-85EA2D?style=flat&logo=swagger&logoColor=white" />
-
 
 
 # ⚙ 기능소개
