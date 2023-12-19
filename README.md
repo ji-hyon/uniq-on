@@ -59,13 +59,13 @@
 
 ## 🔎 기능소개
 
-### (1) DITI (Decentralized Identity Trust Infrastructure)
+### (1) DITI (Decentralized Identity Trust Infrastructure) - 신원인증 서비스
 
 |1. 메인화면 + 로그인 |2. VC 발급|3. VC 조회|
 |:---:|:---:|:---:|
 |![proc1-2](img/diti/main_fill.png)|![proc1-3](img/diti/vc_fill.png)|![proc1-3](img/diti/get_vc_fill.png)|
 
-### (2) UNIQON (UNIQUE + ON)
+### (2) UNIQON (UNIQUE + ON) - NFT 거래 서비스
 
 |1. 로그인|2. 회원가입|
 |:---:|:---:|
