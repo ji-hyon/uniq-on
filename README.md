@@ -71,11 +71,11 @@
 |:---:|:---:|
 |![proc1-3](img/uniqon/login-fill3.png)|![proc1-3](img/uniqon/signup-fill3.png)|
 
-|4. nft 발급|5. nft 거래 목록|
+|4. NFT 발급|5. NFT 거래 목록|
 |:---:|:---:|
 |![proc1-2](img/uniqon/nft-fill.png)|![proc1-3](img/uniqon/post_list_fill.png)|
 
-|6. nft 거래|7. 도감|
+|6. NFT 거래|7. 도감|
 |:---:|:---:|
 |![proc1-2](img/uniqon/transaction_fill.png)|![proc1-3](img/uniqon/collection_fill.png)|
 <br>
