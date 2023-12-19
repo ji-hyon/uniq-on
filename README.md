@@ -59,7 +59,7 @@
 
 ## 🔎 기능소개
 
-### (1) DITI (Decentralized Identity Trust Infrastructure) - 신원 인증 서비스
+### (1) DITI (Decentralized Identity Trust Infrastructure) - 블록체인 기반 신원 인증 서비스
 
 |1. 메인화면 + 로그인 |2. VC 발급|3. VC 조회|
 |:---:|:---:|:---:|
