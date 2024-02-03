@@ -91,17 +91,18 @@
 
 ## 🛠 사용 기술 및 라이브러리
 
+### Block-Chain
+```
+Metamask
+ethers [6.7.1]
+web3_token [1.0.6]
+```
 ### Front-End
 ```
 react [18.2.0]
 zustand [4.4.1]
 tailwindcss [3.3.3]
 three.js [0.154.0]
-```
-### block-Chain
-```
-ethers [6.7.1]
-web3_token [1.0.6]
 ```
 ### Back-End
 ```
