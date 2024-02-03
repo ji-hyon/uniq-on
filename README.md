@@ -33,13 +33,13 @@
             <img src="https://avatars.githubusercontent.com/u/120673992?v=4" width="100px" height="100px" alt="ji-hyon"/><br />
             <sub><b>서지현</b></sub></a>  
             <br /> BlockChain
-            <br/> DevOps
+            <br/> Infra
         </td>
         <td><a href="https://github.com/kmr5326">
             <img src="https://avatars.githubusercontent.com/u/50177492?v=4" width="100px" height="100px" alt="kmr5326"/><br />
             <sub><b>김한결</b></sub></a>
             <br /> BlockChain
-            <br/> DevOps  
+            <br/> Infra
         </td>
         <td><a href="https://github.com/asdqwe45">
             <img src="https://avatars.githubusercontent.com/u/118823358?v=4" width="100px" height="100px" alt="asdqwe45"/><br />
