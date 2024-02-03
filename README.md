@@ -95,22 +95,22 @@
 ```
 Express.js
 Metamask
-ethers [6.7.1]
-web3_token [1.0.6]
+Ethers [6.7.1]
+web3-token [1.0.6]
 ```
 ### Front-End
 ```
-react [18.2.0]
-zustand [4.4.1]
-tailwindcss [3.3.3]
-three.js [0.154.0]
+React [18.2.0]
+Zustand [4.4.1]
+Tailwindcss [3.3.3]
+Three.js [0.154.0]
 ```
 ### Back-End
 ```
 Java [17]
-springboot [3.1.3]
-springsecurity [3.1.3]
+SpringBoot [3.1.3]
+SpringSecurity [3.1.3]
 JPA [3.1.4]
-mysql [8.0.33]
-swagger [2.2.0]
+Mysql [8.0.33]
+Swagger [2.2.0]
 ```
