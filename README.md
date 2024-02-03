@@ -80,28 +80,6 @@
 |![proc1-2](img/uniqon/transaction_fill.png)|![proc1-3](img/uniqon/collection_fill.png)|
 <br>
 
-## 🎫 DID 인증서 기반 로그인 흐름도
-### (1) Uniqon 회원가입
-<div align="center">
-    <img src="" width="70%"/>
-</div>
-
-### (2) Uniqon 로그인 
-<div align="center">
-    <img src="" width="70%"/>
-</div>
-
-### (3) DITI 로그인/회원가입 
-<div align="center">
-    <img src="" width="70%"/>
-</div>
-
-### (4) DITI 인증서 조회 
-<div align="center">
-    <img src="" width="70%"/>
-</div>
-<br>
-
 ## ⚙ 시스템 아키텍처 
 <div align="center">
     <img src="img/architecture.png" width="70%"/>
