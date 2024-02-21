@@ -34,7 +34,7 @@
         <td><a href="https://github.com/szihyon">
             <img src="https://avatars.githubusercontent.com/u/120673992?v=4" width="100px" height="100px" alt="szihyon"/><br />
             <sub><b>서지현</b></sub></a>  
-            <br /> BlockChain
+            <br /> DID
             <br/> CI/CD
         </td>
         <td><a href="https://github.com/kmr5326">
@@ -52,7 +52,7 @@
         <td><a href="https://github.com/cutepassion">
             <img src="https://avatars.githubusercontent.com/u/105566077?v=4" width="100px" height="100px" alt="cutepassion"/><br />
             <sub><b>진병욱</b></sub></a>
-            <br /> Backend 
+            <br /> DID
             <br/> <br/>
         </td>
     </tr>
